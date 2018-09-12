@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <!-- namespace는 설정파일의 완전한 경로를 적어준다 -->
+ <!-- ibatis와 다르게 id값에 . 사용 불가 -->
+<mapper namespace="mybatis.ReplyBBS_mybatis">
+ 
+</mapper>
