@@ -2,11 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<br />
-<br />
-<br />
-<br />
-<br />
+
 <div class="container" style="padding-top:60px; margin-top:60px;">
 	<h2>이용약관</h2>
   <ul id="myTab" class="nav nav-tabs" role="tablist">
