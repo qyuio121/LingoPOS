@@ -108,7 +108,7 @@ $(function(){
 		
 		directUpload : {
 			status: true, // activate direct upload
-			url:'/Reservation/Detail.Lingo',
+			//url:'/Reservation/Detail.Lingo',
 			loaderIcon: '<i class="fas fa-sync fa-spin"></i>',
 			success : function(data, textStatus, jqXHR){
 				$('#hiddenFile').next().html("");	
