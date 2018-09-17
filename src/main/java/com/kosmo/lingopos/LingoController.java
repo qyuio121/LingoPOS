@@ -3,6 +3,7 @@ package com.kosmo.lingopos;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Handles requests for the application home page.
@@ -58,10 +60,35 @@ public class LingoController {
 	public String qna() throws Exception{
 		return "question/QNA.tiles";
 	}
-	@RequestMapping("/Reservation/Detail.Lingo")
-	public String detail() throws Exception{
+//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제 시작
+	@RequestMapping("/Question/QNAEdit.Lingo")
+	public String qnaEdit() throws Exception{
+		return "question/QNAEdit.tiles";
+	}
+	@RequestMapping("/Question/QNAList.Lingo")
+	public String qnaList() throws Exception{
+		return "question/QNAList.tiles";
+	}
+	@RequestMapping("/Question/QNAView.Lingo")
+	public String qnaView() throws Exception{
+		return "question/QNAView.tiles";
+	}
+	@RequestMapping("/Question/QNADelete.Lingo")
+	public String qnaDelete() throws Exception{
+		return "Lingo/Message";
+	}
+//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
+//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
+ 	@RequestMapping("/Reservation/Detail.Lingo")
+	public String detail(@RequestParam Map map,Model model,@RequestParam String hiddenFile) throws Exception{
+		model.addAllAttributes(map);
+		String [] hidden = hiddenFile.trim().split(" ");
+		hidden[0] = hidden[0].substring(9, hidden[0].length());
+		model.addAttribute("hidden",hidden);
+		
 		return "reservation/detail/detail.tiles";
 	}
+ //창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 끝
 	@RequestMapping("/Reservation/Reservation.Lingo")
 	public String reservation() throws Exception{
 		return "reservation/reservation.tiles";
@@ -86,4 +113,5 @@ public class LingoController {
 	public String cal() throws Exception{
 		return "shop/sales/salescal.tiles";
 	}
+	
 }
