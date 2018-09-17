@@ -75,10 +75,11 @@
 </style>
 	</head>
   <body>
-  	<div class="container">
-  		<tiles:insertAttribute name="Top"/>
+  	<tiles:insertAttribute name="Top"/>
+  	<div class="container-fluid">
+  		
     	<tiles:insertAttribute name="Body"/>
-   		<tiles:insertAttribute name="Footer"/>
    	</div>
+   		<tiles:insertAttribute name="Footer"/>
   </body>
 </html>

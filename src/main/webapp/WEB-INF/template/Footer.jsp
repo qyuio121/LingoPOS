@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- Footer -->
-	<footer class="page-footer font-small blue pt-4 navbar-fixed-bottom">
+	<footer class="page-footer font-small blue pt-4 ">
 		<!-- Footer Links -->
 		<div class="container-fluid text-center text-md-left">
 			<!-- Grid row -->
