@@ -77,8 +77,7 @@
   <body>
   	<tiles:insertAttribute name="Top"/>
   	<div class="container-fluid">
-  		
-    	<tiles:insertAttribute name="Body"/>
+	<tiles:insertAttribute name="Body"/>
    	</div>
    		<tiles:insertAttribute name="Footer"/>
   </body>
