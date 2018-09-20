@@ -20,12 +20,11 @@ $(function(){
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
-	<div class="page-header">
-		<h1>QNA<small>1:1문의 리스트</small></h1>
-	</div>
-	<div>
-			<img alt="asdf" src="../Images/apple.png" style="width: 100%;height: 150px;">
-	</div>
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 리스트</small></h2>
+		</div>
+	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 문의등록 버튼 시작 -->
 	<div class="row" style="margin-bottom: 10px">
@@ -37,10 +36,10 @@ $(function(){
 <!-- 문의등록 버튼 끝-->
 <!-- 테이블 시작 -->
 	<div class="row">
-		<div class="table-responsive">
-			<table class="ts sort table table-striped table-bordered table-hover">
+		<div class="table-responsive ">
+			<table class="ts sort table table-bordered ">
 				<thead>
-					<tr class="tsTitles">
+					<tr class="tsTitles" style="text-align: center; font-weight:bold;background-color: #EAEDED">
 						<th class="col-md-1 text-center">문의답변</th>
 						<th class="col-md-1 text-center">문의유형</th>
 						<th class="text-center">문의제목</th>
@@ -91,7 +90,6 @@ $(function(){
 				action="<c:url value='/Question/QNAList.Lingo'/>">
 				<div class="form-group">
 					<select name="searchColumn" class="form-control">
-						<option value="title">답변여부</option>
 						<option value="name">문의유형</option>
 						<option value="content">문의제목</option>
 					</select>

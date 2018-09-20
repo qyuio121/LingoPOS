@@ -50,7 +50,7 @@ $(function(){
 .fs-gal {
         width: 100px;
         height: auto;
-        float: left;
+        float: center;
       }
 </style>
 
@@ -58,21 +58,21 @@ $(function(){
 	
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
-	<div class="page-header">
-		<h1>${name}<small>상세보기</small></h1>
-	</div>
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />${name}<small>상세보기</small></h2>
+		</div>
+	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 슬라이드 갤러리 시작 -->
 	<div class="module">
 		<div class="scroll2" >
 			<c:forEach items="${hidden}" var="hiddenFile">
-				<a href='${hiddenFile}'>
-					<div class="scroll_item">
-						<div class="img">
-							<img src="${hiddenFile}" style="width:100%;height:300px">
-						</div>
+				<div class="scroll_item">
+					<div class="img">
+						<img src="${hiddenFile}" style="width:100%;height:300px">
 					</div>
-				</a>
+				</div>
 			</c:forEach>  	
 		</div>
 	</div>	
@@ -99,10 +99,10 @@ $(function(){
 						</tr>
 					</thead>
 					<tbody class="tsGroup">
-							<tr><td class="text-center"><h4>가게전화번호</h4></td><td><h5>${telselect} - ${teltext1} - ${teltext2}</h5></td><tr>
-							<tr><td class="text-center"><h4>가게주소</h4></td><td><h5>${addr2}</h5></td><tr>
-							<tr><td class="text-center"><h4>영업시간</h4></td><td><h5>${startTime} ~ ${endTime}</h5></td><tr>
-							<tr><td class="text-center"><h4>음식메뉴</h4></td><td><h5>${menu}</h5></td><tr>
+						<tr><td class="text-center"><h4>가게전화번호</h4></td><td><h5>${telselect} - ${teltext1} - ${teltext2}</h5></td><tr>
+						<tr><td class="text-center"><h4>가게주소</h4></td><td><h5>${addr2} ${addr3}</h5></td><tr>
+						<tr><td class="text-center"><h4>영업시간</h4></td><td><h5>${startTime} ~ ${endTime}</h5></td><tr>
+						<tr><td class="text-center"><h4>음식메뉴</h4></td><td><h5>${menu}</h5></td><tr>
 					</tbody>	
 				</table>
 			</div>	
@@ -110,11 +110,11 @@ $(function(){
 <!-- 가게정보 끝 -->		
 <!-- 메뉴갤러리 시작 -->	
 		<div id="tab2" class="swichtab-panel" data-swichtab="target">
-			<c:forEach items="${hidden}" var="hiddenFile">
-				<img class="fs-gal" src="${hiddenFile}" data-url="${hiddenFile}" />
+			<c:forEach items="${hidden1}" var="hiddenFile1">
+				<img class="fs-gal" src="${hiddenFile1}" data-url="${hiddenFile1}" alt="DB연결시 제목 나올자리" title="DB연결시 제목 나올자리" />
 			</c:forEach>
 			<div class="fs-gal-view">
-				<h3>메뉴사진</h3>
+				<h1></h1> <!-- 저장된 메뉴 이미지의 타이틀 값 넣어줄 자리 -->
 				<img class="fs-gal-prev fs-gal-nav" src="../Images/prev.svg" alt="Previous picture" title="Previous picture" />
 				<img class="fs-gal-next fs-gal-nav" src="../Images/next.svg" alt="Next picture" title="Next picture" />
 				<img class="fs-gal-close" src="../Images/close.svg" alt="Close gallery" title="Close gallery" />
@@ -124,6 +124,20 @@ $(function(){
 <!-- 메뉴갤러리 끝 -->		
 <!-- 리뷰 시작 -->	
 		<div id="tab3" class="swichtab-panel" data-swichtab="target">
+			<table class="table table-bordered">
+				<tr style="font-weight:bold; background-color: #EAEDED">
+					<th style="width: 10%; text-align: center">평점</th>
+					<th style="width: 50%; text-align: center">한줄리뷰</th>
+					<th style="width: 10%; text-align: center">글쓴이</th>
+					<th style="width: 10%; text-align: center">작성일</th>
+					
+				</tr>
+				<c:forEach var="i" begin="1" end="6">
+					<tr style="text-align: center">
+						<td>평점${i}</td><td>한줄리뷰${i}</td><td>글쓴이${i}</td><td>작성일${i}</td>
+					</tr>
+				</c:forEach>
+			</table>
 		</div>
 <!-- 리뷰 끝 -->			
 <!-- 예약하기 시작 -->

@@ -6,8 +6,12 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
 <!-- 사진 등록 plug in -->
+<!-- 공통 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" >
+<!-- 가게 -->
 <script type="text/javascript" src="../js/spartan-multi-image-picker.js"></script>
+<!-- 메뉴 -->
+<script type="text/javascript" src="../js/spartan-multi-image-picker1.js"></script>
 
 <!-- 유효성  검사 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
@@ -26,6 +30,7 @@ $(function(){
 			name:"required",
 			addr1:"required",
 			addr2:"required",
+			addr3:"required",
 			foodselect1:"required",
 			foodselect2:"required",
 			teltext1:"required",
@@ -33,20 +38,21 @@ $(function(){
 			coba:"required",
 			check:"required",
 			hiddenFile :"required",
-			menu : "required"
-			
+			menu : "required",
+			table : "required"
 		},messages:{
 			name:"가게명을 입력하세요.",
 			addr1:"우편번호를 입력하세요.",
-			addr2:"상세주소를 입력하세요.",
+			addr2:"주소를 입력하세요.",
+			addr3:"상세주소를 입력하세요.",
 			foodselect1:"음식분류1를 선택하세요.",
 			foodselect2:"음식분류2를 선택하세요.",
 			teltext1:"번호 앞자리를 입력하세요.",
 			teltext2:"번호  뒷자리를 입력하세요.",
 			hiddenFile:"사진을 업로드하세요.",
 			check:"가게정보  수집 동의에 체크하세요.",
-			menu : "메뉴 종류를 입력하세요."
-			
+			menu : "메뉴 종류를 입력하세요.",
+			table : "테이블 수를 선택하세요."
 		}});
 	
 	//validate
@@ -55,7 +61,9 @@ $(function(){
 			$('#frm').submit();}
 		
 		if($('#hiddenFile').val() == "")
-			$('#hiddenFile').next().html("사진을 업로드하세요");	
+			$('#hiddenFile').next().html("가게사진을 업로드하세요");	
+		if($('#hiddenFile1').val() == "")
+			$('#hiddenFile1').next().html("메뉴사진을 업로드하세요");	
 		if($('#startTime').val()==$('#endTime').val())
 				$('.timeError').html("영업시간을 선택하세요");	
 	})
@@ -108,12 +116,24 @@ $(function(){
 		
 		directUpload : {
 			status: true, // activate direct upload
-			//url:'/Reservation/Detail.Lingo',
+			url:'/lingopos/Shop/Store.Lingo',
 			loaderIcon: '<i class="fas fa-sync fa-spin"></i>',
 			success : function(data, textStatus, jqXHR){
 				$('#hiddenFile').next().html("");	
 			},
-			
+		}
+	});
+	
+	//메뉴 사진
+	$("#coba_Menu").spartanMultiImagePicker1({
+		
+		directUpload : {
+			status: true, // activate direct upload
+			url:'/lingopos/Shop/Menu.Lingo',
+			loaderIcon: '<i class="fas fa-sync fa-spin"></i>',
+			success : function(data, textStatus, jqXHR){
+				$('#hiddenFile1').next().html("");	
+			},
 		}
 	});
 	
@@ -147,12 +167,11 @@ $(function(){
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
-	<div class="page-header">
-		<h1>내 가게<small>등록하기</small></h1>
-	</div>
-	<div>
-			<img alt="asdf" src="../Images/apple.png" style="width: 100%;height: 150px;">
-	</div>
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />내 가게<small>등록하기</small></h2>
+		</div>
+	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 가게 등록 입력 폼 시작 -->
 	<form id="frm" class="form-horizontal" action='<c:url value="/Reservation/Detail.Lingo"/>'  method="post" >
@@ -171,29 +190,32 @@ $(function(){
 		    <label class="col-sm-2 control-label">주소명</label>
 		    <div class="col-sm-10">
 		        <input type="text" class="form-control" placeholder="우편번호를 입력해주세요"  style="width: 20%"  name="addr1" id="addr1">
-		        <input type="text" class="form-control" placeholder="상세주소를 입력해주세요"  style="width: 30%"  name="addr2" id="addr2">
-		        <button type="button" value="button타입" class="orgBtn btn btn-primary" id="lookup">조회하기</button><!-- 조회하기 -->   
+		        <input type="text" class="form-control" placeholder="주소를 입력해주세요"  style="width: 30%"  name="addr2" id="addr2">
+		        <button type="button" value="button타입" class="orgBtn btn btn-primary" id="lookup">조회하기</button><!-- 조회하기 -->
+		        
+		        <input type="text" class="form-control" placeholder="상세주소를 입력해주세요"  style="width: 30%"  name="addr3" id="addr3">   
 		    </div>
 		    <label class="col-sm-2 control-label"></label>
 		    <div class="col-sm-10">
 		    	<label for="addr1" id="addr1Error" class="error" style="color:red"></label>
 		    	<label for="addr2" id="addr2Error" class="error" style="color:red"></label>
+		    	<label for="addr3" class="error" style="color:red"></label>
 		    </div>
 		</div>
 <!-- 주소명검색  끝-->
 <!--전화번호 시작 -->
 	 	<div class="form-group">
 			<label class="col-sm-2 control-label">가게전화번호</label>
-				<div class="col-sm-10">
-			    	<select class="form-control col-sm-4" style="width: 20%" id="telselect" name="telselect">
-			      		<option value="010">010</option>
-			            <option value="011">011</option>
-			            <option value="017">017</option>
-			            <option value="019">019</option>
-			      	</select>
-			        <input type="text" class="form-control" placeholder="앞자리를 입력해주세요"  style="width: 20%"  name="teltext1" id="teltext1">
-					<input type="text" class="form-control" placeholder="뒷자리를 입력해주세요"  style="width: 20%"  name="teltext2" id="teltext2">
-		    	</div>
+			<div class="col-sm-10">
+		    	<select class="form-control col-sm-4" style="width: 20%" id="telselect" name="telselect">
+		      		<option value="010">010</option>
+		            <option value="011">011</option>
+		            <option value="017">017</option>
+		            <option value="019">019</option>
+		      	</select>
+		        <input type="text" class="form-control" placeholder="앞자리를 입력해주세요"  style="width: 20%"  name="teltext1" id="teltext1">
+				<input type="text" class="form-control" placeholder="뒷자리를 입력해주세요"  style="width: 20%"  name="teltext2" id="teltext2">
+	    	</div>
 		    <label class="col-sm-2 control-label"></label>
 		    <div class="col-sm-10">
 		    	<label for="telselect" class="error" style="color:red"></label>
@@ -215,6 +237,23 @@ $(function(){
         	</div>
 		</div>
 <!-- 영업시간 끝 -->	
+<!-- 테이블 수 받기 시작-->
+		<div class="form-group">
+			<label class="col-sm-2 control-label">가게 테이블 수</label>
+			<div class="col-sm-10">
+		    	<select class="form-control col-sm-4" style="width: 20%" id="table" name="table">
+		      			<option value="">테이블 수</option>
+		           	<c:forEach begin="5" end="10" var="i">
+			            <option value="${i}">${i}</option>
+			        </c:forEach>
+		      	</select>
+		    </div> 
+		    <label class="col-sm-2 control-label"></label>
+		    <div class="col-sm-10">
+		    	<label for="table" class="error" style="color:red"></label>
+		    </div>	
+	    </div>	     	
+<!-- 테이블 수 받기 끝-->
 <!-- 음식 분류 AJAX 셀렉터 2개  시작 DB연결 DB로 대체 시작 -->
 		<div class="form-group">
 	    	<label  class="col-sm-2 control-label">음식분류</label>
@@ -252,20 +291,18 @@ $(function(){
 		</div>
 <!-- 메뉴 종류 끝 -->
 <!-- 메뉴 사진 시작  -->
-<!-- 
 		<div class="form-group">
 			<label class="col-sm-2 control-label">메뉴 사진</label>
 			<div class="col-md-8">
 				<div class="row">
-					<div id="coba" name="coba"></div>
+					<div id="coba_Menu" name="coba_Menu"></div>
 				</div>
 			</div>
 			<div class="col-md-8">
-				<input type="hidden" name="hiddenFile" id="hiddenFile" value="" />
+				<input type="hidden" name="hiddenFile1" id="hiddenFile1" value="" />
 				<label class="col-sm-offset-3" style="color:red"></label>  
 			</div>
-		</div>
- -->			
+		</div>	
 <!-- 메뉴 사진  끝  -->
 <!-- 가게 전경 및 내부 사진 시작  -->
 		<div class="form-group">

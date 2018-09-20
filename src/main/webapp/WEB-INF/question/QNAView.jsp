@@ -3,6 +3,7 @@
     pageEncoding="UTF-8"%>
 	
 <script>
+$(function(){
 	//해당 글번호에 대한 코멘트 목록을 가져오는 함수 
 	var showComments = function(key){		
 		$.ajax({
@@ -110,12 +111,11 @@
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
-	<div class="page-header">
-		<h1>QNA<small>1:1문의 상세보기</small></h1>
-	</div>
-	<div>
-			<img alt="asdf" src="../Images/apple.png" style="width: 100%;height: 150px;">
-	</div>
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 상세보기</small></h2>
+		</div>
+	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 상세보기 시작 -->
 <!-- 상세보기 내용  DB연결 전까지 대기 시작 -->
