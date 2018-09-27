@@ -1,94 +1,113 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<div class="container">
+<!-- 계산기 API -->
+<script type="text/javascript" src="../js/jautocalc.js"></script>
 
-	<h1>매출 확인 페이지</h1>
-	<button id="update">월별 매출현황 보기</button>
+<script>
+$(function(){
+	//계산기	 			
+	 function autoCalcSetup() {
+	        $('form[name=cart]').jAutoCalc('destroy');
+	        $('form[name=cart] tr[name=line_items]').jAutoCalc({keyEventsFire: true, decimalPlaces: 2, emptyAsZero: true});
+	        $('form[name=cart]').jAutoCalc({decimalPlaces: 2});
+	    }
+	    autoCalcSetup();
+	
+	 $('button[name=remove]').click(function(e) {
+	        e.preventDefault();
+	
+	        var form = $(this).parents('form')
+	        $(this).parents('tr').remove();
+	        autoCalcSetup();
+	
+	    });
+	
+	    $('button[name=add]').click(function(e) {
+	        e.preventDefault();
+	
+	        var $table = $(this).parents('table');
+	        var $top = $table.find('tr[name=line_items]').first();
+	        var $new = $top.clone(true);
+	
+	        $new.jAutoCalc('destroy');
+	        $new.insertBefore($top);
+	        $new.find('input[type=text]').val('');
+	        autoCalcSetup();
+	});
+});
+</script>
 
-	<div id="chart1" class="reusable-highchart"
-		data-options='{"title":{"text":"연별 매출 현황"},"subtitle":{"text":"Source: Lingo.com"},
-						"yAxis":{"title":{"text":"연매출 현황"}},
-						"legend":{"layout":"vertical","align":"right","verticalAlign":"middle"},
-						"plotOptions":{"series":{"label":{"connectorAllowed":false},"pointStart":2010}},
-						"responsive":{"rules":[{"condition":{"maxWidth":500},
-						"chartOptions":{"legend":{"layout":"horizontal","align":"center","verticalAlign":"bottom"}}}]}}'
-						
-		data-data='[{"name":"매출","data":[43934,52503,57177,69658,97031,119931,137133,154175]},
-					{"name":"재료비","data":[24916,24064,29742,29851,32490,30282,38121,40434]},
-					{"name":"인건비","data":[11744,17722,16005,19771,20185,24377,32147,39387]},
-					{"name":"월세","data":[null,null,7988,12169,15112,22452,34400,34227]},
-					{"name":"기타지출","data":[12908,5948,8105,11248,8989,11816,18274,18111]}]'>
-	</div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-		crossorigin="anonymous"></script>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-
-	<script src="../js/jquery.reusable-highcharts.min.js"></script>
-	<script>
-		(function() {
-			"use strict";
-			$(document).ready(
-					function() {
-						var fakeAJAXOptions = {
-							chart : {
-								type : "line"
-							},
-							title : {
-								text : "월별 매출 현황"
-							},
-							subtitle : {
-								text : "Source: Lingo.com"
-							},
-							xAxis : {
-								categories : [ "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" ]
-							},
-							yAxis : {
-								title : {
-									text : "만원"
-								}
-							},
-							plotOptions : {
-								line : {
-									dataLabels : {
-										enabled : true
-									},
-									enableMouseTracking : false
-								}
-							}
-						};
-
-						var fakeAJAXData = [
-								{
-									name : "매출",
-									data : [ 700, 609, 905, 1405, 1804, 2105, 2502, 2605, 2303, 1803, 1309, 906 ]
-								},
-								{
-									name : "지출",
-									data : [ 309, 402, 507, 805, 1109, 1502, 1700, 1606, 1402, 1003, 606, 408 ]
-								} ];
-
-						$("#update").click(
-								function(e) {
-									e.preventDefault();
-
-									// update #chart1 with new data and options
-									$("#chart1").reusableHighchart().updateChart(fakeAJAXData,fakeAJAXOptions);
-
-									// rerender #chart2
-									$("#chart2").reusableHighchart("updateChart");
-						});
-					});
-		})();
-	</script>
+<div class="container" style="padding-top: 60px; margin-top: 60px;">
+<!-- 내용 시작 -->
+<!-- 바디 헤더 시작-->
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />내 가게<small>매출계산기</small></h2>
+		</div>
+	</div>	
+<!-- 바디 헤더 끝-->
+<!-- 계산기  시작-->
+	<form name="cart" style="width: 100%">
+		<table name="cart" class="table table-striped table-bordered">
+			<tr>
+				<th></th>
+				<th>사용내역</th>
+				<th>수량</th>
+				<th>금액</th>
+				<th>&nbsp;</th>
+				<th>총 금액</th>
+			</tr>			
+<!-- 실질적 입력 시작 -->			
+			<tr name="line_items">
+				<td><button name="remove" class="btn btn-danger">제거</button></td>
+				<td><input type="text" name="item" placeholder="사용내역을 입력하세요"></td>
+				<td><input type="text" name="qty" placeholder="수량을 입력하세요"></td>
+				<td><input type="text" name="price" placeholder="금액을 입력하세요"></td>
+				<td>&nbsp;</td>
+				<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
+			</tr>
+			<tr name="line_items">
+				<td><button name="remove" class="btn btn-danger">제거</button></td>
+				<td><input type="text" name="item" placeholder="사용내역을 입력하세요"></td>
+				<td><input type="text" name="qty" placeholder="수량을 입력하세요"></td>
+				<td><input type="text" name="price" placeholder="지출 ex)-1,000"></td>
+				<td>&nbsp;</td>
+				<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
+			</tr>
+			<tr>
+				<td colspan="3">&nbsp;</td>
+				<td>세금 전 합산</td>
+				<td>&nbsp;</td>
+				<td><input type="text" name="sub_total" value="" jAutoCalc="SUM({item_total})"></td>
+			</tr>
+			<tr>
+				<td colspan="3">&nbsp;</td>
+				<td>
+				세금:
+				<select name="tax">
+					<option value=".1">부가가치세 포함</option>
+					<option selected value=".00">부가가치세 미포함</option>
+				</select>
+				</td>
+				<td>&nbsp;</td>
+				<td><input type="text" name="tax_total" value="" jAutoCalc="{sub_total} * {tax}"></td>
+			</tr>
+<!-- 실질적 입력 끝 -->				
+			<tr>
+				<td colspan="3">&nbsp;</td>
+				<td>총합</td>
+				<td>&nbsp;</td>
+				<td><input type="text" name="grand_total" value="" jAutoCalc="{sub_total} + {tax_total}"></td>
+			</tr>
+			<tr>
+				<td colspan="99"><button name="add"  class="btn btn-primary">추가</button></td>
+			</tr>
+		</table>
+	</form>
+<!-- 계산기  끝-->	
+<!-- 내용 끝 -->
 </div>
 
 
