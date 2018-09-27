@@ -1,8 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="container-fluid">
-	<div class="col-xs-10 col-xs-offset-1" style="margin-top: 80px">
+<div class="container"style="margin-top:60px;padding-top:60px">
+	<div >
 		<div class="row">
 			<div class="col-xs-6">
 				<h2>

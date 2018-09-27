@@ -1,8 +1,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="container-fluid">
-		<div class="col-xs-10 col-xs-offset-1" style="margin-top: 80px">
+	<div class="container" style="padding-top:60px;margin-top:60px">
+		<div >
+			<img src='<c:url value="/Images/eventLogo.png"/>' alt="이벤트 이미지" style="width: 100%;height: 200px" />
+		</div>
+		<div >
 			<div class="row">
 				<div class="col-xs-6">
 					<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 공지사항</h2>
@@ -57,5 +60,4 @@
 				</nav>
 			</div>
 	</div>
-
-
+	
