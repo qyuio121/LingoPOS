@@ -3,35 +3,119 @@
     pageEncoding="UTF-8"%>
 
 <!-- 유효성검사 -->	
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+ 
+<!-- 서머노트  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+<!-- 서머노트 한글화 -->
+<script src="../js/summernote-ko-KR.js" charset="utf-8"></script>
+
  
 <script>
 $(function(){
-//유효성검사
+	//사진 업로드 시 서버에 저장된 사진제목 저장할 배열
+	var realImage =[];
+	
+	//유효성검사
 	$('#frm').validate({
 		rules:{
 			select1:"required",
 			title:"required",
-			content:"required",
 			check:"required"
 		},messages:{
 			select1:"상담유형 선택하세요",
 			title:"제목을 입력하세요",
-			content:"내용을 입력하세요",
 			check:"개인정보 수집 동의를 체크하세요"
-			
 		}});
 		
 	//문의등록 시  문의리스트로	
 	$('#confirm').click(function(){
-		if($('#frm').valid())
+		if($('#frm').valid() && $('#summernote').val() != ""){
 			$('#frm').submit();
+		}
+		else if($("#summernote").val() == "")
+			$("#error").html("문의내용을 입력하세요");	
 	})
 	
+	//서머노트  유효성검사 후 재 작성시 유효성 검사 끄기
+	$('#summernote').on('summernote.change', function(we, contents, $editable) {
+		$("#error").html("");	
+	});
+
+
 	//문의취소 시 전페이지로	
 	$('#cancle').click(function(){
 		history.back();
 	})
+	
+	//서머노트 
+	$('#summernote').summernote({
+		height: 300,
+	    minHeight: null,
+	    maxHeight: null,
+	    focus: true,
+	    lang: 'ko-KR',
+	  	toolbar: [
+	      	['style', ['bold', 'italic', 'underline', 'clear']],
+	        ['fontNames', ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']],
+	        ['fontsize', ['fontsize']],
+	        ['color', ['color']],
+	        ['para', ['ul', 'ol', 'paragraph']],
+	        ['height', ['height']],
+	        ['insert', ['link', 'picture']],
+	        ['table', ['table']],
+	    ],
+		callbacks: {
+	    	onImageUpload: function(files, editor, welEditable) {
+		    	for(var i = files.length - 1; i >= 0; i--) {
+		        	sendFile(files[i], this);
+		        }
+		    },
+		    onMediaDelete : function(target, editor, welEditable){
+		    	summernoteDeleteImage(target[0].src);
+ 			}   
+		}
+	});
+	
+	//서머노트 이미지 업로드
+	function sendFile(file, el) {
+		var form_data = new FormData();
+	    form_data.append('upload', file);
+	    $.ajax({
+			data: form_data,
+		    type: "POST",
+		    url: '/lingopos/question/Image.Lingo',
+		    cache: false,
+		    contentType: false,
+		    enctype: 'multipart/form-data',
+		    processData: false,
+		    success: function(url) {
+				$(el).summernote('editor.insertImage', url);
+				realImage.push(url.substr(url.lastIndexOf("/")+1));
+				console.log(realImage+"업로드된 모든 이미지");
+				}
+	    });
+	}
+	
+	//서머노트 업로드된 이미지 삭제
+	function summernoteDeleteImage(file){
+		  var remove = file.substr(file.lastIndexOf("/")+1);
+		  var fileRemove = "removeFile="+remove;
+		  $.ajax({
+	        data: fileRemove,
+	        type: "GET",
+	        url: '/lingopos/question/Image.Lingo',
+	        cache: false,
+	        contentType: false,
+	        processData: false,
+	        success: function() {
+	        	realImage = jQuery.grep(realImage, function(value) { 
+	        		return value != remove; });
+				console.log(realImage+"삭제 후 서버에 저장된 이미지");
+	        }
+	    });
+	}
 });
 </script> 
 
@@ -45,7 +129,7 @@ $(function(){
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 폼 시작 -->
- 	<form id="frm" class="form-horizontal" action='<c:url value="/Lingo/MTMList.lingo"/>'><!-- 폼 시작 -->
+ 	<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" action='<c:url value="/Question/QNAList.Lingo"/>'>
 <!-- 상담분류 시작 -->	
 		<div class="form-group">
 			<label  class="col-sm-2 control-label">상담분류</label>
@@ -76,12 +160,13 @@ $(function(){
 		<div class="form-group">
 			<label class="col-sm-2 control-label">내용</label>
 			<div class="col-sm-10">
-		  		<textarea class="form-control" rows="15" placeholder="내용을 입력해주세요"  style="width: 70%" name="content"></textarea>
-		
-				<label for="content" class="error" style="color:red"></label>
-		  </div>
+<!-- 서머노트 시작 -->			
+				<textarea name="content" id="summernote" value=""></textarea>
+				<label style="color:red" id="error"></label>  
+<!-- 서머노트 끝 -->				
+		  	</div>
 		</div>
-<!-- 문의 내용 끝  -->		
+<!-- 문의 내용 끝  -->
 <!-- 개인정보 수집동의 체크란 시작-->
 	<div class="form-group">
 		<label class="col-sm-2 control-label">개인정보 수집 동의</label>

@@ -1,12 +1,8 @@
 package com.kosmo.lingopos;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.net.InetAddress;
 import java.util.Map;
-
-import org.apache.tiles.template.GetAsStringModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -16,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * Handles requests for the application home page.
@@ -26,44 +23,87 @@ public class LingoController {
 	private static final Logger logger = LoggerFactory.getLogger(LingoController.class);
 	
 	//DB연결시 한글 깨지는거 방지
-	//창선 사진 등록 삭제 - 가게 전경 Controller
+	//창선 사진 등록 삭제 - 서머노트 Controller
+	@ResponseBody
+	@RequestMapping(value="/question/Image.Lingo",method=RequestMethod.POST)
+	public String summernoteUpload(MultipartHttpServletRequest mhsr) throws Exception{
+		//1]서버의 물리적 경로 얻기
+		String phicalPath=mhsr.getServletContext().getRealPath("/Images/summernoteImages");
+		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
+		//MultipartFile객체 얻기
+		MultipartFile upload= mhsr.getFile("upload");
+		//2]File객체 생성
+		//2-1] 파일 중복시 이름 변경
+		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+		File file = new File(phicalPath+File.separator+newFilename);
+		//3]업로드 처리		
+		upload.transferTo(file);
+		//4]서머노트에 다시 보내줄 데이타 저장
+		String localIP = InetAddress.getLocalHost().getHostAddress();
+		//5]DB 연결시 리퀘스트 영역에 새로운 파일명 저장 - 데이타베이스에 저장할 파일명
+		mhsr.setAttribute("realImage", newFilename);
+		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
+		//6]서머노트에 데이타 전달
+		return "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernoteImages/" + newFilename;
+	}
+	/*
+	 * 삭제 추가 필요(C:\CCS\WorkSpace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\LingoPOS\Images\summernoteImages\store7.jpg)
+	 */
+	@ResponseBody
+	@RequestMapping(value="/question/Image.Lingo",method=RequestMethod.GET)
+	public void summernoteDelete(@RequestParam String removeFile) throws Exception{
+		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\summernoteImages"+File.separator+removeFile);
+		remove.delete();
+	}
+
+	//창선 사진 등록  - 가게 전경 Controller
 	@ResponseBody
 	@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
-	public String storeUpload(@RequestParam MultipartFile file) throws Exception{
+	public String storeUpload(MultipartHttpServletRequest mhsr) throws Exception{
 		//1]서버의 물리적 경로 얻기
-		String phiscalPath = "C:\\Users\\choi\\Desktop\\서버저장용 사진\\가게";
-		//2]File객체 생성	
+		String phicalPath=mhsr.getServletContext().getRealPath("/Images/store");
+		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
+		//MultipartFile객체 얻기
+		MultipartFile upload= mhsr.getFile("file");
+		//2]File객체 생성
 		//2-1] 파일 중복시 이름 변경
-		String newFilename=FileUpDownUtils.getNewFileName(phiscalPath, file.getOriginalFilename());
-		File saveFile = new File(phiscalPath+File.separator+newFilename);
-		//3]업로드 처리
-		file.transferTo(saveFile);
+		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+		File file = new File(phicalPath+File.separator+newFilename);
+		//3]업로드 처리		
+		upload.transferTo(file);
+		//4]DB에 저장할 서버에 저장된 파일명 
 		return newFilename;
 	}
+	//창선 사진 삭제  - 가게 전경 Controller
 	@ResponseBody
 	@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.GET)
 	public void storeDelete(@RequestParam String removeFile) throws Exception{
-		File remove = new File("C:\\Users\\choi\\Desktop\\서버저장용 사진\\가게"+File.separator+removeFile);
+		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\store"+File.separator+removeFile);
 		remove.delete();
 	}
-	//창선 사진 등록 삭제 - 메뉴 사진 Controller
+	//창선 사진 등록 - 메뉴 사진 Controller
 	@ResponseBody
 	@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST)
-	public String MenuUpload(@RequestParam MultipartFile file) throws Exception{
+	public String MenuUpload(MultipartHttpServletRequest mhsr) throws Exception{
 		//1]서버의 물리적 경로 얻기
-		String phiscalPath = "C:\\Users\\choi\\Desktop\\서버저장용 사진\\메뉴";
-		//2]File객체 생성	
+		String phicalPath=mhsr.getServletContext().getRealPath("/Images/menu");
+		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
+		//MultipartFile객체 얻기
+		MultipartFile upload= mhsr.getFile("file");
+		//2]File객체 생성
 		//2-1] 파일 중복시 이름 변경
-		String newFilename=FileUpDownUtils.getNewFileName(phiscalPath, file.getOriginalFilename());
-		File saveFile = new File(phiscalPath+File.separator+newFilename);
-		//3]업로드 처리
-		file.transferTo(saveFile);
+		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+		File file = new File(phicalPath+File.separator+newFilename);
+		//3]업로드 처리		
+		upload.transferTo(file);
+		//4]DB에 저장할 서버에 저장된 파일명 
 		return newFilename;
 	}
+	//창선 사진 삭제 - 메뉴 사진 Controller
 	@ResponseBody
 	@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.GET)
 	public void MenuDelete(@RequestParam String removeFile) throws Exception{
-		File remove = new File("C:\\Users\\choi\\Desktop\\서버저장용 사진\\메뉴"+File.separator+removeFile);
+		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\menu"+File.separator+removeFile);
 		remove.delete();
 	}
 	
@@ -113,8 +153,14 @@ public class LingoController {
 	public String qnaEdit() throws Exception{
 		return "question/QNAEdit.tiles";
 	}
-	@RequestMapping("/Question/QNAList.Lingo")
-	public String qnaList() throws Exception{
+	@RequestMapping(value = "/Question/QNAList.Lingo",method=RequestMethod.POST)
+	public String qnaList(@RequestParam MultipartFile files) throws Exception{
+		String phiscalPath = "C:\\Users\\choi\\Desktop\\서버저장용 사진\\서머노트";
+		String newFilename=FileUpDownUtils.getNewFileName(phiscalPath, files.getOriginalFilename());
+		File saveFile = new File(phiscalPath+File.separator+newFilename);
+		files.transferTo(saveFile);
+		System.out.println(newFilename);
+		System.out.println(saveFile);
 		return "question/QNAList.tiles";
 	}
 	@RequestMapping("/Question/QNAView.Lingo")

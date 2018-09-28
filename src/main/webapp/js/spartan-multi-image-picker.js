@@ -257,8 +257,8 @@
                 success: function(data){
                 	//실제 저장된 파일명 목록에서 삭제
                 	indexRealFile.splice(index,1)
-                	console.log(indexArray);
-                	console.log(indexRealFile);
+                	console.log(indexArray+"삭제 후 업로드되었던 모든 이미지");
+                	console.log(indexRealFile+"삭제 후 서버에 저장된 이미지");
                 },
                 error: function(data){
                 	
