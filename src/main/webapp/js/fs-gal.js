@@ -1,3 +1,5 @@
+/*메뉴 사진 슬라이드 js*/	
+
 /**
  * Author: Tim Vervoort - info@timvervoort.com
  * Licence: Free for commercial use

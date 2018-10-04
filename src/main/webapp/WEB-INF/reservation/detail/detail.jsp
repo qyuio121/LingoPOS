@@ -81,10 +81,11 @@ $(function(){
 	<div class="tabGroup tabGroup2">
 		<ul class="swichtab-controller">
 	        <li data-swichtab="controller"><a href="#tab1">가게정보</a></li>
-	        <li data-swichtab="controller"><a href="#tab2">메뉴</a></li>
-	        <li data-swichtab="controller"><a href="#tab3">리뷰</a></li>
+	        <li data-swichtab="controller"><a href="#tab2">가게위치</a></li>
+	        <li data-swichtab="controller"><a href="#tab3">메뉴</a></li>
+	        <li data-swichtab="controller"><a href="#tab4">리뷰</a></li>
 	        <!-- DB연결 시 예약하기 예약불가 구분해서 표시하기!! -->
-	        <li data-swichtab="controller" class="disabled"><a href="#tab4">예약하기</a></li>
+	        <li data-swichtab="controller" class="disabled"><a href="#tab5">예약하기</a></li>
 	    </ul>
 <!-- 탭 바 끝-->
 <!-- 탭 바 내 내용 시작 -->
@@ -95,7 +96,7 @@ $(function(){
 				<table class="table ">
 					<thead>
 						<tr class="tsTitles">
-							<th class="col-md-3"><h3>${name}<small>${foodselect1} / ${foodselect2}</small></h3></th>
+							<th class="col-md-3"><h3>${name}<small>${foodselect1}</small></h3></th>
 						</tr>
 					</thead>
 					<tbody class="tsGroup">
@@ -108,8 +109,15 @@ $(function(){
 			</div>	
 		</div>
 <!-- 가게정보 끝 -->		
+<!-- 가게위치 시작 -->	
+<div id="tab3" class="swichtab-panel" data-swichtab="target">
+<!-- DB연결시 MAP API사용 현재 대기 중 -->
+	<div>DB연결시 MAP API사용 현재 대기 중</div>
+<!-- DB연결시 MAP API사용 현재 대기 중 -->
+</div>
+<!-- 가게위치 끝 -->	
 <!-- 메뉴갤러리 시작 -->	
-		<div id="tab2" class="swichtab-panel" data-swichtab="target">
+		<div id="tab3" class="swichtab-panel" data-swichtab="target">
 			<c:forEach items="${hidden1}" var="hiddenFile1">
 				<img class="fs-gal" src="${hiddenFile1}" data-url="${hiddenFile1}" alt="DB연결시 제목 나올자리" title="DB연결시 제목 나올자리" />
 			</c:forEach>
@@ -123,7 +131,7 @@ $(function(){
 		</div>
 <!-- 메뉴갤러리 끝 -->		
 <!-- 리뷰 시작 -->	
-		<div id="tab3" class="swichtab-panel" data-swichtab="target">
+		<div id="tab4" class="swichtab-panel" data-swichtab="target">
 			<table class="table table-bordered">
 				<tr style="font-weight:bold; background-color: #EAEDED">
 					<th style="width: 10%; text-align: center">평점</th>
@@ -141,7 +149,7 @@ $(function(){
 		</div>
 <!-- 리뷰 끝 -->			
 <!-- 예약하기 시작 -->
-		<div id="tab4" class="swichtab-panel" data-swichtab="target">
+		<div id="tab5" class="swichtab-panel" data-swichtab="target">
 		</div>
 <!-- 예약하기 끝 -->		
 	</div>

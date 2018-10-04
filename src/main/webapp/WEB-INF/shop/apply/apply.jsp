@@ -32,7 +32,6 @@ $(function(){
 			addr2:"required",
 			addr3:"required",
 			foodselect1:"required",
-			foodselect2:"required",
 			teltext1:"required",
 			teltext2:"required",
 			coba:"required",
@@ -46,7 +45,6 @@ $(function(){
 			addr2:"주소를 입력하세요.",
 			addr3:"상세주소를 입력하세요.",
 			foodselect1:"음식분류1를 선택하세요.",
-			foodselect2:"음식분류2를 선택하세요.",
 			teltext1:"번호 앞자리를 입력하세요.",
 			teltext2:"번호  뒷자리를 입력하세요.",
 			hiddenFile:"사진을 업로드하세요.",
@@ -138,8 +136,8 @@ $(function(){
 	});
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: false, beforeShow:'종료시간을 입력하세요',minutesInterval:30,now: "1:00"});
-	$('.timepicker-two').wickedpicker({twentyFour: false, beforeShow:'종료시간을 입력하세요',minutesInterval:30,now: "1:00"});
+	$('.timepicker').wickedpicker({twentyFour: false,minutesInterval:30,now: "1:00"});
+	$('.timepicker-two').wickedpicker({twentyFour: false,minutesInterval:30,now: "1:00"});
 	
 });
 </script>
@@ -178,8 +176,8 @@ $(function(){
 <!--가입 가게 이름 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">가게명</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" placeholder="가게명을 입력해주세요"  style="width: 40%"  name="name" id="name">
+			<div class="col-sm-3">
+				<input type="text" class="form-control" placeholder="가게명을 입력해주세요"   name="name" id="name">
 			    
 			    <label for="name" class="error" style="color:red"></label>
 			</div>
@@ -265,13 +263,6 @@ $(function(){
 		            <option value="중식">중식</option>
 		            <option value="일식">일식</option>
 	      		</select>
-	      		<select class="form-control col-sm-4" style="width: 20%" id="foodselect2" name="foodselect2" >
-		      		<option value="" >음식분류선택2</option>
-		            <option value="면류">면류</option>
-		            <option value="볶음류">볶음류</option>
-		            <option value="구이류">구이류</option>
-		            <option value="반찬">반찬</option>
-	      	</select>
 	      	</div>
 	    	<label  class="col-sm-2 control-label"></label>
 	    	<div class="col-sm-10">

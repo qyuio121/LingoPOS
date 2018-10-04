@@ -22,11 +22,9 @@ $(function(){
 		rules:{
 			select1:"required",
 			title:"required",
-			check:"required"
 		},messages:{
-			select1:"상담유형 선택하세요",
+			select1:"게시글유형 선택하세요",
 			title:"제목을 입력하세요",
-			check:"개인정보 수집 동의를 체크하세요"
 		}});
 		
 	//문의등록 시  문의리스트로	
@@ -35,7 +33,7 @@ $(function(){
 			$('#frm').submit();
 		}
 		else if($("#summernote").val() == "")
-			$("#error").html("문의내용을 입력하세요");	
+			$("#error").html("내용을 입력하세요");	
 	})
 	
 	//서머노트  유효성검사 후 재 작성시 유효성 검사 끄기
@@ -85,7 +83,7 @@ $(function(){
 	    $.ajax({
 			data: form_data,
 		    type: "POST",
-		    url: '/lingopos/question/Image.Lingo',
+		    url: '/lingopos/free/Image.Lingo',
 		    cache: false,
 		    contentType: false,
 		    enctype: 'multipart/form-data',
@@ -105,7 +103,7 @@ $(function(){
 		  $.ajax({
 	        data: fileRemove,
 	        type: "GET",
-	        url: '/lingopos/question/Image.Lingo',
+	        url: '/lingopos/free/Image.Lingo',
 	        cache: false,
 	        contentType: false,
 	        processData: false,
@@ -124,28 +122,27 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 등록</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />자유게시판<small>게시판 등록</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 폼 시작 -->
  	<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" action='<c:url value="/Question/QNAList.Lingo"/>'>
-<!-- 상담분류 시작 -->	
+<!-- 게시글유형분류 시작 -->	
 		<div class="form-group">
-			<label  class="col-sm-2 control-label">상담분류</label>
+			<label  class="col-sm-2 control-label">게시글유형분류</label>
 			<div class="col-sm-3">
 				<select class="form-control col-sm-4" id="select1" name="select1">
-					<option value="" >상담유형선택</option>
-				     <option value="uni">회원정보</option>
-				     <option value="high">주문/결제</option>
-				     <option value="middle">취소/환불</option>
-				     <option value="ele">배송</option>
+					<option value="" >게시글유형선택</option>
+				     <option value="customer">customer</option>
+				     <option value="owner">owner</option>
+				     <option value="chat">chat</option>
 				</select>
 				<label for="select1" class="error" style="color:red"></label>
 			</div>
 		</div>  
-<!-- 상담분류   끝 -->
-<!--문의 제목 시작 -->
+<!-- 게시글유형분류   끝 -->
+<!-- 제목 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">제목</label>
 			<div class="col-sm-7">
@@ -154,7 +151,7 @@ $(function(){
 				<label for="title" class="error" style="color:red"></label>
   			</div>
 		</div>
-<!-- 문의 제목   끝-->
+<!-- 제목   끝-->
 <!-- 문의 내용 시작  -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">내용</label>
@@ -166,26 +163,15 @@ $(function(){
 		  	</div>
 		</div>
 <!-- 문의 내용 끝  -->
-<!-- 개인정보 수집동의 체크란 시작-->
-	<div class="form-group">
-		<label class="col-sm-2 control-label">개인정보 수집 동의</label>
-		<div class="col-sm-10">
-		 	<input type="checkbox" name="check">동의합니다.
-		 	<h6><small>입력하시는 문의 정보는 문의 접수 및 고객 불만 해결을 위해 수집하여 5년간 보관합니다.</small></h6>
-			<h6><small>(문의 종류에 따라 증빙서류 및 기타 정보가 수집될 수 있음)</small></h6>
-	 
-	 		<label for="check" class="error" style="color:red"></label>
-	 	</div>
-	</div>
-<!-- 개인정보 수집동의 체크란 시작 끝 -->
-<!-- 버튼 3개 시작 - 문의하기 / 취소  -->
+
+<!-- 버튼 2개 시작 - 문의하기 / 취소  -->
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10" >
- 			<button type="button" value="button타입" class="btn btn-primary col-sm-offset-3" id="confirm">문의하기</button><!-- 문의하기 -->     
-			<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button><!-- 취소 -->     
+ 			<button type="button" value="button타입" class="btn btn-primary col-sm-offset-3" id="confirm">등록하기</button>     
+			<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button>     
   		</div>
 	</div>
-<!-- 버튼 3개 끝 - 문의하기 / 취소  -->
+<!-- 버튼 2개 끝 - 문의하기 / 취소  -->
 </form>
 <!-- 폼 시작 -->    
 <!-- 내용 끝 -->   

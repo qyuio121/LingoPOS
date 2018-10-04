@@ -54,9 +54,19 @@
 						<li><a href="<c:url value='/Question/QNA.Lingo'/>">1:1 문의</a></li>
 						<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 						<li class="divider"></li>
+<!-- 자유게시판 추가 시작-->						
+						<li><a href="<c:url value='/Free/FreeWrite.Lingo'/>">FREE wirte</a></li>
+						<li><a href="<c:url value='/Free/FreeEdit.Lingo'/>">FREE edit</a></li>
+						<li><a href="<c:url value='/Free/FreeView.Lingo'/>">FREE view</a></li>
+<!-- 자유게시판 추가 끝-->			
+<!-- 자유게시판 추가 시작-->						
+						<li><a href="<c:url value='/Notice/NoticeWrite.Lingo'/>">Notice wirte</a></li>
+						<li><a href="<c:url value='/Notice/NoticeEdit.Lingo'/>">Notice edit</a></li>
+						<li><a href="<c:url value='/Notice/NoticeView.Lingo'/>">Notice view</a></li>
+<!-- 자유게시판 추가 끝-->			
 						<li><a href="<c:url value='/Question/QNAList.Lingo'/>">1:1 list</a></li>
-				<li><a href="<c:url value='/Question/QNAView.Lingo'/>">1:1 view</a></li>
-				<li><a href="<c:url value='/Question/QNAEdit.Lingo'/>">1:1 edit</a></li>
+						<li><a href="<c:url value='/Question/QNAView.Lingo'/>">1:1 view</a></li>
+						<li><a href="<c:url value='/Question/QNAEdit.Lingo'/>">1:1 edit</a></li>
 						<li><a href="<c:url value='/Reservation/Detail.Lingo'/>">상세보기</a></li>
 						<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
 						<li><a href="<c:url value='/Login/Update/Update.Lingo'/>">회원수정</a></li>
@@ -76,6 +86,16 @@
 				<li><a href="<c:url value='/Question/QNA.Lingo'/>">1:1 문의</a></li>
 				<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 				<li class="divider"></li>
+<!-- 자유게시판 추가 시작-->						
+				<li><a href="<c:url value='/Free/FreeWrite.Lingo'/>">FREE wirte</a></li>
+				<li><a href="<c:url value='/Free/FreeEdit.Lingo'/>">FREE edit</a></li>
+				<li><a href="<c:url value='/Free/FreeView.Lingo'/>">FREE view</a></li>
+<!-- 자유게시판 추가 끝-->		
+<!-- 자유게시판 추가 시작-->						
+				<li><a href="<c:url value='/Notice/NoticeWrite.Lingo'/>">Notice wirte</a></li>
+				<li><a href="<c:url value='/Notice/NoticeEdit.Lingo'/>">Notice edit</a></li>
+				<li><a href="<c:url value='/Notice/NoticeView.Lingo'/>">Notice view</a></li>
+<!-- 자유게시판 추가 끝-->					
 				<li><a href="<c:url value='/Question/QNAList.Lingo'/>">1:1 list</a></li>
 				<li><a href="<c:url value='/Question/QNAView.Lingo'/>">1:1 view</a></li>
 				<li><a href="<c:url value='/Question/QNAEdit.Lingo'/>">1:1 edit</a></li>

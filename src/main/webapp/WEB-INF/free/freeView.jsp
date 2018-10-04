@@ -18,11 +18,11 @@ $(function(){
 	//해당 글번호에 대한 코멘트 목록을 뿌려주는 함수 
 	var displayComments	 = function(data){
 		console.log(JSON.stringify(data));
-		var commentString="<h3 style='fontColor:blue'>1:1문의 답변 </h3>";
+		var commentString="<h3 style='fontColor:blue'>댓글란 </h3>";
 		commentString+='<table class="table table-bordered">';
-		commentString+='<tr><th width="15%">작성자</th><th width="50%">문의 답변</th><th width="20%">답변일</th><th>비고</th></tr>';
+		commentString+='<tr><th width="15%">작성자</th><th width="50%">댓글</th><th width="20%">답변일</th><th>비고</th></tr>';
 		if(data.length==0){
-			commentString+="<tr><td colspan='4'>등록된 문의 답변이 없어요</td></tr>";
+			commentString+="<tr><td colspan='4'>등록된 댓글이 없어요</td></tr>";
 		}
 		$.each(data,function(index,comment){			
 			commentString+='<tr><td>'+comment['NAME']+'</td>';
@@ -113,7 +113,7 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 상세보기</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />자유게시판<small>게시글 보기</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
@@ -138,31 +138,27 @@ $(function(){
 <!-- 상세보기 내용 예시 시작  -->
 	<div class="row">
 		<table class="col-sm-10 table table-striped table-bordered ">
-			
-			
-			<!-- 
 			<tr>
-				<th>문의제목 : <small>안되요 안되요 안되요</small> <c:forEach begin="1" end="191">&nbsp</c:forEach>문의유형 : <small>나의정보관리/회원</small></th>
+				<th>유형 : <small>chat</small></th>
 			</tr>
 			<tr>
-				<th>문의일 : <small>2018/09/10</small> <c:forEach begin="1" end="191">&nbsp</c:forEach> 답변여부 : <small>미완료</small></th>
+				<th>작성일 : <small>2018/09/10</small></th>
 			</tr>
 			<tr>
-				<th>문의내역</th>
+				<th>내용</th>
 			</tr>
 			<tr>
 				<td>
-					연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
+					연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>
 				</td>
 			</tr>
-			 -->
 		</table>
 	</div>	
 <!-- 상세보기 내용 예시 끝  -->
 <!-- 상세보기 끝 -->
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
 	<div class="row">
-		<h3>관리자 답변 입력 폼</h3>
+		<h3>댓글 입력 폼</h3>
 		<form class="form-inline" id="frm" >
 			<input type="hidden" name="no" value="${record.no}" />
 			<!-- 수정 및 삭제용 파라미터 -->
