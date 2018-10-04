@@ -20,10 +20,8 @@ $(function(){
 	//유효성검사
 	$('#frm').validate({
 		rules:{
-			select1:"required",
 			title:"required",
 		},messages:{
-			select1:"게시글유형 선택하세요",
 			title:"제목을 입력하세요",
 		}});
 		
@@ -128,20 +126,6 @@ $(function(){
 <!-- 바디 헤더 끝-->
 <!-- 폼 시작 -->
  	<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" action='<c:url value="/Question/QNAList.Lingo"/>'>
-<!-- 게시글유형분류 시작 -->	
-		<div class="form-group">
-			<label  class="col-sm-2 control-label">게시글유형분류</label>
-			<div class="col-sm-3">
-				<select class="form-control col-sm-4" id="select1" name="select1">
-					<option value="" >게시글유형선택</option>
-				     <option value="customer">customer</option>
-				     <option value="owner">owner</option>
-				     <option value="chat">chat</option>
-				</select>
-				<label for="select1" class="error" style="color:red"></label>
-			</div>
-		</div>  
-<!-- 게시글유형분류   끝 -->
 <!-- 제목 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">제목</label>

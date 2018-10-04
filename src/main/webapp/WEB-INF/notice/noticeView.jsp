@@ -15,43 +15,29 @@ $(function(){
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
-<!-- 상세보기 시작 -->
-<!-- 상세보기 내용  DB연결 전까지 대기 시작 -->
-				<!-- 
-				<div>
-					<table class="table t table-striped table-bordered">
-						<tr>
-							<th>문의유형 : <small>${record.type}</small></th>
-						</tr>
-						<tr>
-							<th>문의일 : <small>${record.date}</small> <c:forEach begin="1" end="191">&nbsp</c:forEach> 답변여부 : <small>${record.answer}</small></th>                                     </td>
-						</tr>
-						<tr>
-							<td>${record.content}</td>
-						</tr>
-						</table>
-				</div>
-				 -->
-<!-- 상세보기 내용  DB연결 전까지 대기 끝 -->
 <!-- 상세보기 내용 예시 시작  -->
-	<div class="row">
-		<table class="col-sm-10 table table-striped table-bordered ">
-			<tr>
-				<th>작성일 : <small>2018/09/10</small></th>
+<!-- 상세보기 내용 예시 시작  -->
+	<div class="row" >
+		<table class="col-sm-10 table table-striped table-responsive ">
+			<tr class="tsTitles">
+				<th class="col-xs-9">공지제목 : <small>공지합니다</small></th><th>조회수 : <small>1</small></th>
 			</tr>
-			<tr>
-				<th>내용</th>
+			<tr class="tsTitles">		
+				<th>글쓴이 : <small>김남섭</small></th><th>작성일 : <small>2018/09/10</small></th>
 			</tr>
-			<tr>
-				<td>
-					연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>연결용한줄<br>
-				</td>
-			</tr>
+			<tbody class="tsGroup">
+				<tr>
+					<th colspan="2">공지내용</th>
+				</tr>
+				<tr>
+					<td>
+						연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>	
 <!-- 상세보기 내용 예시 끝  -->
-<!-- 상세보기 끝 -->
-
 <!-- 버튼 3개 시작 -->
 <!-- 버튼 3개 시작  DB연결 전까지 대기 시작 -->
 	<!-- 

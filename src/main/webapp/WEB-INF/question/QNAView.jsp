@@ -117,51 +117,30 @@ $(function(){
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
-<!-- 상세보기 시작 -->
-<!-- 상세보기 내용  DB연결 전까지 대기 시작 -->
-				<!-- 
-				<div>
-					<table class="table t table-striped table-bordered">
-						<tr>
-							<th>문의유형 : <small>${record.type}</small></th>
-						</tr>
-						<tr>
-							<th>문의일 : <small>${record.date}</small> <c:forEach begin="1" end="191">&nbsp</c:forEach> 답변여부 : <small>${record.answer}</small></th>                                     </td>
-						</tr>
-						<tr>
-							<td>${record.content}</td>
-						</tr>
-						</table>
-				</div>
-				 -->
-<!-- 상세보기 내용  DB연결 전까지 대기 끝 -->
 <!-- 상세보기 내용 예시 시작  -->
-	<div class="row">
-		<table class="col-sm-10 table table-striped table-bordered ">
-			
-			
-			<!-- 
-			<tr>
-				<th>문의제목 : <small>안되요 안되요 안되요</small> <c:forEach begin="1" end="191">&nbsp</c:forEach>문의유형 : <small>나의정보관리/회원</small></th>
+	<div class="row" >
+		<table class="col-sm-10 table table-striped table-responsive ">
+			<tr class="tsTitles">
+				<th class="col-xs-9">문의제목 : <small>안되요 안되요 안되요</small></th><th>문의유형 : <small>나의정보관리/회원</small></th>
 			</tr>
-			<tr>
-				<th>문의일 : <small>2018/09/10</small> <c:forEach begin="1" end="191">&nbsp</c:forEach> 답변여부 : <small>미완료</small></th>
+			<tr class="tsTitles">		
+				<th>문의일 : <small>2018/09/10</small></th><th>답변여부 : <small>미완료</small></th>
 			</tr>
-			<tr>
-				<th>문의내역</th>
-			</tr>
-			<tr>
-				<td>
-					연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
-				</td>
-			</tr>
-			 -->
+			<tbody class="tsGroup">
+				<tr>
+					<th colspan="2">문의내역</th>
+				</tr>
+				<tr>
+					<td>
+						연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>	
 <!-- 상세보기 내용 예시 끝  -->
-<!-- 상세보기 끝 -->
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
-	<div class="row">
+	<div class="row" >
 		<h3>관리자 답변 입력 폼</h3>
 		<form class="form-inline" id="frm" >
 			<input type="hidden" name="no" value="${record.no}" />
