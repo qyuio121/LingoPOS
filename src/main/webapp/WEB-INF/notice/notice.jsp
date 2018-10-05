@@ -59,9 +59,6 @@
 					</ul>
 				</nav>
 			</div>
-<<<<<<< HEAD
+
 	</div>
-=======
-	</div>
-	
->>>>>>> branch 'master' of https://github.com/qyuio121/LingoPOS.git
+
