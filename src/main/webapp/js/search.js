@@ -104,8 +104,9 @@ function getRestaurant(x, y) {
 	    		    	var overlay = new daum.maps.CustomOverlay({
 			    			   content : ('<div class="container">' + 
 				   	    	              '    <div class="row">' + 
-				   	    	              '        <div class="title">' + 
-				   	    	              '            <a href="'+value.place_url+'" class="link">'+value.place_name +'</a>'+
+				   	    	              '        <div class="title">' +
+				   	    	              '            <div class ="titleText" style="width:250px">'+
+				   	    	              '            <a href="'+value.place_url+'" class="link">'+value.place_name +'</a></div>'+
 				   	    	              '            <div class="close btnOverlayClose" data-overlay-index="'+index+'" title="닫기"></div>' + 
 				   	    	              '        </div>' + 
 				   	    	              '        <div class="body">' + 
@@ -169,7 +170,7 @@ function searchTableList(result){
 					'<td>'+						
 						'<table class="table" style="border-right:0.1px solid #888;border-bottom:0.1px solid #E5E2E5;height:70px" >'+
 								"<tr style='height:20px'>"+
-									"<td class='titleText' colspan='5' style='font-weight: bold;font-size:15px;display:inline-block'>" +
+									"<td class='titleText' style='font-weight: bold;font-size:15px;display:inline-block;width:250px'>" +
 										"<a href='"+value.place_url+"'>"+value.place_name +"</a>" +
 									"</td>"+
 								"</tr>"+
@@ -177,7 +178,7 @@ function searchTableList(result){
 									"<td>" +
 										"<div class='body' style=''>" +
 											"<div class='img'>" +
-						   	    	        "	<img src='/MinJoungWooWebProJ/Images/marker/userLogo.png' width='73' height='70' style='width:73px;height:70px'>"+
+						   	    	        "	<img src='/MinJoungWooWebProJ/Images/marker/userLogo.png' style='width:73px;height:70px'>"+
 											"</div>" +
 											"<div  >" +
 												"<div class='searchLayout' >도로명주소 : "+value.address_name+"</div><br/>"+

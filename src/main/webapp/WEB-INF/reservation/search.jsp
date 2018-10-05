@@ -17,10 +17,10 @@
 	    .row .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
 	    .row:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
 	    .row .link {color: #5085BB;}
-	    .searchLayout{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 12px}
-	    .titleText{overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 200px; height: 35px;}
+	    .searchLayout{overflow: hidden;text-overflow: ellipsis;white-space: nowrap;font-size: 12px; }
+	    .titleText{overflow: hidden; text-overflow: ellipsis; white-space: nowrap; height: 35px;}
 </style>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top:70px;margin-top:70px">
 	<div class="bg_wrap">
 		<div id="map" style="width:100%;height:600px;position:relative;overflow:hidden;"></div>
 	</div>
