@@ -7,9 +7,9 @@
   <typeAliases>
   	<typeAlias alias="commentDTO" type="com.kosmo.onememo.service.CommentDTO"/>
   </typeAliases>
-   -->
-   <!--
+     -->
+   
   <mappers>
-    <mapper resource="mybatis/ReplyBBS_mybatis.xml"/>
-  </mappers> -->
+    <mapper resource="mybatis/Lingopos_mybatis.xml"/>
+  </mappers>
 </configuration>

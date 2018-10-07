@@ -4,6 +4,248 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  <!-- namespace는 설정파일의 완전한 경로를 적어준다 -->
  <!-- ibatis와 다르게 id값에 . 사용 불가 -->
-<mapper namespace="mybatis.ReplyBBS_mybatis">
+  <!-- 기본 테이블들에 대한 crud -->
+  <!-- 카운트 늘리는 것은 트리거로 작업할 예정 -->
+<mapper namespace="mybatis.Lingopos_mybatis">
+
+ <insert id="LingoAdminInsert" parameterType="java.util.Map">
+ 	insert into admin(adminnick,id) value(#(adminnick),#(id))
+ </insert>
+ <update id="LingoAdminUpdate" parameterType="java.util.Map">
+ 	update admin set adminnick = #(adminnick) where id=#(id)
+ </update>
+ <delete id="LingoAdminDelete" parameterType="java.util.Map">
+ 	delete admin where id=#(id)
+ </delete>
  
+ <insert id="LingoBlackInsert" parameterType="java.util.Map">
+ 	insert into blacklist(storeno,id,reason,added) value(#(storeno),#(id),#(reason),false)
+ </insert>
+ <update id="LingoBlackUpdate" parameterType="java.util.Map">
+ 	update blacklist set added = true where id=#(id)
+ </update>
+ <delete id="LingoBlackDelete" parameterType="java.util.Map">
+ 	delete blacklist where id=#(id)
+ </delete>
+ <select id="LingoBlackSelect" parameterType="java.util.Map" resultType="">
+ 	select id,reason,blackdate,added from blacklist where storeno = #(storeno) 
+ </select>
+ <select id="LingoBlackSelectAdmin" parameterType="java.util.Map" resultType="">
+ 	select * from blacklist where added = false
+ </select>
+ 
+ <insert id="LingoCommentInsert" parameterType="java.util.Map">
+ 	insert into comment(comment,id,freeno) value(#(comment),#(id),#(freeno))
+ </insert>
+ <delete id="LingoCommentDelete" parameterType="java.util.Map">
+ 	delete comment where commentno=#(commentno)
+ </delete>
+ <select id="LingoCommentSelect" parameterType="java.util.Map" resultType="">
+ 	select comment,id,commentno from comment where freeno = #(freeno) 
+ </select>
+ 
+ <insert id="LingoFoodimgInsert" parameterType="java.util.Map">
+ 	insert into foodimg(img,storeno,name,price) value(#(img),#(storeno),#(name),#(price))
+ </insert>
+ <delete id="LingoFoodimgDelete" parameterType="java.util.Map">
+ 	delete foodimg where imgno=#(imgno)
+ </delete>
+ <select id="LingoFoodimgSelect" parameterType="java.util.Map" resultType="">
+ 	select img,imgno,name,price,count from foodimg where storeno = #(storeno) 
+ </select>
+ 
+ <insert id="LingoFreeInsert" parameterType="java.util.Map">
+ 	insert into free(title,content,id) value(#(title),#(content),#(id))
+ </insert>
+ <update id="LingoFreeUpdate" parameterType="java.util.Map">
+ 	update free set title = #(title),content = #(content) where freeno=#(freeno)
+ </update>
+ <delete id="LingoFreeDelete" parameterType="java.util.Map">
+ 	delete free where freeno=#(freeno)
+ </delete>
+ <select id="LingoFreeSelectOne" parameterType="java.util.Map" resultType="">
+ 	select * from free where freeno = #(freeno) 
+ </select>
+ <select id="LingoFreeSelectAll" resultType="">
+ 	select freeno,title,id,count from free 
+ </select>
+ 
+ <insert id="LingoLingoasInsert" parameterType="java.util.Map">
+ 	insert into lingoas(reason,ispaid,asprice,posno) value(#(reason),#(ispaid),#(asprice),#(posno))
+ </insert>
+ <delete id="LingoLingoasDelete" parameterType="java.util.Map">
+ 	delete lingoas where asno=#(asno)
+ </delete>
+ <select id="LingoLingoasSelect" parameterType="java.util.Map" resultType="">
+ 	select * from lingoas
+ </select>
+ 
+ <insert id="LingoLingoposInsert">
+ 	insert into lingopos(outdate) value(null)
+ </insert>
+ <update id="LingoLingoposUpdate" parameterType="java.util.Map">
+ 	update lingopos set outdate = defalut from posno = #(posno)
+ </update>
+ <delete id="LingoLingoposDelete" parameterType="java.util.Map">
+ 	delete lingopos where posno=#(posno)
+ </delete>
+ <select id="LingoLingoposSelect" parameterType="java.util.Map" resultType="">
+ 	select * from lingopos
+ </select>
+ 
+ <insert id="LingoMapInsert" parameterType="java.util.Map">
+ 	insert into map(x,y,storeno) value(#(x),#(y),#(storeno))
+ </insert>
+ <update id="LingoMapUpdate" parameterType="java.util.Map">
+ 	update map set x = #(x),y = #(y) from storeno = #(storeno)
+ </update>
+ <delete id="LingoMapDelete" parameterType="java.util.Map">
+ 	delete map where storeno=#(storeno)
+ </delete>
+ 
+ <insert id="LingoNoticeInsert" parameterType="java.util.Map">
+ 	insert into notice(title,content,adminno) value(#(title),#(content),#(adminno))
+ </insert>
+ <update id="LingoNoticeUpdate" parameterType="java.util.Map">
+ 	update notice set title = #(title),content = #(content) where noticeno=#(noticeno)
+ </update>
+ <delete id="LingoNoticeDelete" parameterType="java.util.Map">
+ 	delete notice where noticeno=#(noticeno)
+ </delete>
+ <select id="LingoNoticeSelectOne" parameterType="java.util.Map" resultType="">
+ 	select n.*,adminnick from notice n join admin a on n.adminno=a.adminno where noticeno = #(noticeno) 
+ </select>
+ <select id="LingoNoticeSelectAll" resultType="">
+ 	select noticeno,title,adminnick,count from notice n join admin a on n.adminno=a.adminno
+ </select>
+ 
+ <insert id="LingoOwnerInsert" parameterType="java.util.Map">
+ 	insert into owner value(#(ownerno),#(storename),#(storedoc),#(id),false)
+ </insert>
+ <update id="LingoOwnerUpdate" parameterType="java.util.Map">
+ 	update owner set isallowed = true where ownerno=#(ownerno)
+ </update>
+ <delete id="LingoOwnerDelete" parameterType="java.util.Map">
+ 	delete owner where ownerno=#(ownerno)
+ </delete>
+ <select id="LingoOwnerSelectAdmin" parameterType="java.util.Map" resultType="">
+ 	select * from owner where isallowed = false
+ </select>
+ 
+ <insert id="LingoQnaInsert" parameterType="java.util.Map">
+ 	insert into qna(kind,title,content,id) value(#(kind),#(title),#(content),#(id))
+ </insert>
+ <delete id="LingoQnaDelete" parameterType="java.util.Map">
+ 	delete qna where qnano=#(qnano)
+ </delete>
+ <select id="LingoQnaSelectOne" parameterType="java.util.Map" resultType="">
+ 	select * from qna where qnano = #(qnano) 
+ </select>
+ <select id="LingoQnaSelectAdmin" resultType="">
+ 	select qnano,title,postdate,id from qna q left join reply r on q.qnano = r.qnano
+ 	where replyno = null
+ </select>
+ <select id="LingoQnaSelectUser" parameterType="java.util.Map" resultType="">
+ 	select qnano,title,postdate,id from qna where id = #(id) 
+ </select>
+ 
+ <insert id="LingoReplyInsert" parameterType="java.util.Map">
+ 	insert into reply(content,qnano) value(#(content),#(qnano))
+ </insert>
+ <delete id="LingoReplyDelete" parameterType="java.util.Map">
+ 	delete reply where replyno=#(replyno)
+ </delete>
+ <select id="LingoReplySelect" parameterType="java.util.Map" resultType="">
+ 	select content from reply where qnano = #(qnano) 
+ </select>
+ 
+<insert id="LingoReservedtableInsert" parameterType="java.util.Map">
+ 	insert into reservedtable(startdate,tableno,storeno,id,people) value(#(startdate),#(tableno),#(storeno),#(id),#(people))
+ </insert>
+ <delete id="LingoReservedtableDelete" parameterType="java.util.Map">
+ 	delete reservedtable where reserveno=#(reserveno)
+ </delete>
+ <select id="LingoReservedtableSelect" parameterType="java.util.Map" resultType="">
+ 	select * from reservedtable where storeno = #(storeno) order by startdate desc
+ </select>
+ 
+<select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="">
+ 	select * from usedtable where storeno = #(storeno)
+</select>
+
+<insert id="LingoReviewInsert" parameterType="java.util.Map">
+ 	insert into review(comment,storeno,id) value(#(comment),#(storeno),#(id))
+ </insert>
+ <delete id="LingoReviewDelete" parameterType="java.util.Map">
+ 	delete review where reviewno=#(reviewno)
+ </delete>
+ <select id="LingoReviewSelect" parameterType="java.util.Map" resultType="">
+ 	select * from review where storeno = #(storeno) order by reviewno desc
+ </select>
+
+<insert id="LingoSaleInsert" parameterType="java.util.Map">
+ 	insert into sale(salesprice,storeno) value(#(salesprice),#(storeno))
+ </insert>
+ <delete id="LingoSaleDelete" parameterType="java.util.Map">
+ 	delete sale where salesno=#(salesno)
+ </delete>
+ <select id="LingoSaleSelectUser" parameterType="java.util.Map" resultType="">
+ 	select * from sale where storeno = #(storeno) order by salesdate desc
+ </select>
+<select id="LingoSaleSelectAdmin" parameterType="java.util.Map" resultType="">
+ 	select * from sale order by salesdate desc
+</select>
+
+<select id="LingoSaleslistSelectUser" parameterType="java.util.Map" resultType="">
+ 	select l.* from sale s right join saleslist l on l.salesno=s.salesno where storeno = #(storeno) order by salesdate desc
+</select>
+
+ <insert id="LingoStoreInsert" parameterType="java.util.Map">
+ 	insert into store(ownerno,id,storename,address,tel,opentime,closetime,tablenum,bigkind,atable)
+ 	 value(#(ownerno),#(id),#(storename),#(address),#(tel),#(opentime),#(closetime),#(tablenum),#(bigkind),#(atable))
+ </insert>
+ <update id="LingoStoreUpdate" parameterType="java.util.Map">
+ 	update store set address=#(address),tel=#(tel),opentime=#(opentime),closetime=#(closetime),tablenum=#(tablenum),bigkind=#(bigkind),atable=#(atable) where storeno=#(storeno)
+ </update>
+ <delete id="LingoStoreDelete" parameterType="java.util.Map">
+ 	delete store where storeno=#(storeno)
+ </delete>
+ <select id="LingoStoreSelect" parameterType="java.util.Map" resultType="">
+ 	select storename,address,tel,opentime,closetime,tablenum,bigkind,atable from store where storeno=#(storeno)
+ </select>
+
+ <insert id="LingoStoreimgInsert" parameterType="java.util.Map">
+ 	insert into storeimg(img,storeno) value(#(img),#(storeno))
+ </insert>
+ <delete id="LingoStoreimgDelete" parameterType="java.util.Map">
+ 	delete storeimg where imgno=#(imgno)
+ </delete>
+ <select id="LingoStoreimgSelect" parameterType="java.util.Map" resultType="">
+ 	select img from storeimg where storeno = #(storeno) 
+ </select>
+
+ <insert id="LingoUserInsert" parameterType="java.util.Map">
+ 	insert into user(id,pwd,email,tel,region)
+ 	 value(#(id),#(pwd),#(email),#(tel),#(region))
+ </insert>
+ <update id="LingoUserUpdate" parameterType="java.util.Map">
+ 	update user set pwd=#(pwd),email=#(email),tel=#(tel),region=#(region) where id=#(id)
+ </update>
+ <delete id="LingoUserDelete" parameterType="java.util.Map">
+ 	delete user where id=#(id)
+ </delete>
+ <select id="LingoUserSelectAdmin" parameterType="java.util.Map" resultType="">
+ 	select * from user where id=#(id)
+ </select>
+
+<insert id="LingoVisitlistInsert" parameterType="java.util.Map">
+ 	insert into visitlist(id,storeno)
+ 	 value(#(id),#(storeno))
+ </insert>
+ <delete id="LingoVisitlistDelete" parameterType="java.util.Map">
+ 	delete visitlist where id=#(id)
+ </delete>
+ <select id="LingoVisitlistSelect" parameterType="java.util.Map" resultType="">
+ 	select count(*) from visitlist where id=#(id) and storeno=#(storeno)
+ </select>
 </mapper>
