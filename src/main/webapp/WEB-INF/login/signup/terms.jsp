@@ -13,7 +13,7 @@
   </ul>
   <div id="myTabContent" class="tab-content">
   
-    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+    <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab" style="overflow:scroll; width:1150px; height:600px">
       <p>링고포스 이용약관</p>
    	   링고포스 이용약관 제1조 (목적) 본 약관은   링고(이하 “회사”라 함)가 운영하는 "링고포스"
 			사이트(www.lingo.com) 또는 “링고포스” 모바일 애플리케이션에서 제공하는 서비스(이하 "서비스"라 함)를
