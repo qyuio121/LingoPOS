@@ -3,11 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-  <!-- 
   <typeAliases>
-  	<typeAlias alias="commentDTO" type="com.kosmo.onememo.service.CommentDTO"/>
+  	<typeAlias alias="adminDTO" type="com.kosmo.lingopos.admin.AdminDTO"/>
+  	<typeAlias alias="blacklistDTO" type="com.kosmo.lingopos.blacklist.BlacklistDTO"/>
+  	<typeAlias alias="commentDTO" type="com.kosmo.lingopos.comment.CommentDTO"/>
+  	<typeAlias alias="foodimgDTO" type="com.kosmo.lingopos.foodimg.FoodimgDTO"/>
+  	<typeAlias alias="freeDTO" type="com.kosmo.lingopos.free.FreeDTO"/>
+  	<typeAlias alias="lingoasDTO" type="com.kosmo.lingopos.lingoas.LingoasDTO"/>
+  	<typeAlias alias="lingoposDTO" type="com.kosmo.lingopos.lingopos.LingoposDTO"/>
+  	<typeAlias alias="mapDTO" type="com.kosmo.lingopos.map.MapDTO"/>
+  	<typeAlias alias="noticeDTO" type="com.kosmo.lingopos.notice.NoticeDTO"/>
+  	<typeAlias alias="ownerDTO" type="com.kosmo.lingopos.owner.OwnerDTO"/>
+  	<typeAlias alias="qnaDTO" type="com.kosmo.lingopos.qna.QnaDTO"/>
+  	<typeAlias alias="replyDTO" type="com.kosmo.lingopos.reply.ReplyDTO"/>
+  	<typeAlias alias="reservedtableDTO" type="com.kosmo.lingopos.reservedtable.ReservedtableDTO"/>
+  	<typeAlias alias="reviewDTO" type="com.kosmo.lingopos.review.ReviewDTO"/>
+  	<typeAlias alias="saleDTO" type="com.kosmo.lingopos.sale.SaleDTO"/>
+  	<typeAlias alias="saleslistDTO" type="com.kosmo.lingopos.saleslist.SaleslistDTO"/>
+  	<typeAlias alias="storeDTO" type="com.kosmo.lingopos.store.StoreDTO"/>
+  	<typeAlias alias="storeimgDTO" type="com.kosmo.lingopos.storeimg.StoreimgDTO"/>
+  	<typeAlias alias="usedtableDTO" type="com.kosmo.lingopos.usedtable.UsedtableDTO"/>
+  	<typeAlias alias="userDTO" type="com.kosmo.lingopos.user.UserDTO"/>
+  	<typeAlias alias="visitlistDTO" type="com.kosmo.lingopos.visitlist.VisitlistDTO"/>
   </typeAliases>
-     -->
+   
    
   <mappers>
     <mapper resource="mybatis/Lingopos_mybatis.xml"/>

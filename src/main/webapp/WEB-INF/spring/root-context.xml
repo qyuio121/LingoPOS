@@ -4,18 +4,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!--  
+	  
 		<bean id="dataSourceByJNDI" class="org.springframework.jndi.JndiObjectFactoryBean">
 			<property name="jndiName" value="jdbc/lingo"/>
 			<property name="resourceRef" value="true"/>
-		</bean>-->
+		</bean>
 		<!-- 마이바티스 -->
-		<!-- 
+		
 		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<property name="dataSource" ref="dataSourceByJNDI"/>
 			<property name="configLocation" value="classpath:mybatis/configuration.xml"/>
 		</bean>
 		<bean id="mybatisTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 			<constructor-arg ref="sqlSessionFactory"/>
-		</bean>	 -->
+		</bean>	 
 </beans>
