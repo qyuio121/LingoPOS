@@ -210,6 +210,9 @@ function buttonOverlayClose(index) {
 function errormap(error){
 	console.log(error.code);
 }
+/* 마우스 드레그이벤트 처리를위한 변수선언 */
+var dragFlag = false;
+var x, y, pre_x, pre_y;
 (function() {
 	mapInfo = {
 			map: null,
@@ -217,7 +220,47 @@ function errormap(error){
 			overlays:[],
 			position:{}
 	}
-	
+	/* 스크롤 마우스드레그 이벤트 처리 */
+	$('#drag').mousedown(
+		function (e) {
+			dragFlag = true;
+			var obj = $(this);
+			x = obj.scrollLeft();
+			y = obj.scrollTop();
+
+			pre_x = e.screenX;
+			pre_y = e.screenY;					
+
+			$(this).css("cursor", "pointer");
+			//$('#result').text("x:" + x + "," + "y:" + y + "," + "pre_x:" + pre_x + "," + "pre_y:" + pre_y);
+		}
+	);
+	$('#drag').mousemove(
+		function (e) {
+			if (dragFlag) {
+				var obj = $(this);
+				obj.scrollLeft(x - e.screenX + pre_x);
+				obj.scrollTop(y - e.screenY + pre_y);
+				return false;
+			}
+		}
+	);
+	$('#drag').mouseup(
+		function () {
+			dragFlag = false;
+			//$('#result').text("x:" + x + "," + "y:" + y + "," + "pre_x:" + pre_x + "," + "pre_y:" + pre_y);
+			$('#result').text(dragFlag);
+			$(this).css("cursor", "default");
+		}
+	);
+	$('body').mouseup(
+		function () {
+			dragFlag = false;					
+			$('#result').text(dragFlag);
+			$(this).css("cursor", "default");
+		}
+	);
+
 	/* 현재위치의 좌표값을 가져오기위한 처리  */
 	if (navigator.geolocation) {
 	var option = {enableHighAccuracy:false};

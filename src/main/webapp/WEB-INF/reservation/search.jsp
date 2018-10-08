@@ -32,7 +32,7 @@
 	</div>
 </div>
 <div class="container-fluid" >	
-	<div class="bg_wrap" style="overflow:auto">
+	<div class="bg_wrap" id="drag" style="overflow:auto">
 		
 		<table>
 			<tr id="searchTable" style="height:240px;width:400px;display:inline-block" >
