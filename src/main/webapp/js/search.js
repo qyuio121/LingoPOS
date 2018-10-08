@@ -176,9 +176,8 @@ function searchTableList(result){
 								"</tr>"+
 								"<tr>"+
 									"<td>" +
-										"<div class='body' style=''>" +
-											"<div class='img'>" +
-						   	    	        "	<img src='/MinJoungWooWebProJ/Images/marker/userLogo.png' style='width:73px;height:70px'>"+
+										"<div class='body'>" +
+											"<div class='img' style='background-image:url(/lingopos/Images/search/userLogo.png);background-size: contain;width:73px;height:70px'>" +
 											"</div>" +
 											"<div  >" +
 												"<div class='searchLayout' >도로명주소 : "+value.address_name+"</div><br/>"+
