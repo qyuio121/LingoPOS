@@ -132,7 +132,7 @@ public class LingoController {
 		//3]업로드 처리		
 		upload.transferTo(file);
 		//4]DB에 저장할 서버에 저장된 파일명 
-		return newFilename;
+		return phicalPath+File.separator+newFilename;
 	}
 	//창선 사진 삭제  - 가게 전경 Controller
 	@ResponseBody
@@ -157,7 +157,7 @@ public class LingoController {
 		//3]업로드 처리		
 		upload.transferTo(file);
 		//4]DB에 저장할 서버에 저장된 파일명 
-		return newFilename;
+		return phicalPath+File.separator+newFilename;
 	}
 	//창선 사진 삭제 - 메뉴 사진 Controller
 	@ResponseBody
