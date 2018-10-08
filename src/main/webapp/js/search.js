@@ -7,7 +7,7 @@ function initDaumMap(position) {
 	/* map객체생성 */
 	mapInfo.map = new daum.maps.Map(document.getElementById('map'), {
 		center: new daum.maps.LatLng(latitude,longitude),
-		level: 3,
+		level: 5,
 		keyboardShortcuts:true
 	});
 	mapInfo.position = {'latitude':latitude,'longitude':longitude};
@@ -94,7 +94,7 @@ function getRestaurant(x, y) {
 	    		    	var marker = new daum.maps.Marker({
 	    		    		map:mapInfo.map,
 	    		    		position: new daum.maps.LatLng(value.y,value.x),
-		    		   		image:new daum.maps.MarkerImage('/MinJoungWooWebProJ/Images/marker/marker2.png',
+		    		   		image:new daum.maps.MarkerImage('/lingopos/Images/search/marker2.png',
 		    		   										new daum.maps.Size(64, 69),
 		    		   										{offset: new daum.maps.Point(27, 69)})
 		    			});
@@ -111,7 +111,7 @@ function getRestaurant(x, y) {
 				   	    	              '        </div>' + 
 				   	    	              '        <div class="body">' + 
 				   	    	              '            <div class="img">' +
-				   	    	              '                <img src="/MinJoungWooWebProJ/Images/marker/userLogo.png" style="width:73px;height:70px">' +
+				   	    	              '                <img src="/lingopos/Images/search/userLogo.png" style="width:73px;height:70px">' +
 				   	    	              '           </div>' + 
 				   	    	              '            <div class="desc">' + 
 				   	    	              '                <div class="ellipsis">도로명주소 : '+value.address_name+'</div>' + 
