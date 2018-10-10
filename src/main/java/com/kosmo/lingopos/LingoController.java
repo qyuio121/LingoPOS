@@ -253,23 +253,65 @@ public class LingoController {
 	public String qnaDelete() throws Exception{
 		return "Lingo/Message";
 	}
-//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
-//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
- 	@RequestMapping("/Reservation/Detail.Lingo")
-	public String detail(@RequestParam Map map,Model model,@RequestParam String hiddenFile,@RequestParam String hiddenFile1) throws Exception{
-		model.addAllAttributes(map);
-		String [] hidden = hiddenFile.trim().split(" ");
-		hidden[0] = hidden[0].substring(9, hidden[0].length());
-		
-		String [] hidden1 = hiddenFile1.trim().split(" ");
-		hidden1[0] = hidden1[0].substring(9, hidden1[0].length());
-		
-		model.addAttribute("hidden",hidden);
-		model.addAttribute("hidden1",hidden1);
-		
-		return "reservation/detail/detail.tiles";
-	}
- //창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 끝
+	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
+	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
+	 	@RequestMapping("/Reservation/Detail.Lingo")
+		public String detail(@RequestParam Map map,Model model,@RequestParam String hiddenFile,@RequestParam String hiddenFile1) throws Exception{
+			model.addAllAttributes(map);
+			String [] hidden = hiddenFile.trim().split(" ");
+			hidden[0] = hidden[0].substring(9, hidden[0].length());
+			
+			String [] hidden1 = hiddenFile1.trim().split(" ");
+			hidden1[0] = hidden1[0].substring(9, hidden1[0].length());
+			
+			model.addAttribute("hidden",hidden);
+			model.addAttribute("hidden1",hidden1);
+			
+			
+			/*
+			 * 
+			 * @RequestMapping("/Reservation/Detail.Lingo")
+			 * public String detail(Model model,
+			 * 						HttpServletRequest req,//페이징용 메소드에 전달
+			 * 						@RequestParam(required=false,defaultValue="1") int nowPage//페이징용 nowPage파라미터 받기용
+			 *						) throws Exception{
+	         * DB연결 시 여기서 부터 데이터 값 불러옴
+			 * Parameter 즉, 인자 변경 시 부터 수정 필요(서비스 추가필요)
+			 * //서비스 호출]
+			 * //뿌려줄 데이타] 
+			 * StoreDTO store = (등록한 서비스).LingoStoreSelect(map); // map은 storeno // 가게이름/분류/전화번호/주소/오픈시간/종료시간
+			 * 
+			 * List<FoodimgDTO> foodimg = (등록한 서비스).LingoFoodimgSelect(map); // map은 storeno // 메뉴이름/메뉴가격/메뉴이미지경로(여러개)
+			 * 
+			 * List<StoreimgDTO> storeimg = (등록한 서비스).LingoStoreimgSelect(map); // map은 storeno // 가게이미지경로(여러개)
+			 * 
+			 * MapDTO map = (등록한 서비스).LingoMapSelect(map);; //map은 storeno // 맵에 표시할 x/y 좌표 2개 
+			 * 
+			 * List<ReviewDTO> review = (등록한 서비스).LingoReviewSelect(map);; //map은 storeno // 리뷰커멘트 //작성자 
+			 * 
+			 * 페이징을 위한 로직 시작]
+			 * 전체 레코드 수
+			 * int totalRecordCount= (등록한 서비스).(실행할 totalRecordCount sql과 연결된 메소드)(map);		
+			 * 페이징 문자열을 위한 로직 호출 - SpringMavenProj에서 PagingUtil.java 가져오기!!
+			 * String pagingString=PagingUtil.pagingBootStrapStyle(totalRecordCount, pageSize, blockPage, nowPage,req.getContextPath()+ "/reservation/detail/detail.Lingo?");
+			 * 페이징 데이타 저장
+			 * 
+			 * model.addAttribute("pagingString", pagingString);
+			 * 
+			 * 
+			 * //데이타 저장]
+			 * model객체에 저장
+			 * model.addAttribute("store",store);
+			 * model.addAttribute("foodimgs",foodimg); // list객체
+			 * model.addAttribute("storeimgs",storeimg); // list객체
+			 * model.addAttribute("map",map);
+			 * model.addAttribute("reviews",review); // list객체
+			 * 
+			 * */
+			
+			return "reservation/detail/detail.tiles";
+		}
+	 //창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 끝
 	@RequestMapping("/Reservation/Reservation.Lingo")
 	public String reservation() throws Exception{
 		return "reservation/reservation.tiles";

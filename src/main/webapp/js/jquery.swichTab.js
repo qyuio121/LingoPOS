@@ -1,4 +1,4 @@
-/*FAQ 탭 js*/
+	/*FAQ 탭 js*/
 
 /*
 The MIT License (MIT)
@@ -58,10 +58,51 @@ THE SOFTWARE.
                     $controller.removeClass("is-active");
                     $(this).addClass("is-active");
                     $target.removeClass("is-active").hide().eq(i).addClass("is-active").show();
+                    
                 } else if (opts.cahngePanel === 'fade') {
                     $controller.removeClass("is-active");
                     $(this).addClass("is-active");
                     $target.removeClass("is-active").hide().eq(i).addClass("is-active").stop().fadeIn();
+//창선이 만든 map api 보이게 하기
+                    if(i==1){
+                    	var x = document.getElementById("x");
+                    	var y = document.getElementById("y");
+                    	//var storename = document.getElementById("storename");
+                    	console.log("x : "+x.value+" "+"y : "+y.value);
+                    var mapContainer = document.getElementById('map'), 
+                    mapOption = { 
+//여기다가 좌표값 넣어줄거	
+                        center: new daum.maps.LatLng(x.value,y.value), 
+//여기다가 좌표값 넣어줄거
+                        level: 1 
+                    };
+                    
+                	var map = new daum.maps.Map(mapContainer, mapOption); 
+
+                	
+                		mapContainer.style.width = '100%';
+                	    mapContainer.style.height = '400px'; 
+                		map.relayout();
+//마커 시작 여기다가 좌표값 넣어줄거                		
+                		var markerPosition  = new daum.maps.LatLng(x.value,y.value); 
+//마커 시작 여기다가 좌표값 넣어줄거
+                		var marker = new daum.maps.Marker({
+                		    position: markerPosition
+                		});
+                		marker.setMap(map);
+//마커 음식점 이름  넣어줄거(좌표값도 필요)              		
+                		var iwContent = '<div style="padding:5px;">'+storename+'<br><a href="http://map.daum.net/link/map/"'+storename+'","'+x+'","'+y+'" style="color:blue" target="_blank">큰지도보기</a> <a href="http://map.daum.net/link/to/"'+storename+'","'+x+'","'+y+'" style="color:blue" target="_blank">길찾기</a></div>', 
+//마커 음식점 이름  넣어줄거(좌표값도 필요)     
+//좌표값 필요                		
+                	    iwPosition = new daum.maps.LatLng(x.value,y.value);
+//좌표값 필요                		
+                		var infowindow = new daum.maps.InfoWindow({
+                		    position : iwPosition, 
+                		    content : iwContent 
+                		});
+                		infowindow.open(map,marker); 
+                    }
+//창선이 만든 map api 보이게 하기                    
                 }
             });
 
