@@ -30,7 +30,7 @@
  <select id="LingoBlackSelect" parameterType="java.util.Map" resultType="blacklistDTO">
  	select id,reason,blackdate,added from blacklist where storeno = #{storeno} 
  </select>
- <select id="LingoBlackSelectAdmin" parameterType="java.util.Map" resultType="blacklistDTO">
+ <select id="LingoBlackSelectAdmin" resultType="blacklistDTO">
  	select * from blacklist where added = false
  </select>
  
@@ -76,7 +76,7 @@
  <delete id="LingoLingoasDelete" parameterType="java.util.Map">
  	delete lingoas where asno=#{asno}
  </delete>
- <select id="LingoLingoasSelect" parameterType="java.util.Map" resultType="lingoasDTO">
+ <select id="LingoLingoasSelect" resultType="lingoasDTO">
  	select * from lingoas
  </select>
  
@@ -89,7 +89,7 @@
  <delete id="LingoLingoposDelete" parameterType="java.util.Map">
  	delete lingopos where posno=#{posno}
  </delete>
- <select id="LingoLingoposSelect" parameterType="java.util.Map" resultType="lingoposDTO">
+ <select id="LingoLingoposSelect" resultType="lingoposDTO">
  	select * from lingopos
  </select>
  
@@ -131,7 +131,7 @@
  <delete id="LingoOwnerDelete" parameterType="java.util.Map">
  	delete owner where ownerno=#{ownerno}
  </delete>
- <select id="LingoOwnerSelectAdmin" parameterType="java.util.Map" resultType="ownerDTO">
+ <select id="LingoOwnerSelectAdmin" resultType="ownerDTO">
  	select * from owner where isallowed = false
  </select>
  
@@ -195,7 +195,7 @@
  <select id="LingoSaleSelectUser" parameterType="java.util.Map" resultType="saleDTO">
  	select * from sale where storeno = #{storeno} order by salesdate desc
  </select>
-<select id="LingoSaleSelectAdmin" parameterType="java.util.Map" resultType="saleDTO">
+<select id="LingoSaleSelectAdmin" resultType="saleDTO">
  	select * from sale order by salesdate desc
 </select>
 
@@ -237,7 +237,10 @@
  <delete id="LingoUserDelete" parameterType="java.util.Map">
  	delete user where id=#{id}
  </delete>
- <select id="LingoUserSelectAdmin" parameterType="java.util.Map" resultType="userDTO">
+ <select id="LingoUserSelectAll" resultType="userDTO">
+ 	select * from user
+ </select>
+ <select id="LingoUserSelectOne" parameterType="java.util.Map" resultType="userDTO">
  	select * from user where id=#{id}
  </select>
 
