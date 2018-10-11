@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 	<div class="container" style="padding-top:60px;margin-top:60px">
 		<div >
-			<img src='<c:url value="/Images/eventLogo.png"/>' alt="이벤트 이미지" style="width: 100%;height: 200px" />
+			<img src='<c:url value="/Images/eventImages/eventLogo.png"/>' alt="이벤트 이미지" style="width: 100%;height: 200px" />
 		</div>
 		<div >
 			<div class="row">
