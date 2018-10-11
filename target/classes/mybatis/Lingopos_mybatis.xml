@@ -71,7 +71,7 @@
 		<if test="searchColumn != null">
  		  where #{searchColumn} like '%' || #{searchWord} || '%'
  		</if>
-	) t) tab, (select @rownum:=0) b where rnum between #{start} and #{end}
+	) t, (select @rownum:=0) b) tab where rnum between #{start} and #{end} order by freeno desc
  </select>
  <select id="LingoFreeGetTotalRecord" resultType="int" >
  	select count(*) from free
@@ -129,7 +129,7 @@
  	select n.*,adminnick from notice n join admin a on n.adminno=a.adminno where noticeno = #{noticeno} 
  </select>
  <select id="LingoNoticeSelectAll" parameterType="java.util.Map" resultType="noticeDTO">
-    select * from (select @rownum:=@rownum+1 as rnum,t.* from (select n.*,adminnick from notice n join admin a on n.adminno=a.adminno) t) tab, (select @rownum:=0) b where rnum between #{start} and #{end}
+    select * from (select @rownum:=@rownum+1 as rnum,t.* from (select n.*,adminnick from notice n join admin a on n.adminno=a.adminno) t, (select @rownum:=0) b) tab where rnum between #{start} and #{end} order by noticeno desc
  </select>
  <select id="LingoNoticeGetTotalRecord" resultType="int" >
  	select count(*) from notice

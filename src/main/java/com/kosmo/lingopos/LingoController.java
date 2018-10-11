@@ -3,6 +3,7 @@ package com.kosmo.lingopos;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -214,20 +215,20 @@ public class LingoController {
 			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
 
 		int totalRecordCount = noticeService.getTotalRecord(map);
+		
 		int start = (nowPage-1)*noticepageSize+1;
 		int end = nowPage*noticepageSize;
-		
 		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, noticepageSize, noticeblockPage, nowPage, req.getContextPath()+"/Notice/Notice.Lingo?");
 		map.put("start", start);
 		map.put("end", end);
 		
 		List<NoticeDTO> list = noticeService.selectAll(map);
-		System.out.println(Arrays.toString(list.toArray()));
 		model.addAttribute("list", list);
 		model.addAttribute("pageString", pageString);
 		model.addAttribute("totalRecordCount", totalRecordCount);
 		model.addAttribute("pageSize", noticepageSize);
 		model.addAttribute("nowPage", nowPage);
+		
 		return "notice/notice.tiles";
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
