@@ -20,8 +20,11 @@ public class CommentDAO {
 	public int delete(Map map) {
 		return template.delete("LingoCommentDelete",map);
 	}
-	public List<CommentDTO> select(Map map) {
+	public List<Map> select(Map map) {
 		return template.selectList("LingoCommentSelect",map);
+	}
+	public int deletebyno(Map map) {
+		return template.delete("LingoCommentDeleteByNo",map);
 	}
 	
 }

@@ -40,9 +40,12 @@
  <delete id="LingoCommentDelete" parameterType="java.util.Map">
  	delete comment where commentno=#{commentno}
  </delete>
- <select id="LingoCommentSelect" parameterType="java.util.Map" resultType="commentDTO">
- 	select comment,id,commentno from comment where freeno = #{freeno} 
+ <select id="LingoCommentSelect" parameterType="java.util.Map" resultType="java.util.Map">
+ 	select * from comment where freeno = #{freeno} order by commentno desc
  </select>
+ <delete id="LingoCommentDeleteByNo" parameterType="java.util.Map">
+	delete comment where freeno=#{freeno}
+</delete>
  
  <insert id="LingoFoodimgInsert" parameterType="java.util.Map">
  	insert into foodimg(img,storeno,name,price) value(#{img},#{storeno},#{name},#{price})

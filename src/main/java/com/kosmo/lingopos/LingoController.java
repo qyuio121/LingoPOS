@@ -9,7 +9,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kosmo.lingopos.comment.CommentService;
 import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.notice.NoticeDTO;
@@ -48,6 +51,9 @@ public class LingoController {
 	private int freepageSize;
 	@Value("${freeBlockPage}")
 	private int freeblockPage;
+	
+	@Resource(name="commentService")
+	private CommentService commentService;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
@@ -250,9 +256,9 @@ public class LingoController {
 			return "notice/noticeEdit.tiles";
 		}
 		@RequestMapping("/Notice/NoticeView.Lingo")
-		public String noticeView(Map model,@RequestParam Map map) throws Exception{
+		public String noticeView(Model model,@RequestParam Map map) throws Exception{
 			NoticeDTO dto = noticeService.selectOne(map);
-			model.put("record", dto);
+			model.addAttribute("record", dto);
 			return "notice/noticeView.tiles";
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
@@ -287,10 +293,39 @@ public class LingoController {
 		return "free/freeEdit.tiles";
 	}
 	@RequestMapping("/Free/FreeView.Lingo")
-	public String freeView() throws Exception{
+	public String freeView(Model model,@RequestParam Map map) throws Exception{
+		FreeDTO dto = freeService.selectOne(map);
+		model.addAttribute("record", dto);
 		return "free/freeView.tiles";
 	}
-//창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 끝	
+//창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 끝
+	//comment
+	@ResponseBody
+	@RequestMapping("/Comment/CommentWrite.Lingo")
+	public String commentWrite(@RequestParam Map map,HttpSession session) throws Exception{
+		map.put("id", session.getAttribute("id"));
+		commentService.insert(map);
+		return map.get("freeno").toString();
+	}
+	@ResponseBody
+	@RequestMapping("/Comment/CommentDelete.Lingo")
+	public String commentDelete(@RequestParam Map map) throws Exception{
+		commentService.delete(map);
+		return map.get("freeno").toString();
+	}
+	@ResponseBody
+	@RequestMapping("/Comment/Comment.Lingo")
+	public String comment(@RequestParam Map map) throws Exception{
+		List<Map> list =commentService.selectList(map);
+		System.out.println(JSONArray.toJSONString(list));
+		//날짜를 string으로 변경
+		for(Map commen: list) {
+			commen.put("commentdate",commen.get("commentdate").toString().substring(0,10));
+		}
+		System.out.println(JSONArray.toJSONString(list));
+		return JSONArray.toJSONString(list);
+	}
+	//comment end
 	@RequestMapping("/Question/FAQ.Lingo")
 	public String faq() throws Exception{
 		return "question/FAQ.tiles";
