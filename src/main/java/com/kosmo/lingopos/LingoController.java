@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kosmo.lingopos.free.FreeDTO;
+import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
 
@@ -41,7 +43,7 @@ public class LingoController {
 	private int noticeblockPage;
 	
 	@Resource(name="freeService")
-	private NoticeService freeService;
+	private FreeService freeService;
 	@Value("${freePageSize}")
 	private int freepageSize;
 	@Value("${freeBlockPage}")
@@ -266,7 +268,7 @@ public class LingoController {
 		map.put("start", start);
 		map.put("end", end);
 		
-		List<NoticeDTO> list = freeService.selectAll(map);
+		List<FreeDTO> list = freeService.selectAll(map);
 		model.addAttribute("list", list);
 		model.addAttribute("pageString", pageString);
 		model.addAttribute("totalRecordCount", totalRecordCount);
