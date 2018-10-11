@@ -40,9 +40,6 @@
 		<div class="btn-group btn-group-justified" role="group" aria-label="...">
 			<div class="col-xs-12" >
 				<div class="btn-toolbar pull-right" >
-					<div class="btn-group " role="group" style="margin-right: 5px">
-				    	<button type="button" class="btn btn-warning" id="insertBtn" >수정</button>
-				  	</div>
 				  	<div class="btn-group " role="group">
 				    	<button type="button" class="btn btn-primary" id="updateBtn">등록</button>
 				  	</div>
