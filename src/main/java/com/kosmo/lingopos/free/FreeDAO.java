@@ -22,10 +22,13 @@ public class FreeDAO {
 	public int delete(Map map) {
 		return template.delete("LingoFreeDelete",map);
 	}
-	public List<FreeDTO> selectOne(Map map) {
-		return template.selectList("LingoFreeSelectOne",map);
+	public FreeDTO selectOne(Map map) {
+		return template.selectOne("LingoFreeSelectOne",map);
 	}
-	public List<FreeDTO> selectAll() {
-		return template.selectList("LingoFreeSelectAll");
+	public List<FreeDTO> selectAll(Map map) {
+		return template.selectList("LingoFreeSelectAll",map);
+	}
+	public int getTotalRecord(Map map) {
+		return template.selectOne("LingoFreeGetTotalRecord",map);
 	}
 }

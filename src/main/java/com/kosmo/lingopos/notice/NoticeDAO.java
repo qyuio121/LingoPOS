@@ -22,10 +22,13 @@ public class NoticeDAO {
 	public int delete(Map map) {
 		return template.delete("LingoNoticeDelete",map);
 	}
-	public List<NoticeDTO> selectOne(Map map) {
-		return template.selectList("LingoNoticeSelectOne",map);
+	public NoticeDTO selectOne(Map map) {
+		return template.selectOne("LingoNoticeSelectOne",map);
 	}
-	public List<NoticeDTO> selectAll() {
-		return template.selectList("LingoNoticeSelectAll");
+	public List<NoticeDTO> selectAll(Map map) {
+		return template.selectList("LingoNoticeSelectAll",map);
+	}
+	public int getTotalRecord(Map map) {
+		return template.selectOne("LingoNoticeGetTotalRecord",map);
 	}
 }

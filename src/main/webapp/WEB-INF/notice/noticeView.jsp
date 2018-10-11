@@ -20,10 +20,10 @@ $(function(){
 	<div class="row" >
 		<table class="col-sm-10 table table-striped table-responsive ">
 			<tr class="tsTitles">
-				<th class="col-xs-9">공지제목 : <small>공지합니다</small></th><th>조회수 : <small>1</small></th>
+				<th class="col-xs-9">공지제목 : <small>${record.title}</small></th><th>조회수 : <small>${record.count}</small></th>
 			</tr>
 			<tr class="tsTitles">		
-				<th>글쓴이 : <small>김남섭</small></th><th>작성일 : <small>2018/09/10</small></th>
+				<th>글쓴이 : <small>${record.adminnick}</small></th><th>작성일 : <small>${record.postdate}</small></th>
 			</tr>
 			<tbody class="tsGroup">
 				<tr>
@@ -31,7 +31,7 @@ $(function(){
 				</tr>
 				<tr>
 					<td>
-						연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
+						${record.content}	
 					</td>
 				</tr>
 			</tbody>
@@ -40,7 +40,7 @@ $(function(){
 <!-- 상세보기 내용 예시 끝  -->
 <!-- 버튼 3개 시작 -->
 <!-- 버튼 3개 시작  DB연결 전까지 대기 시작 -->
-	<!-- 
+	<%-- 
 	<div class="row">
 		<div class="text-center">
 			<c:if test="${sessionScope.id==record.id }">
@@ -52,13 +52,13 @@ $(function(){
 
 		</div>
 	</div>
-	 -->
+	--%> 
 <!-- 버튼 3개 시작  DB연결 전까지 대기 끝 -->
 <!-- 버튼 3개 예시 시작 -->
 	<div class="row">
 		<div class="text-center">
 			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
-			<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
+			<a href="#" class="btn btn-primary">삭제</a>
 			<a href="<c:url value='#'/>" class="btn btn-primary">목록</a>
 		</div>
 	</div>			

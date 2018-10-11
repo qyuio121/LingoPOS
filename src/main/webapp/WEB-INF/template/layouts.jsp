@@ -79,6 +79,6 @@
   	<div class="container-fluid">
 	<tiles:insertAttribute name="Body"/>
    	</div>
-   		<tiles:insertAttribute name="Footer"/>
+   	<tiles:insertAttribute name="Footer"/>
   </body>
 </html>

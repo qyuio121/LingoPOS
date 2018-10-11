@@ -2,9 +2,16 @@ package com.kosmo.lingopos;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kosmo.lingopos.notice.NoticeDTO;
+import com.kosmo.lingopos.notice.NoticeService;
+
 /**
  * Handles requests for the application home page.
  */
@@ -21,6 +31,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 public class LingoController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(LingoController.class);
+	
+	@Resource(name="noticeService")
+	private NoticeService noticeService;
+	@Value("${noticePageSize}")
+	private int noticepageSize;
+	@Value("${noticeBlockPage}")
+	private int noticeblockPage;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
@@ -193,7 +210,24 @@ public class LingoController {
 		return "login/signup/signup.tiles";
 	}
 	@RequestMapping("/Notice/Notice.Lingo")
-	public String notice() throws Exception{
+	public String notice(Model model,HttpServletRequest req,
+			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+
+		int totalRecordCount = noticeService.getTotalRecord(map);
+		int start = (nowPage-1)*noticepageSize+1;
+		int end = nowPage*noticepageSize;
+		
+		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, noticepageSize, noticeblockPage, nowPage, req.getContextPath()+"/Notice/Notice.Lingo?");
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<NoticeDTO> list = noticeService.selectAll(map);
+		System.out.println(Arrays.toString(list.toArray()));
+		model.addAttribute("list", list);
+		model.addAttribute("pageString", pageString);
+		model.addAttribute("totalRecordCount", totalRecordCount);
+		model.addAttribute("pageSize", noticepageSize);
+		model.addAttribute("nowPage", nowPage);
 		return "notice/notice.tiles";
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
@@ -206,7 +240,9 @@ public class LingoController {
 			return "notice/noticeEdit.tiles";
 		}
 		@RequestMapping("/Notice/NoticeView.Lingo")
-		public String noticeView() throws Exception{
+		public String noticeView(Map model,@RequestParam Map map) throws Exception{
+			NoticeDTO dto = noticeService.selectOne(map);
+			model.put("record", dto);
 			return "notice/noticeView.tiles";
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		

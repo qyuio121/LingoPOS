@@ -29,36 +29,27 @@
 					<td style="width: 20%">작성일</td>
 					<td style="width: 7%">조회수</td>
 				</tr>
-				<c:forEach var="i" begin="1" end="10">
+				<c:if test="${not empty list}" var="result">
+				<c:forEach items="${list}" var="item" varStatus="loop">
 					<tr style="text-align: center">
-						<td style="width: 5%">${i}</td>
-						<td style="width: 50%">${command.title}</td>
-						<td style="width: 10%">${command.id}</td>
-						<td style="width: 20%">${command.regidate }</td>
-						<td style="width: 5%">${gestCount}</td>
+						<td style="width: 5%">${totalRecordCount - (((nowPage - 1) * pageSize) + loop.index)}</td>
+						<td style="width: 50%">
+						<a href="<c:url value='/Notice/NoticeView.Lingo?noticeno=${item.noticeno}'/>">
+						${item.title}
+						</a></td>
+						<td style="width: 10%">${item.adminnick}</td>
+						<td style="width: 20%">${item.postdate }</td>
+						<td style="width: 5%">${item.count}</td>
 					</tr>
 				</c:forEach>
+				</c:if>
+				<c:if test="${not result}">
+					<td colspan="5" align="center">
+						게시물이 없습니다.
+					</td>
+				</c:if>
 			</table>
 		</div>
-		<div class="col-xs-offset-19">
-				<nav style="text-align: center" >
-					<ul class="pagination pagination">
-						<li>
-							<a href="#" aria-label="Previous">
-								<span aria-hidden="true">&laquo;</span>
-							</a>
-						</li>
-						<c:forEach var="i" begin="1" end="5">
-							<li><a href="#">${i}</a></li>
-						</c:forEach>
-						<li>
-							<a href="#" aria-label="Next"> 
-								<span aria-hidden="true">&raquo;</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-
+		${pageString}
 	</div>
 

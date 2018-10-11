@@ -66,8 +66,18 @@
  <select id="LingoFreeSelectOne" parameterType="java.util.Map" resultType="freeDTO">
  	select * from free where freeno = #{freeno} 
  </select>
- <select id="LingoFreeSelectAll" resultType="freeDTO">
- 	select freeno,title,id,count from free 
+ <select id="LingoFreeSelectAll" parameterType="java.util.Map" resultType="freeDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select * from free
+		<if test="searchColumn != null">
+ 		  where #{searchColumn} like '%' || #{searchWord} || '%'
+ 		</if>
+	) t) tab, (select @rownum:=0) b where rnum between #{start} and #{end}
+ </select>
+ <select id="LingoFreeGetTotalRecord" resultType="int" >
+ 	select count(*) from free
+ 	<if test="searchColumn != null">
+ 		where #{searchColumn} like '%' || #{searchWord} || '%'
+ 	</if>
  </select>
  
  <insert id="LingoLingoasInsert" parameterType="java.util.Map">
@@ -118,8 +128,11 @@
  <select id="LingoNoticeSelectOne" parameterType="java.util.Map" resultType="noticeDTO">
  	select n.*,adminnick from notice n join admin a on n.adminno=a.adminno where noticeno = #{noticeno} 
  </select>
- <select id="LingoNoticeSelectAll" resultType="noticeDTO">
- 	select noticeno,title,adminnick,count from notice n join admin a on n.adminno=a.adminno
+ <select id="LingoNoticeSelectAll" parameterType="java.util.Map" resultType="noticeDTO">
+    select * from (select @rownum:=@rownum+1 as rnum,t.* from (select n.*,adminnick from notice n join admin a on n.adminno=a.adminno) t) tab, (select @rownum:=0) b where rnum between #{start} and #{end}
+ </select>
+ <select id="LingoNoticeGetTotalRecord" resultType="int" >
+ 	select count(*) from notice
  </select>
  
  <insert id="LingoOwnerInsert" parameterType="java.util.Map">
