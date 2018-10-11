@@ -40,6 +40,13 @@ public class LingoController {
 	@Value("${noticeBlockPage}")
 	private int noticeblockPage;
 	
+	@Resource(name="freeService")
+	private NoticeService freeService;
+	@Value("${freePageSize}")
+	private int freepageSize;
+	@Value("${freeBlockPage}")
+	private int freeblockPage;
+	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
 	@ResponseBody
@@ -248,7 +255,24 @@ public class LingoController {
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
 	@RequestMapping("/Free/Free.Lingo")
-	public String free() throws Exception{
+	public String free(Model model,HttpServletRequest req,
+			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+
+		int totalRecordCount = freeService.getTotalRecord(map);
+		
+		int start = (nowPage-1)*freepageSize+1;
+		int end = nowPage*freepageSize;
+		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, freepageSize, freeblockPage, nowPage, req.getContextPath()+"/Free/FreeView.Lingo?");
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<NoticeDTO> list = freeService.selectAll(map);
+		model.addAttribute("list", list);
+		model.addAttribute("pageString", pageString);
+		model.addAttribute("totalRecordCount", totalRecordCount);
+		model.addAttribute("pageSize", noticepageSize);
+		model.addAttribute("nowPage", nowPage);
+		
 		return "free/free.tiles";
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 시작
