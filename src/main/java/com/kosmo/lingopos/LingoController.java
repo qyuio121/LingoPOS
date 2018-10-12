@@ -271,7 +271,13 @@ public class LingoController {
 		
 		int start = (nowPage-1)*freepageSize+1;
 		int end = nowPage*freepageSize;
-		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, freepageSize, freeblockPage, nowPage, req.getContextPath()+"/Free/FreeView.Lingo?");
+		String pageString = null;
+		if(map.get("searchColumn")!=null) {
+			pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, freepageSize, freeblockPage, nowPage, req.getContextPath()+"/Free/Free.Lingo?",map.get("searchColumn").toString(),map.get("searchWord").toString());
+		}else {
+			pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, freepageSize, freeblockPage, nowPage, req.getContextPath()+"/Free/Free.Lingo?");
+		}
+		
 		map.put("start", start);
 		map.put("end", end);
 		System.out.println(map.get("searchColumn"));

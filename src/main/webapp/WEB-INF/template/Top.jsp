@@ -61,7 +61,6 @@
 <!-- 자유게시판 추가 시작-->						
 						<li><a href="<c:url value='/Notice/NoticeWrite.Lingo'/>">Notice wirte</a></li>
 						<li><a href="<c:url value='/Notice/NoticeEdit.Lingo'/>">Notice edit</a></li>
-						<li><a href="<c:url value='/Notice/NoticeView.Lingo'/>">Notice view</a></li>
 <!-- 자유게시판 추가 끝-->			
 						<li><a href="<c:url value='/Question/QNAList.Lingo'/>">1:1 list</a></li>
 						<li><a href="<c:url value='/Question/QNAView.Lingo'/>">1:1 view</a></li>
@@ -88,12 +87,10 @@
 <!-- 자유게시판 추가 시작-->						
 				<li><a href="<c:url value='/Free/FreeWrite.Lingo'/>">FREE wirte</a></li>
 				<li><a href="<c:url value='/Free/FreeEdit.Lingo'/>">FREE edit</a></li>
-				<li><a href="<c:url value='/Free/FreeView.Lingo'/>">FREE view</a></li>
 <!-- 자유게시판 추가 끝-->		
 <!-- 자유게시판 추가 시작-->						
 				<li><a href="<c:url value='/Notice/NoticeWrite.Lingo'/>">Notice wirte</a></li>
 				<li><a href="<c:url value='/Notice/NoticeEdit.Lingo'/>">Notice edit</a></li>
-				<li><a href="<c:url value='/Notice/NoticeView.Lingo'/>">Notice view</a></li>
 <!-- 자유게시판 추가 끝-->					
 				<li><a href="<c:url value='/Question/QNAList.Lingo'/>">1:1 list</a></li>
 				<li><a href="<c:url value='/Question/QNAView.Lingo'/>">1:1 view</a></li>

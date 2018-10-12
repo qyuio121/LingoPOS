@@ -8,6 +8,9 @@
   <!-- 카운트 늘리는 것은 트리거로 작업할 예정 -->
 <mapper namespace="mybatis.Lingopos_mybatis">
 
+<select id="LingoLoginResult" parameterType="java.util.Map">
+	select * from user u left join owner o on u.id=o.id left join admin a on u.id=a.id where u.id = #{id};
+</select>
  <insert id="LingoAdminInsert" parameterType="java.util.Map">
  	insert into admin(adminnick,id) value(#{adminnick},#{id})
  </insert>
@@ -74,7 +77,7 @@
 		<if test="searchColumn!=null and !searchColumn.equals('')">
  		  where ${searchColumn} like '%${searchWord}%' 
  		</if>
-	) t, (select @rownum:=0) b) tab where rnum between #{start} and #{end} order by freeno desc
+	) t, (select @rownum:=0) b order by postdate desc) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoFreeGetTotalRecord" parameterType="java.util.Map" resultType="int" >
  	select count(*) from free
@@ -132,7 +135,7 @@
  	select n.*,adminnick from notice n join admin a on n.adminno=a.adminno where noticeno = #{noticeno} 
  </select>
  <select id="LingoNoticeSelectAll" parameterType="java.util.Map" resultType="noticeDTO">
-    select * from (select @rownum:=@rownum+1 as rnum,t.* from (select n.*,adminnick from notice n join admin a on n.adminno=a.adminno) t, (select @rownum:=0) b) tab where rnum between #{start} and #{end} order by noticeno desc
+    select * from (select @rownum:=@rownum+1 as rnum,t.* from (select n.*,adminnick from notice n join admin a on n.adminno=a.adminno) t, (select @rownum:=0) b order by noticeno desc) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoNoticeGetTotalRecord" resultType="int" >
  	select count(*) from notice
@@ -165,7 +168,7 @@
  	where replyno = null
  </select>
  <select id="LingoQnaSelectUser" parameterType="java.util.Map" resultType="qnaDTO">
- 	select qnano,title,postdate,id from qna where id = #{id} 
+ 	select kind,title,postdate,r.content from qna q left join reply r on q.qnano=r.qnano where id = #{id} order by q.qnano desc
  </select>
  
  <insert id="LingoReplyInsert" parameterType="java.util.Map">

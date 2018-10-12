@@ -2,15 +2,16 @@ package com.kosmo.lingopos.qna;
 
 public class QnaDTO {
 	private int qnano;
-	private int kind;
+	private String kind;
 	private String title;
 	private String content;
 	private java.sql.Timestamp postdate;
 	private String id;
+	
 	public int getQnano() {
 		return qnano;
 	}
-	public int getKind() {
+	public String getKind() {
 		return kind;
 	}
 	public String getTitle() {
@@ -28,7 +29,7 @@ public class QnaDTO {
 	public void setQnano(int qnano) {
 		this.qnano = qnano;
 	}
-	public void setKind(int kind) {
+	public void setKind(String kind) {
 		this.kind = kind;
 	}
 	public void setTitle(String title) {
