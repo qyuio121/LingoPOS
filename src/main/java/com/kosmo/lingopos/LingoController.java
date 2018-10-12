@@ -259,6 +259,7 @@ public class LingoController {
 		public String noticeView(Model model,@RequestParam Map map) throws Exception{
 			NoticeDTO dto = noticeService.selectOne(map);
 			model.addAttribute("record", dto);
+			model.addAttribute("nowPage", map.get("nowPage"));
 			return "notice/noticeView.tiles";
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
@@ -273,7 +274,7 @@ public class LingoController {
 		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, freepageSize, freeblockPage, nowPage, req.getContextPath()+"/Free/FreeView.Lingo?");
 		map.put("start", start);
 		map.put("end", end);
-		
+		System.out.println(map.get("searchColumn"));
 		List<FreeDTO> list = freeService.selectAll(map);
 		model.addAttribute("list", list);
 		model.addAttribute("pageString", pageString);
@@ -301,20 +302,20 @@ public class LingoController {
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 끝
 	//comment
 	@ResponseBody
-	@RequestMapping("/Comment/CommentWrite.Lingo")
+	@RequestMapping(value="/Comment/CommentWrite.Lingo",produces="text/html; charset=UTF-8")
 	public String commentWrite(@RequestParam Map map,HttpSession session) throws Exception{
 		map.put("id", session.getAttribute("id"));
 		commentService.insert(map);
 		return map.get("freeno").toString();
 	}
 	@ResponseBody
-	@RequestMapping("/Comment/CommentDelete.Lingo")
+	@RequestMapping(value="/Comment/CommentDelete.Lingo",produces="text/html; charset=UTF-8")
 	public String commentDelete(@RequestParam Map map) throws Exception{
 		commentService.delete(map);
 		return map.get("freeno").toString();
 	}
 	@ResponseBody
-	@RequestMapping("/Comment/Comment.Lingo")
+	@RequestMapping(value="/Comment/Comment.Lingo",produces="text/html; charset=UTF-8")
 	public String comment(@RequestParam Map map) throws Exception{
 		List<Map> list =commentService.selectList(map);
 		System.out.println(JSONArray.toJSONString(list));

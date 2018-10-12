@@ -9,9 +9,14 @@
 			</h2>
 		</div>
 		<div class="col-xs-6">
-			<form class="navbar-form navbar-right" id="gtBtn" style="margin-top: 50px" action="#" method="post">
+			<form class="navbar-form navbar-right" id="gtBtn" style="margin-top: 50px" action="<c:url value='/Free/Free.Lingo'/>" method="get">
 				<div class="form-group">
-					<input type="text" class="form-control" id="searchtext" placeholder="검색">
+					<select name="searchColumn" class="form-control">
+				       <option value="title">제목</option>
+				       <option value="id">작성자</option>
+				       <option value="content">내용</option>
+				    </select>
+					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 				</div>
 				<button type="submit" class="btn btn-default" style="margin-left: -3px">검색</button>
 			</form>
@@ -31,7 +36,7 @@
 					<tr style="text-align: center">
 						<td style="width: 5%">${totalRecordCount - (((nowPage - 1) * pageSize) + loop.index)}</td>
 						<td style="width: 50%">
-						<a href="<c:url value='/Free/FreeView.Lingo?freeno=${item.freeno}'/>">
+						<a href="<c:url value='/Free/FreeView.Lingo?freeno=${item.freeno}&searchColumn=${param.searchColumn}&searchWord=${param.searchWord}&nowPage=${nowPage}'/>">
 						${item.title}
 						</a></td>
 						<td style="width: 10%">${item.id}</td>

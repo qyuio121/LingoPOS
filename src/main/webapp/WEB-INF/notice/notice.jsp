@@ -34,7 +34,7 @@
 					<tr style="text-align: center">
 						<td style="width: 5%">${totalRecordCount - (((nowPage - 1) * pageSize) + loop.index)}</td>
 						<td style="width: 50%">
-						<a href="<c:url value='/Notice/NoticeView.Lingo?noticeno=${item.noticeno}'/>">
+						<a href="<c:url value='/Notice/NoticeView.Lingo?noticeno=${item.noticeno}&nowPage=${nowPage}'/>">
 						${item.title}
 						</a></td>
 						<td style="width: 10%">${item.adminnick}</td>

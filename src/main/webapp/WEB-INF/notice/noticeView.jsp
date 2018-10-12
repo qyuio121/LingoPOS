@@ -59,11 +59,12 @@ $(function(){
 		<div class="text-center">
 			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
 			<a href="#" class="btn btn-primary">삭제</a>
-			<a href="<c:url value='#'/>" class="btn btn-primary">목록</a>
+			<a href="<c:url value='/Notice/Notice.Lingo?nowPage=${nowPage}'/>" class="btn btn-primary">목록</a>
 		</div>
 	</div>			
 <!-- 버튼 3개 예시 끝 -->
 <!-- 버튼 3개 끝 -->
 <!-- 내용 끝 -->
+<br/><br/><br/>
 </div>
 	

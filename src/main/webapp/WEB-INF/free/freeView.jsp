@@ -112,7 +112,7 @@
 		<div class="text-center">
 			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
 			<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
-			<a href="<c:url value='#'/>" class="btn btn-primary">목록</a>
+			<a href="<c:url value='/Free/Free.Lingo?searchWord=${param.searchWord}&searchColumn=${param.searchColumn}&nowPage=${param.nowPage}'/>" class="btn btn-primary">목록</a>
 		</div>
 	</div>	
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
