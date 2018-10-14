@@ -495,5 +495,21 @@
 			시행한다. 제 2조 위치정보관리책임자는 2018년 9월 1일을 기준으로 다음과 같이 지정합니다. 1. 이름 : 홍길동 2.
 			연락처 : 02-000-0000
     </div>
-   
+    <br/>
+    <input type="checkbox" id="check">위 내용에 동의합니다
+    <br/>
+    <div style="text-align: center">
+	   <Button class="btn btn-primary" id="normal">일반 회원 가입</Button>
+	   <Button class="btn btn-danger" id="owner">사업자 회원 가입</Button>
+   </div>
+   <br/><br/><br/><br/>
   </div>
+ </div>
+ <script>
+ 	$("#normal").click(function(){
+ 		location.href("<c:url value='/Login/Signup/Signup.Lingo?kind=normal'/>");
+ 	});
+	$("#owner").click(function(){
+		location.href("<c:url value='/Login/Signup/Signup.Lingo?kind=owner'/>");
+ 	});
+ </script>

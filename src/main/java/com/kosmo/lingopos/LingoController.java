@@ -21,12 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kosmo.lingopos.comment.CommentService;
 import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
+import com.kosmo.lingopos.login.LoginDTO;
+import com.kosmo.lingopos.login.LoginService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
 
@@ -54,6 +58,7 @@ public class LingoController {
 	
 	@Resource(name="commentService")
 	private CommentService commentService;
+	
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
@@ -217,12 +222,10 @@ public class LingoController {
 	public String search() throws Exception{
 		return "reservation/search.tiles";
 	}
-	@RequestMapping("/Login/Login.Lingo")
-	public String login() throws Exception{
-		return "login/login.tiles";
-	}
+
 	@RequestMapping("/Login/Signup/Signup.Lingo")
-	public String signup() throws Exception{
+	public String signup(@RequestParam Map map,Model model) throws Exception{
+		model.addAttribute("kind",map.get("kind"));
 		return "login/signup/signup.tiles";
 	}
 	@RequestMapping("/Notice/Notice.Lingo")

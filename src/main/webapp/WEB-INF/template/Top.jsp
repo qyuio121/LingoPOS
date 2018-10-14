@@ -37,8 +37,15 @@
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="<c:url value='/Shop/Sales.Lingo'/>">매출</a></li>
 				<li><a href="<c:url value='/Reservation/Search.Lingo'/>">예약</a></li>
-				<li><a class="login/out" href="<c:url value='/Login/Login.Lingo'/>">로그인</a></li>
-				<li><a class="member" href="<c:url value='/Login/Signup/Signup.Lingo'/>">회원가입</a></li>
+				<c:if test="${not empty sessionScope.loginDTO}" var="result">
+
+				<li><a class="login/out" href="<c:url value='/Login/Logout.Lingo'/>">로그아웃</a></li>
+				</c:if>
+				<c:if test="${not result}">
+					<li><a class="login/out" href="<c:url value='/Login/Login.Lingo'/>">로그인</a></li>
+					<li><a class="member" href="<c:url value='/Login/Signup/Terms.Lingo'/>">회원가입</a></li>
+				</c:if>
+				
 			</ul>
 			<ul class="nav navbar-nav navbar-left">
 				<li class="dropdown " id="drop">
@@ -68,7 +75,6 @@
 						<li><a href="<c:url value='/Reservation/Detail.Lingo'/>">상세보기</a></li>
 						<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
 						<li><a href="<c:url value='/Login/Update/Update.Lingo'/>">회원수정</a></li>
-						<li><a href="<c:url value='/Login/Signup/Terms.Lingo'/>">약관</a></li>
 						<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
 						<li><a href="<c:url value='/Shop/Edit.Lingo'/>">가게수정</a></li>
 						<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>
@@ -98,7 +104,6 @@
 				<li><a href="<c:url value='/Reservation/Detail.Lingo'/>">상세보기</a></li>
 				<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
 				<li><a href="<c:url value='/Login/Update/Update.Lingo'/>">회원수정</a></li>
-				<li><a href="<c:url value='/Login/Signup/Terms.Lingo'/>">약관</a></li>
 				<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
 				<li><a href="<c:url value='/Shop/Edit.Lingo'/>">가게수정</a></li>
 				<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>

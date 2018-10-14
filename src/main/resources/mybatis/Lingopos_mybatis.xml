@@ -8,8 +8,8 @@
   <!-- 카운트 늘리는 것은 트리거로 작업할 예정 -->
 <mapper namespace="mybatis.Lingopos_mybatis">
 
-<select id="LingoLoginResult" parameterType="java.util.Map">
-	select * from user u left join owner o on u.id=o.id left join admin a on u.id=a.id where u.id = #{id};
+<select id="LingoLoginResult" parameterType="java.util.Map" resultType="loginDTO">
+	select u.id,ownerno,adminno from user u left join owner o on u.id=o.id left join admin a on u.id=a.id where u.id = #{id} and u.pwd = #{pwd};
 </select>
  <insert id="LingoAdminInsert" parameterType="java.util.Map">
  	insert into admin(adminnick,id) value(#{adminnick},#{id})

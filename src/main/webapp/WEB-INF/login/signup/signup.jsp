@@ -6,30 +6,39 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
  <script>
  $(function(){
-	 $('#frm').validate({
-		 rules:{
-			 id:"required",
-			 pass:"required",
-			 pass2:"required",
-			 name:"required",
-			 phone:"required"
-			 
-		 },messages:{
-			 id:"아이디입력하세요",
-			 pass:"비밀번호를입력하세요",
-			 pass2:"비밀번호를입력하세요",
-			 name:"이름을입력하세요",
-			 phone:"번호를입력하세요"
-		 }
-	 });
+	 
+		 $('#frm').validate({
+			 rules:{
+				 id:"required",
+				 pwd:"required",
+				 pass2:"required",
+				 email:"required",
+				 tel:"required",
+				 region:"required",
+				 ownerno:"required",
+				 storename:"required",
+				 storedoc:"required"
+				 
+			 },messages:{
+				 id:"아이디입력하세요",
+				 pwd:"비밀번호를입력하세요",
+				 pass2:"비밀번호를입력하세요",
+				 email:"이메일을입력하세요",
+				 tel:"번호를입력하세요",
+				 region:"지역을 입력하세요",
+				 ownerno:"사업자 번호를 입력하세요",
+				 storename:"가게이름을입력하세요",
+				 storedoc:"사업자 등록증을 등록해주세요"
+			 }
+		 });
+	 
  })
  </script>
-<div style="margin-top:150px">
-<form id="frm" action="">
+<div style="margin-top:150px;padding-bottom:150px">
+<form id="frm" action="<c:url value='/Login/Signup/SignupProcess.Lingo'/>">
 	<h1>LingoPOS 회원가입</h1>
 	<legend></legend>
 	<div class="col-sm-6">
-	
 		<div class="form-group">
 			<label>아이디</label> 
 			<input type="text"
@@ -39,8 +48,8 @@
 		<div class="form-group">
 			<label>비밀번호</label> 
 			<input type="password"
-				class="form-control" name="pass" placeholder="비밀번호를 입력해주세요">
-			<label for="pass" class="error" style="color:red"></label>
+				class="form-control" name="pwd" placeholder="비밀번호를 입력해주세요">
+			<label for="pwd" class="error" style="color:red"></label>
 		</div>
 		<div class="form-group">
 			<label>비밀번호 확인</label> 
@@ -49,107 +58,45 @@
 			<label for="pass2" class="error" style="color:red"></label>
 		</div>
 		<div class="form-group">
-			<label>이름</label> 
-			<input type="text"
-				class="form-control" name="name" placeholder="이름을 입력해주세요">
-			<label for="name" class="error" style="color:red"></label>
-		</div>
-		<div class="form-group">
 			<label>이메일</label> 
 			<input type="text"
-				class="form-control" id="email" placeholder="이메일을 입력해주세요">
+				class="form-control" name="email" placeholder="이메일을 입력해주세요">
+			<label for="email" class="error" style="color:red"></label>
 		</div>
 		<div class="form-group">
 			<label>휴대전화</label> 
 			<input type="text"
-				class="form-control" name="phone" placeholder="휴대전화를 입력해주세요">
-			<label for="phone" class="error" style="color:red"></label>
+				class="form-control" name="tel" placeholder="휴대전화를 입력해주세요">
+			<label for="tel" class="error" style="color:red"></label>
 		</div>
 		<div class="form-group">
 			<label>지역</label> 
 			<input type="text"
-				class="form-control" id="regi" placeholder="지역을 입력해주세요">
+				class="form-control" name="region" placeholder="지역을 입력해주세요">
+			<label for="region" class="error" style="color:red"></label>
 		</div>
-	
-	</div>
-	<div class="col-sm-6">
-		<label>이용약관</label>
-		<legend></legend>
-		<div style="overflow-y: scroll; height:400px;">
-1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"
-1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"1.동해물과백두산이마르고닳도록하느님이보우하사우리나라만세무궁화삼천리화려강산대한사람대한으로길이보전하세2.남산위에저소나무철갑을두른듯
-					바람서리불변함은우리기상일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					3.가을하늘공활한데높고구름없이
-					밝은달은우리가슴일편단심일세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세
-					4.이기상과이맘으로충성을다하여
-					괴로우나즐거우나나라사랑하세
-					무궁화삼천리화려강산
-					대한사람대한으로길이보전하세"
+		<c:if test="${kind == 'owner'}">
+		<div class="form-group">
+			<label>사업자 번호</label> 
+			<input type="text"
+				class="form-control" name="ownerno" placeholder="사업자 번호를 입력해주세요">
+			<label for="ownerno" class="error" style="color:red"></label>
 		</div>
-		<input type="checkbox" name="check">위 내용에 동의합니다
-		
+		<div class="form-group">
+			<label>가게명</label> 
+			<input type="text"
+				class="form-control" name="storename" placeholder="가게 이름을 입력해주세요">
+		<label for="storename" class="error" style="color:red"></label>
+		</div>
+		<div class="form-group">
+			<label>사업자 등록증</label> 
+			<input type="text"
+				class="form-control" name="storedoc" placeholder="사업자 등록증을 등록해주세요">
+		<label for="storedoc" class="error" style="color:red"></label>
+		</div>
+		</c:if>
+		<button type="submit" class="btn btn-primary">가입하기</button>
 	</div>
-	<button type="submit" class="btn btn-primary">가입하기</button>
 </form>
-</div>
 
-<!-- ?사장추가폼? -->
+</div>
