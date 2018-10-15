@@ -155,119 +155,64 @@ public class LingoController {
 	}
 
 	//창선 사진 등록  - 가게 전경 Controller
-
-	@ResponseBody
-
-	@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
-
-	public String storeUpload(MultipartHttpServletRequest mhsr) throws Exception{
-
-		//1]서버의 물리적 경로 얻기
-
-		String phicalPath=mhsr.getServletContext().getRealPath("/Images/store");
-
-		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
-
-		//MultipartFile객체 얻기
-
-		MultipartFile upload= mhsr.getFile("file");
-
-		//2]File객체 생성
-
-		//2-1]파일 중복시 이름 변경
-
-		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
-
-		File file = new File(phicalPath+File.separator+newFilename);
-
-		//2-2]폴더 없을 시 폴더 생성
-
-		if(!file.exists()) {
-
-			file.mkdirs();
-
+		@ResponseBody
+		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
+		public String storeUpload(MultipartHttpServletRequest mhsr) throws Exception{
+			//1]서버의 물리적 경로 얻기
+			String phicalPath=mhsr.getServletContext().getRealPath("/Images/store");
+			//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
+			//MultipartFile객체 얻기
+			MultipartFile upload= mhsr.getFile("file");
+			//2]File객체 생성
+			//2-1]파일 중복시 이름 변경
+			String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+			File file = new File(phicalPath+File.separator+newFilename);
+			//2-2]폴더 없을 시 폴더 생성
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			//3]업로드 처리		
+			upload.transferTo(file);
+			//4]DB에 저장할 서버에 저장된 파일명 
+			return phicalPath+File.separator+newFilename;
 		}
-
-		//3]업로드 처리		
-
-		upload.transferTo(file);
-
-		//4]DB에 저장할 서버에 저장된 파일명 
-
-		return phicalPath+File.separator+newFilename;
-
-	}
-
-	//창선 사진 삭제  - 가게 전경 Controller
-
-	@ResponseBody
-
-	@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.GET)
-
-	public void storeDelete(@RequestParam String removeFile) throws Exception{
-
-		File remove = new File(removeFile);
-
-		remove.delete();
-
-	}
-
-	//창선 사진 등록 - 메뉴 사진 Controller
-
-	@ResponseBody
-
-	@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST)
-
-	public String MenuUpload(MultipartHttpServletRequest mhsr) throws Exception{
-
-		//1]서버의 물리적 경로 얻기
-
-		String phicalPath=mhsr.getServletContext().getRealPath("/Images/menu");
-
-		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
-
-		//MultipartFile객체 얻기
-
-		MultipartFile upload= mhsr.getFile("file");
-
-		//2]File객체 생성
-
-		//2-1] 파일 중복시 이름 변경
-
-		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
-
-		File file = new File(phicalPath+File.separator+newFilename);
-
-		//2-2]폴더 없을 시 폴더 생성
-
-		if(!file.exists()) {
-
-			file.mkdirs();
-
+		//창선 사진 삭제  - 가게 전경 Controller
+		@ResponseBody
+		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.GET)
+		public void storeDelete(@RequestParam String removeFile) throws Exception{
+			File remove = new File(removeFile);
+			remove.delete();
 		}
-
-		//3]업로드 처리		
-
-		upload.transferTo(file);
-
-		//4]DB에 저장할 서버에 저장된 파일명 
-
-		return phicalPath+File.separator+newFilename;
-
-	}
-
-	//창선 사진 삭제 - 메뉴 사진 Controller
-
-	@ResponseBody
-
-	@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.GET)
-
-	public void MenuDelete(@RequestParam String removeFile) throws Exception{
-
-		File remove = new File(removeFile);
-
-		remove.delete();
-	}
+		//창선 사진 등록 - 메뉴 사진 Controller
+		@ResponseBody
+		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST)
+		public String MenuUpload(MultipartHttpServletRequest mhsr) throws Exception{
+			//1]서버의 물리적 경로 얻기
+			String phicalPath=mhsr.getServletContext().getRealPath("/Images/menu");
+			//1-1]MultipartHtWtpServletRequest객체의 getFile("파라미터명")메소드로
+			//MultipartFile객체 얻기
+			MultipartFile upload= mhsr.getFile("file");
+			//2]File객체 생성
+			//2-1] 파일 중복시 이름 변경
+			String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+			File file = new File(phicalPath+File.separator+newFilename);
+			//2-2]폴더 없을 시 폴더 생성
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			//3]업로드 처리		
+			upload.transferTo(file);
+			//4]DB에 저장할 서버에 저장된 파일명 
+			return phicalPath+File.separator+newFilename;
+		}
+		//창선 사진 삭제 - 메뉴 사진 Controller
+		@ResponseBody
+		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.GET)
+		public void MenuDelete(@RequestParam String removeFile) throws Exception{
+			File remove = new File(removeFile);
+			remove.delete();
+		}
+		
 	
 	
 	
