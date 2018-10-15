@@ -51,16 +51,19 @@
 					</td>
 		</c:if>
 	</table>
-	<div class="row">
-		<div class="btn-group btn-group-justified" role="group" aria-label="...">
-			<div class="col-xs-12" >
-				<div class="btn-toolbar pull-right" >
-				  	<div class="btn-group " role="group">
-				    	<button type="button" class="btn btn-primary" id="updateBtn">등록</button>
-				  	</div>
-				</div>
-		  	</div>
+	<c:if test="${not empty sessionScope.loginDTO.id}" var="result">
+		<div class="row">
+			<div class="btn-group btn-group-justified" role="group" aria-label="...">
+				<div class="col-xs-12" >
+					<div class="btn-toolbar pull-right" >
+					  	<div class="btn-group " role="group">
+					    	<a href="<c:url value='/Free/FreeWrite.Lingo'/>"><button type="button" class="btn btn-primary" id="updateBtn">등록</button></a>
+					  	</div>
+					</div>
+			  	</div>
+			</div>
 		</div>
-	</div>
+	</c:if>
+	
 	${pageString}
 </div>

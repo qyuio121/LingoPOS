@@ -18,6 +18,9 @@ public class NoticeService {
 	public int update(Map map) {
 		return dao.update(map);
 	}
+	public void updateCount(Map map) {
+		dao.updateCount(map);
+	}
 	public int delete(Map map) {
 		return dao.delete(map);
 	}

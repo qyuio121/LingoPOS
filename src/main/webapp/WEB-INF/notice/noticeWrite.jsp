@@ -126,7 +126,7 @@ $(function(){
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 폼 시작 -->
- 	<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" action='<c:url value="/Question/QNAList.Lingo"/>'>
+ <form id="frm" class="form-horizontal" method="post" action='<c:url value="/Notice/NoticeWrite.Lingo"/>'>
 <!-- 제목 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">공지제목</label>
@@ -142,7 +142,7 @@ $(function(){
 			<label class="col-sm-2 control-label">내용</label>
 			<div class="col-sm-10">
 <!-- 서머노트 시작 -->			
-				<textarea name="content" id="summernote" value=""></textarea>
+				<textarea name="content" id="summernote"></textarea>
 				<label style="color:red" id="error"></label>  
 <!-- 서머노트 끝 -->				
 		  	</div>
@@ -156,7 +156,10 @@ $(function(){
 			<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button>     
   		</div>
 	</div>
+	
 <!-- 버튼 2개 끝 - 등록하기 / 취소  -->
+	<input type="hidden" name="adminno" value="${sessionScope.loginDTO.adminno}">
+	
 </form>
 <!-- 폼 시작 -->    
 <!-- 내용 끝 -->   

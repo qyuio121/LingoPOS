@@ -41,13 +41,13 @@
  	insert into comment(comment,id,freeno) value(#{comment},#{id},#{freeno})
  </insert>
  <delete id="LingoCommentDelete" parameterType="java.util.Map">
- 	delete comment where commentno=#{commentno}
+ 	delete from comment where commentno=#{commentno}
  </delete>
  <select id="LingoCommentSelect" parameterType="java.util.Map" resultType="java.util.Map">
  	select * from comment where freeno = #{freeno} order by commentno desc
  </select>
  <delete id="LingoCommentDeleteByNo" parameterType="java.util.Map">
-	delete comment where freeno=#{freeno}
+	delete from comment where freeno=#{freeno}
 </delete>
  
  <insert id="LingoFoodimgInsert" parameterType="java.util.Map">
@@ -66,8 +66,11 @@
  <update id="LingoFreeUpdate" parameterType="java.util.Map">
  	update free set title = #{title},content = #{content} where freeno=#{freeno}
  </update>
+ <update id="LingoFreeCountUpdate" parameterType="java.util.Map">
+ 	update free set count = count+1 where freeno=#{freeno}
+ </update>
  <delete id="LingoFreeDelete" parameterType="java.util.Map">
- 	delete free where freeno=#{freeno}
+ 	delete from free where freeno=#{freeno}
  </delete>
  <select id="LingoFreeSelectOne" parameterType="java.util.Map" resultType="freeDTO">
  	select * from free where freeno = #{freeno} 
@@ -128,8 +131,11 @@
  <update id="LingoNoticeUpdate" parameterType="java.util.Map">
  	update notice set title = #{title},content = #{content} where noticeno=#{noticeno}
  </update>
+ <update id="LingoNoticeCountUpdate" parameterType="java.util.Map">
+ 	update notice set count = count+1 where noticeno=#{noticeno}
+ </update>
  <delete id="LingoNoticeDelete" parameterType="java.util.Map">
- 	delete notice where noticeno=#{noticeno}
+ 	delete from notice where noticeno=#{noticeno}
  </delete>
  <select id="LingoNoticeSelectOne" parameterType="java.util.Map" resultType="noticeDTO">
  	select n.*,adminnick from notice n join admin a on n.adminno=a.adminno where noticeno = #{noticeno} 

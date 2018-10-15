@@ -29,7 +29,7 @@
 			commentString+='<td align="left">'+comment['comment']+'</td>'; 
 			commentString+='<td>'+comment['commentdate']+'</td>';
 			commentString+='<td>';
-			if('${sessionScope.id}' == comment["id"])
+			if('${sessionScope.loginDTO.id}' == comment["id"])
 				commentString+='<span class="commentDelete" title="'+comment["commentno"]+'" style="cursor: pointer; color: green; font-size: 1.4em; font-weight: bold">삭제</span>';
 			else
 				commentString+='<span style="color: gray; font-size: 0.7em; font-weight: bold">삭제불가</span>';
@@ -73,8 +73,13 @@
 					showComments(key);
 				}		
 			});		
-			
+			$("#comment").val("");
 		});		
+		$('#del_memo').click(function(){
+			if(confirm("정말 삭제 하시겠습니까")){
+				location.replace("<c:url value='/Free/FreeDelete.Lingo?freeno=${record.freeno}'/>");
+			}
+		});
 	});
 </script>
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
@@ -110,22 +115,25 @@
 <!-- 상세보기 내용 예시 끝  -->
 	<div class="row">
 		<div class="text-center">
-			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
-			<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
+			<c:if test="${sessionScope.loginDTO.id==record.id }">
+				<a href="<c:url value='/Free/FreeEdit.Lingo?freeno=${record.freeno}'/>" class="btn btn-primary">수정</a>
+				<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
+			</c:if>
 			<a href="<c:url value='/Free/Free.Lingo?searchWord=${param.searchWord}&searchColumn=${param.searchColumn}&nowPage=${param.nowPage}'/>" class="btn btn-primary">목록</a>
 		</div>
 	</div>	
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
 	<div class="row">
-		<h3>댓글 입력 폼</h3>
-		<form class="form-inline" id="frm" >
-			<input type="hidden" name="no" value="${record.freeno}" />
-			<!-- 수정 및 삭제용 파라미터 -->
-			<input type="hidden" name="cno" />
-			<input placeholder="댓글을 입력하세요" id="title" class="form-control" type="text" size="50" name="onelinecomment" />
-			<input class="btn btn-primary" id="submit" type="button" value="등록" /></td>
-				
-		</form>
+		<c:if test="${not empty sessionScope.loginDTO.id}">
+			<h3>댓글 입력 폼</h3>
+			<form class="form-inline" id="frm" >
+				<input type="hidden" name="freeno" value="${record.freeno}" />
+				<!-- 수정 및 삭제용 파라미터 -->
+				<input type="hidden" name="id" value="${sessionScope.loginDTO.id}" />
+				<input placeholder="댓글을 입력하세요" id="comment" class="form-control" type="text" size="50" name="comment" />
+				<input class="btn btn-primary" id="submit" type="button" value="등록" />	
+			</form>
+		</c:if>
 	</div>
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  끝 -->
 <!-- DB연결시 답변 목록 시작 -->

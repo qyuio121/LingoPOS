@@ -19,6 +19,9 @@ public class NoticeDAO {
 	public int update(Map map) {
 		return template.update("LingoNoticeUpdate",map);
 	}
+	public void updateCount(Map map) {
+		 template.update("LingoNoticeCountUpdate",map);
+	}
 	public int delete(Map map) {
 		return template.delete("LingoNoticeDelete",map);
 	}

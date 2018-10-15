@@ -499,17 +499,28 @@
     <input type="checkbox" id="check">위 내용에 동의합니다
     <br/>
     <div style="text-align: center">
-	   <Button class="btn btn-primary" id="normal">일반 회원 가입</Button>
-	   <Button class="btn btn-danger" id="owner">사업자 회원 가입</Button>
+	   <a href="<c:url value='/Login/Signup/Signup.Lingo?kind=normal'/>"><Button class="btn btn-primary" id="normal">일반 회원 가입</Button></a>
+	   <a href="<c:url value='/Login/Signup/Signup.Lingo?kind=owner'/>"><Button class="btn btn-danger" id="owner">사업자 회원 가입</Button></a>
    </div>
    <br/><br/><br/><br/>
   </div>
  </div>
  <script>
- 	$("#normal").click(function(){
- 		location.href("<c:url value='/Login/Signup/Signup.Lingo?kind=normal'/>");
- 	});
-	$("#owner").click(function(){
-		location.href("<c:url value='/Login/Signup/Signup.Lingo?kind=owner'/>");
- 	});
+ $('#normal').click(function(){
+	 var checked = $('#check').is(':checked');
+	 if(!checked){
+		 alert("약관을 동의해야 회원가입이 가능합니다.");
+		 return false;
+	 }
+	 return true;
+ });
+ $('#owner').click(function(){
+	 var checked = $('#check').is(':checked');
+	 console.log(checked);
+	 if(!checked){
+		 alert("약관을 동의해야 회원가입이 가능합니다.");
+		 return false;
+	 }
+	 return true;
+ });
  </script>

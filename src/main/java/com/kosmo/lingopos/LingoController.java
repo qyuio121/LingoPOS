@@ -250,16 +250,34 @@ public class LingoController {
 		return "notice/notice.tiles";
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
-		@RequestMapping("/Notice/NoticeWrite.Lingo")
+		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.GET)
 		public String noticeWrite() throws Exception{
 			return "notice/noticeWrite.tiles";
 		}
-		@RequestMapping("/Notice/NoticeEdit.Lingo")
-		public String noticeEdit() throws Exception{
+		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.POST)
+		public String noticeWriteOk(@RequestParam Map map) throws Exception{
+			noticeService.insert(map);
+			return "forward:/Notice/Notice.Lingo";
+		}
+		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.GET)
+		public String noticeEdit(Model model,@RequestParam Map map) throws Exception{
+			NoticeDTO dto = noticeService.selectOne(map);
+			model.addAttribute("record", dto);
 			return "notice/noticeEdit.tiles";
+		}
+		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.POST)
+		public String noticeEditOk(@RequestParam Map map) throws Exception{
+			noticeService.update(map);
+			return "forward:/Notice/NoticeView.Lingo?noticeno="+map.get("noticeno");
+		}
+		@RequestMapping("/Notice/NoticeDelete.Lingo")
+		public String noticeDelete(@RequestParam Map map) throws Exception{
+			noticeService.delete(map);
+			return "forward:/Notice/Notice.Lingo";
 		}
 		@RequestMapping("/Notice/NoticeView.Lingo")
 		public String noticeView(Model model,@RequestParam Map map) throws Exception{
+			noticeService.updateCount(map);
 			NoticeDTO dto = noticeService.selectOne(map);
 			model.addAttribute("record", dto);
 			model.addAttribute("nowPage", map.get("nowPage"));
@@ -294,26 +312,47 @@ public class LingoController {
 		return "free/free.tiles";
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 시작
-	@RequestMapping("/Free/FreeWrite.Lingo")
+	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.GET)
 	public String freeWrite() throws Exception{
 		return "free/freeWrite.tiles";
 	}
-	@RequestMapping("/Free/FreeEdit.Lingo")
-	public String freeEdit() throws Exception{
+	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.POST)
+	public String freeWriteOk(@RequestParam Map map) throws Exception{
+		freeService.insert(map);
+		return "forward:/Free/Free.Lingo";
+	}
+	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.GET)
+	public String freeEdit(Model model,@RequestParam Map map) throws Exception{
+		FreeDTO dto = freeService.selectOne(map);
+		model.addAttribute("record", dto);
 		return "free/freeEdit.tiles";
+	}
+	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.POST)
+	public String freeEditOk(@RequestParam Map map) throws Exception{
+		freeService.update(map);
+		return "forward:/Free/FreeView.Lingo?freeno="+map.get("freeno");
 	}
 	@RequestMapping("/Free/FreeView.Lingo")
 	public String freeView(Model model,@RequestParam Map map) throws Exception{
+		freeService.updateCount(map);
 		FreeDTO dto = freeService.selectOne(map);
 		model.addAttribute("record", dto);
+		model.addAttribute("nowPage", map.get("nowPage"));
+		model.addAttribute("searchWord", map.get("searchWord"));
+		model.addAttribute("searchColumn", map.get("searchColumn"));
 		return "free/freeView.tiles";
+	}
+	@RequestMapping("/Free/FreeDelete.Lingo")
+	public String freeDelete(@RequestParam Map map) throws Exception{
+		commentService.deletebyno(map);
+		freeService.delete(map);
+		return "forward:/Free/Free.Lingo";
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 끝
 	//comment
 	@ResponseBody
 	@RequestMapping(value="/Comment/CommentWrite.Lingo",produces="text/html; charset=UTF-8")
 	public String commentWrite(@RequestParam Map map,HttpSession session) throws Exception{
-		map.put("id", session.getAttribute("id"));
 		commentService.insert(map);
 		return map.get("freeno").toString();
 	}

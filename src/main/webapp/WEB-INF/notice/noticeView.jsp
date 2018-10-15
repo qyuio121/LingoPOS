@@ -4,7 +4,12 @@
 	
 <script>
 $(function(){
+	$('#del_memo').click(function(){
+			if(confirm("정말 삭제 하시겠습니까")){
+				location.replace("<c:url value='/Notice/NoticeDelete.Lingo?noticeno=${record.noticeno}'/>");
+			}
 	});
+});
 </script>
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
@@ -40,31 +45,21 @@ $(function(){
 <!-- 상세보기 내용 예시 끝  -->
 <!-- 버튼 3개 시작 -->
 <!-- 버튼 3개 시작  DB연결 전까지 대기 시작 -->
-	<%-- 
+
 	<div class="row">
 		<div class="text-center">
-			<c:if test="${sessionScope.id==record.id }">
-				<a  href="<c:url value='/BBS/Edit.bbs?no=${record.no}'/>"
+			<c:if test="${sessionScope.loginDTO.adminno==record.adminno}">
+				<a  href="<c:url value='/Notice/NoticeEdit.Lingo?noticeno=${record.noticeno}'/>"
 					class="btn btn-success">수정</a>
 				<a id="del_memo" href="#" class="btn btn-success">삭제</a>
 			</c:if>
-			<a href="<c:url value='/BBS/List.bbs'/>" class="btn btn-success">목록</a>
+			<a href="<c:url value='/Notice/Notice.Lingo?nowPage=${nowPage}'/>" class="btn btn-success">목록</a>
 
 		</div>
 	</div>
-	--%> 
 <!-- 버튼 3개 시작  DB연결 전까지 대기 끝 -->
-<!-- 버튼 3개 예시 시작 -->
-	<div class="row">
-		<div class="text-center">
-			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
-			<a href="#" class="btn btn-primary">삭제</a>
-			<a href="<c:url value='/Notice/Notice.Lingo?nowPage=${nowPage}'/>" class="btn btn-primary">목록</a>
-		</div>
-	</div>			
-<!-- 버튼 3개 예시 끝 -->
+
 <!-- 버튼 3개 끝 -->
 <!-- 내용 끝 -->
 <br/><br/><br/>
 </div>
-	

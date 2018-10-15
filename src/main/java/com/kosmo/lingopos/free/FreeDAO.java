@@ -19,6 +19,9 @@ public class FreeDAO {
 	public int update(Map map) {
 		return template.update("LingoFreeUpdate",map);
 	}
+	public void updateCount(Map map) {
+		template.update("LingoFreeCountUpdate",map);
+	}
 	public int delete(Map map) {
 		return template.delete("LingoFreeDelete",map);
 	}

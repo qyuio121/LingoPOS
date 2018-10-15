@@ -49,6 +49,19 @@
 					</td>
 				</c:if>
 			</table>
+			<div class="row">
+			<c:if test="${not empty sessionScope.loginDTO.adminno}" var="result">
+				<div class="btn-group btn-group-justified" role="group" aria-label="...">
+					<div class="col-xs-12" >
+						<div class="btn-toolbar pull-right" >
+						  	<div class="btn-group " role="group">
+						    	<a href="<c:url value='/Notice/NoticeWrite.Lingo'/>"><button type="button" class="btn btn-primary" id="updateBtn">등록</button></a>
+						  	</div>
+						</div>
+				  	</div>
+				</div>
+			</c:if>
+	</div>
 		</div>
 		${pageString}
 	</div>
