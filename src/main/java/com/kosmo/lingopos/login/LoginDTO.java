@@ -4,6 +4,7 @@ public class LoginDTO {
 	private String id;
 	private String ownerno;
 	private String adminno;
+	private String storeno;
 	public String getId() {
 		return id;
 	}
@@ -21,5 +22,11 @@ public class LoginDTO {
 	}
 	public void setAdminno(String adminno) {
 		this.adminno = adminno;
+	}
+	public String getStoreno() {
+		return storeno;
+	}
+	public void setStoreno(String storeno) {
+		this.storeno = storeno;
 	}
 }

@@ -193,21 +193,34 @@
                 });
             }
             	
-            //DB연결시 파일 객체 얻을 거 실질적인 AJAX DATA 객체 넘기는 곳
+          //DB연결시 파일 객체 얻을 거 실질적인 AJAX DATA 객체 넘기는 곳
+
             $.ajax({
+
                 url: settings.directUpload.url,
+
                 type: 'POST',
+
                 data: formData,
+
                 cache: false,
+
                 processData: false,
+
                 contentType: false,	
+
                 success: function(data, textStatus, jqXHR){
+
                 	
+
                 	//DB연결 전 테스트용
-                	$('#hiddenFile').val(image);
+
+                	$('#hiddenFile').val("1");
+
                 	//DB연결 전 테스트용
-                	indexArray.push(data);
-                	indexRealFile.push(data);
+
+                	indexStore.push(data);
+
                 	
                 	
                     $(parent).find('[data-spartanindexloader="'+index+'"]').css('display', 'none');
@@ -243,28 +256,55 @@
             total_count--;
             settings.onRemoveRow.call(this, index);
             
-            //삭제 파일명 가져오기
-            var fileRemove = "removeFile="+indexArray[index];
             
-            //삭제 로직 시작
-            $.ajax({
-                url: settings.directUpload.url,
-                type: 'get',
-                data: fileRemove,
-                cache: false,
-                processData: false,
-                contentType: false,	
-                success: function(data){
-                	//실제 저장된 파일명 목록에서 삭제
-                	indexRealFile.splice(index,1)
-                	console.log(indexArray+"삭제 후 업로드되었던 모든 이미지");
-                	console.log(indexRealFile+"삭제 후 서버에 저장된 이미지");
-                },
-                error: function(data){
-                	
-                }
-            });
-            //삭제 로직 끝
+
+          //삭제 파일명 가져오기
+
+                      var file = indexStore[index];
+
+                      var fileRemove = "removeFile="+encodeURI(file);
+
+                     
+
+                      
+
+                      //삭제 로직 시작
+
+                      $.ajax({
+
+                          url: settings.directUpload.url,
+
+                          type: 'get',
+
+                          data: fileRemove,
+
+                          cache: false,
+
+                          processData: false,
+
+                          contentType: false,	
+
+                          success: function(data){
+
+                          	//실제 저장된 파일명 목록에서 삭제
+
+                          	indexRealStore.splice(indexRealStore.indexOf(data),1);
+
+                          	console.log(indexStore+"삭제 후 업로드되었던 모든 이미지");
+
+                          	console.log(indexRealStore+"삭제 후 서버에 저장된 이미지");
+
+                          },
+
+                          error: function(data){
+
+                          	
+
+                          }
+
+                      });
+
+                      //삭제 로직 끝
         }
 
 

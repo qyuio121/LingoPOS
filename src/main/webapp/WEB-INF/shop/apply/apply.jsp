@@ -32,24 +32,21 @@ $(function(){
 			addr2:"required",
 			addr3:"required",
 			foodselect1:"required",
-			teltext1:"required",
-			teltext2:"required",
+			tel:"required",
 			coba:"required",
 			check:"required",
 			hiddenFile :"required",
-			menu : "required",
 			table : "required"
+			
 		},messages:{
 			name:"가게명을 입력하세요.",
 			addr1:"우편번호를 입력하세요.",
 			addr2:"주소를 입력하세요.",
 			addr3:"상세주소를 입력하세요.",
 			foodselect1:"음식분류1를 선택하세요.",
-			teltext1:"번호 앞자리를 입력하세요.",
-			teltext2:"번호  뒷자리를 입력하세요.",
+			tel:"번호 앞자리를 입력하세요.",
 			hiddenFile:"사진을 업로드하세요.",
 			check:"가게정보  수집 동의에 체크하세요.",
-			menu : "메뉴 종류를 입력하세요.",
 			table : "테이블 수를 선택하세요."
 		}});
 	
@@ -177,8 +174,7 @@ $(function(){
 		<div class="form-group">
 			<label class="col-sm-2 control-label">가게명</label>
 			<div class="col-sm-3">
-				<input type="text" class="form-control" placeholder="가게명을 입력해주세요"   name="name" id="name">
-			    
+				<input type="text" class="form-control" placeholder="가게명을 입력해주세요" name="storename" id="storename">	    
 			    <label for="name" class="error" style="color:red"></label>
 			</div>
 		</div>
@@ -205,20 +201,11 @@ $(function(){
 	 	<div class="form-group">
 			<label class="col-sm-2 control-label">가게전화번호</label>
 			<div class="col-sm-10">
-		    	<select class="form-control col-sm-4" style="width: 20%" id="telselect" name="telselect">
-		      		<option value="010">010</option>
-		            <option value="011">011</option>
-		            <option value="017">017</option>
-		            <option value="019">019</option>
-		      	</select>
-		        <input type="text" class="form-control" placeholder="앞자리를 입력해주세요"  style="width: 20%"  name="teltext1" id="teltext1">
-				<input type="text" class="form-control" placeholder="뒷자리를 입력해주세요"  style="width: 20%"  name="teltext2" id="teltext2">
-	    	</div>
+		        <input type="text" class="form-control" placeholder="가게 번호를 입력해주세요"  style="width: 20%"  name="tel" id="tel">
+			</div>
 		    <label class="col-sm-2 control-label"></label>
 		    <div class="col-sm-10">
-		    	<label for="telselect" class="error" style="color:red"></label>
-			    <label for="teltext1" class="error" style="color:red"></label>
-			    <label for="teltext2" class="error" style="color:red"></label>
+		    	<label for="tel" class="error" style="color:red"></label>
 		    </div>
 		</div>
 <!-- 전화번호   끝-->		
@@ -227,10 +214,10 @@ $(function(){
 			<label class="col-sm-2 control-label">영업시간</label>
 			<div class="col-sm-10">
 				<label class="control-label" for="timepicker">개장시간</label>
-        		<input type="text" id="startTime" name="startTime" class="timepicker form-control time" style="width: 20%;display: inline-block"><br>
+        		<input type="text" id="startTime" name="opentime" class="timepicker form-control time" style="width: 20%;display: inline-block"><br>
         		
         		<label class="control-label" for="timepicker-two">종료시간</label>
-        		<input type="text" id="endTime" name="endTime" class="timepicker-two form-control time" style="width: 20%;display: inline-block"><br>
+        		<input type="text" id="endTime" name="closetime" class="timepicker-two form-control time" style="width: 20%;display: inline-block"><br>
         		<label class="timeError" style="color:red"></label>  	
         	</div>
 		</div>
@@ -239,9 +226,9 @@ $(function(){
 		<div class="form-group">
 			<label class="col-sm-2 control-label">가게 테이블 수</label>
 			<div class="col-sm-10">
-		    	<select class="form-control col-sm-4" style="width: 20%" id="table" name="table">
+		    	<select class="form-control col-sm-4" style="width: 20%" id="tablenum" name="tablenum">
 		      			<option value="">테이블 수</option>
-		           	<c:forEach begin="5" end="10" var="i">
+		           	<c:forEach begin="5" end="15" var="i">
 			            <option value="${i}">${i}</option>
 			        </c:forEach>
 		      	</select>
@@ -256,8 +243,8 @@ $(function(){
 		<div class="form-group">
 	    	<label  class="col-sm-2 control-label">음식분류</label>
 	    	<div class="col-sm-10">
-	      		<select class="form-control col-sm-4" style="width: 20%" id="foodselect1" name="foodselect1" >
-		      		<option value="" >음식분류선택1</option>
+	      		<select class="form-control col-sm-4" style="width: 20%" id="bigkind" name="bigkind" >
+		      		<option value="" >음식분류선택</option>
 		            <option value="한식">한식</option>
 		            <option value="양식">양식</option>
 		            <option value="중식">중식</option>
@@ -266,21 +253,11 @@ $(function(){
 	      	</div>
 	    	<label  class="col-sm-2 control-label"></label>
 	    	<div class="col-sm-10">
-	    		<label for="foodselect1" class="error" style="color:red"></label>
-	   			<label for="foodselect2" class="error" style="color:red"></label>
+	    		<label for="bigkind" class="error" style="color:red"></label>
 	    	</div>
 	  	</div>
 <!--음식 분류 AJAX 셀렉터 2개  시작 DB연결 DB로 대체 끝 -->
-<!-- 메뉴 종류 시작 -->
-		<div class="form-group">
-			<label  class="col-sm-2 control-label">메뉴종류</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" placeholder="ex)감자탕/순대국/소머리국밥/내장탕"  style="width: 40%"  name="menu" id="menu">
-				
-				 <label for="menu" class="error" style="color:red"></label>
-			</div>	 
-		</div>
-<!-- 메뉴 종류 끝 -->
+
 <!-- 메뉴 사진 시작  -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">메뉴 사진</label>
