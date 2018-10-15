@@ -4,7 +4,7 @@
 
 <!-- 주소 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8b1f17eca567f307bb9f9a105ef8e9f&libraries=services,clusterer,drawing"></script>
 <!-- 사진 등록 plug in -->
 <!-- 공통 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" >
@@ -25,13 +25,14 @@
 $(function(){
 	var postcode;//우편번호 변수 설정
 	var addr;//상세주소 변수 설정
+	
 	$('#frm').validate({
 		rules:{
 			name:"required",
 			addr1:"required",
 			addr2:"required",
 			addr3:"required",
-			foodselect1:"required",
+			bigkind:"required",
 			tel:"required",
 			coba:"required",
 			check:"required",
@@ -43,7 +44,7 @@ $(function(){
 			addr1:"우편번호를 입력하세요.",
 			addr2:"주소를 입력하세요.",
 			addr3:"상세주소를 입력하세요.",
-			foodselect1:"음식분류1를 선택하세요.",
+			bigkind:"음식분류1를 선택하세요.",
 			tel:"번호 앞자리를 입력하세요.",
 			hiddenFile:"사진을 업로드하세요.",
 			check:"가게정보  수집 동의에 체크하세요.",
@@ -52,15 +53,19 @@ $(function(){
 	
 	//validate
 	$('#confirm').click(function(){
-		if($('#frm').valid() && $('#hiddenFile').val() != "" && $('#startTime').val()!=$('#endTime').val()){
-			$('#frm').submit();}
+		if($('#frm').valid() && $('#hiddenStore').val() != "" && $('#startTime').val()!=$('#endTime').val()){
+			
+			$('#frm').submit();
+		}else{
+			if($('#hiddenStore').val() == "")
+				$('#hiddenStore').next().html("가게사진을 업로드하세요");	
+			if($('#hiddenMenu').val() == "")
+				$('#hiddenMenu').next().html("메뉴사진을 업로드하세요");	
+			if($('#startTime').val()==$('#endTime').val())
+					$('.timeError').html("영업시간을 선택하세요");	
+			return false;
+		}
 		
-		if($('#hiddenFile').val() == "")
-			$('#hiddenFile').next().html("가게사진을 업로드하세요");	
-		if($('#hiddenFile1').val() == "")
-			$('#hiddenFile1').next().html("메뉴사진을 업로드하세요");	
-		if($('#startTime').val()==$('#endTime').val())
-				$('.timeError').html("영업시간을 선택하세요");	
 	})
 	
 	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
@@ -99,7 +104,14 @@ $(function(){
 	                $("#addr1").val(postcode);
 	              	$("#addr2").val(addr);
 	              	$('#addr1Error').html("");	
-	              	$('#addr2Error').html("");	
+	              	$('#addr2Error').html("");
+	              	var geocoder = new daum.maps.services.Geocoder();
+	    			geocoder.addressSearch($("#addr2").val(),function(result, status){
+	    				 if (status === daum.maps.services.Status.OK) {
+	    					 $('#x').val(result[0].x);
+	    					 $('#y').val(result[0].y);
+	    				 }
+	    			});
 	 			},
 	        shorthand : false
 	        }).open();
@@ -169,12 +181,12 @@ $(function(){
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 가게 등록 입력 폼 시작 -->
-	<form id="frm" class="form-horizontal" action='<c:url value="/Reservation/Detail.Lingo"/>'  method="post" >
+	<form id="frm" class="form-horizontal" action='<c:url value="/Shop/Apply.Lingo"/>' method="post" accept-charset="UTF-8">
 <!--가입 가게 이름 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">가게명</label>
 			<div class="col-sm-3">
-				<input type="text" class="form-control" placeholder="가게명을 입력해주세요" name="storename" id="storename">	    
+				<input type="text" class="form-control" value=${storename } name="storename" id="storename" readOnly>	    
 			    <label for="name" class="error" style="color:red"></label>
 			</div>
 		</div>
@@ -267,7 +279,7 @@ $(function(){
 				</div>
 			</div>
 			<div class="col-md-8">
-				<input type="hidden" name="hiddenFile1" id="hiddenFile1" value="" />
+						<input type="hidden" id="hiddenMenu" name="hiddenMenu"/> 
 				<label class="col-sm-offset-3" style="color:red"></label>  
 			</div>
 		</div>	
@@ -281,7 +293,7 @@ $(function(){
 				</div>
 			</div>
 			<div class="col-md-8">
-				<input type="hidden" name="hiddenFile" id="hiddenFile" value="" />
+				<input type="hidden" id="hiddenStore" name="hiddenStore"/>	
 				<label class="col-sm-offset-3" style="color:red"></label>  
 			</div>
 		</div>	
@@ -304,7 +316,10 @@ $(function(){
 		   		<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button><!-- 취소 -->     
 		  	</div>
 		</div>
-<!-- 버튼 2개 끝 - 문의하기 / 취소  -->		  
+<!-- 버튼 2개 끝 - 문의하기 / 취소  -->	
+
+		<input type="hidden" id="x" name="x"/>	
+		<input type="hidden" id="y" name="y"/>  
 	</form>	  
 <!-- 가게 등록 입력 폼 끝 -->
 <!-- 내용 끝 -->

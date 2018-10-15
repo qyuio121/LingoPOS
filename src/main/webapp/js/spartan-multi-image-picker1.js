@@ -206,8 +206,7 @@
                 contentType: false,	
                 success: function(data, textStatus, jqXHR){
                 	
-                	//DB연결 전 테스트용
-                	$('#hiddenFile1').val(image);
+                	
                 	//DB연결 전 테스트용
 
                 	var addss = data;
@@ -218,7 +217,7 @@
       	
                 	indexMenu.push(data);
                 	indexRealMenu.push(data);
-               	
+                	$('#hiddenMenu').val(indexRealMenu);
                 	
                     $(parent).find('[data-spartanindexloader="'+index+'"]').css('display', 'none');
 

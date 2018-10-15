@@ -202,12 +202,13 @@
                 contentType: false,	
                 success: function(data, textStatus, jqXHR){
                 	
-                	//DB연결 전 테스트용
-                	$('#hiddenFile').val("1");
+                	
                 	//DB연결 전 테스트용
                 	indexStore.push(data);
                 	indexRealStore.push(data);
                 	
+                	//DB연결 전 테스트용
+                	$('#hiddenStore').val(indexRealStore);
                 	
                     $(parent).find('[data-spartanindexloader="'+index+'"]').css('display', 'none');
 
@@ -246,6 +247,7 @@
 
             //삭제 파일명 가져오기
             var file = indexStore[index];
+            console.log(file);
             var fileRemove = encodeURI("removeFile="+file);
            
             

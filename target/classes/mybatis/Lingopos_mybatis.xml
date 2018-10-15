@@ -119,7 +119,7 @@
  	update map set x = #{x},y = #{y}, img=#{img} from storeno = #{storeno}
  </update>
  <delete id="LingoMapDelete" parameterType="java.util.Map">
- 	delete map where storeno=#{storeno}
+ 	delete from map where storeno=#{storeno}
  </delete>
  <select id="LingoMapSelect" parameterType="java.util.Map" resultType="mapDTO">
  	select m.*,storename,address,tel,bigkind from store s join map m on s.storeno=m.storeno
@@ -158,6 +158,9 @@
  </delete>
  <select id="LingoOwnerSelectAdmin" resultType="ownerDTO">
  	select * from owner where isallowed = false
+ </select>
+ <select id="LingoOwnerSelect" parameterType="java.util.Map" resultType="ownerDTO">
+ 	select storename from owner where ownerno = #{ownerno}
  </select>
  
  <insert id="LingoQnaInsert" parameterType="java.util.Map">
@@ -240,6 +243,9 @@
  </delete>
  <select id="LingoStoreSelect" parameterType="java.util.Map" resultType="storeDTO">
  	select storename,address,tel,opentime,closetime,tablenum,bigkind,atable from store where storeno=#{storeno}
+ </select>
+ <select id="LingoStoreSelectbyID" parameterType="java.util.Map" resultType="int">
+ 	select storeno from store where id=#{id}
  </select>
 
  <insert id="LingoStoreimgInsert" parameterType="java.util.Map">

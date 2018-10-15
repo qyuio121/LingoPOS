@@ -22,8 +22,11 @@ public class StoreDAO {
 	public int delete(Map map) {
 		return template.delete("LingoStoreDelete",map);
 	}
-	public List<StoreDTO> select(Map map) {
-		return template.selectList("LingoStoreSelect",map);
+	public StoreDTO select(Map map) {
+		return template.selectOne("LingoStoreSelect",map);
+	}
+	public int selectbyID(Map map) {
+		return template.selectOne("LingoStoreSelectbyID",map);
 	}
 	
 }

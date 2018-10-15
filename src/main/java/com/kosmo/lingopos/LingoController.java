@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,12 +30,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kosmo.lingopos.comment.CommentService;
+import com.kosmo.lingopos.foodimg.FoodimgService;
 import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.login.LoginDTO;
 import com.kosmo.lingopos.login.LoginService;
+import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
+import com.kosmo.lingopos.owner.OwnerDTO;
+import com.kosmo.lingopos.owner.OwnerService;
+import com.kosmo.lingopos.store.StoreDTO;
+import com.kosmo.lingopos.store.StoreService;
+import com.kosmo.lingopos.storeimg.StoreimgService;
 
 /**
  * Handles requests for the application home page.
@@ -59,6 +69,20 @@ public class LingoController {
 	@Resource(name="commentService")
 	private CommentService commentService;
 	
+	@Resource(name="ownerService")
+	private OwnerService ownerService;
+	
+	@Resource(name="storeService")
+	private StoreService storeService;
+	
+	@Resource(name="mapService")
+	private MapService mapService;
+	
+	@Resource(name="storeimgService")
+	private StoreimgService storeimgService;
+	
+	@Resource(name="foodimgService")
+	private FoodimgService foodimgService;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
@@ -157,9 +181,10 @@ public class LingoController {
 	//창선 사진 등록  - 가게 전경 Controller
 		@ResponseBody
 		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
-		public String storeUpload(MultipartHttpServletRequest mhsr) throws Exception{
+		public String storeUpload(MultipartHttpServletRequest mhsr,HttpSession session) throws Exception{
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			//1]서버의 물리적 경로 얻기
-			String phicalPath=mhsr.getServletContext().getRealPath("/Images/store");
+			String phicalPath=mhsr.getServletContext().getRealPath("/Images/")+dto.getId()+"/store";
 			//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
 			//MultipartFile객체 얻기
 			MultipartFile upload= mhsr.getFile("file");
@@ -186,9 +211,10 @@ public class LingoController {
 		//창선 사진 등록 - 메뉴 사진 Controller
 		@ResponseBody
 		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST)
-		public String MenuUpload(MultipartHttpServletRequest mhsr) throws Exception{
+		public String MenuUpload(MultipartHttpServletRequest mhsr,HttpSession session) throws Exception{
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			//1]서버의 물리적 경로 얻기
-			String phicalPath=mhsr.getServletContext().getRealPath("/Images/menu");
+			String phicalPath=mhsr.getServletContext().getRealPath("/Images/")+dto.getId()+"/menu";
 			//1-1]MultipartHtWtpServletRequest객체의 getFile("파라미터명")메소드로
 			//MultipartFile객체 얻기
 			MultipartFile upload= mhsr.getFile("file");
@@ -212,10 +238,7 @@ public class LingoController {
 			File remove = new File(removeFile);
 			remove.delete();
 		}
-		
-	
-	
-	
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -470,9 +493,43 @@ public class LingoController {
 	public String terms() throws Exception{
 		return "login/signup/terms.tiles";
 	}
-	@RequestMapping("/Shop/Apply.Lingo")
-	public String apply() throws Exception{
+	@RequestMapping(value="/Shop/Apply.Lingo",method=RequestMethod.GET)
+	public String apply(HttpSession session,Model model) throws Exception{
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		Map map = new HashMap();
+		map.put("ownerno", dto.getOwnerno());
+		OwnerDTO owner = ownerService.select(map);
+		model.addAttribute("storename",owner.getStorename());
 		return "shop/apply/apply.tiles";
+	}
+	@RequestMapping(value="/Shop/Apply.Lingo",method=RequestMethod.POST)
+	public String applyOk(@RequestParam Map map,HttpSession session) throws Exception{
+		LoginDTO logindto=(LoginDTO)session.getAttribute("loginDTO");
+		map.put("id", logindto.getId());
+		map.put("ownerno", logindto.getOwnerno());
+		map.put("atable",map.get("tablenum"));
+		map.put("address",map.get("addr1")+" "+map.get("addr2")+" "+map.get("addr3"));
+		storeService.insert(map);
+		int storeno= storeService.selectbyID(map);
+		map.put("storeno", storeno);
+		String[] storeimg = map.get("hiddenStore").toString().split(",");
+		map.put("img", storeimg[0]);
+		mapService.insert(map);
+		for(String path:storeimg) {
+			map.put("img", path);
+			storeimgService.insert(map);
+		}
+		String[] menuimg = map.get("hiddenMenu").toString().split(",");
+		for(String path:menuimg) {
+			map.put("img", path);
+			String filename = path.substring(path.lastIndexOf(File.separator)+1,path.lastIndexOf('.'));
+			String[] food = filename.split("_");
+			System.out.println(food[0]);
+			map.put("name", food[0]);
+			map.put("price", food[1]);
+			foodimgService.insert(map);
+		}
+		return "forward:/";
 	}
 	@RequestMapping("/Shop/Edit.Lingo")
 	public String edit() throws Exception{

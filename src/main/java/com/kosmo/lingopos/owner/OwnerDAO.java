@@ -25,5 +25,7 @@ public class OwnerDAO {
 	public List<OwnerDTO> selectAdmin() {
 		return template.selectList("LingoOwnerSelectAdmin");
 	}
-
+	public OwnerDTO select(Map map) {
+		return template.selectOne("LingoOwnerSelect",map);
+	}
 }
