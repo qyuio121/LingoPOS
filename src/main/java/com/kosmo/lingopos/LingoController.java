@@ -83,7 +83,7 @@ public class LingoController {
 	
 	@Resource(name="foodimgService") 
 	private FoodimgService foodimgService;
-	
+
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - QNA 서머노트 Controller
 	@ResponseBody

@@ -178,7 +178,7 @@ $(function(){
 		<div class="col-xs-6">
 			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />내 가게<small>등록하기</small></h2>
 		</div>
-	</div>	
+	</div>
 <!-- 바디 헤더 끝-->
 <!-- 가게 등록 입력 폼 시작 --> 
 	<form id="frm" class="form-horizontal" action='<c:url value="/Shop/Apply.Lingo"/>' method="post" accept-charset="UTF-8">
