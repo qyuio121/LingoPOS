@@ -1,6 +1,7 @@
 package com.kosmo.lingopos;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -508,8 +510,12 @@ public class LingoController {
 		return "login/update/update.tiles";
 	}
 	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.POST)
-	public String updateOk() throws Exception{
-		return "login/update/update.tiles";
+	public String updateOk(@RequestParam Map map) throws Exception{
+		if(!map.get("newpwd").toString().trim().equals("")) {
+			map.put("pwd", map.get("newpwd"));
+		}
+		userService.update(map);
+		return "forward:/";
 	}
 	@RequestMapping("/Login/Signup/Terms.Lingo")
 	public String terms() throws Exception{
@@ -521,6 +527,17 @@ public class LingoController {
 	public String duplicate(@RequestParam Map map) throws Exception{
 		UserDTO dto =userService.select(map);
 		if(dto ==null) {
+			return "0";
+		}else {
+			return "1";
+		}
+	
+	}
+	@ResponseBody
+	@RequestMapping("/Login/Update/Valicate.Lingo")
+	public String valicate(@RequestParam Map map) throws Exception{
+		UserDTO dto =userService.select(map);
+		if(dto.getPwd().equals(map.get("pwd"))) {
 			return "0";
 		}else {
 			return "1";
@@ -559,6 +576,8 @@ public class LingoController {
 		map.put("address",map.get("addr1")+" "+map.get("addr2")+" "+map.get("addr3"));
 		storeService.insert(map);
 		int storeno= storeService.selectbyID(map);
+		logindto.setStoreno(String.valueOf(storeno));
+		session.setAttribute("loginDTO", logindto);
 		map.put("storeno", storeno);
 		String[] storeimg = map.get("hiddenStore").toString().split(",");
 		map.put("img", storeimg[0]);

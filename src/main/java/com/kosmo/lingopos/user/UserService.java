@@ -16,7 +16,7 @@ public class UserService {
 		return dao.insert(map);
 	}
 	public int update(Map map) {
-		return dao.delete(map);
+		return dao.update(map);
 	}
 	public int delete(Map map) {
 		return dao.delete(map);

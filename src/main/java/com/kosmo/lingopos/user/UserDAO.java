@@ -17,7 +17,7 @@ public class UserDAO {
 		return template.insert("LingoUserInsert",map);
 	}
 	public int update(Map map) {
-		return template.delete("LingoUserUpdate",map);
+		return template.update("LingoUserUpdate",map);
 	}
 	public int delete(Map map) {
 		return template.delete("LingoUserDelete",map);
