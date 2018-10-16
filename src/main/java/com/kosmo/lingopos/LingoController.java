@@ -2,6 +2,7 @@ package com.kosmo.lingopos;
 
 import java.io.File;
 import java.net.InetAddress;
+import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -198,6 +199,9 @@ public class LingoController {
 			//3]업로드 처리		
 			upload.transferTo(file);
 			//4]DB에 저장할 서버에 저장된 파일명 
+			
+			newFilename =  URLEncoder.encode(newFilename, "utf-8");
+			
 			return phicalPath+File.separator+newFilename;
 		}
 		//창선 사진 삭제  - 가게 전경 Controller
@@ -228,6 +232,9 @@ public class LingoController {
 			//3]업로드 처리		
 			upload.transferTo(file);
 			//4]DB에 저장할 서버에 저장된 파일명 
+			
+			newFilename =  URLEncoder.encode(newFilename, "utf-8");
+			
 			return phicalPath+File.separator+newFilename;
 		}
 		//창선 사진 삭제 - 메뉴 사진 Controller

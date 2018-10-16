@@ -203,6 +203,8 @@
                 success: function(data, textStatus, jqXHR){
                 	
                 	
+                	data = decodeURI(data); 
+                	
                 	//DB연결 전 테스트용
                 	indexStore.push(data);
                 	indexRealStore.push(data);

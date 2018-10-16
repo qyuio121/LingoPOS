@@ -208,7 +208,7 @@
                 	
                 	
                 	//DB연결 전 테스트용
-
+                	data = decodeURI(data); 
                 	var addss = data;
                 	var adds = addss.substr(addss.lastIndexOf("\\")+1);
                 	var add = adds.substr(0,adds.lastIndexOf("."));
