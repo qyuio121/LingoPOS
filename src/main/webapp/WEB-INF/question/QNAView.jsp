@@ -1,112 +1,107 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	
+    
+<!-- 서머노트  -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+
+<!-- 서머노트 한글화 -->
+<script src="../js/summernote-ko-KR.js" charset="utf-8"></script>
+    
 <script>
 $(function(){
-	//해당 글번호에 대한 코멘트 목록을 가져오는 함수 
-	var showComments = function(key){		
-		$.ajax({
-			url:"<c:url value='/Comment/List.bbs'/>",
-			data:{no:key},
-			dataType:'json',
-			type:'post',
-			success:displayComments			
+		$('#del_memo').click(function(){
+				if(confirm("정말 삭제 하시겠습니까")){
+					location.replace("<c:url value='/Question/QNADelete.Lingo?qnano=${record.qnano}'/>");
+				}
 		});
-	};
-	
-	//해당 글번호에 대한 코멘트 목록을 뿌려주는 함수 
-	var displayComments	 = function(data){
-		console.log(JSON.stringify(data));
-		var commentString="<h3 style='fontColor:blue'>1:1문의 답변 </h3>";
-		commentString+='<table class="table table-bordered">';
-		commentString+='<tr><th width="15%">작성자</th><th width="50%">문의 답변</th><th width="20%">답변일</th><th>비고</th></tr>';
-		if(data.length==0){
-			commentString+="<tr><td colspan='4'>등록된 문의 답변이 없어요</td></tr>";
-		}
-		$.each(data,function(index,comment){			
-			commentString+='<tr><td>'+comment['NAME']+'</td>';
-			if('${sessionScope.id}' != comment["ID"])
-				commentString+='<td align="left">'+comment['ONELINECOMMENT']+'</td>'; 
-			else
-				commentString+='<td align="left"><span style="cursor:pointer" class="commentEdit" title="'+comment["CNO"]+'">'+comment['ONELINECOMMENT']+'</span></td>'; 		
-			commentString+='<td>'+comment['CPOSTDATE']+'</td>';
-			commentString+='<td>';
-			if('${sessionScope.id}' == comment["ID"])
-				commentString+='<span  class="commentDelete" title="'+comment["CNO"]+'" style="cursor: pointer; color: green; font-size: 1.4em; font-weight: bold">삭제</span>';
-			else
-				commentString+='<span style="color: gray; font-size: 0.7em; font-weight: bold">답변대기</span>';
-			commentString+='</td></tr>';
-		});		
-		commentString+='</table>';
-		
-		$('#comments').html(commentString);
-		
-		//코멘트 수정/삭제 처리
-		$('.commentEdit').click(function(){
-			//cno값 출력
-			console.log($(this).attr("title"));
-			$('#title').val($(this).html());
-			$('#submit').val('수정');
-			//form의 hidden속성중 name="cno"값 설정
-			$('input[name=cno]').val($(this).attr("title"));
-			
-		});
-		
-		$('.commentDelete').click(function(){			
-			var cno_value = $(this).attr("title");
-			
-			$.ajax({
-				url:"<c:url value='/Question/QNADelete.Lingo'/>",
-				data:{cno:cno_value,no:${record.no}},
-				dataType:'text',
-				type:'post',
-				success:function(key){					
-					showComments(key);					
-				}		
-			});		
-			
-			
-		});
-
-	};
-	
-	$(function(){
-		//페이지 로드시 코멘트 목록 뿌려주기
-		showComments(${record.no});
-	
-		//코멘트 입력처리]
-		$('#submit').click(function(){	
-//DB 연결 후 운영자 답변 테이블 추가 필요//			
-			if($(this).val()=='등록')
-				var action="<c:url value='#'/>";
-			else
-				var action="<c:url value='#'/>";	
-//DB 연결 후 운영자 답변 테이블 추가 필요//				
-			$.ajax({
-				url:action,
-				data:$('#frm').serialize(),
-				dataType:'text',
-				type:'post',
-				success:function(key){					
-					showComments(key);
-					if($('#submit').val()=='수정'){						
-						$('#submit').val('등록');
-						$('#title').val('');
-					}
-					
-				}		
-			});		
-			
-		});
-//Message.jsp 파일 필요		
-		//메모글 삭제처리]
-		$('#del_memo').on('click',function(){
-			if(confirm('답변한 내용을  삭제하실겁니까?')){
-				location.replace("<c:url value='/Question/QNADelete.Lingo=${record.no}'/>");				
+		$('#del_reply').click(function(){
+			if(confirm("정말 삭제 하시겠습니까")){
+				location.replace("<c:url value='/Reply/ReplyDelete.Lingo?replyno=${reply.replyno}&qnano=${record.qnano}'/>");
 			}
 		});
-	});
+		//사진 업로드 시 서버에 저장된 사진제목 저장할 배열
+		var realImage =[];
+		
+		//문의등록 시  문의리스트로	
+		$('#confirm').click(function(){
+			if($('#summernote').val() != ""){
+				$('#frm').submit();
+			}
+			else if($("#summernote").val() == ""){
+				$("#error").html("답변내용을 입력하세요");
+				return false;
+			}
+		})
+
+		//서머노트 
+		$('#summernote').summernote({
+			height: 300,
+		    minHeight: null,
+		    maxHeight: null,
+		    focus: true,
+		    lang: 'ko-KR',
+		  	toolbar: [
+		      	['style', ['bold', 'italic', 'underline', 'clear']],
+		        ['fontNames', ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']],
+		        ['fontsize', ['fontsize']],
+		        ['color', ['color']],
+		        ['para', ['ul', 'ol', 'paragraph']],
+		        ['height', ['height']],
+		        ['insert', ['link', 'picture']],
+		        ['table', ['table']],
+		    ],
+			callbacks: {
+		    	onImageUpload: function(files, editor, welEditable) {
+			    	for(var i = files.length - 1; i >= 0; i--) {
+			        	sendFile(files[i], this);
+			        }
+			    },
+			    onMediaDelete : function(target, editor, welEditable){
+			    	summernoteDeleteImage(target[0].src);
+	 			}   
+			}
+		});
+		
+		//서머노트 이미지 업로드
+		function sendFile(file, el) {
+			var form_data = new FormData();
+		    form_data.append('upload', file);
+		    $.ajax({
+				data: form_data,
+			    type: "POST",
+			    url: '<c:url value="/Image/Image.Lingo"/>',
+			    cache: false,
+			    contentType: false,
+			    enctype: 'multipart/form-data',
+			    processData: false,
+			    success: function(url) {
+					$(el).summernote('editor.insertImage', url);
+					realImage.push(url.substr(url.lastIndexOf("/")+1));
+					console.log(realImage+"업로드된 모든 이미지");
+					}
+		    });
+		}
+		
+		//서머노트 업로드된 이미지 삭제
+		function summernoteDeleteImage(file){
+			  var remove = file.substr(file.lastIndexOf("/")+1);
+			  var fileRemove = "removeFile="+remove;
+			  $.ajax({
+		        data: fileRemove,
+		        type: "GET",
+		        url: '<c:url value="/Image/Image.Lingo"/>',
+		        cache: false,
+		        contentType: false,
+		        processData: false,
+		        success: function() {
+		        	realImage = jQuery.grep(realImage, function(value) { 
+		        		return value != remove; });
+					console.log(realImage+"삭제 후 서버에 저장된 이미지");
+		        }
+		    });
+		}
+});
 </script>
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
@@ -121,10 +116,10 @@ $(function(){
 	<div class="row" >
 		<table class="col-sm-10 table table-striped table-responsive ">
 			<tr class="tsTitles">
-				<th class="col-xs-9">문의제목 : <small>안되요 안되요 안되요</small></th><th>문의유형 : <small>나의정보관리/회원</small></th>
+				<th class="col-xs-9">문의제목 : <small>${record.title}</small></th><th>문의유형 : <small>${record.kind}</small></th>
 			</tr>
 			<tr class="tsTitles">		
-				<th>문의일 : <small>2018/09/10</small></th><th>답변여부 : <small>미완료</small></th>
+				<th>문의일 : <small>${record.postdate}</small></th><th>답변여부 : <small>${reply.replyno!=null?'답변완료':'미완료'}</small></th>
 			</tr>
 			<tbody class="tsGroup">
 				<tr>
@@ -132,7 +127,7 @@ $(function(){
 				</tr>
 				<tr>
 					<td>
-						연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>연결용한줄</br>
+						${record.content}
 					</td>
 				</tr>
 			</tbody>
@@ -141,47 +136,75 @@ $(function(){
 <!-- 상세보기 내용 예시 끝  -->
 <!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
 	<div class="row" >
-		<h3>관리자 답변 입력 폼</h3>
-		<form class="form-inline" id="frm" >
-			<input type="hidden" name="no" value="${record.no}" />
-			<!-- 수정 및 삭제용 파라미터 -->
-			<input type="hidden" name="cno" />
-			<input placeholder="댓글을 입력하세요" id="title" class="form-control" type="text" size="50" name="onelinecomment" />
-			<input class="btn btn-primary" id="submit" type="button" value="등록" /></td>
-				
-		</form>
-	</div>
-<!-- DB연결시 관리자만 보일 문의 답변 입력 폼  끝 -->
-<!-- DB연결시 답변 목록 시작 -->
-	<div class="row" id="comments">
-	</div>
-<!-- DB연결시 답변 목록 끝 -->
-<!-- 버튼 3개 시작 -->
-<!-- 버튼 3개 시작  DB연결 전까지 대기 시작 -->
-	<!-- 
-	<div class="row">
-		<div class="text-center">
-			<c:if test="${sessionScope.id==record.id }">
-				<a  href="<c:url value='/BBS/Edit.bbs?no=${record.no}'/>"
-					class="btn btn-success">수정</a>
-				<a id="del_memo" href="#" class="btn btn-success">삭제</a>
+		<c:if test="${not empty reply.replyno}" var="result">	
+			<table class="col-sm-10 table table-striped table-responsive ">
+				<tbody class="tsGroup">
+						<tr>
+							<th>답변내역</th>
+						</tr>
+						<tr>
+							<td>
+								${reply.content}
+							</td>
+						</tr>
+					</tbody>
+			</table>
+			<c:if test="${not empty sessionScope.loginDTO.adminno}">
+				<div class="row">
+					<div class="text-center">
+						<a id="del_reply" href="#" class="btn btn-success">답변삭제</a>
+					</div>
+				</div>
 			</c:if>
-			<a href="<c:url value='/BBS/List.bbs'/>" class="btn btn-success">목록</a>
-
-		</div>
+		</c:if>
+		<c:if test="${not result}" var="result">
+			<c:if test="${empty sessionScope.loginDTO.adminno}" var="res">
+				<table class="col-sm-10 table table-striped table-responsive ">
+					<tbody class="tsGroup">
+						<tr>
+							<th>답변내역</th>
+						</tr>
+						<tr>
+							<td style="text-align: center">
+								아직 답변이 도착하지 않았어요!
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</c:if>
+			<c:if test="${not res}" var="res">
+				<label class="col-sm-2 control-label">답변내용</label>
+				<form id="frm" class="form-horizontal" method="post" action='<c:url value="/Reply/ReplyWrite.Lingo"/>'>
+					<div class="form-group">	
+						<div class="col-sm-12">
+							<textarea name="content" id="summernote"></textarea>
+							<label style="color:red" id="error"></label>  			
+					  	</div>
+					</div>
+					<input type="hidden" name="qnano" value="${record.qnano}"/>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10" >
+				 			<button type="button" class="btn btn-primary col-sm-offset-11" id="confirm">등록하기</button>     
+				  		</div>
+					</div>
+				</form>
+			</c:if>
+		</c:if>
+		<br/><br/>
 	</div>
-	 -->
-<!-- 버튼 3개 시작  DB연결 전까지 대기 끝 -->
-<!-- 버튼 3개 예시 시작 -->
+
+
 	<div class="row">
 		<div class="text-center">
-			<a  href="<c:url value='#'/>" class="btn btn-primary">수정</a>
-			<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
-			<a href="<c:url value='#'/>" class="btn btn-primary">목록</a>
+			<a  href="<c:url value='/Question/QNAEdit.Lingo?qnano=${record.qnano}'/>"
+					class="btn btn-success">수정</a>
+			<a id="del_memo" href="#" class="btn btn-success">삭제</a>
+			<a href="<c:url value='/Question/QNA.Lingo?nowPage=${nowPage}'/>" class="btn btn-success">목록</a>
 		</div>
-	</div>			
+	</div>		
 <!-- 버튼 3개 예시 끝 -->
 <!-- 버튼 3개 끝 -->
 <!-- 내용 끝 -->
+<br/><br/><br/><br/>
 </div>
 	

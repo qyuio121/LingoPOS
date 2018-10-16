@@ -3,18 +3,41 @@
    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-		<definition name="layouts" template="/WEB-INF/template/layouts.jsp">
+		<!-- admin -->	
+		<definition name=".admin" template="/WEB-INF/template/Adminlayouts.jsp">
+	        <put-attribute name="Top" value="/WEB-INF/template/AdminTop.jsp" />
+	        <put-attribute name="Body" value="" />        
+	        <put-attribute name="Footer" value="/WEB-INF/template/AdminFooter.jsp" />
+	    </definition>
+		
+		<!-- lingo --> 	
+		<definition name=".lingo" template="/WEB-INF/template/layouts.jsp">
 			<put-attribute name="Top" value="/WEB-INF/template/Top.jsp"/>
 			<put-attribute name="Body" value=""/>
 			<put-attribute name="Footer" value="/WEB-INF/template/Footer.jsp"/>
 		</definition>
-		<definition name="*/*.tiles" extends="layouts">
+
+		<!-- admin --> 	
+	    <definition name="admin/*.tiles" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/admin/{1}.jsp"/>
+		</definition>
+		<definition name="admin/*/*.tiles" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/admin/{1}/{2}.jsp"/>
+		</definition>	
+		<definition name="admin/*/*/*.tiles" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/admin/{1}/{2}/{3}.jsp"/>
+		</definition>
+	    	
+	   	<!-- lingo --> 	
+	   	<definition name="*/*.tiles" extends=".lingo">
 			<put-attribute name="Body" value="/WEB-INF/{1}/{2}.jsp"/>
 		</definition>
-		<definition name="*.tiles" extends="layouts">
+		<definition name="*.tiles" extends=".lingo">
 			<put-attribute name="Body" value="/WEB-INF/{1}.jsp"/>
 		</definition>
-		<definition name="*/*/*.tiles" extends="layouts">
+		<definition name="*/*/*.tiles" extends=".lingo">
 			<put-attribute name="Body" value="/WEB-INF/{1}/{2}/{3}.jsp"/>
 		</definition>
+
+	
 </tiles-definitions>

@@ -19,14 +19,20 @@ public class QnaDAO {
 	public int delete(Map map) {
 		return template.delete("LingoQnaDelete",map);
 	}
+	public int update(Map map) {
+		return template.update("LingoQnaUpdate",map);
+	}
 	public List<QnaDTO> selectAdmin() {
 		return template.selectList("LingoQnaSelectAdmin");
 	}
-	public List<QnaDTO> selectOne(Map map) {
-		return template.selectList("LingoQnaSelectOne",map);
+	public QnaDTO select(Map map) {
+		return template.selectOne("LingoQnaSelectOne",map);
 	}
 	public List<QnaDTO> selectUser(Map map) {
 		return template.selectList("LingoQnaSelectUser",map);
+	}
+	public int getTotalRecord(Map map) {
+		return template.selectOne("LingoQnaGetTotalRecord",map);
 	}
 
 }

@@ -40,7 +40,7 @@
 <div class="container"  style="margin-top:80px">
 	<div class="row">
 		<div class="col-xs-9 col-xs-offset-3" >
-			<form id="loginform" action="<c:url value='/Login/LoginProcess.Lingo'/>" method="get">
+			<form id="loginform" action="<c:url value='/Login/LoginProcess.Lingo'/>" method="post">
 			<div class="row">
 				<label class="col-xs-2">아이디</label>
 				<div class="col-xs-6">

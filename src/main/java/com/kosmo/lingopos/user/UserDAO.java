@@ -25,7 +25,7 @@ public class UserDAO {
 	public List<UserDTO> selectAll() {
 		return template.selectList("LingoUserSelectAll");
 	}
-	public List<UserDTO> selectOne(Map map) {
-		return template.selectList("LingoUserSelectOne",map);
+	public UserDTO select(Map map) {
+		return template.selectOne("LingoUserSelectOne",map);
 	}
 }

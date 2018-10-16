@@ -81,7 +81,7 @@ $(function(){
 	    $.ajax({
 			data: form_data,
 		    type: "POST",
-		    url: '/lingopos/free/Image.Lingo',
+		    url: '/lingopos/Image/Image.Lingo',
 		    cache: false,
 		    contentType: false,
 		    enctype: 'multipart/form-data',
@@ -101,7 +101,7 @@ $(function(){
 		  $.ajax({
 	        data: fileRemove,
 	        type: "GET",
-	        url: '/lingopos/free/Image.Lingo',
+	        url: '/lingopos/Image/Image.Lingo',
 	        cache: false,
 	        contentType: false,
 	        processData: false,

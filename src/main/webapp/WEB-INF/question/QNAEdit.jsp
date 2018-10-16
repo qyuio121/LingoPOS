@@ -13,18 +13,24 @@
 
  
 <script>
+if(${reply.replyno!=null}){
+	alert('이미 답변이 등록된 문의는 수정할수 없습니다.');
+	history.back();
+}
 $(function(){
+	var kind = '${record.kind}';
 	//사진 업로드 시 서버에 저장된 사진제목 저장할 배열
+	$('select option[value="'+kind+'"]').attr('selected','selected');
 	var realImage =[];
 	
 	//유효성검사
 	$('#frm').validate({
 		rules:{
-			select1:"required",
+			kind:"required",
 			title:"required",
 			check:"required"
 		},messages:{
-			select1:"상담유형 선택하세요",
+			kind:"상담유형 선택하세요",
 			title:"제목을 입력하세요",
 			check:"개인정보 수집 동의를 체크하세요"
 		}});
@@ -85,7 +91,7 @@ $(function(){
 	    $.ajax({
 			data: form_data,
 		    type: "POST",
-		    url: '/lingopos/question/Image.Lingo',
+		    url: '<c:url value="/Image/Image.Lingo"/>',
 		    cache: false,
 		    contentType: false,
 		    enctype: 'multipart/form-data',
@@ -105,7 +111,7 @@ $(function(){
 		  $.ajax({
 	        data: fileRemove,
 	        type: "GET",
-	        url: '/lingopos/question/Image.Lingo',
+	        url: '<c:url value="/Image/Image.Lingo"/>',
 	        cache: false,
 	        contentType: false,
 	        processData: false,
@@ -124,22 +130,22 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 등록</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />QNA<small>1:1문의 수정</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 폼 시작 -->
- 	<form id="frm" class="form-horizontal" enctype="multipart/form-data" method="post" action='<c:url value="/Question/QNAList.Lingo"/>'>
+ 	<form id="frm" class="form-horizontal" method="post" action='<c:url value="/Question/QNAEdit.Lingo"/>'>
 <!-- 상담분류 시작 -->	
 		<div class="form-group">
 			<label  class="col-sm-2 control-label">상담분류</label>
 			<div class="col-sm-3">
-				<select class="form-control col-sm-4" id="select1" name="select1">
+				<select class="form-control col-sm-4" id="kind" name="kind">
 					<option value="" >상담유형선택</option>
-				     <option value="uni">회원정보</option>
-				     <option value="high">주문/결제</option>
-				     <option value="middle">취소/환불</option>
-				     <option value="ele">배송</option>
+				    <option value="회원정보관련">회원정보관련</option>
+				     <option value="예약관련">예약관련</option>
+				     <option value="POS관련">POS관련</option>
+				     <option value="신고관련">신고관련</option>
 				</select>
 				<label for="select1" class="error" style="color:red"></label>
 			</div>
@@ -149,7 +155,7 @@ $(function(){
 		<div class="form-group">
 			<label class="col-sm-2 control-label">제목</label>
 			<div class="col-sm-7">
-   				<input type="text" class="form-control" placeholder="제목을 입력해주세요"  name="title">
+   				<input type="text" class="form-control" placeholder="제목을 입력해주세요"  name="title" value="${record.title}">
    				
 				<label for="title" class="error" style="color:red"></label>
   			</div>
@@ -160,7 +166,7 @@ $(function(){
 			<label class="col-sm-2 control-label">내용</label>
 			<div class="col-sm-10">
 <!-- 서머노트 시작 -->			
-				<textarea name="content" id="summernote" value=""></textarea>
+				<textarea name="content" id="summernote" value="">${record.content}</textarea>
 				<label style="color:red" id="error"></label>  
 <!-- 서머노트 끝 -->				
 		  	</div>
@@ -181,11 +187,12 @@ $(function(){
 <!-- 버튼 3개 시작 - 문의하기 / 취소  -->
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10" >
- 			<button type="button" value="button타입" class="btn btn-primary col-sm-offset-3" id="confirm">문의하기</button><!-- 문의하기 -->     
+ 			<button type="button" value="button타입" class="btn btn-primary col-sm-offset-4" id="confirm">수정하기</button><!-- 문의하기 -->     
 			<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button><!-- 취소 -->     
   		</div>
 	</div>
 <!-- 버튼 3개 끝 - 문의하기 / 취소  -->
+<input type="hidden" name="qnano" value="${param.qnano}">
 </form>
 <!-- 폼 시작 -->    
 <!-- 내용 끝 -->   
