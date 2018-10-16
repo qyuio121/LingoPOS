@@ -81,7 +81,7 @@ public class LingoController {
 	@Resource(name="storeimgService")
 	private StoreimgService storeimgService;
 	
-	@Resource(name="foodimgService")
+	@Resource(name="foodimgService") 
 	private FoodimgService foodimgService;
 	
 	//DB연결시 한글 깨지는거 방지
@@ -89,7 +89,6 @@ public class LingoController {
 	@ResponseBody
 	@RequestMapping(value="/question/Image.Lingo",method=RequestMethod.POST)
 	public String qnasummernoteUpload(MultipartHttpServletRequest mhsr) throws Exception{
-		//1]서버의 물리적 경로 얻기
 		String phicalPath=mhsr.getServletContext().getRealPath("/Images/qna_summernote");
 		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
 		//MultipartFile객체 얻기

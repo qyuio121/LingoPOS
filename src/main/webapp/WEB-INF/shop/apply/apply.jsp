@@ -180,7 +180,7 @@ $(function(){
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
-<!-- 가게 등록 입력 폼 시작 -->
+<!-- 가게 등록 입력 폼 시작 --> 
 	<form id="frm" class="form-horizontal" action='<c:url value="/Shop/Apply.Lingo"/>' method="post" accept-charset="UTF-8">
 <!--가입 가게 이름 시작 -->
 		<div class="form-group">
