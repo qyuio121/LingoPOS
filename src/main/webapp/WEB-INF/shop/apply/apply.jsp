@@ -31,7 +31,6 @@ $(function(){
 			name:"required",
 			addr1:"required",
 			addr2:"required",
-			addr3:"required",
 			bigkind:"required",
 			tel:"required",
 			coba:"required",
@@ -43,7 +42,6 @@ $(function(){
 			name:"가게명을 입력하세요.",
 			addr1:"우편번호를 입력하세요.",
 			addr2:"주소를 입력하세요.",
-			addr3:"상세주소를 입력하세요.",
 			bigkind:"음식분류1를 선택하세요.",
 			tel:"번호 앞자리를 입력하세요.",
 			hiddenFile:"사진을 업로드하세요.",
@@ -185,8 +183,8 @@ $(function(){
 <!--가입 가게 이름 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">가게명</label>
-			<div class="col-sm-3">
-				<input type="text" class="form-control" value=${storename } name="storename" id="storename" readOnly>	    
+			<div class="col-sm-4">
+				<input type="text" class="form-control" value="${storename }" name="storename" id="storename" readOnly>	    
 			    <label for="name" class="error" style="color:red"></label>
 			</div>
 		</div>
