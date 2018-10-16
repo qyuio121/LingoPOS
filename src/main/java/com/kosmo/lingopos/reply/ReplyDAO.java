@@ -19,7 +19,10 @@ public class ReplyDAO {
 	public int delete(Map map) {
 		return template.delete("LingoReplyDelete",map);
 	}
-	public List<ReplyDTO> select(Map map) {
-		return template.selectList("LingoReplySelectAdmin",map);
+	public int deleteByQNA(Map map) {
+		return template.delete("LingoReplyDeletebyQNA",map);
+	}
+	public ReplyDTO select(Map map) {
+		return template.selectOne("LingoReplySelect",map);
 	}
 }

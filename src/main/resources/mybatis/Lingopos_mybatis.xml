@@ -148,7 +148,7 @@
  </select>
  
  <insert id="LingoOwnerInsert" parameterType="java.util.Map">
- 	insert into owner value(#{ownerno},#{storename},#{storedoc},#{id},false)
+ 	insert into owner value(#{ownerno},#{storename},#{storedoc},#{id},true)
  </insert>
  <update id="LingoOwnerUpdate" parameterType="java.util.Map">
  	update owner set isallowed = true where ownerno=#{ownerno}
@@ -166,8 +166,11 @@
  <insert id="LingoQnaInsert" parameterType="java.util.Map">
  	insert into qna(kind,title,content,id) value(#{kind},#{title},#{content},#{id})
  </insert>
+ <update id="LingoQnaUpdate" parameterType="java.util.Map">
+ 	update qna set title = #{title},content=#{content},kind=#{kind} where qnano=#{qnano}
+ </update>
  <delete id="LingoQnaDelete" parameterType="java.util.Map">
- 	delete qna where qnano=#{qnano}
+ 	delete from qna where qnano=#{qnano}
  </delete>
  <select id="LingoQnaSelectOne" parameterType="java.util.Map" resultType="qnaDTO">
  	select * from qna where qnano = #{qnano} 
@@ -177,17 +180,23 @@
  	where replyno = null
  </select>
  <select id="LingoQnaSelectUser" parameterType="java.util.Map" resultType="qnaDTO">
- 	select kind,title,postdate,r.content from qna q left join reply r on q.qnano=r.qnano where id = #{id} order by q.qnano desc
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select q.qnano,kind,title,postdate,r.content from qna q left join reply r on q.qnano=r.qnano where id = #{id}) t, (select @rownum:=0) b order by qnano desc) tab where rnum between #{start} and #{end}
+ </select>
+  <select id="LingoQnaGetTotalRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from qna where id = #{id}
  </select>
  
  <insert id="LingoReplyInsert" parameterType="java.util.Map">
  	insert into reply(content,qnano) value(#{content},#{qnano})
  </insert>
  <delete id="LingoReplyDelete" parameterType="java.util.Map">
- 	delete reply where replyno=#{replyno}
+ 	delete from reply where replyno=#{replyno}
+ </delete>
+  <delete id="LingoReplyDeletebyQNA" parameterType="java.util.Map">
+ 	delete from reply where qnano=#{qnano}
  </delete>
  <select id="LingoReplySelect" parameterType="java.util.Map" resultType="replyDTO">
- 	select content from reply where qnano = #{qnano} 
+ 	select replyno,content from reply where qnano = #{qnano} 
  </select>
  
 <insert id="LingoReservedtableInsert" parameterType="java.util.Map">

@@ -40,9 +40,15 @@ import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
 import com.kosmo.lingopos.owner.OwnerDTO;
 import com.kosmo.lingopos.owner.OwnerService;
+import com.kosmo.lingopos.qna.QnaDTO;
+import com.kosmo.lingopos.qna.QnaService;
+import com.kosmo.lingopos.reply.ReplyDTO;
+import com.kosmo.lingopos.reply.ReplyService;
 import com.kosmo.lingopos.store.StoreDTO;
 import com.kosmo.lingopos.store.StoreService;
 import com.kosmo.lingopos.storeimg.StoreimgService;
+import com.kosmo.lingopos.user.UserDTO;
+import com.kosmo.lingopos.user.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -83,44 +89,27 @@ public class LingoController {
 	
 	@Resource(name="foodimgService") 
 	private FoodimgService foodimgService;
+	
+	@Resource(name="qnaService") 
+	private QnaService qnaService;
+	@Value("${qnaPageSize}")
+	private int qnapageSize;
+	@Value("${qnaBlockPage}")
+	private int qnablockPage;
 
+	@Resource(name="replyService") 
+	private ReplyService replyService;
+	
+	@Resource(name="userService") 
+	private UserService userService;
+	
 	//DB연결시 한글 깨지는거 방지
-	//창선 사진 등록 - QNA 서머노트 Controller
+	//창선 사진 등록 - 서머노트 Controller
 	@ResponseBody
-	@RequestMapping(value="/question/Image.Lingo",method=RequestMethod.POST)
-	public String qnasummernoteUpload(MultipartHttpServletRequest mhsr) throws Exception{
-		String phicalPath=mhsr.getServletContext().getRealPath("/Images/qna_summernote");
-		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
-		//MultipartFile객체 얻기
-		MultipartFile upload= mhsr.getFile("upload");
-		//2]File객체 생성
-		//2-1] 파일 중복시 이름 변경
-		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
-		File file = new File(phicalPath+File.separator+newFilename);
-		//3]업로드 처리		
-		upload.transferTo(file);
-		//4]서머노트에 다시 보내줄 데이타 저장
-		String localIP = InetAddress.getLocalHost().getHostAddress();
-		//5]DB 연결시 리퀘스트 영역에 새로운 파일명 저장 - 데이타베이스에 저장할 파일명
-		mhsr.setAttribute("realImage", newFilename);
-		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
-		//6]서머노트에 데이타 전달
-		return "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/qna_summernote/" + newFilename;
-	}
-	//창선 사진 삭제 - QNA 서머노트 Controller
-	@ResponseBody
-	@RequestMapping(value="/question/Image.Lingo",method=RequestMethod.GET)
-	public void qnasummernoteDelete(@RequestParam String removeFile) throws Exception{
-		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\qna_summernote"+File.separator+removeFile);
-		remove.delete();
-	}
-	
-	//창선 사진 등록 - FREE 서머노트 Controller
-	@ResponseBody
-	@RequestMapping(value="/free/Image.Lingo",method=RequestMethod.POST)
+	@RequestMapping(value="/Image/Image.Lingo",method=RequestMethod.POST,produces="text/html; charset=UTF-8")
 	public String summernoteUpload(MultipartHttpServletRequest mhsr) throws Exception{
-		//1]서버의 물리적 경로 얻기
-		String phicalPath=mhsr.getServletContext().getRealPath("/Images/free_summernote");
+		
+		String phicalPath=mhsr.getServletContext().getRealPath("/Images/summernote");
 		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
 		//MultipartFile객체 얻기
 		MultipartFile upload= mhsr.getFile("upload");
@@ -128,6 +117,9 @@ public class LingoController {
 		//2-1] 파일 중복시 이름 변경
 		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
 		File file = new File(phicalPath+File.separator+newFilename);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
 		//3]업로드 처리		
 		upload.transferTo(file);
 		//4]서머노트에 다시 보내줄 데이타 저장
@@ -136,47 +128,19 @@ public class LingoController {
 		mhsr.setAttribute("realImage", newFilename);
 		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
 		//6]서머노트에 데이타 전달
-		return "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/free_summernote/" + newFilename;
+		return "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernote/" + newFilename;
 	}
-	//창선 사진 삭제 - FREE 서머노트 Controller
+	//창선 사진 삭제 - 서머노트 Controller
 	@ResponseBody
-	@RequestMapping(value="/free/Image.Lingo",method=RequestMethod.GET)
-	public void summernoteDelete(@RequestParam String removeFile) throws Exception{
-		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\free_summernote"+File.separator+removeFile);
+	@RequestMapping(value="/Image/Image.Lingo",method=RequestMethod.GET,produces="text/html; charset=UTF-8")
+	public void summernoteDelete(@RequestParam String removeFile,HttpServletRequest req) throws Exception{
+		String phicalPath=req.getServletContext().getRealPath("/Images/summernote");
+		File remove = new File(phicalPath+File.separator+removeFile);
+		System.out.println(remove.getAbsolutePath());
 		remove.delete();
 	}
 	
-	//창선 사진 등록 - NOTICE 서머노트 Controller
-	@ResponseBody
-	@RequestMapping(value="/notice/Image.Lingo",method=RequestMethod.POST)
-	public String noticesummernoteUpload(MultipartHttpServletRequest mhsr) throws Exception{
-		//1]서버의 물리적 경로 얻기
-		String phicalPath=mhsr.getServletContext().getRealPath("/Images/notice_summernote");
-		//1-1]MultipartHttpServletRequest객체의 getFile("파라미터명")메소드로
-		//MultipartFile객체 얻기
-		MultipartFile upload= mhsr.getFile("upload");
-		//2]File객체 생성
-		//2-1] 파일 중복시 이름 변경
-		String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
-		File file = new File(phicalPath+File.separator+newFilename);
-		//3]업로드 처리		
-		upload.transferTo(file);
-		//4]서머노트에 다시 보내줄 데이타 저장
-		String localIP = InetAddress.getLocalHost().getHostAddress();
-		//5]DB 연결시 리퀘스트 영역에 새로운 파일명 저장 - 데이타베이스에 저장할 파일명
-		mhsr.setAttribute("realImage", newFilename);
-		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
-		//6]서머노트에 데이타 전달
-		return "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/notice_summernote/" + newFilename;
-	}
-	//창선 사진 삭제 - NOTICE 서머노트 Controller
-	@ResponseBody
-	@RequestMapping(value="/notice/Image.Lingo",method=RequestMethod.GET)
-	public void noticesummernoteDelete(@RequestParam String removeFile) throws Exception{
-		File remove = new File("C:\\CCS\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\LingoPOS\\Images\\notice_summernote"+File.separator+removeFile);
-		remove.delete();
-	}
-
+	
 	//창선 사진 등록  - 가게 전경 Controller
 		@ResponseBody
 		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
@@ -254,11 +218,7 @@ public class LingoController {
 		return "reservation/search.tiles";
 	}
 
-	@RequestMapping("/Login/Signup/Signup.Lingo")
-	public String signup(@RequestParam Map map,Model model) throws Exception{
-		model.addAttribute("kind",map.get("kind"));
-		return "login/signup/signup.tiles";
-	}
+	
 	@RequestMapping("/Notice/Notice.Lingo")
 	public String notice(Model model,HttpServletRequest req,
 			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
@@ -332,7 +292,6 @@ public class LingoController {
 		
 		map.put("start", start);
 		map.put("end", end);
-		System.out.println(map.get("searchColumn"));
 		List<FreeDTO> list = freeService.selectAll(map);
 		model.addAttribute("list", list);
 		model.addAttribute("pageString", pageString);
@@ -397,12 +356,10 @@ public class LingoController {
 	@RequestMapping(value="/Comment/Comment.Lingo",produces="text/html; charset=UTF-8")
 	public String comment(@RequestParam Map map) throws Exception{
 		List<Map> list =commentService.selectList(map);
-		System.out.println(JSONArray.toJSONString(list));
 		//날짜를 string으로 변경
 		for(Map commen: list) {
 			commen.put("commentdate",commen.get("commentdate").toString().substring(0,10));
 		}
-		System.out.println(JSONArray.toJSONString(list));
 		return JSONArray.toJSONString(list);
 	}
 	//comment end
@@ -411,26 +368,79 @@ public class LingoController {
 		return "question/FAQ.tiles";
 	}
 	@RequestMapping("/Question/QNA.Lingo")
-	public String qna() throws Exception{
+	public String qna(HttpSession session,Model model,HttpServletRequest req,
+			 @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		Map map = new HashMap();
+		map.put("id", dto.getId());
+		
+		int totalRecordCount = qnaService.getTotalRecord(map);
+		
+		int start = (nowPage-1)*qnapageSize+1;
+		int end = nowPage*qnapageSize;
+		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, qnapageSize, qnablockPage, nowPage, req.getContextPath()+"/Question/QNA.Lingo?");
+		map.put("start", start);
+		map.put("end", end);
+		List<QnaDTO> records = qnaService.selectUser(map);
+		model.addAttribute("records",records);
+		model.addAttribute("pageString", pageString);
+		model.addAttribute("totalRecordCount", totalRecordCount);
+		model.addAttribute("pageSize", qnapageSize);
+		model.addAttribute("nowPage", nowPage);
+		
 		return "question/QNA.tiles";
 	}
 //창선 추가로 등록한 QNA 수정 조회 상세보기 삭제 시작
-	@RequestMapping("/Question/QNAEdit.Lingo")
-	public String qnaEdit() throws Exception{
+	@RequestMapping(value="/Question/QNAEdit.Lingo",method=RequestMethod.GET)
+	public String qnaEdit(@RequestParam Map map,Model model) throws Exception{
+		QnaDTO dto =  qnaService.select(map);
+		model.addAttribute("record",dto);
+		ReplyDTO reply = replyService.select(map);
+		model.addAttribute("reply", reply);
 		return "question/QNAEdit.tiles";
 	}
-	@RequestMapping("/Question/QNAList.Lingo")
-	public String qnaList() throws Exception{
-		return "question/QNAList.tiles";
+	@RequestMapping(value="/Question/QNAEdit.Lingo",method=RequestMethod.POST)
+	public String qnaEditOk(@RequestParam Map map) throws Exception{
+		qnaService.update(map);
+		return "forward:/Question/QNAView.Lingo?qnano="+map.get("qnano");
+	}
+	@RequestMapping(value="/Question/QNAWrite.Lingo",method=RequestMethod.GET)
+	public String qnaWrite() throws Exception{
+		return "question/QNAWrite.tiles";
+	}
+	@RequestMapping(value="/Question/QNAWrite.Lingo",method=RequestMethod.POST)
+	public String qnaWriteOk(HttpSession session,@RequestParam Map map) throws Exception{
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		map.put("id", dto.getId());
+		qnaService.insert(map);
+		return "forward:/Question/QNA.Lingo";
 	}
 	@RequestMapping("/Question/QNAView.Lingo")
-	public String qnaView() throws Exception{
+	public String qnaView(@RequestParam Map map,Model model) throws Exception{
+		QnaDTO dto = qnaService.select(map);
+		ReplyDTO reply = replyService.select(map);
+		model.addAttribute("record", dto);
+		model.addAttribute("reply", reply);
+		model.addAttribute("nowPage", map.get("nowPage"));
 		return "question/QNAView.tiles";
 	}
 	@RequestMapping("/Question/QNADelete.Lingo")
-	public String qnaDelete() throws Exception{
-		return "Lingo/Message";
+	public String qnaDelete(@RequestParam Map map) throws Exception{
+		replyService.deleteByQNA(map);
+		qnaService.delete(map);
+		return "forward:/Question/QNA.Lingo";
 	}
+	@RequestMapping("/Reply/ReplyWrite.Lingo")
+	public String replyWrite(@RequestParam Map map) throws Exception{
+		replyService.insert(map);
+		return "forward:/Question/QNAView.Lingo?qnano="+map.get("qnano");
+	}
+	@RequestMapping("/Reply/ReplyDelete.Lingo")
+	public String replyDelete(@RequestParam Map map) throws Exception{
+		replyService.delete(map);
+		return "forward:/Question/QNAView.Lingo?qnano="+map.get("qnano");
+	}
+	
 	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
 	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
 	 	@RequestMapping("/Reservation/Detail.Lingo")
@@ -484,14 +494,46 @@ public class LingoController {
 	public String reservation() throws Exception{
 		return "reservation/reservation.tiles";
 	}
-	@RequestMapping("/Login/Update/Update.Lingo")
-	public String update() throws Exception{
+	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.GET)
+	public String update(@RequestParam Map map,Model model) throws Exception{
+		UserDTO dto = userService.select(map);
+		model.addAttribute("record",dto); 
+		return "login/update/update.tiles";
+	}
+	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.POST)
+	public String updateOk() throws Exception{
 		return "login/update/update.tiles";
 	}
 	@RequestMapping("/Login/Signup/Terms.Lingo")
 	public String terms() throws Exception{
 		return "login/signup/terms.tiles";
 	}
+	
+	@ResponseBody
+	@RequestMapping("/Login/Signup/Duplicate.Lingo")
+	public String duplicate(@RequestParam Map map) throws Exception{
+		UserDTO dto =userService.select(map);
+		if(dto ==null) {
+			return "0";
+		}else {
+			return "1";
+		}
+	
+	}
+	@RequestMapping(value="/Login/Signup/Signup.Lingo",method=RequestMethod.GET)
+	public String signup(@RequestParam Map map,Model model) throws Exception{
+		model.addAttribute("kind",map.get("kind"));
+		return "login/signup/signup.tiles";
+	}
+	@RequestMapping(value="/Login/Signup/Signup.Lingo",method=RequestMethod.POST)
+	public String signupOk(@RequestParam Map map,Model model) throws Exception{
+		userService.insert(map);
+		if(map.get("ownerno")!=null) {
+			ownerService.insert(map);
+		}
+		return "forward:/";
+	}
+	
 	@RequestMapping(value="/Shop/Apply.Lingo",method=RequestMethod.GET)
 	public String apply(HttpSession session,Model model) throws Exception{
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
@@ -523,7 +565,6 @@ public class LingoController {
 			map.put("img", path);
 			String filename = path.substring(path.lastIndexOf(File.separator)+1,path.lastIndexOf('.'));
 			String[] food = filename.split("_");
-			System.out.println(food[0]);
 			map.put("name", food[0]);
 			map.put("price", food[1]);
 			foodimgService.insert(map);
