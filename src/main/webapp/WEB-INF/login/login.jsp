@@ -58,8 +58,10 @@
 						class="form-control" name="pwd" id="pwd" placeholder="비밀번호를 입력하세요">
 				</div>
 				</div>
+				<br/>
 			</form>
-			<Button id="submit" class="btn btn-lg btn-default col-xs-2">로그인</button>
+			
+			<Button id="submit" class="btn btn-lg btn-default col-md-offset-6 col-md-2">로그인</button>
 		</div>
 	</div>
 	<br/><br/><br/><br/>
