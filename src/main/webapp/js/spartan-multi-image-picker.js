@@ -7,6 +7,7 @@
  */
 (function ($) {
     "use strict";
+    var localAddress =[];
     var image;
     var indexStore=[];
     var indexRealStore=[];
@@ -197,12 +198,17 @@
                 url: settings.directUpload.url,
                 type: 'POST',
                 data: formData,
+                dataType:'json',
                 cache: false,
                 processData: false,
                 contentType: false,	
                 success: function(data, textStatus, jqXHR){
+                	var temporary = data;
+                	data=data[0].realAddress;
                 	
                 	
+                	localAddress.push(temporary[0].localAddress);
+                	console.log("들어가기 전 데이타  : "+temporary[0].localAddress);
                 	data = decodeURI(data); 
                 	
                 	//DB연결 전 테스트용
@@ -210,7 +216,10 @@
                 	indexRealStore.push(data);
                 	
                 	//DB연결 전 테스트용
-                	$('#hiddenStore').val(indexRealStore);
+                	
+                	//$('#hiddenStore').val(indexRealStore);
+                	
+                	$('#hiddenStore').val(localAddress);
                 	
                     $(parent).find('[data-spartanindexloader="'+index+'"]').css('display', 'none');
 
@@ -261,9 +270,17 @@
                 cache: false,
                 processData: false,
                 contentType: false,	
-                success: function(data){
+                success: function(data1){
+                	console.log(data1+"a머야 씨발");
+                	
                 	//실제 저장된 파일명 목록에서 삭제
-                	indexRealStore.splice(indexRealStore.indexOf(data),1);
+                	indexRealStore.splice(indexRealStore.indexOf(data1),1);
+                	
+                	
+                		localAddress.splice(localAddress.indexOf(data1),1);
+                	
+                	console.log(localAddress+"삭제 로컬 어드레스");
+                	
                 	console.log(indexStore+"삭제 후 업로드되었던 모든 이미지");
                 	console.log(indexRealStore+"삭제 후 서버에 저장된 이미지");
                 },

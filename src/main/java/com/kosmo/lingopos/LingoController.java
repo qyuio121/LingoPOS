@@ -39,7 +39,6 @@ import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.login.LoginDTO;
 import com.kosmo.lingopos.login.LoginService;
-import com.kosmo.lingopos.map.MapDTO;
 import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
@@ -148,7 +147,7 @@ public class LingoController {
 	
 	//창선 사진 등록  - 가게 전경 Controller
 		@ResponseBody
-		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST)
+		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.POST,produces="text/html; charset=UTF-8")
 		public String storeUpload(MultipartHttpServletRequest mhsr,HttpSession session) throws Exception{
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			//1]서버의 물리적 경로 얻기
@@ -168,20 +167,43 @@ public class LingoController {
 			upload.transferTo(file);
 			//4]DB에 저장할 서버에 저장된 파일명 
 			
+			
+			
 			newFilename =  URLEncoder.encode(newFilename, "utf-8");
 			
-			return phicalPath+File.separator+newFilename;
+			List<Map> ssibal = new Vector<Map>();	
+			Map record = new HashMap();
+			
+			
+			//원래 전달값
+			String realAddress = phicalPath+File.separator+newFilename;
+			//로컬 호스트 전달값
+			String localIP = InetAddress.getLocalHost().getHostAddress();
+			String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernote/" + newFilename;
+			
+			record.put("realAddress",realAddress);
+			record.put("localAddress",localAddress);
+			
+			System.out.println("원래 데이타 :" + realAddress);
+			System.out.println("로컬 데이타 "+ localAddress);
+			
+			ssibal.add(record);
+			
+			return JSONArray.toJSONString(ssibal);
 		}
 		//창선 사진 삭제  - 가게 전경 Controller
 		@ResponseBody
-		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.GET)
-		public void storeDelete(@RequestParam String removeFile) throws Exception{
+		@RequestMapping(value="/Shop/Store.Lingo",method=RequestMethod.GET,produces="text/plain; charset=UTF-8")
+		public String storeDelete(@RequestParam String removeFile) throws Exception{
 			File remove = new File(removeFile);
 			remove.delete();
+			String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
+			System.out.println(removes);
+			return removes;
 		}
 		//창선 사진 등록 - 메뉴 사진 Controller
 		@ResponseBody
-		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST)
+		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.POST,produces="text/html; charset=UTF-8")
 		public String MenuUpload(MultipartHttpServletRequest mhsr,HttpSession session) throws Exception{
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			//1]서버의 물리적 경로 얻기
@@ -202,15 +224,36 @@ public class LingoController {
 			//4]DB에 저장할 서버에 저장된 파일명 
 			
 			newFilename =  URLEncoder.encode(newFilename, "utf-8");
+			List<Map> ssibal = new Vector<Map>();	
+			Map record = new HashMap();
 			
-			return phicalPath+File.separator+newFilename;
+			
+			//원래 전달값
+			String realAddress = phicalPath+File.separator+newFilename;
+			//로컬 호스트 전달값
+			String localIP = InetAddress.getLocalHost().getHostAddress();
+			String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernote/" + newFilename;
+			
+			record.put("realAddress",realAddress);
+			record.put("localAddress",localAddress);
+			
+			System.out.println("원래 데이타 :" + realAddress);
+			System.out.println("로컬 데이타 "+ localAddress);
+			
+			ssibal.add(record);
+			
+			return JSONArray.toJSONString(ssibal);
 		}
 		//창선 사진 삭제 - 메뉴 사진 Controller
 		@ResponseBody
-		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.GET)
-		public void MenuDelete(@RequestParam String removeFile) throws Exception{
+		@RequestMapping(value="/Shop/Menu.Lingo",method=RequestMethod.GET,produces="text/plain; charset=UTF-8")
+		public String MenuDelete(@RequestParam String removeFile) throws Exception{
 			File remove = new File(removeFile);
 			remove.delete();
+			String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
+			System.out.println(removes);
+			return removes;
+			
 		}
 
 	/**
@@ -695,26 +738,6 @@ public class LingoController {
 	public String cal() throws Exception{
 		return "shop/sales/salescal.tiles";
 	}
-	@ResponseBody
-	@RequestMapping(value="/Map/Map.Lingo",produces="text/html; charset=UTF-8")
-	public String getmap() throws Exception{
-		List<MapDTO> list = mapService.select();
-		List<Map> maplist= new Vector<Map>();
-		for(MapDTO dto:list) {
-			Map map = new HashMap();
-			map.put("x",dto.getX());
-			map.put("y",dto.getY());
-			map.put("img",dto.getImg());
-			map.put("storeno",dto.getStoreno());
-			map.put("storename",dto.getStorename());
-			map.put("tel",dto.getTel());
-			map.put("mapno",dto.getMapno());
-			map.put("bigkind",dto.getBigkind());
-			map.put("address",dto.getAddress());
-			maplist.add(map);
-		}	
-		return JSONArray.toJSONString(maplist);
-	}
 	
 	//백엔드 인덱스
 		@RequestMapping("/Admin/Index/Index.Admin")
@@ -744,6 +767,12 @@ public class LingoController {
 		@RequestMapping("/Admin/question/QNA.Admin")
 		public String adminQNA() throws Exception{
 			return "admin/question/QNA.Admin";
+		}
+		
+		//백엔드 FCM
+		@RequestMapping("/Admin/FCM/FCM.Admin")
+		public String adminFCM() throws Exception{
+			return "admin/FCM/FCM.Admin";
 		}
 		
 		

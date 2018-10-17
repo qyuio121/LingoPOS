@@ -7,6 +7,7 @@
  */
 (function ($) {
     "use strict";
+    var localAddress =[];
     var image;
     //저장할 파일명 
     var imageName=[];
@@ -201,11 +202,16 @@
                 url: settings.directUpload.url,
                 type: 'POST',
                 data: formData,
+                dataType:'json',
                 cache: false,
                 processData: false,
                 contentType: false,	
                 success: function(data, textStatus, jqXHR){
+                	var temporary = data;
+                	data=data[0].realAddress;
                 	
+                	localAddress.push(temporary[0].localAddress);
+                	console.log("들어가기 전 데이타  : "+temporary[0].localAddress);
                 	
                 	//DB연결 전 테스트용
                 	data = decodeURI(data); 
@@ -217,7 +223,7 @@
       	
                 	indexMenu.push(data);
                 	indexRealMenu.push(data);
-                	$('#hiddenMenu').val(indexRealMenu);
+                	$('#hiddenMenu').val(localAddress);
                 	
                     $(parent).find('[data-spartanindexloader="'+index+'"]').css('display', 'none');
 
@@ -266,13 +272,18 @@
                 cache: false,
                 processData: false,
                 contentType: false,	
-                success: function(data){
+                success: function(data1){
                 	//실제 저장된 파일경로 목록에서 삭제
-                	indexRealMenu.splice(indexRealMenu.indexOf(data),1);
+                	indexRealMenu.splice(indexRealMenu.indexOf(data1),1);
+                	
+                	localAddress.splice(localAddress.indexOf(data1),1);
+                	
                 	console.log(indexMenu);
                 	console.log(indexRealMenu);
                 	
-                	var minusss = data;
+                	console.log(localAddress+"삭제 로컬 어드레스");
+                	
+                	var minusss = data1;
                 	var minuss = minusss.substr(minusss.lastIndexOf("\\")+1);
                 	var minus = minuss.substr(0,minuss.lastIndexOf("."));
                 	imageName.splice(imageName.indexOf(minus),1);
