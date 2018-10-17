@@ -29,16 +29,10 @@
         <ul class="sidebar-menu" id="nav-accordion">
 		  <li class="mt">
             <a class="active" href="<c:url value='/Admin/Index/Index.Admin'/>">
-              <i class="fa fa-dashboard"></i>
+              <i class="fa fa-desktop"></i>
               <span>메인페이지</span>
               </a>
           </li>
-          <li class="sub-menu">
-            <a href="<c:url value='/Admin/blackList/blackList.Admin'/>">
-              <i class="fa fa-desktop"></i>
-              <span>블랙리스트</span>
-              </a>
-		  </li>
           <li class="sub-menu">
             <a href="<c:url value='/Admin/apply/apply.Admin'/>">
               <i class="fa fa-cogs"></i>
@@ -52,6 +46,14 @@
               <span>회원관리시스템</span>
               </a>
           </li>
+          <li class="sub-menu">
+            <a href="<c:url value='/Admin/blackList/blackList.Admin'/>">
+              <i class="fa fa-tasks"></i>
+              <span>블랙리스트</span>
+              </a>
+		  </li>
+          
+        
           <li class="sub-menu">
             <a href="#">
               <i class="fa fa-th"></i>
@@ -67,6 +69,12 @@
               <i class="fa fa-envelope"></i>
               <span>1:1문의 응답</span>
               <span class="label label-theme pull-right mail-info">2</span>
+              </a>
+          </li>
+           <li>
+            <a href="<c:url value='/Admin/FCM/FCM.Admin'/>">
+              <i class="fa fa-envelope"></i>
+              <span>FCM</span>
               </a>
           </li>
         </ul>

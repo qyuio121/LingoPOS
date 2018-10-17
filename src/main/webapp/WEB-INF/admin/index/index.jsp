@@ -60,7 +60,7 @@
 			  <div class="col-md-4 col-sm-4 mb">
 			    <div class="grey-panel pn donut-chart">
                   <div class="grey-header">
-                    <h5>SERVER LOAD</h5>
+                    <h5>POS 가맹점 신규 설치</h5>
                   </div>
                   <canvas id="serverstatus01" height="120" width="120"></canvas>
                   <script>
@@ -77,7 +77,7 @@
                   </script>
                   <div class="row">
                     <div class="col-sm-6 col-xs-6 goleft">
-                      <p>Usage<br/>Increase:</p>
+                      <p>POS 설치<br/>증가량</p>
                     </div>
                     <div class="col-sm-6 col-xs-6">
                       <h2>21%</h2>
@@ -90,7 +90,7 @@
               <div class="col-md-4 col-sm-4 mb">
                 <div class="darkblue-panel pn">
                   <div class="darkblue-header">
-                    <h5>DROPBOX STATICS</h5>
+                    <h5>사업자회원 / 일반회원 </h5>
                   </div>
                   <canvas id="serverstatus02" height="120" width="120"></canvas>
                   <script>
@@ -105,13 +105,13 @@
                     ];
                     var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
                   </script>
-                  <p>April 17, 2014</p>
+                  <p>그래프</p>
                   <footer>
                     <div class="pull-left">
-                      <h5><i class="fa fa-hdd-o"></i> 17 GB</h5>
+                      <h5><i class="fa fa-hdd-o"></i>사업자회원 / 일반회원비율</h5>
                     </div>
                     <div class="pull-right">
-                      <h5>60% Used</h5>
+                      <h5>60% / 40%</h5>
                     </div>
                   </footer>
                 </div>
@@ -121,12 +121,12 @@
               <div class="col-md-4 col-sm-4 mb">
                 <div class="green-panel pn">
                   <div class="green-header">
-                    <h5>REVENUE</h5>
+                    <h5>금일 예약 시스템 사용자</h5>
                   </div>
                   <div class="chart mt">
                     <div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,464,655]"></div>
                   </div>
-                  <p class="mt"><b>$ 17,980</b><br/>Month Income</p>
+                  <p class="mt"><b>1,000</b><br/>회원</p>
                 </div>
               </div>
 	<!--3번 원형차트-->			  
@@ -135,4 +135,3 @@
           </div>
 
 <!--메인 페이지 -->	
-

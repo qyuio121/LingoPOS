@@ -724,6 +724,12 @@ public class LingoController {
 			return "admin/question/QNA.Admin";
 		}
 		
+		//백엔드 FCM
+		@RequestMapping("/Admin/FCM/FCM.Admin")
+		public String adminFCM() throws Exception{
+			return "admin/FCM/FCM.Admin";
+		}
+		
 		
 	
 }
