@@ -3,9 +3,6 @@
     pageEncoding="UTF-8"%>
 
 <!--메인 페이지 -->
-    <section id="main-content">
-      <section class="wrapper">
-        <div class="row">
           <div class="col-lg-12 main-chart">
             <!--CUSTOM CHART START -->
 <!-- 차트 타이틀-->			
@@ -136,9 +133,6 @@
             </div>
 <!-- 원형차트 혹시 모르니 대기 -->					
           </div>
-        </div>
-        <!-- /row -->
-      </section>
-    </section>
+
 <!--메인 페이지 -->	
 

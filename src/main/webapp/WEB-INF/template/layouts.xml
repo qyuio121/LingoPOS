@@ -18,14 +18,14 @@
 		</definition>
 
 		<!-- admin --> 	
-	    <definition name="admin/*.tiles" extends=".admin">
-			<put-attribute name="Body" value="/WEB-INF/admin/{1}.jsp"/>
+	    <definition name="*.Admin" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/{1}.jsp"/>
 		</definition>
-		<definition name="admin/*/*.tiles" extends=".admin">
-			<put-attribute name="Body" value="/WEB-INF/admin/{1}/{2}.jsp"/>
+		<definition name="*/*.Admin" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/{1}/{2}.jsp"/>
 		</definition>	
-		<definition name="admin/*/*/*.tiles" extends=".admin">
-			<put-attribute name="Body" value="/WEB-INF/admin/{1}/{2}/{3}.jsp"/>
+		<definition name="*/*/*.Admin" extends=".admin">
+			<put-attribute name="Body" value="/WEB-INF/{1}/{2}/{3}.jsp"/>
 		</definition>
 	    	
 	   	<!-- lingo --> 	

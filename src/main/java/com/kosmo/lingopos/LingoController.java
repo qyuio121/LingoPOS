@@ -229,9 +229,9 @@ public class LingoController {
 
 	
 	@RequestMapping("/Notice/Notice.Lingo")
-	public String notice(Model model,HttpServletRequest req,
+	public String notice(HttpSession session,Model model,HttpServletRequest req,
 			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
-
+		
 		int totalRecordCount = noticeService.getTotalRecord(map);
 		
 		int start = (nowPage-1)*noticepageSize+1;
@@ -247,12 +247,27 @@ public class LingoController {
 		model.addAttribute("pageSize", noticepageSize);
 		model.addAttribute("nowPage", nowPage);
 		
-		return "notice/notice.tiles";
+		//사용자 유형에 따른 페이지 이동 
+		//관리자
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto.getAdminno() != null)
+			return "notice/notice.Admin";
+		//고객
+		else
+			return "notice/notice.tiles";
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.GET)
-		public String noticeWrite() throws Exception{
-			return "notice/noticeWrite.tiles";
+		public String noticeWrite(HttpSession session) throws Exception{
+			//사용자 유형에 따른 페이지 이동 
+			//관리자
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			if (dto.getAdminno() != null)
+				return "notice/noticeWrite.Admin";
+			//고객
+			else
+				return "notice/noticeWrite.tiles";
+		
 		}
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.POST)
 		public String noticeWriteOk(@RequestParam Map map) throws Exception{
@@ -276,12 +291,21 @@ public class LingoController {
 			return "forward:/Notice/Notice.Lingo";
 		}
 		@RequestMapping("/Notice/NoticeView.Lingo")
-		public String noticeView(Model model,@RequestParam Map map) throws Exception{
+		public String noticeView(HttpSession session,Model model,@RequestParam Map map) throws Exception{
 			noticeService.updateCount(map);
 			NoticeDTO dto = noticeService.selectOne(map);
 			model.addAttribute("record", dto);
 			model.addAttribute("nowPage", map.get("nowPage"));
-			return "notice/noticeView.tiles";
+			
+			//사용자 유형에 따른 페이지 이동 
+			//관리자
+			LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+			if (dto1.getAdminno() != null)
+				return "notice/noticeView.Admin";
+			//고객
+			else
+				return "notice/noticeView.tiles";
+			
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
 	@RequestMapping("/Free/Free.Lingo")
@@ -312,7 +336,7 @@ public class LingoController {
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 시작
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.GET)
-	public String freeWrite() throws Exception{
+	public String freeWrite(HttpSession session) throws Exception{
 		return "free/freeWrite.tiles";
 	}
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.POST)
@@ -609,43 +633,62 @@ public class LingoController {
 	//백엔드 인덱스
 		@RequestMapping("/Admin/Index/Index.Admin")
 		public String adminIndex() throws Exception{
-			return "admin/index/index.tiles";
+			return "admin/index/index.Admin";
 		}
 		
 		//백엔드 블랙리스트
 		@RequestMapping("/Admin/blackList/blackList.Admin")
 		public String adminBlackList() throws Exception{
-			return "admin/blackList/blackList.tiles";
+			return "admin/blackList/blackList.Admin";
 		}
 		
 		//백엔드 가게승인
 		@RequestMapping("/Admin/apply/apply.Admin")
 		public String adminApply() throws Exception{
-			return "admin/apply/apply.tiles";
+			return "admin/apply/apply.Admin";
 		}
 		
 		//백엔드 회원관리시스템
 		@RequestMapping("/Admin/member/member.Admin")
 		public String adminMember() throws Exception{
-			return "admin/member/member.tiles";
+			return "admin/member/member.Admin";
 		}
 		
+		/*
 		//백엔드 게시판관리시스템 - 공지사항
 		@RequestMapping("/Admin/board/notice.Admin")
-		public String adminNotice() throws Exception{
-			return "admin/board/notice.tiles";
+		public String adminNotice(Model model,HttpServletRequest req,
+				@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+			int totalRecordCount = noticeService.getTotalRecord(map);
+			
+			int start = (nowPage-1)*noticepageSize+1;
+			int end = nowPage*noticepageSize;
+			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, noticepageSize, noticeblockPage, nowPage, req.getContextPath()+"/Notice/Notice.Lingo?");
+			map.put("start", start);
+			map.put("end", end);
+			
+			List<NoticeDTO> list = noticeService.selectAll(map);
+			model.addAttribute("list", list);
+			model.addAttribute("pageString", pageString);
+			model.addAttribute("totalRecordCount", totalRecordCount);
+			model.addAttribute("pageSize", noticepageSize);
+			model.addAttribute("nowPage", nowPage);
+			
+			return "notice/notice.Admin";
 		}
-		
+		*/
 		//백엔드 게시판관리시스템 - 자유게시판
 		@RequestMapping("/Admin/board/free.Admin")
 		public String adminFree() throws Exception{
-			return "admin/board/free.tiles";
+			return "admin/board/free.Admin";
 		}
 		
 		//백엔드 1:1문의 응답 
 		@RequestMapping("/Admin/question/QNA.Admin")
 		public String adminQNA() throws Exception{
-			return "admin/question/QNA.tiles";
+			return "admin/question/QNA.Admin";
 		}
+		
+		
 	
 }

@@ -58,7 +58,7 @@
               <span>게시판관리시스템</span>
               </a>
 			<ul class="sub">
-              <li><a href="<c:url value='/Admin/board/notice.Admin'/>">공지사항</a></li>
+              <li><a href="<c:url value='/Notice/Notice.Lingo'/>">공지사항</a></li>
               <li><a href="<c:url value='/Admin/board/free.Admin'/>">자유게시판</a></li>
             </ul>
           </li>
