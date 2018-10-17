@@ -210,12 +210,13 @@
                 	var temporary = data;
                 	data=data[0].realAddress;
                 	
-                	localAddress.push(temporary[0].localAddress);
+                	localAddress.push(decodeURIComponent(temporary[0].localAddress));
                 	console.log("들어가기 전 데이타  : "+temporary[0].localAddress);
                 	
                 	//DB연결 전 테스트용
                 	data = decodeURIComponent(data);
                 	data = replaceAll(data,"+"," ");
+                	console.log("들어가기 전 데이타  : "+temporary[0].localAddress+" "+data);
                 	var addss = data;
                 	var adds = addss.substr(addss.lastIndexOf("\\")+1);
                 	var add = adds.substr(0,adds.lastIndexOf("."));

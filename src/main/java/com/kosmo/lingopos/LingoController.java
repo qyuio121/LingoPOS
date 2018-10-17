@@ -180,7 +180,7 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernote/" + newFilename;
+				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
@@ -234,7 +234,7 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/summernote/" + newFilename;
+				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
@@ -724,7 +724,7 @@ public class LingoController {
 		String[] menuimg = map.get("hiddenMenu").toString().split(",");
 		for(String path:menuimg) {
 			map.put("img", path);
-			String filename = path.substring(path.lastIndexOf(File.separator)+1,path.lastIndexOf('.'));
+			String filename = path.substring(path.lastIndexOf('/')+1,path.lastIndexOf('.'));
 			String[] food = filename.split("_");
 			map.put("name", food[0]);
 			map.put("price", food[1]);

@@ -207,7 +207,7 @@
                 	data=data[0].realAddress;
                 	
                 	
-                	localAddress.push(temporary[0].localAddress);
+                	localAddress.push(decodeURIComponent(temporary[0].localAddress));
                 	console.log("들어가기 전 데이타  : "+temporary[0].localAddress);
                 	data = decodeURIComponent(data);
                 	data = replaceAll(data,"+"," ");
