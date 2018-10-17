@@ -214,7 +214,8 @@
                 	console.log("들어가기 전 데이타  : "+temporary[0].localAddress);
                 	
                 	//DB연결 전 테스트용
-                	data = decodeURI(data); 
+                	data = decodeURIComponent(data);
+                	data = replaceAll(data,"+"," ");
                 	var addss = data;
                 	var adds = addss.substr(addss.lastIndexOf("\\")+1);
                 	var add = adds.substr(0,adds.lastIndexOf("."));
@@ -273,6 +274,8 @@
                 processData: false,
                 contentType: false,	
                 success: function(data1){
+                	data1 = decodeURIComponent(data1);
+                	data1 = replaceAll(data1,"+"," ");
                 	//실제 저장된 파일경로 목록에서 삭제
                 	indexRealMenu.splice(indexRealMenu.indexOf(data1),1);
                 	
@@ -297,7 +300,12 @@
             });
             //삭제 로직 끝
         }
+        
+        function replaceAll(sValue, param1, param2) { // replaceAll 이라는 변수 선언.
 
+     	   return sValue.split(param1).join(param2);
+
+     }
 
 
         return this.each( function() {

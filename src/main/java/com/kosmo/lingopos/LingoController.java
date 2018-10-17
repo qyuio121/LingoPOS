@@ -200,6 +200,7 @@ public class LingoController {
 				remove.delete();
 				String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
 				System.out.println(removes);
+				removes = URLEncoder.encode(removes, "utf-8");
 				return removes;
 			}
 			//창선 사진 등록 - 메뉴 사진 Controller
@@ -253,6 +254,7 @@ public class LingoController {
 				remove.delete();
 				String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
 				System.out.println(removes);
+				removes = URLEncoder.encode(removes, "utf-8");
 				return removes;
 				
 			}
