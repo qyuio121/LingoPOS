@@ -122,7 +122,7 @@
 			<a href="<c:url value='/Free/Free.Lingo?searchWord=${param.searchWord}&searchColumn=${param.searchColumn}&nowPage=${param.nowPage}'/>" class="btn btn-primary">목록</a>
 		</div>
 	</div>	
-<!-- DB연결시 관리자만 보일 문의 답변 입력 폼  시작 -->
+
 	<div class="row">
 		<c:if test="${not empty sessionScope.loginDTO.id}">
 			<h3>댓글 입력 폼</h3>
@@ -135,32 +135,10 @@
 			</form>
 		</c:if>
 	</div>
-<!-- DB연결시 관리자만 보일 문의 답변 입력 폼  끝 -->
-<!-- DB연결시 답변 목록 시작 -->
+
 		<div class="row" id="comments">
 		</div>
-<!-- DB연결시 답변 목록 끝 -->
-<!-- 버튼 3개 시작 -->
-<!-- 버튼 3개 시작  DB연결 전까지 대기 시작 -->
-	<%-- 
-	<div class="row">
-		<div class="text-center">
-			<c:if test="${sessionScope.id==record.id }">
-				<a  href="<c:url value='/BBS/Edit.bbs?no=${record.no}'/>"
-					class="btn btn-success">수정</a>
-				<a id="del_memo" href="#" class="btn btn-success">삭제</a>
-			</c:if>
-			<a href="<c:url value='/BBS/List.bbs'/>" class="btn btn-success">목록</a>
 
-		</div>
-	</div>
-	 --%>
-<!-- 버튼 3개 시작  DB연결 전까지 대기 끝 -->
-<!-- 버튼 3개 예시 시작 -->
-		
-<!-- 버튼 3개 예시 끝 -->
-<!-- 버튼 3개 끝 -->
-<!-- 내용 끝 -->
 <br/><br/><br/>
 </div>
 	

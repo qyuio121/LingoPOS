@@ -258,7 +258,7 @@ public class LingoController {
 			return "notice/notice.tiles";}
 		catch(Exception e) {
 			//로그인 안하고 바로 접근시
-			return "login/signup/terms.tiles";
+			return "notice/notice.tiles";
 		}
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
@@ -266,17 +266,14 @@ public class LingoController {
 		public String noticeWrite(HttpSession session) throws Exception{
 			//사용자 유형에 따른 페이지 이동 
 			//관리자
-			try {
+			
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			if (dto.getAdminno() != null)
 				return "notice/noticeWrite.Admin";
 			//고객
 			else
-				return "notice/noticeWrite.tiles";}
-			catch(Exception e) {
-				//로그인 안하고 바로 접근시
-				return "login/signup/terms.tiles";
-			}
+				return "notice/noticeWrite.tiles";
+	
 		
 		}
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.POST)
@@ -320,7 +317,7 @@ public class LingoController {
 				return "notice/noticeView.tiles";}
 			catch(Exception e) {
 				//로그인 안하고 바로 접근시
-				return "login/signup/terms.tiles";
+				return "notice/noticeView.tiles";
 			}
 		
 		}
@@ -360,7 +357,7 @@ public class LingoController {
 					return "free/free.tiles";}
 				catch(Exception e) {
 					//로그인 안하고 바로 접근시
-					return "login/signup/terms.tiles";
+					return "free/free.tiles";
 				}
 		
 		
@@ -370,30 +367,40 @@ public class LingoController {
 	public String freeWrite(HttpSession session) throws Exception{
 		//사용자 유형에 따른 페이지 이동 
 		//관리자
-		try {
+		
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 		if (dto.getAdminno() != null)
 			return "free/freeWrite.Admin";
 		//고객
 		else
-			return "free/freeWrite.tiles";}
-		catch(Exception e) {
-			//로그인 안하고 바로 접근시
-			return "login/signup/terms.tiles";
+			return "free/freeWrite.tiles";
+		
 		}
 		
-	}
+	
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.POST)
 	public String freeWriteOk(@RequestParam Map map) throws Exception{
 		freeService.insert(map);
 		return "forward:/Free/Free.Lingo";
 	}
 	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.GET)
-	public String freeEdit(Model model,@RequestParam Map map) throws Exception{
+	public String freeEdit(HttpSession session,Model model,@RequestParam Map map) throws Exception{
 		FreeDTO dto = freeService.selectOne(map);
 		model.addAttribute("record", dto);
-		return "free/freeEdit.tiles";
+		
+		
+		//사용자 유형에 따른 페이지 이동 
+				//관리자
+				
+				LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+				if (dto1.getAdminno() != null)
+					return "free/freeEdit.Admin";
+				//고객
+				else
+					return "free/freeEdit.tiles";
+				
 	}
+		
 	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.POST)
 	public String freeEditOk(@RequestParam Map map) throws Exception{
 		freeService.update(map);
@@ -419,7 +426,7 @@ public class LingoController {
 					return "free/freeView.tiles";}
 				catch(Exception e) {
 					//로그인 안하고 바로 접근시
-					return "login/signup/terms.tiles";
+					return "free/freeView.tiles";
 				}
 	}
 	@RequestMapping("/Free/FreeDelete.Lingo")
@@ -709,13 +716,6 @@ public class LingoController {
 		@RequestMapping("/Admin/member/member.Admin")
 		public String adminMember() throws Exception{
 			return "admin/member/member.Admin";
-		}
-		
-		
-		//백엔드 게시판관리시스템 - 자유게시판
-		@RequestMapping("/Admin/board/free.Admin")
-		public String adminFree() throws Exception{
-			return "admin/board/free.Admin";
 		}
 		
 		//백엔드 1:1문의 응답 
