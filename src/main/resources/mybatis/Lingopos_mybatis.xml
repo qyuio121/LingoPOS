@@ -121,7 +121,7 @@
  <delete id="LingoMapDelete" parameterType="java.util.Map">
  	delete from map where storeno=#{storeno}
  </delete>
- <select id="LingoMapSelect" parameterType="java.util.Map" resultType="mapDTO">
+ <select id="LingoMapSelect" resultType="mapDTO">
  	select m.*,storename,address,tel,bigkind from store s join map m on s.storeno=m.storeno
  </select>
  

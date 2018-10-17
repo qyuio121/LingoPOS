@@ -21,7 +21,7 @@ public class MapService {
 	public int delete(Map map) {
 		return dao.delete(map);
 	}
-	public List<MapDTO> select(Map map) {
-		return dao.select(map);
+	public List<MapDTO> select() {
+		return dao.select();
 	}
 }

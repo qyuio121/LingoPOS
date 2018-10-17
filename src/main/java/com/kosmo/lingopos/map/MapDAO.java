@@ -22,8 +22,8 @@ public class MapDAO {
 	public int delete(Map map) {
 		return template.delete("LingoMapDelete",map);
 	}
-	public List<MapDTO> select(Map map) {
-		return template.selectList("LingoMapSelect",map);
+	public List<MapDTO> select() {
+		return template.selectList("LingoMapSelect");
 	}
 
 }

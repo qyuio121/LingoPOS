@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,7 @@ import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.login.LoginDTO;
 import com.kosmo.lingopos.login.LoginService;
+import com.kosmo.lingopos.map.MapDTO;
 import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
@@ -693,6 +695,26 @@ public class LingoController {
 	public String cal() throws Exception{
 		return "shop/sales/salescal.tiles";
 	}
+	@ResponseBody
+	@RequestMapping(value="/Map/Map.Lingo",produces="text/html; charset=UTF-8")
+	public String getmap() throws Exception{
+		List<MapDTO> list = mapService.select();
+		List<Map> maplist= new Vector<Map>();
+		for(MapDTO dto:list) {
+			Map map = new HashMap();
+			map.put("x",dto.getX());
+			map.put("y",dto.getY());
+			map.put("img",dto.getImg());
+			map.put("storeno",dto.getStoreno());
+			map.put("storename",dto.getStorename());
+			map.put("tel",dto.getTel());
+			map.put("mapno",dto.getMapno());
+			map.put("bigkind",dto.getBigkind());
+			map.put("address",dto.getAddress());
+			maplist.add(map);
+		}	
+		return JSONArray.toJSONString(maplist);
+	}
 	
 	//백엔드 인덱스
 		@RequestMapping("/Admin/Index/Index.Admin")
@@ -722,12 +744,6 @@ public class LingoController {
 		@RequestMapping("/Admin/question/QNA.Admin")
 		public String adminQNA() throws Exception{
 			return "admin/question/QNA.Admin";
-		}
-		
-		//백엔드 FCM
-		@RequestMapping("/Admin/FCM/FCM.Admin")
-		public String adminFCM() throws Exception{
-			return "admin/FCM/FCM.Admin";
 		}
 		
 		
