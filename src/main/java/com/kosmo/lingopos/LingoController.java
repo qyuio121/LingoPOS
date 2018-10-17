@@ -249,30 +249,56 @@ public class LingoController {
 		
 		//사용자 유형에 따른 페이지 이동 
 		//관리자
+		try {
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 		if (dto.getAdminno() != null)
 			return "notice/notice.Admin";
 		//고객
 		else
-			return "notice/notice.tiles";
+			return "notice/notice.tiles";}
+		catch(Exception e) {
+			//로그인 안하고 바로 접근시
+			return "login/signup/terms.tiles";
+		}
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.GET)
 		public String noticeWrite(HttpSession session) throws Exception{
 			//사용자 유형에 따른 페이지 이동 
 			//관리자
+			try {
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			if (dto.getAdminno() != null)
 				return "notice/noticeWrite.Admin";
 			//고객
 			else
-				return "notice/noticeWrite.tiles";
+				return "notice/noticeWrite.tiles";}
+			catch(Exception e) {
+				//로그인 안하고 바로 접근시
+				return "login/signup/terms.tiles";
+			}
 		
 		}
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.POST)
-		public String noticeWriteOk(@RequestParam Map map) throws Exception{
+		public String noticeWriteOk(HttpSession session,@RequestParam Map map) throws Exception{
 			noticeService.insert(map);
+			
+			//사용자 유형에 따른 페이지 이동 
+			//관리자
+			try {
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			if (dto.getAdminno() != null)
+				return "forward:/Notice/Notice.Admin";
+			//고객
+			else
+				return "forward:/Notice/Notice.Lingo";}
+			catch(Exception e) {
+				//로그인 안하고 바로 접근시
+				return "login/signup/terms.tiles";
+			}
+			/*
 			return "forward:/Notice/Notice.Lingo";
+			*/
 		}
 		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.GET)
 		public String noticeEdit(Model model,@RequestParam Map map) throws Exception{
@@ -299,13 +325,18 @@ public class LingoController {
 			
 			//사용자 유형에 따른 페이지 이동 
 			//관리자
+			try {
 			LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
 			if (dto1.getAdminno() != null)
 				return "notice/noticeView.Admin";
 			//고객
 			else
-				return "notice/noticeView.tiles";
-			
+				return "notice/noticeView.tiles";}
+			catch(Exception e) {
+				//로그인 안하고 바로 접근시
+				return "login/signup/terms.tiles";
+			}
+		
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
 	@RequestMapping("/Free/Free.Lingo")
