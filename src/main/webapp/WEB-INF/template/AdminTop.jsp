@@ -17,7 +17,7 @@
 <!--로그아웃키-->      
       <div class="top-menu">
         <ul class="nav pull-right top-menu">
-          <li><a class="logout" href="login.html">로그아웃</a></li>
+          <li><a class="logout" href="<c:url value='/Login/Logout.Lingo'/>">로그아웃</a></li>
         </ul>
       </div>
 <!--로그아웃키-->	  
@@ -59,7 +59,7 @@
               </a>
 			<ul class="sub">
               <li><a href="<c:url value='/Notice/Notice.Lingo'/>">공지사항</a></li>
-              <li><a href="<c:url value='/Admin/board/free.Admin'/>">자유게시판</a></li>
+              <li><a href="<c:url value='/Free/Free.Lingo'/>">자유게시판</a></li>
             </ul>
           </li>
           <li>

@@ -326,7 +326,7 @@ public class LingoController {
 		}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 끝		
 	@RequestMapping("/Free/Free.Lingo")
-	public String free(Model model,HttpServletRequest req,
+	public String free(HttpSession session,Model model,HttpServletRequest req,
 			@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
 
 		int totalRecordCount = freeService.getTotalRecord(map);
@@ -349,12 +349,39 @@ public class LingoController {
 		model.addAttribute("pageSize", noticepageSize);
 		model.addAttribute("nowPage", nowPage);
 		
-		return "free/free.tiles";
+		//사용자 유형에 따른 페이지 이동 
+				//관리자
+				try {
+				LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+				if (dto.getAdminno() != null)
+					return "free/free.Admin";
+				//고객
+				else
+					return "free/free.tiles";}
+				catch(Exception e) {
+					//로그인 안하고 바로 접근시
+					return "login/signup/terms.tiles";
+				}
+		
+		
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 시작
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.GET)
 	public String freeWrite(HttpSession session) throws Exception{
-		return "free/freeWrite.tiles";
+		//사용자 유형에 따른 페이지 이동 
+		//관리자
+		try {
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto.getAdminno() != null)
+			return "free/freeWrite.Admin";
+		//고객
+		else
+			return "free/freeWrite.tiles";}
+		catch(Exception e) {
+			//로그인 안하고 바로 접근시
+			return "login/signup/terms.tiles";
+		}
+		
 	}
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.POST)
 	public String freeWriteOk(@RequestParam Map map) throws Exception{
@@ -373,14 +400,27 @@ public class LingoController {
 		return "forward:/Free/FreeView.Lingo?freeno="+map.get("freeno");
 	}
 	@RequestMapping("/Free/FreeView.Lingo")
-	public String freeView(Model model,@RequestParam Map map) throws Exception{
+	public String freeView(HttpSession session,Model model,@RequestParam Map map) throws Exception{
 		freeService.updateCount(map);
 		FreeDTO dto = freeService.selectOne(map);
 		model.addAttribute("record", dto);
 		model.addAttribute("nowPage", map.get("nowPage"));
 		model.addAttribute("searchWord", map.get("searchWord"));
 		model.addAttribute("searchColumn", map.get("searchColumn"));
-		return "free/freeView.tiles";
+		
+		//사용자 유형에 따른 페이지 이동 
+				//관리자
+				try {
+				LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+				if (dto1.getAdminno() != null)
+					return "free/freeView.Admin";
+				//고객
+				else
+					return "free/freeView.tiles";}
+				catch(Exception e) {
+					//로그인 안하고 바로 접근시
+					return "login/signup/terms.tiles";
+				}
 	}
 	@RequestMapping("/Free/FreeDelete.Lingo")
 	public String freeDelete(@RequestParam Map map) throws Exception{
