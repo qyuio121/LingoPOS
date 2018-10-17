@@ -283,28 +283,14 @@ public class LingoController {
 		public String noticeWriteOk(HttpSession session,@RequestParam Map map) throws Exception{
 			noticeService.insert(map);
 			
-			//사용자 유형에 따른 페이지 이동 
-			//관리자
-			try {
-			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-			if (dto.getAdminno() != null)
-				return "forward:/Notice/Notice.Admin";
-			//고객
-			else
-				return "forward:/Notice/Notice.Lingo";}
-			catch(Exception e) {
-				//로그인 안하고 바로 접근시
-				return "login/signup/terms.tiles";
-			}
-			/*
-			return "forward:/Notice/Notice.Lingo";
-			*/
+				return "forward:/Notice/Notice.Lingo";
+			
 		}
 		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.GET)
 		public String noticeEdit(Model model,@RequestParam Map map) throws Exception{
 			NoticeDTO dto = noticeService.selectOne(map);
 			model.addAttribute("record", dto);
-			return "notice/noticeEdit.tiles";
+			return "notice/noticeEdit.Admin";
 		}
 		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.POST)
 		public String noticeEditOk(@RequestParam Map map) throws Exception{
@@ -685,29 +671,7 @@ public class LingoController {
 			return "admin/member/member.Admin";
 		}
 		
-		/*
-		//백엔드 게시판관리시스템 - 공지사항
-		@RequestMapping("/Admin/board/notice.Admin")
-		public String adminNotice(Model model,HttpServletRequest req,
-				@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
-			int totalRecordCount = noticeService.getTotalRecord(map);
-			
-			int start = (nowPage-1)*noticepageSize+1;
-			int end = nowPage*noticepageSize;
-			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, noticepageSize, noticeblockPage, nowPage, req.getContextPath()+"/Notice/Notice.Lingo?");
-			map.put("start", start);
-			map.put("end", end);
-			
-			List<NoticeDTO> list = noticeService.selectAll(map);
-			model.addAttribute("list", list);
-			model.addAttribute("pageString", pageString);
-			model.addAttribute("totalRecordCount", totalRecordCount);
-			model.addAttribute("pageSize", noticepageSize);
-			model.addAttribute("nowPage", nowPage);
-			
-			return "notice/notice.Admin";
-		}
-		*/
+		
 		//백엔드 게시판관리시스템 - 자유게시판
 		@RequestMapping("/Admin/board/free.Admin")
 		public String adminFree() throws Exception{
