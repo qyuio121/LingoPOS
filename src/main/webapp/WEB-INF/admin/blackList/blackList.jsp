@@ -2,8 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<script type="text/javascript" src="../../js/jquery-latest.js"></script>
-<script type="text/javascript" src="../../js/jquery.tablesorter.js"></script>
+
 
 <script>
 $(function() {
@@ -19,15 +18,28 @@ $(function() {
             $("input[name=check]").prop("checked",false);
         }
     })
-    $("#tablesort").tablesorter();
-});
+    //정렬
+    $('#status').click(function(){
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc){rows = rows.reverse()}
+        for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+    })
+    function comparer(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+        }
+    }
+    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+	});
 </script>
 <!--메인 페이지 -->
 <section id="main-content">
 	<section class="wrapper content-panel">
-
 		<div class="row">
-			<h4><i class="fa fa-angle-right"></i>블랙리스트</h4>
+			<h4><i class="fa fa-angle-right"></i>블랙리스트dsfs</h4>
 		</div>
 		<!-- 검색창 -->
 		<div class="row">
@@ -54,7 +66,7 @@ $(function() {
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr>
 							<th><i class="fa fa-check"></i><input type="checkbox" id="checkall"></th>
-							<th><i class=" fa fa-user"></i>아이디</th>
+							<th><i class=" fa fa-user"></i>id</th>
 							<th><i class=" fa fa-question-circle"></i>이름</th>
 							<th><i class=" fa fa-bookmark"></i>누적된 신고</th>
 							<th><i class=" fa fa-list-alt"></i>신고한가게</th>
@@ -63,26 +75,14 @@ $(function() {
 						</tr>
 					</thead>
 
-					<tfoot>
-						<tr>
-							<th></th>
-							<th>아이디</th>
-							<th>이름</th>
-							<th>누적된 신고</th>
-							<th>신고한가게</th>
-							<th>상태</th>
-							<th>삭제</th>
-						</tr>
-					</tfoot>
-
 					<tbody>
 						<tr>
 							<td><input type="checkbox" name="check"></td>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
+							<td>1</td>
+							<td>1</td>
+							<td>2</td>
 							<td>가게명</td>
-							<td><span class="label label-danger label-mini">승인</span></td>
+							<td><span class="label label-danger label-mini">승인요청</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-danger btn-xs" data-title="Delete"
@@ -95,11 +95,45 @@ $(function() {
 
 						<tr>
 							<td><input type="checkbox" name="check"></td>
-							<td>Tiger Nixon</td>
-							<td>System Architect</td>
-							<td>Edinburgh</td>
+							<td>2</td>
+							<td>2</td>
+							<td>1</td>
 							<td>가게명</td>
-							<td><span class="label label-warning label-mini">승인요청</span></td>
+							<td><span class="label label-warning label-mini">승인</span></td>
+							<td><p data-placement="top" data-toggle="tooltip"
+									title="Delete">
+									<button class="btn btn-danger btn-xs" data-title="Delete"
+										data-toggle="modal" data-target="#delete">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+								</p>
+							</td>
+						</tr>
+						
+						<tr>
+							<td><input type="checkbox" name="check"></td>
+							<td>3</td>
+							<td>1</td>
+							<td>2</td>
+							<td>가게명</td>
+							<td><span class="label label-danger label-mini">승인요청</span></td>
+							<td><p data-placement="top" data-toggle="tooltip"
+									title="Delete">
+									<button class="btn btn-danger btn-xs" data-title="Delete"
+										data-toggle="modal" data-target="#delete">
+										<span class="glyphicon glyphicon-trash"></span>
+									</button>
+								</p>
+							</td>
+						</tr>
+						
+						<tr>
+							<td><input type="checkbox" name="check"></td>
+							<td>4</td>
+							<td>2</td>
+							<td>1</td>
+							<td>가게명</td>
+							<td><span class="label label-warning label-mini">승인</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-danger btn-xs" data-title="Delete"
