@@ -26,7 +26,7 @@
 					<th style="width:30%"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> 
 						유저권한 승격여부
 						<div class="btn-group" id="userStatusBtn">
-						  <button type="button" id="userStatusView" class="btn btn-default btn-xs">admin</button>
+						  <button type="button" id="userStatusView" class="btn btn-default btn-xs" style="width:100px">admin</button>
 						  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						    <span class="caret"></span>
 						    <span class="sr-only"></span>
@@ -43,8 +43,8 @@
 					<td><input type="checkbox">
 					<td>admin</td>
 					<td>관리자</td>
-					<td>admin</td>
 					<td>최고 관리자</td>
+					<td>admin</td>
 				</tr>
 			</table>
 		</div>
