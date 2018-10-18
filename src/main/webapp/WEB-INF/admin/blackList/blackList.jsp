@@ -19,7 +19,7 @@ $(function() {
         }
     })
     //정렬
-    $('#status').click(function(){
+    $('th').click(function(){
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
         this.asc = !this.asc
@@ -36,10 +36,9 @@ $(function() {
 	});
 </script>
 <!--메인 페이지 -->
-<section id="main-content">
-	<section class="wrapper content-panel">
+	<div class="wrapper content-panel">
 		<div class="row">
-			<h4><i class="fa fa-angle-right"></i>블랙리스트dsfs</h4>
+			<h4><i class="fa fa-angle-right"></i>블랙리스트</h4>
 		</div>
 		<!-- 검색창 -->
 		<div class="row">
@@ -148,7 +147,7 @@ $(function() {
 			</div>
 		</div>
 		<!-- 검색창 끝-->
-
+	</div>
 		<!-- 삭제버튼 모달 -->
 		<div class="modal fade" id="delete" tabindex="-1" role="dialog"
 			aria-labelledby="edit" aria-hidden="true">
@@ -180,6 +179,5 @@ $(function() {
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
-	</section>
-</section>
+
 <!--메인 페이지 -->

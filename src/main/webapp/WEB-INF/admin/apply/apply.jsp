@@ -19,7 +19,7 @@ $(function() {
         }
     })
   //정렬
-    $('#status').click(function(){
+    $('th').click(function(){
         var table = $(this).parents('table').eq(0)
         var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
         this.asc = !this.asc
@@ -36,8 +36,7 @@ $(function() {
 });
 </script>
 <!--메인 페이지 -->
-<section id="main-content">
-	<section class="wrapper content-panel">
+<div class="wrapper content-panel">
 
 		<div class="row">
 			<h4>
@@ -68,7 +67,6 @@ $(function() {
 					class="tablesorter table table-striped table-bordered"
 					cellspacing="0" width="100%">
 					<thead>
-						<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr>
 							<th><i class="fa fa-check"></i><input type="checkbox"
 								id="checkall"></th>
@@ -142,6 +140,5 @@ $(function() {
 			</div>
 		</div>
 		<!-- 검색창 끝-->
-	</section>
-</section>
+</div>
 <!--메인 페이지 -->	
