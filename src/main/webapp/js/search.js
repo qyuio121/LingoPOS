@@ -37,19 +37,19 @@ function setCurrentPosition(){
 	    		mapInfo.markers.push(marker);
 	    		var overlay = new daum.maps.CustomOverlay({
 	    			   content : ('<div class="container">' + 
-		   	    	              '    <div class="row id="markerRow">' + 
+		   	    	              '    <div class="row" style="background-color:white">' + 
 		   	    	              '        <div class="title">' +
 		   	    	              '            <div class ="titleText" style="width:250px">'+
-		   	    	              '            <a href="'+'#'+'" class="link">'+value.storename +'</a></div>'+
+		   	    	              '            <a href="#" class="link">'+value.storename +'</a></div>'+
 		   	    	              '            <div class="close btnOverlayClose" data-overlay-index="'+index+'" title="닫기"></div>' + 
 		   	    	              '        </div>' + 
 		   	    	              '        <div class="body">' + 
 		   	    	              '            <div class="img">' +
-		   	    	              '                <img src="'+value.img+'" style="width:73px;height:70px">' +
+		   	    	              '                <img src="'+value.img+'" style="width:73px;height:70px;pointer-events: none">' +
 		   	    	              '           </div>' + 
 		   	    	              '            <div class="desc">' + 
 		   	    	              '                <div class="ellipsis">주소 : '+value.address+'</div>' + 
-		   	    	              '				   <div class="ellipsis">'+value.tel+'<h1 class="jibun ellipsis" style="display:inline"> | '+value.bigkind+'</h1></div>' +
+		   	    	              '                <div class="ellipsis">'+value.tel+'<h1 class="jibun ellipsis" style="display:inline"> | '+value.bigkind+'</h1></div>' +
 		   	    	              '            </div>' + 
 		   	    	              '        </div>' + 
 		   	    	              '    </div>' +    
@@ -133,7 +133,8 @@ function searchTableList(result){
 								"<tr>"+
 									"<td>" +
 										"<div class='body'>" +
-											"<div class='img' style='background-image:url('"+value.img+"');background-size: contain;width:73px;height:70px'>" +
+											'<div class="img">'+
+												'<img src="'+value.img+'" draggable="false" style="width:73px;height:70px;-moz-user-select:-moz-none;pointer-events: none" ondragstart="return false">' +
 											"</div>" +
 											"<div  >" +
 												"<div class='searchLayout' >도로명주소 : "+value.address+"</div><br/>"+
