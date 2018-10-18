@@ -7,6 +7,13 @@ public class FreeDTO {
 	private java.sql.Timestamp postdate;
 	private int count;
 	private String id;
+	private int commentcount;
+	public int getCommentcount() {
+		return commentcount;
+	}
+	public void setCommentcount(int commentcount) {
+		this.commentcount = commentcount;
+	}
 	public int getFreeno() {
 		return freeno;
 	}

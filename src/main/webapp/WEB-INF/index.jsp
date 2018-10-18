@@ -56,7 +56,7 @@
 		      <div class="col-sm-4">
 		        <img src="<c:url value='/Images/mapImage.jpg' />" alt="Reservation" style="width:100%;">
 		        <h3><a href="<c:url value='/Reservation/Search.Lingo' /> ">지도를 통한 예약</a></h3>
-		        <p><a href="<c:url value='/Reservation/Search.Lingo'/>">지도를</a> 통하여 집 주변의 맛집에서부터 원하는 지역의 맛집을 찾아 쉽게 예약할수있게 도와줍니다.</p>
+		        <p><a href="<c:url value='/Reservation/Search.Lingo'/>">지도</a>를 통하여 집 주변의 맛집에서부터 원하는 지역의 맛집을 찾아 쉽게 예약할수있게 도와줍니다.</p>
 		      </div>
 		      <div class="col-sm-4">
 		        <img src="<c:url value='/Images/자유게시판.png' />" alt="Components" style="width:100%;">

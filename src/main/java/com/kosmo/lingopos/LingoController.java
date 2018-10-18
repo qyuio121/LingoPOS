@@ -141,7 +141,6 @@ public class LingoController {
 	public void summernoteDelete(@RequestParam String removeFile,HttpServletRequest req) throws Exception{
 		String phicalPath=req.getServletContext().getRealPath("/Images/summernote");
 		File remove = new File(phicalPath+File.separator+removeFile);
-		System.out.println(remove.getAbsolutePath());
 		remove.delete();
 	}
 	
@@ -185,9 +184,6 @@ public class LingoController {
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
 				
-				System.out.println("원래 데이타 :" + realAddress);
-				System.out.println("로컬 데이타 "+ localAddress);
-				
 				ssibal.add(record);
 				
 				return JSONArray.toJSONString(ssibal);
@@ -199,7 +195,6 @@ public class LingoController {
 				File remove = new File(removeFile);
 				remove.delete();
 				String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
-				System.out.println(removes);
 				removes = URLEncoder.encode(removes, "utf-8");
 				return removes;
 			}
@@ -239,9 +234,6 @@ public class LingoController {
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
 				
-				System.out.println("원래 데이타 :" + realAddress);
-				System.out.println("로컬 데이타 "+ localAddress);
-				
 				ssibal.add(record);
 				
 				return JSONArray.toJSONString(ssibal);
@@ -253,7 +245,6 @@ public class LingoController {
 				File remove = new File(removeFile);
 				remove.delete();
 				String removes=removeFile.substring(removeFile.lastIndexOf("\\")+1);
-				System.out.println(removes);
 				removes = URLEncoder.encode(removes, "utf-8");
 				return removes;
 				

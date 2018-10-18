@@ -59,7 +59,6 @@
 					<ul class="dropdown-menu dropdown-menu-right">
 						<li class="dropdown-header">목록</li>
 						<li class="divider"></li>
-						<li><a href="<c:url value='/Admin/Index/Index.Admin'/>">관리자</a></li>
 						<li><a href="<c:url value='/Notice/Notice.Lingo'/>">공지사항</a></li>
 						<li><a href="<c:url value='/Free/Free.Lingo'/>">자유게시판</a></li>
 						<li><a href="<c:url value='/Question/FAQ.Lingo'/>">FAQ</a></li>

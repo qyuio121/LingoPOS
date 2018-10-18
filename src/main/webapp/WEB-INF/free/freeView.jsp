@@ -22,7 +22,7 @@
 			commentString+='<table class="table table-bordered">';
 			commentString+='<tr><th width="15%">작성자</th><th width="50%">한줄 댓글</th><th width="20%">댓글일</th><th>삭제여부</th></tr>';
 			if(data.length==0){
-				commentString+="<tr><td colspan='4'>등록된 댓글이 없어요</td></tr>";
+				commentString+="<tr><td colspan='4' style='text-align:center'>등록된 댓글이 없어요</td></tr>";
 			}
 		$.each(data,function(index,comment){			
 			commentString+='<tr><td>'+comment['id']+'</td>';

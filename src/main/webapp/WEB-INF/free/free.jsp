@@ -38,7 +38,7 @@
 						<td style="width: 50%">
 						<a href="<c:url value='/Free/FreeView.Lingo?freeno=${item.freeno}&searchColumn=${param.searchColumn}&searchWord=${param.searchWord}&nowPage=${nowPage}'/>">
 						${item.title}
-						</a></td>
+						</a><small class="badge">${item.commentcount}</small></td>
 						<td style="width: 10%">${item.id}</td>
 						<td style="width: 20%">${item.postdate }</td>
 						<td style="width: 5%">${item.count}</td>
