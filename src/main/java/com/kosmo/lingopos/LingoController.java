@@ -133,8 +133,8 @@ public class LingoController {
 		mhsr.setAttribute("realImage", newFilename);
 		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
 		//6]서머노트에 데이타 전달
-		//return "https://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
-		return "https://www.lingopos.co.kr/lingopos/Images/summernote/" + newFilename;
+		return "https://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
+		//return "https://www.lingopos.co.kr/lingopos/Images/summernote/" + newFilename;
 	}
 	//창선 사진 삭제 - 서머노트 Controller
 	@ResponseBody
@@ -180,8 +180,8 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				//String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
-				String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
+				String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
+				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
@@ -231,8 +231,8 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				//String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
-				String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
+				String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
+				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
