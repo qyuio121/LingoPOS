@@ -18,23 +18,23 @@
 		</div>
 		<div class="col-xs-12">
 			<table class="table table-bordered">
-				<tr>
+				<tr style="background-color:#D8D8D8;">
 					<th style="width:10%"><input type="checkbox"/> 전체선택</th>
 					<th style="width:15%"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> 아이디</th>
 					<th style="width:13%"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" ></span> 이름</th>
 					<th style="width:30%"><span class="glyphicon glyphicon-eye-open" aria-hidden="true" ></span> 유저권한 상태</th>
 					<th style="width:30%"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> 
 						유저권한 승격여부
-						<div class="btn-group">
-						  <button type="button" class="btn btn-default">admin</button>
-						  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+						<div class="btn-group" id="userStatusBtn">
+						  <button type="button" id="userStatusView" class="btn btn-default btn-xs">admin</button>
+						  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 						    <span class="caret"></span>
-						    <span class="sr-only">Toggle Dropdown</span>
+						    <span class="sr-only"></span>
 						  </button>
-						  <ul class="dropdown-menu" role="menu">
-						    <li><a href="#">admin</a></li>
-						    <li class="divider"></li>
-						    <li><a href="#">user</a></li>
+						  <ul class="dropdown-menu" id="userStatus" role="menu">
+						    <li><a href="#" id="admin" value="admin">admin</a></li>
+						    <li class="divider"></li> 
+						    <li><a href="#" id="user" value="user">user</a></li>
 						  </ul>
 						</div>
 					</th>
@@ -51,7 +51,19 @@
 	</div>    
 </div>
 <script>
-$('.btn-group').click(function(){
-	
-});
+var flag = false;
+if(!flag){
+	$('#userStatus li a').click(function(){
+		console.log(this)
+		if(this.innerText == "admin"){
+			console.log('sdfs')
+			$('#userStatusView').html('admin');
+		}
+		else{
+			console.log('xczvc')
+			$('#userStatusView').html('user');
+		}
+	});
+	flag = true;
+}
 </script>
