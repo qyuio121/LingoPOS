@@ -3,8 +3,8 @@
     pageEncoding="UTF-8"%>
 
 <!-- 주소 API -->
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8b1f17eca567f307bb9f9a105ef8e9f&libraries=services,clusterer,drawing"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da1e05139c89159059ef2c519421cae8&libraries=services,clusterer,drawing"></script>
 <!-- 사진 등록 plug in -->
 <!-- 공통 -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" >
