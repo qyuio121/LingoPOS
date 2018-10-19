@@ -19,12 +19,9 @@
 			<h2 class="form-login-heading">sign in</h2>
 			<div class="login-wrap">
 				<form id="loginform" action="<c:url value='/Login/LoginProcess.Lingo'/>" method="post">
-					<input type="text" name='id' id="id" class="form-control"
-						placeholder="User ID" autofocus> <br> <input
-						type="password" name="pwd" id="pwd" class="form-control"
-						placeholder="Password"> <label class="checkbox"> <input
-						id="saveId" type="checkbox" value="remember-me"> 아이디저장
-					</label>
+					<input type="text" name='id' id="id" class="form-control" placeholder="User ID" autofocus> <br> 
+					<input type="password" name="pwd" id="pwd" class="form-control" placeholder="Password"> 
+					아이디저장 <input id="saveId" type="checkbox" value="remember-me"> 
 					<h4 style="color: red">${notcorrect}</h4>
 				</form>
 				<button id="submit" class="btn btn-theme btn-block">
@@ -56,6 +53,14 @@
 		    if($("#id").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
 		        $("#saveId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
 		    }
+		    $('#loginform').keydown(function(e){
+		    	var key = e.keyCode
+		    	console.log(typeof(key))
+		    	console.log(key)
+		    	if(e.keyCode == 13){
+		    		$('#submit').trigger('click');
+		    	}
+		    });
 		$("#submit").click(function(e) {
 			e.preventDefault();
 			if($("#id").val().trim()==""){

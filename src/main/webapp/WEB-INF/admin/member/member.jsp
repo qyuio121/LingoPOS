@@ -9,11 +9,10 @@
 				<div class="form-group">
 					<select name="searchColumn" class="form-control">
 						<option value="id">아이디</option>
-						<option value="content">권한상태</option>
-					</select> <input type="text" class="form-control" id="searchWord"
-						name="searchWord" placeholder="검색">
+						<option value="userStatus">권한상태</option>
+					</select> <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 				</div>
-				<button type="submit" class="btn btn-default">검색</button>
+				<button type="submit" id="searchBtn" class="btn btn-default">검색</button>
 			</form>
 		</div>
 		<div class="col-xs-12">
@@ -39,31 +38,42 @@
 						</div>
 					</th>
 				</tr>
-				<tr>
-					<td><input type="checkbox">
-					<td>admin</td>
-					<td>관리자</td>
-					<td>최고 관리자</td>
-					<td>admin</td>
-				</tr>
+				<c:forEach var="i" items="">
+					<tr>
+						<td><input type="checkbox">
+						<td>admin</td>
+						<td>관리자</td>
+						<td>최고 관리자</td>
+						<td>admin</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 	</div>    
 </div>
 <script>
 var flag = false;
-if(!flag){
-	$('#userStatus li a').click(function(){
-		console.log(this)
-		if(this.innerText == "admin"){
-			console.log('sdfs')
-			$('#userStatusView').html('admin');
+$(function(){
+	if(!flag){
+		$('#userStatus li a').click(function(){
+			console.log(this)
+			if(this.innerText == "admin"){
+				//console.log('sdfs')
+				$('#userStatusView').html('admin');
+			}
+			else{
+				//console.log('xczvc')
+				$('#userStatusView').html('user');
+			}
+		});
+		flag = true;
+	}
+	var $searchBtn = $('#searchBtn')
+	$searchBtn.click(function(){
+		if($('select[name=searchColumn]').val() === 'id'){
+			$search
 		}
-		else{
-			console.log('xczvc')
-			$('#userStatusView').html('user');
-		}
+		
 	});
-	flag = true;
-}
+});
 </script>

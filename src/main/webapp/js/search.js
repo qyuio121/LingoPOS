@@ -110,6 +110,7 @@ function setBtnSearch() {
 	/* 검색 엔터처리 */
 	$searchText.on('keydown', function(e) {
 		if(e.keyCode === 13) {
+			
 			$btnSearch.trigger('click');
 		}
 	})
