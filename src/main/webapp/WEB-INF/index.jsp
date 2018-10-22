@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="container-fluid">
@@ -18,7 +19,6 @@
 							<img src="<c:url  value='/Images/eventImages/event1.jpg'/>" alt="슬라이드1" style="width: 100%; height: 500px">
 						</a>
 						<div class="carousel-caption">
-							<h2>이벤트 1</h2>
 						</div>
 					</div>
 					<div class="item">
@@ -26,7 +26,6 @@
 							<img src="<c:url value='/Images/eventImages/event2.jpg'/>" alt="슬라이드2" style="width: 100%; height: 500px">
 						</a>
 						<div class="carousel-caption">
-							<h2>이벤트 2</h2>
 						</div>
 					</div>
 					<div class="item">
@@ -34,7 +33,6 @@
 							<img src="<c:url value='/Images/eventImages/event3.jpg'/>" alt="슬라이드3" style="width: 100%; height: 500px;">
 						</a>
 						<div class="carousel-caption">
-							<h2>이벤트 3</h2>
 						</div>
 					</div>
 				</div>
@@ -68,5 +66,8 @@
 		</div>
 	</div><!-- row -->
 </div>
+<c:forEach begin="0" end="${10-fn:length(list)}" step="1">
+	<br/>
+</c:forEach>
 
 

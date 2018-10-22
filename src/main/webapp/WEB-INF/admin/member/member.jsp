@@ -20,7 +20,7 @@
 		<div class="col-xs-12">
 			<table class="table table-bordered">
 				<thead>
-					<tr style="background-color:#D8D8D8;">
+					<tr style="background-color:#D8D8D8">
 						
 						<th style="width:15%"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> 아이디</th>
 						<th style="width:13%"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" > Email</span> </th>
@@ -37,11 +37,14 @@
 							    <li><a href="#" id="admin" value="admin">admin</a></li>
 							    <li class="divider"></li> 
 							    <li><a href="#" id="user" value="user">user</a></li>
-							  </ul>
-							  	<div class="btn-group btn-group-xs" role="group" style="display:inline">
-							  		<input type="text" id="adminSearchText" style="width:100px;height:20px;margin-left: 3px;display:inline" class="form-control"  >
-							  		<button type="submit" class="btn btn-default"  >버튼</button>
-							  	</div>
+							  </ul>							  
+								<form class="form-inline" id="adminNic" action="<c:url value='#'/>" method="get" style="height:10px;display:inline-block;">
+									<div class="form-group btn-xs" >								 
+										<input type="text" class="form-control" id="adminSearchText" name="adminSearchText" style="height:20px;width:100px;margin-top:0px" placeholder="검색">
+										<button type="submit" id="searchBtn" class="btn btn-default btn-xs">검색</button>
+									</div>
+									
+								</form>
 							</div>
 						</th>
 					</tr>
@@ -53,6 +56,7 @@
 		</div>
 	</div>    
 </div>
+<!-- <br/>처리 -->
 <c:forEach begin="0" end="${25-fn:length(list)}" step="1">
 	<br/>
 </c:forEach>

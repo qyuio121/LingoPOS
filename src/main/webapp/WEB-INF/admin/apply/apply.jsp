@@ -142,6 +142,7 @@ $(function() {
 		</div>
 		<!-- 검색창 끝-->
 </div>
+<!-- <br/>처리 -->
 <c:forEach begin="0" end="${25-fn:length(list)}" step="1">
 	<br/>
 </c:forEach>

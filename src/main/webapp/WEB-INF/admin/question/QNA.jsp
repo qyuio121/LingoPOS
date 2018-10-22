@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -49,5 +50,9 @@
 		<div>${pageString}</div>
 	</div>
 <!-- 페이징  끝-->
+<!-- <br/>처리 -->
+<c:forEach begin="0" end="${20-fn:length(list)}" step="1">
+	<br/>
+</c:forEach>
 <!-- 내용 끝 -->   
 </div>
