@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -42,3 +43,6 @@ $(function(){
 			</div>
 	</form>		
 </div>	
+<c:forEach begin="0" end="${15-fn:length(list)}" step="1">
+	<br/>
+</c:forEach>

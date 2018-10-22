@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	<div class="container" style="padding-top:60px;margin-top:60px">
@@ -10,17 +11,7 @@
 				<div class="col-xs-6">
 					<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 공지사항</h2>
 				</div>
-				<div class="col-xs-6">
-					<form class="navbar-form navbar-right" id="gtBtn" style="margin-top: 50px" action="#" method="post">
-						<div class="form-group">
-							<input type="text" class="form-control" id="searchtext" placeholder="검색" >
-						</div>
-						<button type="submit" class="btn btn-default" style="margin-left: -3px">검색</button>
-					</form> 
-				</div>
-			
 			</div>
-			
 			<table class="table table-bordered">
 				<tr style="text-align: center;font-weight:bold;background-color: #EAEDED">
 					<td style="width: 5%">NO</td>
@@ -50,19 +41,22 @@
 				</c:if>
 			</table>
 			<div class="row">
-			<c:if test="${not empty sessionScope.loginDTO.adminno}" var="result">
-				<div class="btn-group btn-group-justified" role="group" aria-label="...">
-					<div class="col-xs-12" >
-						<div class="btn-toolbar pull-right" >
-						  	<div class="btn-group " role="group">
-						    	<a href="<c:url value='/Notice/NoticeWrite.Lingo'/>"><button type="button" class="btn btn-primary" id="updateBtn">등록</button></a>
-						  	</div>
-						</div>
-				  	</div>
-				</div>
-			</c:if>
-	</div>
+				<c:if test="${not empty sessionScope.loginDTO.adminno}" var="result">
+					<div class="btn-group btn-group-justified" role="group" aria-label="...">
+						<div class="col-xs-12" >
+							<div class="btn-toolbar pull-right" >
+							  	<div class="btn-group " role="group">
+							    	<a href="<c:url value='/Notice/NoticeWrite.Lingo'/>"><button type="button" class="btn btn-primary" id="updateBtn">등록</button></a>
+							  	</div>
+							</div>
+					  	</div>
+					</div>
+				</c:if>
+			</div>
 		</div>
 		${pageString}
 	</div>
+	<c:forEach begin="0" end="${15-fn:length(list)}" step="1">
+		<br/>
+	</c:forEach>
 

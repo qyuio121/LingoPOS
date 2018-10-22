@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
@@ -179,5 +180,7 @@ $(function() {
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
-
+<c:forEach begin="0" end="${25-fn:length(list)}" step="1">
+	<br/>
+</c:forEach>
 <!--메인 페이지 -->

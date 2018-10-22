@@ -22,7 +22,38 @@ $(function(){
       swiper: true,
       index: 0,
     });
-	
+	//테이블 <br/처리>
+	$('.swichtab-controller li a').click(function(){
+		$('#footerBrResult').empty();
+		if(this.innerHTML == '나의정보관리'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="13" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+		else if(this.innerHTML == '가게등록'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="20" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+		else if(this.innerHTML == '찾기/예약'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="20" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+		else if(this.innerHTML == '모바일/기타'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="20" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+	});
 	//아코디언
 	$(".set > a").on("click", function() {
 		    if ($(this).hasClass("active")) {
@@ -33,6 +64,7 @@ $(function(){
 		      $(".set > a i")
 		        .removeClass("fa-minus")
 		        .addClass("fa-plus");
+		      console.log(this)
 		    } else {
 		      $(".set > a i")
 		        .removeClass("fa-minus")
@@ -246,8 +278,12 @@ $(function(){
 		</div>
 <!-- #faq4 -->			
 	</div>
+</div >
+<div id="footerBrResult">
+	<c:forEach begin="0" step="1" end="13">
+		<br/>
+	</c:forEach>
 </div>
-<br/><br/><br/><br/> 
 <!-- 네이베이션 바 내 아코디언 끝-->	
 <!-- 내용 끝 -->
 </div>
