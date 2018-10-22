@@ -22,8 +22,8 @@ public class QnaService {
 	public int update(Map map) {
 		return dao.update(map);
 	}
-	public List<QnaDTO> selectAdmin() {
-		return dao.selectAdmin();
+	public List<QnaDTO> selectAdmin(Map map) {
+		return dao.selectAdmin(map);
 	}
 	public QnaDTO select(Map map) {
 		return dao.select(map);
@@ -34,5 +34,7 @@ public class QnaService {
 	public int getTotalRecord(Map map) {
 		return dao.getTotalRecord(map);
 	}
-
+	public int getTotalRecordAdmin() {
+		return dao.getTotalRecordAdmin();
+	}
 }

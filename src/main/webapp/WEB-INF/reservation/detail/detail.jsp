@@ -8,7 +8,6 @@
 <script type="text/javascript" src="../js/search.js"></script>
 
 <!-- 슬라이드 js -->
-<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="../js/infiniteslidev2.js"></script>
 <!-- 슬라이드 css  -->
 <link rel="stylesheet" href="../css/infiniteslidev2.css" />

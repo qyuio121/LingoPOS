@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -530,12 +531,16 @@ public class LingoController {
 	}
 //창선 추가로 등록한 QNA 수정 조회 상세보기 삭제 시작
 	@RequestMapping(value="/Question/QNAEdit.Lingo",method=RequestMethod.GET)
-	public String qnaEdit(@RequestParam Map map,Model model) throws Exception{
+	public String qnaEdit(@RequestParam Map map,Model model,HttpSession session) throws Exception{
 		QnaDTO dto =  qnaService.select(map);
 		model.addAttribute("record",dto);
 		ReplyDTO reply = replyService.select(map);
 		model.addAttribute("reply", reply);
-		return "question/QNAEdit.tiles";
+		LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto1.getAdminno() != null)
+			return "question/QNAEdit.Admin";
+		else
+			return "question/QNAEdit.tiles";
 	}
 	@RequestMapping(value="/Question/QNAEdit.Lingo",method=RequestMethod.POST)
 	public String qnaEditOk(@RequestParam Map map) throws Exception{
@@ -551,22 +556,33 @@ public class LingoController {
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 		map.put("id", dto.getId());
 		qnaService.insert(map);
-		return "forward:/Question/QNA.Lingo";
+		if (dto.getAdminno() != null)
+			return "forward:/Admin/question/QNA.Admin";
+		else
+			return "forward:/Question/QNA.Lingo";
 	}
 	@RequestMapping("/Question/QNAView.Lingo")
-	public String qnaView(@RequestParam Map map,Model model) throws Exception{
+	public String qnaView(@RequestParam Map map,Model model,HttpSession session) throws Exception{
 		QnaDTO dto = qnaService.select(map);
 		ReplyDTO reply = replyService.select(map);
 		model.addAttribute("record", dto);
 		model.addAttribute("reply", reply);
 		model.addAttribute("nowPage", map.get("nowPage"));
-		return "question/QNAView.tiles";
+		LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto1.getAdminno() != null)
+			return "question/QNAView.Admin";
+		else
+			return "question/QNAView.tiles";
 	}
 	@RequestMapping("/Question/QNADelete.Lingo")
-	public String qnaDelete(@RequestParam Map map) throws Exception{
+	public String qnaDelete(@RequestParam Map map,HttpSession session) throws Exception{
 		replyService.deleteByQNA(map);
 		qnaService.delete(map);
-		return "forward:/Question/QNA.Lingo";
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto.getAdminno() != null)
+			return "forward:/Admin/question/QNA.Admin";
+		else
+			return "forward:/Question/QNA.Lingo";
 	}
 	@RequestMapping("/Reply/ReplyWrite.Lingo")
 	public String replyWrite(@RequestParam Map map) throws Exception{
@@ -781,7 +797,24 @@ public class LingoController {
 		
 		//백엔드 1:1문의 응답 
 		@RequestMapping("/Admin/question/QNA.Admin")
-		public String adminQNA() throws Exception{
+		public String adminQNA(HttpSession session, Model model,HttpServletRequest req,
+				 @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			Map map = new HashMap();
+			
+			int totalRecordCount = qnaService.getTotalRecordAdmin();
+			int start = (nowPage-1)*qnapageSize+1;
+			int end = nowPage*qnapageSize;
+			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, qnapageSize, qnablockPage, nowPage, req.getContextPath()+"/Question/QNA.Lingo?");
+			map.put("start", start);
+			map.put("end", end);
+			List<QnaDTO> records = qnaService.selectAdmin(map);
+			model.addAttribute("records",records);
+			model.addAttribute("pageString", pageString);
+			model.addAttribute("totalRecordCount", totalRecordCount);
+			model.addAttribute("pageSize", qnapageSize);
+			model.addAttribute("nowPage", nowPage);
+			
 			return "admin/question/QNA.Admin";
 		}
 		
@@ -789,6 +822,12 @@ public class LingoController {
 		@RequestMapping("/Admin/FCM/FCM.Admin")
 		public String FCM() throws Exception{
 			return "admin/FCM/FCM.Admin";
+		}
+		
+		@ResponseBody
+		@RequestMapping("/Admin/question/AlertQNA.Admin")
+		public String alertQna(@RequestParam Map map) throws Exception{
+			return String.valueOf(qnaService.getTotalRecordAdmin());
 		}
 
 }

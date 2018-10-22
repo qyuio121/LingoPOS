@@ -2,6 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    
 <!-- 서머노트  -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 
@@ -199,7 +202,12 @@ $(function(){
 			<a  href="<c:url value='/Question/QNAEdit.Lingo?qnano=${record.qnano}'/>"
 					class="btn btn-success">수정</a>
 			<a id="del_memo" href="#" class="btn btn-success">삭제</a>
-			<a href="<c:url value='/Question/QNA.Lingo?nowPage=${nowPage}'/>" class="btn btn-success">목록</a>
+			<c:if test="${not empty sessionScope.loginDTO.adminno}" var="result">
+				<a href="<c:url value='/Admin/question/QNA.Admin?nowPage=${nowPage}'/>" class="btn btn-success">목록</a>
+			</c:if>
+			<c:if test="${not result}">
+				<a href="<c:url value='/Question/QNA.Lingo?nowPage=${nowPage}'/>" class="btn btn-success">목록</a>
+			</c:if>
 		</div>
 	</div>		
 <!-- 버튼 3개 예시 끝 -->
