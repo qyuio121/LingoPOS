@@ -163,4 +163,7 @@ $(function() {
 <!-- 예약하기 폼 끝 -->
 <!-- 내용 끝 -->	
 </div>
+<c:forEach begin="0" end="10" step="1">
+	<br/>
+</c:forEach>
 
