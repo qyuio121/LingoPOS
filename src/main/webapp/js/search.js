@@ -37,7 +37,7 @@ function setCurrentPosition(){
 	    		mapInfo.markers.push(marker);
 	    		var overlay = new daum.maps.CustomOverlay({
 	    			   content : ('<div class="container">' + 
-		   	    	              '    <div class="row" style="background-color:white">' + 
+		   	    	              '    <div class="markerRow" style="background-color:white">' + 
 		   	    	              '        <div class="title">' +
 		   	    	              '            <div class ="titleText" style="width:250px">'+
 		   	    	              '            <a href="#" class="link">'+value.storename +'</a></div>'+
