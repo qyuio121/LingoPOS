@@ -90,7 +90,6 @@ $(function(){
 	<div class="tabGroup tabGroup2">
 		<ul class="swichtab-controller">
 	        <li data-swichtab="controller"><a href="#tab1">가게정보</a></li>
-	        <li id="mapEvent" data-swichtab="controller"><a href="#tab2">가게위치</a></li>
 	        <li data-swichtab="controller"><a href="#tab3">메뉴</a></li>
 	        <li data-swichtab="controller"><a href="#tab4">리뷰</a></li>
 	    </ul>
@@ -103,18 +102,22 @@ $(function(){
 				<table class="table ">
 					<thead>
 						<tr class="tsTitles">
-							<th class="col-md-3"><h3>${store.storename}<small>${store.bigkind}</small></h3></th>
+							<th class="col-md-3"><h3>${store.storename} <small>${store.bigkind}</small></h3></th>
 						</tr>
 					</thead>
 					<tbody class="tsGroup">
 						<tr><td class="text-center"><h4>가게전화번호</h4></td><td><h5>${store.tel}</h5></td><tr>
 						<tr><td class="text-center"><h4>가게주소</h4></td><td><h5>${store.address}</h5></td><tr>
 						<tr><td class="text-center"><h4>영업시간</h4></td><td><h5>${store.opentime} ~ ${store.closetime}</h5></td><tr>
-						<tr><td class="text-center"><h4>음식메뉴</h4></td><td><h5>${foodimg.name}</h5></td><tr>
+						<tr><td class="text-center"><h4>사용 가능한 테이블수</h4></td><td><h5>${store.atable} / ${store.tablenum}</h5></td><tr>
+						<tr><td class="text-center"><h4>사용 가능한 테이블수</h4></td><td><button class="btn btn-primary">예약하기</button></td></tr>
 					</tbody>	
 				</table>
-			</div>	
-		</div>
+			</div>
+			<c:forEach begin="0" end="5" step="1">
+				<br/>
+			</c:forEach>
+		</div>	
 <!-- 가게정보 끝 -->		
 <!-- 가게위치 시작 -->	
 <!--  
@@ -133,9 +136,15 @@ $(function(){
 <!-- DB연결용 미리 만들어논거 끝 -->
 <!-- 가게위치 끝 -->	
 		<div id="tab3" class="swichtab-panel" data-swichtab="target">
-			<c:forEach items="${foodimgs}" var="foodimg">
-				<img class="fs-gal" src="${foodimg.img}" data-url="${foodimg.img}" alt="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" title="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" />
-			</c:forEach>
+			<div style="text-align: center;width:100%;">
+				<c:forEach items="${foodimgs}" var="foodimg">
+					<div style="display:inline-table;width:45%">
+						<img style="width:400px;height:400px;display: table-row;" class="fs-gal" src="${foodimg.img}" data-url="${foodimg.img}" alt="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" title="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" />	
+						<span style="display:table-row;font-size:1.8em">메뉴 : ${foodimg.name} 가격 : ${foodimg.price}</span>
+						<br/>
+					</div>
+				</c:forEach>
+			</div>
 			<div class="fs-gal-view">
 				<h1></h1> 
 				<img class="fs-gal-prev fs-gal-nav" src="../Images/prev.svg" alt="Previous picture" title="Previous picture" />

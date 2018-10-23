@@ -145,7 +145,7 @@ public class LingoController {
 		mhsr.setAttribute("realImage", newFilename);
 		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
 		//6]서머노트에 데이타 전달
-		return "https://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
+		return "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
 		//return "https://www.lingopos.co.kr/lingopos/Images/summernote/" + newFilename;
 	}
 	//창선 사진 삭제 - 서머노트 Controller
@@ -192,7 +192,7 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
+				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
 				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
@@ -243,7 +243,7 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "https://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
+				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
 				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
@@ -616,8 +616,6 @@ public class LingoController {
 			  StoreDTO store = storeService.select(map);
 			  List<FoodimgDTO> foodimg = foodimgService.select(map); 
 			  List<StoreimgDTO> storeimg = storeimgService.select(map);
-			  //
-			  //MapDTO map = (등록한 서비스).LingoMapSelect(map);; //map은 storeno // 맵에 표시할 x/y 좌표 2개 
 			  List<ReviewDTO> review =  reviewService.select(map); 
 			  int totalRecordCount= reviewService.getTotalRecord(map);		
 
@@ -628,7 +626,6 @@ public class LingoController {
 			  model.addAttribute("store",store);
 			  model.addAttribute("foodimgs",foodimg);
 			  model.addAttribute("storeimgs",storeimg);
-			  //model.addAttribute("map",map);
 			  model.addAttribute("reviews",review);
 			 
 			return "reservation/detail/detail.tiles";

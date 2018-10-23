@@ -40,7 +40,7 @@ function setCurrentPosition(){
 		   	    	              '    <div class="markerRow" style="background-color:white">' + 
 		   	    	              '        <div class="title">' +
 		   	    	              '            <div class ="titleText" style="width:250px">'+
-		   	    	              '            <a href="#" class="link">'+value.storename +'</a></div>'+
+		   	    	              '            <a href="/lingopos/Reservation/Detail.Lingo?storeno='+value.storeno+'" class="link">'+value.storename +'</a></div>'+
 		   	    	              '            <div class="close btnOverlayClose" data-overlay-index="'+index+'" title="닫기"></div>' + 
 		   	    	              '        </div>' + 
 		   	    	              '        <div class="body">' + 
@@ -118,7 +118,6 @@ function setBtnSearch() {
 function searchTableList(result){
 	var $searchTable = $("#searchTable");
 	var $searchText = $("#searchText");
-//	console.log($searchText.val());
 //	console.log($searchTable.val());
 	/* 재검색시 테이블에 담겨있는 값 초기화를 위한 메소드 */
 	$searchTable.empty();
@@ -128,7 +127,7 @@ function searchTableList(result){
 						'<table class="table" style="border-right:0.1px solid #888;border-bottom:0.1px solid #E5E2E5;height:70px" >'+
 								"<tr style='height:20px'>"+
 									"<td class='titleText' style='font-weight: bold;font-size:15px;display:inline-block;width:250px'>" +
-										"<a href='"+'#'+"'>"+value.storename +"</a>" +
+										'<a href="/lingopos/Reservation/Detail.Lingo?storeno='+value.storeno+'">'+value.storename +"</a>" +
 									"</td>"+
 								"</tr>"+
 								"<tr>"+
