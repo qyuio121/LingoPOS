@@ -41,10 +41,70 @@ $(function(){
 		direction: 'right',
 		clone: 10
 	});
-
+	$('#reviewWrite').click(function(){
+		var comment = $('#reviewText').val();
+		if(comment==''){
+			alert('리뷰 내용을 입력해주세요');
+			return false;
+		}
+		reviewWrite(${param.storeno},comment);
+		showCommentsWrite(${param.storeno});
+		return false;
+	});
 });
 
+//해당 글번호에 대한 코멘트 목록을 가져오는 함수
+var reviewWrite = function(key,comment){		
+	$.ajax({
+		url:"<c:url value='/Review/ReviewWrite.Lingo'/>",
+		data: "storeno="+key+"&comment="+comment,
+		dataType:"text",
+		type:'post',
+		success:function(data){
+			if(data=='0'){
+				alert('입력실패!');
+			}
+		}			
+	});
+};
+var showCommentsWrite = function(key){		
+	$.ajax({
+		url:"<c:url value='/Review/Review.Lingo'/>",
+		data: "storeno="+key,
+		dataType:"text",
+		type:'post',
+		success:displayComments			
+	});
+};
+var showCommentsPage = function(key,nowPage){		
+	$.ajax({
+		url:"<c:url value='/Review/Review.Lingo'/>",
+		data:"storeno="+key+"&nowPage="+nowPage,
+		dataType:"text",
+		type:'post',
+		success:displayComments			
+	});
+};
+//해당 글번호에 대한 코멘트 목록을 뿌려주는 함수 
+var displayComments	 = function(data){
+	$('#tab4').html(data);
+	$('#reviewWrite').click(function(){
+		var comment = $('#reviewText').val();
+		if(comment==''){
+			alert('리뷰 내용을 입력해주세요');
+			return false;
+		}
+		reviewWrite(${param.storeno},comment);
+		showCommentsWrite(${param.storeno});
+		return false;
+	});
+};
+function getReview(nowPage){
+	showCommentsPage(${param.storeno},nowPage);
+}
+
 </script>
+
 <style>
 <!--슬라이드 -->
 .scroll2 img{
@@ -110,7 +170,7 @@ $(function(){
 						<tr><td class="text-center"><h4>가게주소</h4></td><td><h5>${store.address}</h5></td><tr>
 						<tr><td class="text-center"><h4>영업시간</h4></td><td><h5>${store.opentime} ~ ${store.closetime}</h5></td><tr>
 						<tr><td class="text-center"><h4>사용 가능한 테이블수</h4></td><td><h5>${store.atable} / ${store.tablenum}</h5></td><tr>
-						<tr><td class="text-center"><h4>사용 가능한 테이블수</h4></td><td><button class="btn btn-primary">예약하기</button></td></tr>
+						<tr><td class="text-center"><h4>예약하기</h4></td><td><button class="btn btn-primary">예약하기</button></td></tr>
 					</tbody>	
 				</table>
 			</div>
@@ -156,32 +216,38 @@ $(function(){
 <!-- 메뉴갤러리 끝 -->		
 <!-- 리뷰 시작 -->	
 
-	 	<div id="tab4" class="swichtab-panel" data-swichtab="target">
+	 	<div id="tab4" class="swichtab-panel" data-swichtab="target">\
+	 		<div style="float: right;">
+				<span>멋진 댓글을 작성해 주세요 </span> <input type="text" id="reviewText" style="width:300px"/> <button id="reviewWrite" class="btn btn-primary">등록</button>			
+			</div>
+			<div>
+				<br/>
+			</div>
 			<table class="table table-bordered">
 				<tr style="font-weight:bold; background-color: #EAEDED">
-					<th style="width: 50%; text-align: center">글쓴이</th>
-					<th style="width: 10%; text-align: center">한줄리뷰</th>
-					<th style="width: 10%; text-align: center">작성일</th>
+					<th style="width: 50%; text-align: center">한줄리뷰</th>
+					<th style="width: 10%; text-align: center">글쓴이</th>
+					<th style="width: 20%; text-align: center">작성일</th>
 				</tr>
 				<c:if test="${empty requestScope.reviews}" var="isEmpty">
-					<tr>
+					<tr style="text-align: center">
 						<td colspan="4">등록된 리뷰가 없어요</td>
 					</tr>
 				</c:if>
 				<c:if test="${not isEmpty }">
 					<c:forEach var="review" items="${reviews}" varStatus="loop">
-						<tr>
-							<td>${review.id}</td>
+						<tr style="text-align: center">
 							<td>${review.comment}</td>
+							<td>${review.id}</td>
 							<td>${review.postdate}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
 			</table>
+			<div class="row">
+				<div>${pagingString}</div>
+			</div>
 		</div>	
-		<div class="row">
-			<div>${pagingString}</div>
-		</div>
 <!-- 리뷰 끝 -->	
 	</div>
 <!-- 탭 바 내 내용 끝 -->

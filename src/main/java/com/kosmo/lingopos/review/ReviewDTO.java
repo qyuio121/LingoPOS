@@ -5,6 +5,14 @@ public class ReviewDTO {
 	private int reviewno;
 	private int storeno;
 	private String id;
+	private java.sql.Timestamp postdate;
+	
+	public java.sql.Timestamp getPostdate() {
+		return postdate;
+	}
+	public void setPostdate(java.sql.Timestamp postdate) {
+		this.postdate = postdate;
+	}
 	public String getComment() {
 		return comment;
 	}

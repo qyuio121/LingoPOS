@@ -605,7 +605,40 @@ public class LingoController {
 		replyService.delete(map);
 		return "forward:/Question/QNAView.Lingo?qnano="+map.get("qnano");
 	}
-	
+	@ResponseBody
+	@RequestMapping(value="/Review/Review.Lingo",produces="text/html; charset=UTF-8")
+	public String review(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage) throws Exception{
+		  
+		  int totalRecordCount= reviewService.getTotalRecord(map);		
+		  int start = (nowPage-1)*reviewpageSize+1;
+		  int end = nowPage*reviewpageSize;
+		  map.put("start", start);
+		  map.put("end", end);
+		  List<ReviewDTO> reviews =  reviewService.select(map);
+		  String pagingString=PagingUtil.pagingBootStrapStyleReview(totalRecordCount, reviewpageSize, reviewblockPage, nowPage);
+		  StringBuffer reviewTable = new StringBuffer();
+		  
+		  reviewTable.append("<div style='float: right;'>");
+		  reviewTable.append("<span>멋진 댓글을 작성해 주세요 </span> <input type='text' id='reviewText' style='width:300px'/> <button id='reviewWrite' class='btn btn-primary'>등록</button></div><div><br/></div>");	
+		  reviewTable.append("<table class='table table-bordered'><tr style='font-weight:bold; background-color: #EAEDED'><th style='width: 50%; text-align: center'>한줄리뷰</th><th style='width: 10%; text-align: center'>글쓴이</th><th style='width: 20%; text-align: center'>작성일</th></tr>");
+			if(reviews.size()==0){
+				reviewTable.append("<tr style='text-align: center'><td colspan='4'>등록된 리뷰가 없어요</td></tr>");
+			}
+			for(ReviewDTO review:reviews){			
+				reviewTable.append("<tr style='text-align: center'><td>"+review.getComment()+"</td>");
+				reviewTable.append("<td>"+review.getId()+"</td>"); 
+				reviewTable.append("<td>"+review.getPostdate()+"</td></tr>");
+			}
+			reviewTable.append("</table></div><div class='row'><div>"+pagingString+"</div></div>");		
+		return reviewTable.toString();
+	}
+	@ResponseBody
+	@RequestMapping("/Review/ReviewWrite.Lingo")
+	public String reviewWrite(@RequestParam Map map,HttpSession session) throws Exception{
+		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		map.put("id", dto.getId());
+		return String.valueOf(reviewService.insert(map));
+	}
 	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
 	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
 	@RequestMapping("/Reservation/Detail.Lingo")
@@ -616,13 +649,16 @@ public class LingoController {
 			  StoreDTO store = storeService.select(map);
 			  List<FoodimgDTO> foodimg = foodimgService.select(map); 
 			  List<StoreimgDTO> storeimg = storeimgService.select(map);
-			  List<ReviewDTO> review =  reviewService.select(map); 
+			   
 			  int totalRecordCount= reviewService.getTotalRecord(map);		
-
-			 //String pagingString=PagingUtil.pagingBootStrapStyle(totalRecordCount, reviewpageSize, reviewblockPage, nowPage,req.getContextPath()+ "/reservation/detail/detail.Lingo?");
+			  int start = (nowPage-1)*reviewpageSize+1;
+			  int end = nowPage*reviewpageSize;
+			  map.put("start", start);
+			  map.put("end", end);
+			  List<ReviewDTO> review =  reviewService.select(map);
+			  String pagingString=PagingUtil.pagingBootStrapStyleReview(totalRecordCount, reviewpageSize, reviewblockPage, nowPage);
 			  
-			 // model.addAttribute("pagingString", pagingString);
-			  
+			  model.addAttribute("pagingString", pagingString);
 			  model.addAttribute("store",store);
 			  model.addAttribute("foodimgs",foodimg);
 			  model.addAttribute("storeimgs",storeimg);
