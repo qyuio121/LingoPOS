@@ -22,4 +22,7 @@ public class ReviewDAO {
 	public List<ReviewDTO> select(Map map) {
 		return template.selectList("LingoReviewSelect",map);
 	}
+	public int getTotalRecord(Map map) {
+		return template.selectOne("LingoReviewGetTotalRecord",map);
+	}
 }

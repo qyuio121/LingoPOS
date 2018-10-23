@@ -57,7 +57,7 @@
  	delete from foodimg where imgno=#{imgno}
  </delete>
  <select id="LingoFoodimgSelect" parameterType="java.util.Map" resultType="foodimgDTO">
- 	select img,imgno,name,price,count from foodimg where storeno = #{storeno} 
+ 	select * from foodimg where storeno = #{storeno} 
  </select>
  
  <insert id="LingoFreeInsert" parameterType="java.util.Map">
@@ -223,7 +223,10 @@
  	delete from review where reviewno=#{reviewno}
  </delete>
  <select id="LingoReviewSelect" parameterType="java.util.Map" resultType="reviewDTO">
- 	select * from review where storeno = #{storeno} order by reviewno desc
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select * from review where storeno = #{storeno}) t, (select @rownum:=0) b  order by reviewno desc) tab where rnum between #{start} and #{end}
+ </select>
+  <select id="LingoReviewGetTotalRecord" parameterType="java.util.Map" resultType="int">
+ 	select count(*) from review where storeno = #{storeno}
  </select>
 
 <insert id="LingoSaleInsert" parameterType="java.util.Map">
@@ -267,7 +270,7 @@
  	delete from storeimg where imgno=#{imgno}
  </delete>
  <select id="LingoStoreimgSelect" parameterType="java.util.Map" resultType="storeimgDTO">
- 	select img from storeimg where storeno = #{storeno} 
+ 	select * from storeimg where storeno = #{storeno} 
  </select>
 
  <insert id="LingoUserInsert" parameterType="java.util.Map">

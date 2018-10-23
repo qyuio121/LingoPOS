@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kosmo.lingopos.comment.CommentService;
+import com.kosmo.lingopos.foodimg.FoodimgDTO;
 import com.kosmo.lingopos.foodimg.FoodimgService;
 import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
@@ -50,8 +51,11 @@ import com.kosmo.lingopos.qna.QnaDTO;
 import com.kosmo.lingopos.qna.QnaService;
 import com.kosmo.lingopos.reply.ReplyDTO;
 import com.kosmo.lingopos.reply.ReplyService;
+import com.kosmo.lingopos.review.ReviewDTO;
+import com.kosmo.lingopos.review.ReviewService;
 import com.kosmo.lingopos.store.StoreDTO;
 import com.kosmo.lingopos.store.StoreService;
+import com.kosmo.lingopos.storeimg.StoreimgDTO;
 import com.kosmo.lingopos.storeimg.StoreimgService;
 import com.kosmo.lingopos.user.UserDTO;
 import com.kosmo.lingopos.user.UserService;
@@ -108,6 +112,13 @@ public class LingoController {
 	
 	@Resource(name="userService") 
 	private UserService userService;
+	
+	@Resource(name="reviewService") 
+	private ReviewService reviewService;
+	@Value("${reviewPageSize}")
+	private int reviewpageSize;
+	@Value("${reviewBlockPage}")
+	private int reviewblockPage;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -173,7 +184,7 @@ public class LingoController {
 				
 				newFilename =  URLEncoder.encode(newFilename, "utf-8");
 				
-				List<Map> ssibal = new Vector<Map>();	
+				List<Map> list = new Vector<Map>();	
 				Map record = new HashMap();
 				
 				
@@ -187,9 +198,9 @@ public class LingoController {
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
 				
-				ssibal.add(record);
+				list.add(record);
 				
-				return JSONArray.toJSONString(ssibal);
+				return JSONArray.toJSONString(list);
 			}
 			//창선 사진 삭제  - 가게 전경 Controller
 			@ResponseBody
@@ -224,7 +235,7 @@ public class LingoController {
 				//4]DB에 저장할 서버에 저장된 파일명 
 				
 				newFilename =  URLEncoder.encode(newFilename, "utf-8");
-				List<Map> ssibal = new Vector<Map>();	
+				List<Map> list = new Vector<Map>();	
 				Map record = new HashMap();
 				
 				
@@ -238,9 +249,9 @@ public class LingoController {
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
 				
-				ssibal.add(record);
+				list.add(record);
 				
-				return JSONArray.toJSONString(ssibal);
+				return JSONArray.toJSONString(list);
 			}
 			//창선 사진 삭제 - 메뉴 사진 Controller
 			@ResponseBody
@@ -597,50 +608,29 @@ public class LingoController {
 	
 	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
 	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
-	 	@RequestMapping("/Reservation/Detail.Lingo")
-		public String detail(@RequestParam Map map,Model model,@RequestParam String hiddenFile,@RequestParam String hiddenFile1) throws Exception{
-	 		
-			/*
-			 * 
-			 * @RequestMapping("/Reservation/Detail.Lingo")
-			 * public String detail(Model model,
-			 * 						HttpServletRequest req,//페이징용 메소드에 전달
-			 * 						@RequestParam(required=false,defaultValue="1") int nowPage//페이징용 nowPage파라미터 받기용
-			 *						) throws Exception{
-	         * DB연결 시 여기서 부터 데이터 값 불러옴
-			 * Parameter 즉, 인자 변경 시 부터 수정 필요(서비스 추가필요)
-			 * //서비스 호출]
-			 * //뿌려줄 데이타] 
-			 * StoreDTO store = (등록한 서비스).LingoStoreSelect(map); // map은 storeno // 가게이름/분류/전화번호/주소/오픈시간/종료시간
-			 * 
-			 * List<FoodimgDTO> foodimg = (등록한 서비스).LingoFoodimgSelect(map); // map은 storeno // 메뉴이름/메뉴가격/메뉴이미지경로(여러개)
-			 * 
-			 * List<StoreimgDTO> storeimg = (등록한 서비스).LingoStoreimgSelect(map); // map은 storeno // 가게이미지경로(여러개)
-			 * 
-			 * MapDTO map = (등록한 서비스).LingoMapSelect(map);; //map은 storeno // 맵에 표시할 x/y 좌표 2개 
-			 * 
-			 * List<ReviewDTO> review = (등록한 서비스).LingoReviewSelect(map);; //map은 storeno // 리뷰커멘트 //작성자 
-			 * 
-			 * 페이징을 위한 로직 시작]
-			 * 전체 레코드 수
-			 * int totalRecordCount= (등록한 서비스).(실행할 totalRecordCount sql과 연결된 메소드)(map);		
-			 * 페이징 문자열을 위한 로직 호출 - SpringMavenProj에서 PagingUtil.java 가져오기!!
-			 * String pagingString=PagingUtil.pagingBootStrapStyle(totalRecordCount, pageSize, blockPage, nowPage,req.getContextPath()+ "/reservation/detail/detail.Lingo?");
-			 * 페이징 데이타 저장
-			 * 
-			 * model.addAttribute("pagingString", pagingString);
-			 * 
-			 * 
-			 * //데이타 저장]
-			 * model객체에 저장
-			 * model.addAttribute("store",store);
-			 * model.addAttribute("foodimgs",foodimg); // list객체
-			 * model.addAttribute("storeimgs",storeimg); // list객체
-			 * model.addAttribute("map",map);
-			 * model.addAttribute("reviews",review); // list객체
-			 * 
-			 * */
-			
+	@RequestMapping("/Reservation/Detail.Lingo")
+	public String detail(Model model,HttpServletRequest req,//페이징용 메소드에 전달
+			  						@RequestParam(required=false,defaultValue="1") int nowPage,//페이징용 nowPage파라미터 받기용
+			  						@RequestParam Map map) throws Exception{
+	         
+			  StoreDTO store = storeService.select(map);
+			  List<FoodimgDTO> foodimg = foodimgService.select(map); 
+			  List<StoreimgDTO> storeimg = storeimgService.select(map);
+			  //
+			  //MapDTO map = (등록한 서비스).LingoMapSelect(map);; //map은 storeno // 맵에 표시할 x/y 좌표 2개 
+			  List<ReviewDTO> review =  reviewService.select(map); 
+			  int totalRecordCount= reviewService.getTotalRecord(map);		
+
+			 //String pagingString=PagingUtil.pagingBootStrapStyle(totalRecordCount, reviewpageSize, reviewblockPage, nowPage,req.getContextPath()+ "/reservation/detail/detail.Lingo?");
+			  
+			 // model.addAttribute("pagingString", pagingString);
+			  
+			  model.addAttribute("store",store);
+			  model.addAttribute("foodimgs",foodimg);
+			  model.addAttribute("storeimgs",storeimg);
+			  //model.addAttribute("map",map);
+			  model.addAttribute("reviews",review);
+			 
 			return "reservation/detail/detail.tiles";
 		}
 	 //창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 끝
