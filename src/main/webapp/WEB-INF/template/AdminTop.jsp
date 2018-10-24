@@ -56,11 +56,15 @@ $(function(){
               </a>
           </li>
           <li class="sub-menu">
-            <a class="menu" href="<c:url value='/Admin/apply/apply.Admin?active=1'/>">
+            <a class="menu" href="#">
               <i class="fa fa-cogs"></i>
-              <span>가게승인</span>
+              <span>가게</span>
 			  <span class="label label-theme pull-right mail-info">2</span>
               </a>
+              <ul class="sub">
+              	<li><a href="<c:url value='/Admin/shop/apply.Admin?active=1'/>">가게승인</a></li>
+              	<li><a href="<c:url value='/Admin/shop/delete.Admin?active=1'/>">가게관리</a></li>
+              </ul>
 		  </li>
           <li class="sub-menu">
             <a class="menu" href="<c:url value='/Admin/member/member.Admin?active=2'/>">

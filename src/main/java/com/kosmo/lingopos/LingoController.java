@@ -807,11 +807,15 @@ public class LingoController {
 		}
 		
 		//백엔드 가게승인
-		@RequestMapping("/Admin/apply/apply.Admin")
+		@RequestMapping("/Admin/shop/apply.Admin")
 		public String adminApply() throws Exception{
-			return "admin/apply/apply.Admin";
+			return "admin/shop/apply.Admin";
 		}
-		
+		//백엔드 가게승인
+		@RequestMapping("/Admin/shop/delete.Admin")
+		public String adminDelete() throws Exception{
+			return "admin/shop/delete.Admin";
+		}
 		//백엔드 회원관리시스템
 		@RequestMapping("/Admin/member/member.Admin")
 		public String adminMember() throws Exception{

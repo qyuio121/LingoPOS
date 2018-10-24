@@ -5,37 +5,7 @@
 
 
 
-<script>
-$(function() {
-    //최상단 체크박스 클릭
-    $("#checkall").click(function(){
-        //클릭되었으면
-        if($("#checkall").prop("checked")){
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
-            $("input[name=check]").prop("checked",true);
-            //클릭이 안되있으면
-        }else{
-            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
-            $("input[name=check]").prop("checked",false);
-        }
-    })
-    //정렬
-    $('th').click(function(){
-        var table = $(this).parents('table').eq(0)
-        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-        this.asc = !this.asc
-        if (!this.asc){rows = rows.reverse()}
-        for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-    })
-    function comparer(index) {
-        return function(a, b) {
-            var valA = getCellValue(a, index), valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
-        }
-    }
-    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
-	});
-</script>
+
 <!--메인 페이지 -->
 	<div class="wrapper content-panel">
 		<div class="row">
@@ -60,29 +30,27 @@ $(function() {
 		<!-- 테이블 -->
 		<div class="row">
 			<div class="col-md-12">
-				<table id="tablesort" class="tablesorter table table-striped table-bordered"
-					cellspacing="0" width="100%">
+				<table class="table table-bordered">
 					<thead>
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
-						<tr>
-							<th><i class="fa fa-check"></i><input type="checkbox" id="checkall"></th>
-							<th><i class=" fa fa-user"></i>id</th>
-							<th><i class=" fa fa-question-circle"></i>이름</th>
-							<th><i class=" fa fa-bookmark"></i>누적된 신고</th>
-							<th><i class=" fa fa-list-alt"></i>신고한가게</th>
-							<th id="status"><i class=" fa fa-edit"></i>상태</th>
-							<th><i class=" fa fa-trash"></i>삭제</th>
+						<tr style="background-color:#D8D8D8">
+							<th style="width:5%"><input type="checkbox" id="checkall"></th>
+							<th style="width:15%"><span class="glyphicon glyphicon-user" aria-hidden="true">  Id</th>
+							<th><span class="glyphicon glyphicon-send" aria-hidden="true">  Email</th>
+							<th><span class="glyphicon glyphicon-earphone" aria-hidden="true">  Tel</span>
+							<th> 신고사유</th>glyphicon glyphicon-pencil
+							<th><i class=" fa fa-list-alt"></i>  신고한가게</th>
+							<th><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  승인</th>
 						</tr>
 					</thead>
-
-					<tbody>
+					<tbody id="blackApplyTable" >
 						<tr>
 							<td><input type="checkbox" name="check"></td>
 							<td>1</td>
 							<td>1</td>
 							<td>2</td>
+							<td>2</td>
 							<td>가게명</td>
-							<td><span class="label label-danger label-mini">승인요청</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-danger btn-xs" data-title="Delete"
@@ -98,25 +66,8 @@ $(function() {
 							<td>2</td>
 							<td>2</td>
 							<td>1</td>
-							<td>가게명</td>
-							<td><span class="label label-warning label-mini">승인</span></td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-danger btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
-						
-						<tr>
-							<td><input type="checkbox" name="check"></td>
-							<td>3</td>
 							<td>1</td>
-							<td>2</td>
 							<td>가게명</td>
-							<td><span class="label label-danger label-mini">승인요청</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-danger btn-xs" data-title="Delete"
@@ -126,14 +77,13 @@ $(function() {
 								</p>
 							</td>
 						</tr>
-						
 						<tr>
-							<td><input type="checkbox" name="check"></td>
+							<td><input type="checkbox" name="check" checked="checked"></td>
 							<td>4</td>
 							<td>2</td>
 							<td>1</td>
+							<td>1</td>
 							<td>가게명</td>
-							<td><span class="label label-warning label-mini">승인</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-danger btn-xs" data-title="Delete"
@@ -163,7 +113,7 @@ $(function() {
 					<div class="modal-body">
 						<div class="alert alert-danger">
 							<span class="glyphicon glyphicon-warning-sign"></span>
-							해당 회원을 블랙리스트 해제하시겠습니까?
+							해당 회원을 블랙리스트로 지정하시겠습니까?
 						</div>
 					</div>
 					
@@ -184,3 +134,55 @@ $(function() {
 	<br/>
 </c:forEach>
 <!--메인 페이지 -->
+<script>
+$(function() {
+    //최상단 체크박스 클릭
+    $("#checkall").click(function(){
+    	var $chackbox = $('#blackApplyTable tr td input[type=checkbox]')
+        //클릭되었으면
+        if($("#checkall").prop("checked")){
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=check]").prop("checked",true);
+            //클릭이 안되있으면
+        }
+        else{
+            //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=check]").prop("checked",false);
+        }
+        if($chackbox.prop() == )
+    })
+    //정렬
+    $('th').click(function(){
+    	console.log(this)
+    	if(this == $('#complainCount')[0])
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc){rows = rows.reverse()}
+        for (var i = 0; i < rows.length; i++){table.append(rows[i])}
+    })
+    function comparer(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
+        }
+    }
+    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
+	});
+<tr>
+<td><input type="checkbox" name="check"></td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>가게명</td>
+<td><p data-placement="top" data-toggle="tooltip"
+		title="Delete">
+		  <button type="button" class="btn btn-primary btn-xs">승인
+		  	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+		  </button>
+		</button>
+	</p>
+</td>
+</tr>
+</script>

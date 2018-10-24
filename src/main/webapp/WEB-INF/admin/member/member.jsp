@@ -5,12 +5,21 @@
 <div class="wrapper content-panel">    
    	<div class='row'> 
 	   	<h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span>회원관리 시스템</h4>
-	   	<div class="col-md-12">
+	   	<div class="col-md-1" style="height:50px;line-height: 50px" >
+	   		<div class="form-group" style="margin-top:8px" >
+				<select name="StatusList" class="form-control">
+					<option value="user">user</option>
+					<option value="owner">owner</option>
+					<option value="admin">admin</option>
+				</select> 
+			</div>
+	   	</div>
+	   	<div class="col-md-11">	   	
 			<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
 				<div class="form-group">
 					<select name="searchColumn" class="form-control">
 						<option value="id">아이디</option>
-						<option value="userStatus">Email</option>
+						<option value="email">Email</option>
 					</select> 
 					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 				</div>
@@ -23,9 +32,9 @@
 					<tr style="background-color:#D8D8D8">
 						
 						<th style="width:15%"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> 아이디</th>
-						<th style="width:13%"><span class="glyphicon glyphicon-question-sign" aria-hidden="true" > Email</span> </th>
-						<th style="width:30%"><span class="glyphicon glyphicon-eye-open" aria-hidden="true" ></span> 유저권한 상태</th>
-						<th style="width:30%"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true" ></span> 
+						<th style="width:13%"><span class="glyphicon glyphicon-question-send" aria-hidden="true"> Email</span> </th>
+						<th style="width:30%"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 유저권한 상태</th>
+						<th style="width:30%"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 
 							유저권한 승격여부
 							<div class="btn-group" id="userStatusBtn">
 							  <button type="button" id="userStatusView" class="btn btn-default btn-xs" style="width:100px">admin</button>
@@ -40,8 +49,8 @@
 							  </ul>							  
 								<form class="form-inline" id="adminNic" action="<c:url value='#'/>" method="get" style="height:10px;display:inline-block;">
 									<div class="form-group btn-xs" >								 
-										<input type="text" class="form-control" id="adminSearchText" name="adminSearchText" style="height:20px;width:100px;margin-top:0px" placeholder="검색">
-										<button type="submit" id="searchBtn" class="btn btn-default btn-xs">검색</button>
+										<input type="text" class="form-control" id="adminSearchText" name="adminSearchText" style="height:20px;width:100px;margin-top:0px" placeholder="NicName">
+										<button type="submit" id="searchBtn" class="btn btn-default btn-xs">부여</button>
 									</div>
 									
 								</form>
