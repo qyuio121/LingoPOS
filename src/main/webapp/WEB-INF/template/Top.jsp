@@ -72,10 +72,12 @@
 							<c:if test="${not result}">
 								<li><a href="<c:url value='/Shop/Edit.Lingo'/>">가게수정</a></li>
 							</c:if>
+							<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>
 							<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>
 						</c:if>
 						<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 						<li class="divider"></li>	
+						<li><a href="<c:url value='/Reservation/Detail.Lingo'/>">상세보기</a></li>
 						<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
 						<li class="divider"></li>
 						<!-- 임시끝 -->
@@ -96,10 +98,12 @@
 					<c:if test="${not result}">
 						<li><a href="<c:url value='/Shop/Edit.Lingo'/>">가게수정</a></li>
 					</c:if>
+					<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>
 					<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>
 				</c:if>
 				<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 				<li class="divider"></li>				
+				<li><a href="<c:url value='/Reservation/Detail.Lingo'/>">상세보기</a></li>
 				<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
 				<li class="divider"></li>
 				<!-- 임시끝 -->

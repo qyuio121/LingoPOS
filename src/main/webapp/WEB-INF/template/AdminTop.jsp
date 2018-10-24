@@ -69,11 +69,15 @@ $(function(){
               </a>
           </li>
           <li class="sub-menu">
-            <a class="menu" href="<c:url value='/Admin/blackList/blackList.Admin?active=3'/>">
+            <a class="menu" href="#">
               <i class="fa fa-tasks"></i>
-              <span>블랙리스트</span>
-               <span class="label label-theme pull-right mail-info">0</span>
+               <span>블랙리스트</span>
+               <span class="label label-theme pull-right mail-info">2</span>
               </a>
+              <ul class="sub">
+               <li><a href="<c:url value='/Admin/blackList/blackApply.Admin?active=3'/>">블랙리스트신청</a></li>
+               <li><a href="<c:url value='/Admin/blackList/blackList.Admin?active=3'/>">블랙리스트관리</a></li>
+            </ul>
 		  </li>
           
         
@@ -91,6 +95,7 @@ $(function(){
             <a id="qna" class="menu" href="<c:url value='/Admin/question/QNA.Admin?active=5'/>">
               <i class="fa fa-envelope"></i>
               <span>1:1문의 응답</span>
+              <span class="label label-theme pull-right mail-info">2</span>
             </a>
           </li>
            <li>
@@ -103,4 +108,4 @@ $(function(){
        
       </div>
     </aside>
-<!--왼쪽 네비게이션바-->		
+<!--왼쪽 네비게이션바-->	
