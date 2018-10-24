@@ -95,7 +95,6 @@ $(function(){
             <a id="qna" class="menu" href="<c:url value='/Admin/question/QNA.Admin?active=5'/>">
               <i class="fa fa-envelope"></i>
               <span>1:1문의 응답</span>
-              <span class="label label-theme pull-right mail-info">2</span>
             </a>
           </li>
            <li>
