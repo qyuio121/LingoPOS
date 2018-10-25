@@ -13,8 +13,7 @@
 					<div class="form-group">
 						<select name="searchColumn" class="form-control">
 							<option value="id">아이디</option>
-							<option value="name">이름</option>
-							<option value="content">신고한 가게</option>
+							<option value="storename">신고한 가게</option>
 						</select> <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 					</div>
 					<button type="submit" class="btn btn-default" >검색</button>

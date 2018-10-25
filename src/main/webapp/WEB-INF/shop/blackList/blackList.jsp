@@ -5,21 +5,7 @@
 
 
 
-<script>
-$(function() {
-    //모달에서 버튼 클릭시 이벤트 처리
-    $('#confirm').click(function(){
-    	if($('#reason').val() !=""){$('#frm').submit();}
-    	else{
-    		$('#reasonConfirm').next().html("신청사유를 작성해주세요.");
-    		return false;
-    	}
-    })
-    $("#reason").on('input',function(){
-		$('#reasonConfirm').next().html("");	
-	})
-});
-</script>
+
 <!--메인 페이지 -->
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
@@ -33,13 +19,9 @@ $(function() {
 <!-- 게시판 -->	
 		<div class="row">
 			<div class="col-md-12">
+				
 				<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
-					<div class="form-group">
-						<select name="searchColumn" class="form-control">
-							<option value="id">아이디</option>
-							<option value="name">이름</option>
-						</select> <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
-					</div>
+					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="아이디 검색">
 					<button type="submit" class="btn btn-default" >검색</button>
 				</form>
 			</div>
@@ -53,65 +35,15 @@ $(function() {
 					<thead>
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr>
-							<th><i class=" fa fa-user"></i>아이디</th>
-							<th><i class=" fa fa-question-circle"></i>이름</th>
-							<th id="status"><i class=" fa fa-edit"></i>신고횟수</th>
-							<th id="status"><i class=" fa fa-edit"></i>수락여부</th>
-							<th><i class=" fa fa-trash"></i>승인요청</th>
+							<th>아이디</th>
+							<th>이메일</th>
+							<th>전화번호</th>
+							<th>방문날짜</th>
+							<th>승인요청</th>
 						</tr>
 					</thead>
-
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>1</td>
-							<td>2</td>
-							<td><span class="label label-danger label-mini">승인요청</span></td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-primary btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
-
-						<tr>
-							<td>2</td>
-							<td>2</td>
-							<td>1</td>
-							<td><span class="label label-warning label-mini">승인완료</span></td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-primary btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
 						
-						<tr>
-							<td>3</td>
-							<td>1</td>
-							<td>2</td>
-							<td><span class="label label-danger label-mini">승인요청</span></td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-primary btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
-						
-						<tr>
-							<td>4</td>
-							<td>2</td>
-							<td>1</td>
-							<td><span class="label label-warning label-mini">승인완료</span></td>
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
 									<button class="btn btn-primary btn-xs" data-title="Delete"
@@ -176,3 +108,18 @@ $(function() {
 <!-- 페이징  끝-->
 <!-- 내용 끝 -->   
 </div>
+<script>
+$(function() {
+    //모달에서 버튼 클릭시 이벤트 처리
+    $('#confirm').click(function(){
+    	if($('#reason').val() !=""){$('#frm').submit();}
+    	else{
+    		$('#reasonConfirm').next().html("신청사유를 작성해주세요.");
+    		return false;
+    	}
+    })
+    $("#reason").on('input',function(){
+		$('#reasonConfirm').next().html("");	
+	})
+});
+</script>
