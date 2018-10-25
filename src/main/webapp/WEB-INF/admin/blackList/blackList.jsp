@@ -38,21 +38,21 @@
 							<th><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  제외</th>
 						</tr>
 					</thead>
-					<tbody id="blackApplyTable" >
+					<tbody id="blackListTable" >
 					<%-- <c:forEach var="value" items="${records}">
-							<tr>			
-								<td>
-									<input type="checkbox" name="check">
-								</td>
-								<td>${value.id}</td>															
-								<td>${value.email}</td>														
-								<td>${value.tel}</td>															
-								<td>${value.reason}</td>														
-								<td>${value.blackdate}</td>																	
-								<td data-placement="top" data-toggle="tooltip" title="Delete">	
-									<button type="button" class="btn btn-primary btn-xs" style="margin-left:10px">승인</button>																
+							<tr>																							
+								<td><input type="checkbox" name="check"></td>									
+								<td>'+value.id+'</td>															
+								<td>'+value.email+'</td>														
+								<td>'+value.tel+'</td>															
+								<td>'+value.reason+'</td>														
+								<td>'+value.blackdate+'</td>													
+								<td data-placement="top" data-toggle="tooltip" title="Delete">					
+									<button type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
+										<span class="glyphicon glyphicon-trash"></span>							
+									</button>																	
 								</td>																			
-							</tr>
+							</tr>			
 						</c:forEach> --%>
 					</tbody>
 				</table>
