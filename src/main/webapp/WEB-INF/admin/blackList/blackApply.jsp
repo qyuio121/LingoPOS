@@ -35,10 +35,10 @@
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr style="background-color:#D8D8D8">
 							<th style="width:5%"><input type="checkbox" id="checkall"></th>
-							<th style="width:15%"><span class="glyphicon glyphicon-user" aria-hidden="true">  Id</th>
-							<th><span class="glyphicon glyphicon-send" aria-hidden="true">  Email</th>
-							<th><span class="glyphicon glyphicon-earphone" aria-hidden="true">  Tel</span>
-							<th> 신고사유</th>glyphicon glyphicon-pencil
+							<th style="width:15%"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Id</th>
+							<th><span class="glyphicon glyphicon-send" aria-hidden="true"></span>  Email</th>
+							<th><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>  Tel</th>
+							<th><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 신고사유</th>
 							<th><i class=" fa fa-list-alt"></i>  신고한가게</th>
 							<th><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  승인</th>
 						</tr>
@@ -136,9 +136,10 @@
 <!--메인 페이지 -->
 <script>
 $(function() {
+	var maxCount = $("input[name=check]").length ;
+	var count = 0;
     //최상단 체크박스 클릭
     $("#checkall").click(function(){
-    	var $chackbox = $('#blackApplyTable tr td input[type=checkbox]')
         //클릭되었으면
         if($("#checkall").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
@@ -149,27 +150,20 @@ $(function() {
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
             $("input[name=check]").prop("checked",false);
         }
-        if($chackbox.prop() == )
     })
-    //정렬
-    $('th').click(function(){
-    	console.log(this)
-    	if(this == $('#complainCount')[0])
-        var table = $(this).parents('table').eq(0)
-        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
-        this.asc = !this.asc
-        if (!this.asc){rows = rows.reverse()}
-        for (var i = 0; i < rows.length; i++){table.append(rows[i])}
-    })
-    function comparer(index) {
-        return function(a, b) {
-            var valA = getCellValue(a, index), valB = getCellValue(b, index)
-            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.toString().localeCompare(valB)
-        }
-    }
-    function getCellValue(row, index){ return $(row).children('td').eq(index).text() }
-	});
-<tr>
+    if($('#checkall').checked)
+    	$('input[name=check]').click(function(){
+    	if(this.checked){
+			
+    		console.log(maxCount)
+    	}
+    	else{
+    		
+    		console.log(maxCount)
+    	}
+     })
+        
+/* <tr>
 <td><input type="checkbox" name="check"></td>
 <td>3</td>
 <td>1</td>
@@ -184,5 +178,5 @@ $(function() {
 		</button>
 	</p>
 </td>
-</tr>
+</tr> */
 </script>

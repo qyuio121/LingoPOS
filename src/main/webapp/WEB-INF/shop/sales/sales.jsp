@@ -1,189 +1,145 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<style>
-	/* UI Object */
-	.tbl_type, .tbl_type th, .tbl_type td {
-		border: 0
-	}
+
+<link href="<c:url value="/lib/font-awesome/css/font-awesome.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/zabuto_calendar.css"/>" rel="stylesheet">
+<link href="<c:url value="/lib/gritter/css/jquery.gritter.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/salesstyle.css"/>" rel="stylesheet">
+<link href="<c:url value="/css/style-responsive.css"/>" rel="stylesheet">
+<script src="<c:url value="/lib/chart-master/Chart.js"/>"></script> 
+
+
+<script>
+$(function() {
 	
-	.tbl_type {
-		width: 100%;
-		border-bottom: 2px solid #dcdcdc;
-		font-family: '돋움', dotum;
-		font-size: 12px;
-		text-align: center;
-		border-collapse: collapse
-	}
-	
-	.tbl_type caption {
-		display: none
-	}
-	
-	.tbl_type tfoot {
-		background-color: #f5f7f9;
-		font-weight: bold
-	}
-	
-	.tbl_type th {
-		padding: 7px 0 4px;
-		border-top: 2px solid #dcdcdc;
-		border-right: 1px solid #dcdcdc;
-		border-left: 1px solid #dcdcdc;
-		background-color: #f5f7f9;
-		color: #666;
-		font-family: '돋움', dotum;
-		font-size: 12px;
-		font-weight: bold
-	}
-	
-	.tbl_type td {
-		padding: 6px 0 4px;
-		border: 1px solid #e5e5e5;
-		color: #4c4c4c
-	}
-	
-	.tbl_type td.date {
-		font-weight: bold
-	}
-	/* //UI Object */
-</style>
-<br/><br/><br/><br/><br/><br/><br/>
-<div id="wrapper">
-	<div id="content-wrapper">
-		<div class="container-fluid">
-			<!-- Breadcrumbs-->
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="#">통계</a></li>
-				<li class="breadcrumb-item active">Charts</li>
-			</ol>
-			<!-- Area Chart Example-->
-				<div class="panel panel-default">
-				 	 <div class="panel-body">
-				   		 <table class="table">
-							<div class="card mb-3">
-								<div class="card-header">
-									<i class="fas fa-chart-area"></i>
-								</div>
-								<div class="card-body">
-									<canvas id="myAreaChart" width="100%" height="30"></canvas>
-								</div>
-								<div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-							</div>
-							</table>
-						</div>
-				</div>
-			<!-- UI Object -->
-			<table cellspacing="0" border="1" class="tbl_type">
-				<colgroup>
-					<col width="10%">
-					<col>
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-				</colgroup>
-				<thead>
-					<tr>
-						<th scope="col">주문일</th>
-						<th scope="col">결제건수</th>
-						<th scope="col">실결제금액</th>
-						<th scope="col">판매금액</th>
-						<th scope="col">판매이익</th>
-						<th scope="col">??</th>
-						<th scope="col">??</th>
-						<th scope="col">??</th>
-					</tr>
-				</thead>
-				<tfoot>
-					<tr>
-						<td>합계</td>
-						<td>34</td>
-						<td>3,000,000</td>
-						<td>3,000,000</td>
-						<td>1,500,000</td>
-						<td>???</td>
-						<td>????</td>
-						<td>????</td>
-					</tr>
-				</tfoot>
-				<tbody>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>19</td>
-						<td>1,000,000</td>
-						<td>1,000,000</td>
-						<td>700,000</td>
-						<td>???</td>
-						<td>???</td>
-						<td>???</td>
-					</tr>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>60</td>
-						<td>1,100,000</td>
-						<td>1,100,000</td>
-						<td>500,000</td>
-						<td>????</td>
-						<td>????</td>
-						<td>????</td>
-					</tr>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>40</td>
-						<td>1,000,000</td>
-						<td>1,000,000</td>
-						<td>500,000</td>
-						<td>????</td>
-						<td>????</td>
-						<td>????</td>
-					</tr>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>30</td>
-						<td>1,000,000</td>
-						<td>1,000,000</td>
-						<td>500,000</td>
-						<td>????</td>
-						<td>????</td>
-						<td>????</td>
-					</tr>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>40</td>
-						<td>1,100,000</td>
-						<td>1,100,000</td>
-						<td>500,000</td>
-						<td>????</td>
-						<td>????</td>
-						<td>????</td>
-					</tr>
-					<tr>
-						<td scope="row" class="date">2018-9-15</td>
-						<td>30</td>
-						<td>1,000,000</td>
-						<td>1,000,000</td>
-						<td>500,000</td>
-						<td>???</td>
-						<td>???</td>
-						<td>????</td>
-					</tr>
-				</tbody>
-			</table>
-			<br/>
-			<!-- //UI Object -->
-	
+});
+</script>
+
+<!--메인 페이지 -->
+<div class="container" style="padding-top: 60px; margin-top: 60px;">
+<!-- 내용 시작 -->
+<!-- 바디 헤더 시작-->
+	<div class="row">
+		<div class="col-xs-6">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />가맹점<small>매출확인</small></h2>
 		</div>
-		<!-- /.container-fluid -->
-	</div>
-	<!-- /.content-wrapper -->
+	</div>	
+<!-- 바디 헤더 끝-->
+	<section id="main-content">
+<!-- 가게삭제, 매출계산기  시작 -->
+	 	<section class="wrapper">	
+     		<button type="button" class="btn btn-primary nav pull-right" id="storeDelete" style="margin-left:10px"> 가게삭제</button>
+			<button type="button" class="btn btn-primary nav pull-right" id="salescal"> 매출계산기</button>
+     	</section>
+<!-- 가게삭제, 매출계산기  시작 -->
+<!-- 출력3개  시작 -->
+		<div class="col-md-4 col-sm-4 mb">
+			<div class="darkblue-panel pn">
+				<div class="darkblue-header">
+                   	<h5>일별 방문고객 수</h5>
+               	</div>
+               	<h1 class="mt"><i class="fa fa-user fa-3x"></i></h1>
+               	</br>
+               	<footer>
+					<div class="centered">
+        	  			<h4><i class="fa fa-play"></i> 100명</h4>
+               		</div>
+           		</footer>
+           	</div>
+		</div>
+		<div class="col-md-4 col-sm-4 mb">
+			<div class="darkblue-panel pn">
+				<div class="darkblue-header">
+                   	<h5>일별 총 매출액</h5>
+               	</div>
+               	<h1 class="mt"><i class="fa fa-usd fa-3x"></i></h1>
+               	</br>
+               	<footer>
+                  		<div class="centered">
+                    			<h4><i class="fa fa-play"></i> 100만원</h4>
+                  		</div>
+                		</footer>
+              	</div>
+		</div>
+		<div class="col-md-4 col-sm-4 mb">
+			<div class="darkblue-panel pn">
+				<div class="darkblue-header">
+                   	<h5>월별 총 매출액</h5>
+               	</div>
+               	<h1 class="mt"><i class="fa fa-usd fa-3x"></i></h1>
+               	</br>
+               	<footer>
+                  		<div class="centered">
+                    			<h4><i class="fa fa-play"></i> 1,000만원</h4>
+                  		</div>
+                		</footer>
+              	</div>
+		</div>
+<!-- 출력3개  끝 -->			
+<!-- 차트 시작 -->
+<!-- 차트 타이틀-->
+		<section class="wrapper">			
+		    <div class="border-head">
+				<h3>일별 매출</h3>
+			</div>
+<!-- 차트 타이틀-->			
+<!-- 차트-->			
+			<div class="custom-bar-chart">
+<!-- y축-->			
+		    	<ul class="y-axis">
+					<li><span>500</span></li>
+					<li><span>400</span></li>
+					<li><span>300</span></li>
+					<li><span>200</span></li>
+					<li><span>100</span></li>
+					<li><span>0</span></li>
+				</ul>
+<!-- y축-->	
+<!-- x축-->			  
+				<div class="bar">
+					<div class="title">1일</div>
+					<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">85%</div>
+				</div>
+		        <div class="bar ">
+					<div class="title">5일</div>
+					<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">50%</div>
+				</div>
+		       	<div class="bar ">
+		        	<div class="title">10일</div>
+		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">60%</div>
+				</div>
+		        <div class="bar ">
+		        	<div class="title">15일</div>
+		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">45%</div>
+				</div>
+		        <div class="bar">
+		            <div class="title">20일</div>
+		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">32%</div>
+				</div>
+		        <div class="bar ">
+		            <div class="title">25일</div>
+		        	<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">62%</div>
+				</div>
+				<div class="bar ">
+		            <div class="title">30일</div>
+		        	<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">62%</div>
+				</div>
+<!-- x축-->					  
+			</div>
+		</section>	
+<!-- 차트 끝 -->
+<!-- 테이블 시작 -->
+		
+<!-- 테이블 끝 -->
+	</section>
+<!-- 내용 끝 -->
 </div>
-<!-- /#wrapper -->
 
-<!-- Page level plugin JavaScript-->
-<script src="../js/Chart.min.js"></script>
-
-<!-- Demo scripts for this page-->
-<script src="../js/chart-area-demo.js"></script>
+<script src="<c:url value="/lib/jquery.dcjqaccordion.2.7.js"/>"></script>
+<script src="<c:url value="/lib/jquery.scrollTo.min.js"/>"></script>
+<script src="<c:url value="/lib/jquery.nicescroll.js"/>"></script>
+<script src="<c:url value="/lib/jquery.sparkline.js"/>"></script>
+<script src="<c:url value="/lib/common-scripts.js"/>"></script> 
+<script src="<c:url value="/lib/gritter/js/jquery.gritter.js"/>"></script>
+<script src="<c:url value="/lib/gritter-conf.js"/>"></script>
