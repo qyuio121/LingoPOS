@@ -300,4 +300,47 @@
  <select id="LingoVisitlistSelect" parameterType="java.util.Map" resultType="visitlistDTO">
  	select * from visitlist where id=#{id} and storeno=#{storeno}
  </select>
+ 
+ <select id="LingoAdminSelectUserlist" parameterType="java.util.Map" resultType="userinfoDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.* from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		 	u.${searchColumn} like '%${searchWord}%' and 
+ 		</if> 		
+	 ownerno is null and adminno is null) t, (select @rownum:=0) b order by regidate desc) tab where rnum between #{start} and #{end}
+ </select>
+ <select id="LingoAdminSelectAdminlist" parameterType="java.util.Map" resultType="userinfoDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.*,adminnick,adminno from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		 	u.${searchColumn} like '%${searchWord}%' and 
+ 		</if> 		
+	 ownerno is null and adminno is not null) t, (select @rownum:=0) b order by regidate desc) tab where rnum between #{start} and #{end}
+ </select>
+ <select id="LingoAdminSelectOwnerlist" parameterType="java.util.Map" resultType="userinfoDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.*,ownerno from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		 	u.${searchColumn} like '%${searchWord}%' and 
+ 		</if> 		
+	 ownerno is not null and adminno is null) t, (select @rownum:=0) b order by regidate desc) tab where rnum between #{start} and #{end}
+ </select>
+ <select id="LingoAdminGetTotalUserRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+ 	<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		u.${searchColumn} like '%${searchWord}%' and
+ 	</if>
+ 	 ownerno is null and adminno is null
+ </select>
+ <select id="LingoAdminGetTotalAdminRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+ 	<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		u.${searchColumn} like '%${searchWord}%' and
+ 	</if>
+ 	 ownerno is null and adminno is not null
+ </select>
+ <select id="LingoAdminGetTotalOwnerRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
+ 	<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		u.${searchColumn} like '%${searchWord}%' and
+ 	</if>
+ 	 ownerno is not null and adminno is null
+ </select>
 </mapper>

@@ -7,7 +7,7 @@
 	   	<h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span>회원관리 시스템</h4>
 	   	<div class="col-md-1" style="height:50px;line-height: 50px" >
 	   		<div class="form-group" style="margin-top:8px" >
-				<select name="StatusList" class="form-control">
+				<select id="statusList" class="form-control">
 					<option value="user">user</option>
 					<option value="owner">owner</option>
 					<option value="admin">admin</option>
@@ -17,51 +17,16 @@
 	   	<div class="col-md-11">	   	
 			<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
 				<div class="form-group">
-					<select name="searchColumn" class="form-control">
+					<select id="searchColumn" class="form-control">
 						<option value="id">아이디</option>
 						<option value="email">Email</option>
 					</select> 
-					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
+					<input type="text" class="form-control" id="searchWord" placeholder="검색">
 				</div>
 				<button type="submit" id="searchBtn" class="btn btn-default">검색</button>
 			</form>
 		</div>
-		<div class="col-xs-12">
-			<table class="table table-bordered">
-				<thead>
-					<tr style="background-color:#D8D8D8">
-						
-						<th style="width:15%"><span class="glyphicon glyphicon-apple" aria-hidden="true"></span> 아이디</th>
-						<th style="width:13%"><span class="glyphicon glyphicon-question-send" aria-hidden="true"> Email</span> </th>
-						<th style="width:30%"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> 유저권한 상태</th>
-						<th style="width:30%"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> 
-							유저권한 승격여부
-							<div class="btn-group" id="userStatusBtn">
-							  <button type="button" id="userStatusView" class="btn btn-default btn-xs" style="width:100px">admin</button>
-							  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-							    <span class="caret"></span>
-							    <span class="sr-only"></span>
-							  </button>
-							  <ul class="dropdown-menu" id="userStatus" role="menu">
-							    <li><a href="#" id="admin" value="admin">admin</a></li>
-							    <li class="divider"></li> 
-							    <li><a href="#" id="user" value="user">user</a></li>
-							  </ul>							  
-								<form class="form-inline" id="adminNic" action="<c:url value='#'/>" method="get" style="height:10px;display:inline-block;">
-									<div class="form-group btn-xs" >								 
-										<input type="text" class="form-control" id="adminSearchText" name="adminSearchText" style="height:20px;width:100px;margin-top:0px" placeholder="NicName">
-										<button type="submit" id="searchBtn" class="btn btn-default btn-xs">부여</button>
-									</div>
-									
-								</form>
-							</div>
-						</th>
-					</tr>
-				</thead>
-				<tbody id="tableBody" >
-					
-				</tbody>
-			</table>
+		<div id="userinfotable" class="col-xs-12">
 		</div>
 	</div>    
 </div>
@@ -72,43 +37,95 @@
 <script>
 var flag = false;
 $(function(){
-	//유저 권한상태 테이블 textView
-	if(!flag){
-		$('#userStatus li a').click(function(){
-			console.log(this)
-			if(this.innerText == "admin"){
-				//console.log('sdfs')
-				$('#userStatusView').html('admin');
-			}
-			else{
-				//console.log('xczvc')
-				$('#userStatusView').html('user');
-			}
-		});
-		flag = true;
-	}
-	var member = [{'id':'kim','email':'asd@gmail.com','adminno':1,'ownerno':1},
-				  {'id':'lee','email':'lee@gmail.com','adminno':0,'ownerno':0}
-				 ];
-	console.log(member.id)
-	//테이블을 그리기위한 로직
-	$.each(member,function(index,value){
-		$('#tableBody').append(
-				'<tr>'+
-				'	<td><input type="radio" name="userCheck" > '+value.id+'</td>'+
-				'	<td>'+value.email+'</td>'+
-				'	<td>'+(value.adminno != 1 ?"user":"admin") +'</td>'+
-				'	<td>'+(value.adminno != 1 ? value.ownerno != 1 ? "가능" : "불가능": "불가능")+'</td>'+
-				'</tr>'
-		)
-	})
-	//권한  승격여부 드랍박스에 의한 정렬을 위한 로직
-	var $searchBtn = $('#searchBtn')
-	$searchBtn.click(function(){
-		if($('select[name=searchColumn]').val() === 'id'){
-			
-		}
+	showComments('user');
+	$('#statusList').change(function(){
+		showComments($('#statusList').val());
+	});
+	$('#searchBtn').click(function(){
 		
+		$.ajax({
+			url:"<c:url value='/Admin/Member.Admin'/>",
+			data: "kind="+$('#statusList').val()+"&searchColumn="+$('#searchColumn').val()+"&searchWord="+$('#searchWord').val(),
+			dataType:"text",
+			type:'post',
+			success:displayComments			
+		});
+		
+		return false;
 	});
 });
+
+var showComments = function(key){		
+	$.ajax({
+		url:"<c:url value='/Admin/Member.Admin'/>",
+		data: "kind="+key,
+		dataType:"text",
+		type:'post',
+		success:displayComments			
+	});
+};
+var showCommentsPage = function(key,nowPage){		
+	$.ajax({
+		url:"<c:url value='/Admin/Member.Admin'/>",
+		data:"kind="+key+"&nowPage="+nowPage,
+		dataType:"text",
+		type:'post',
+		success:displayComments			
+	});
+};
+var showCommentsPageSearch = function(key,nowPage,searchColumn,searchWord){		
+	$.ajax({
+		url:"<c:url value='/Admin/Member.Admin'/>",
+		data:"kind="+key+"&nowPage="+nowPage+"&searchColumn="+searchColumn+"&searchWord="+searchWord,
+		dataType:"text",
+		type:'post',
+		success:displayComments			
+	});
+};
+//해당 글번호에 대한 코멘트 목록을 뿌려주는 함수 
+var displayComments	 = function(data){
+	$('#userinfotable').html(data);
+	$('#setBtn').click(function(){
+		if($('#statusList').val()=='user'){
+			if($('#adminnick').val()==""){
+				alert('운영자 닉네임을 입력하세요');
+				return false;
+			}
+			if($('input[name="id"]:checked').length==0){
+				alert('승격시킬 아이디를 선택해주세요');
+				return false;
+			}
+			$.ajax({
+				url:"<c:url value='/Admin/AddAdmin.Admin'/>",
+				data:"id="+$('input[name="id"]:checked').val()+"&adminnick="+$('#adminnick').val(),
+				dataType:"text",
+				type:'post',
+				success:function(){
+					showComments('user');
+				}			
+			});
+		}else if($('#statusList').val()=='admin'){
+			if($('input[name="id"]:checked').length==0){
+				alert('강등시킬 아이디를 선택해주세요');
+				return false;
+			}
+			$.ajax({
+				url:"<c:url value='/Admin/RemoveAdmin.Admin'/>",
+				data:"id="+$('input[name="id"]:checked').val(),
+				dataType:"text",
+				type:'post',
+				success:function(){
+					showComments('admin');
+				}			
+			});
+		}
+		return false;
+	});
+};
+function getReview(nowPage){
+	showCommentsPage($('#statusList').val(),nowPage);
+}
+function getReviewSearch(nowPage,searchColumn,searchWord){
+	showCommentsPageSearch($('#statusList').val(),nowPage,searchColumn,searchWord);
+}
 </script>

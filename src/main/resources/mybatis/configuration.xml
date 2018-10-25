@@ -26,6 +26,7 @@
   	<typeAlias alias="userDTO" type="com.kosmo.lingopos.user.UserDTO"/>
   	<typeAlias alias="visitlistDTO" type="com.kosmo.lingopos.visitlist.VisitlistDTO"/>
     <typeAlias alias="loginDTO" type="com.kosmo.lingopos.login.LoginDTO"/>
+    <typeAlias alias="userinfoDTO" type="com.kosmo.lingopos.userinfo.UserinfoDTO"/>
   </typeAliases>
    
    

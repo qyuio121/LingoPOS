@@ -34,6 +34,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.kosmo.lingopos.admin.AdminService;
 import com.kosmo.lingopos.comment.CommentService;
 import com.kosmo.lingopos.foodimg.FoodimgDTO;
 import com.kosmo.lingopos.foodimg.FoodimgService;
@@ -59,6 +60,8 @@ import com.kosmo.lingopos.storeimg.StoreimgDTO;
 import com.kosmo.lingopos.storeimg.StoreimgService;
 import com.kosmo.lingopos.user.UserDTO;
 import com.kosmo.lingopos.user.UserService;
+import com.kosmo.lingopos.userinfo.UserinfoDTO;
+import com.kosmo.lingopos.userinfo.UserinfoService;
 
 /**
  * Handles requests for the application home page.
@@ -120,6 +123,15 @@ public class LingoController {
 	@Value("${reviewBlockPage}")
 	private int reviewblockPage;
 	
+	@Resource(name="userinfoService") 
+	private UserinfoService userinfoService;
+	@Value("${userinfoPageSize}")
+	private int userinfopageSize;
+	@Value("${userinfoBlockPage}")
+	private int userinfoblockPage;
+	
+	@Resource(name="adminService") 
+	private AdminService adminService;
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
 	@ResponseBody
@@ -638,6 +650,103 @@ public class LingoController {
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 		map.put("id", dto.getId());
 		return String.valueOf(reviewService.insert(map));
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/Admin/Member.Admin",produces="text/html; charset=UTF-8")
+	public String member(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage,HttpSession session) throws Exception{
+		  LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");  
+		  int start = (nowPage-1)*userinfopageSize+1;
+		  int end = nowPage*userinfopageSize;
+		  map.put("start", start);
+		  map.put("end", end);
+		  
+		  int totalRecordCount = 0;
+		  List<UserinfoDTO> list = null;
+		  
+		  
+		  switch(map.get("kind").toString()){
+			  case "user": totalRecordCount= userinfoService.getTotalUserRecord(map);
+			  			   list =  userinfoService.selectUserlist(map);
+			  			   break;
+			  case "owner": totalRecordCount= userinfoService.getTotalOwnerRecord(map);
+ 			   				list =  userinfoService.selectOwnerlist(map);
+ 			   				break;
+			  case "admin": totalRecordCount= userinfoService.getTotalAdminRecord(map);
+			  				list =  userinfoService.selectAdminlist(map);
+			  				break;
+		  }  
+		  String pagingString=null;
+		  if(map.get("searchColumn")!=null) {
+			  pagingString=PagingUtil.pagingBootStrapStyleReviewSearch(totalRecordCount, userinfopageSize, userinfoblockPage, nowPage,map.get("searchColumn").toString(),map.get("searchWord").toString());
+		  }else {
+			  pagingString=PagingUtil.pagingBootStrapStyleReview(totalRecordCount, userinfopageSize, userinfoblockPage, nowPage);
+		  }
+		  StringBuffer userinfoTable = new StringBuffer();
+		  
+		  userinfoTable.append("<table class='table table-bordered'><thead><tr style='background-color:#D8D8D8'><th style='width:15%'><span class='glyphicon glyphicon-apple'></span> 아이디</th><th style='width:15%'><span class='glyphicon glyphicon-send'></span>  EMail");
+		  if(map.get("kind").toString().equals("user")) {
+			  userinfoTable.append("</th><th style='width:20%'><span class='glyphicon glyphicon-eye-open'></span> 전화번호</th>");	
+		  }else if(map.get("kind").toString().equals("admin")) {
+			  userinfoTable.append("</th><th style='width:20%'><span class='glyphicon glyphicon-eye-open'></span> 운영자별명</th>");	
+		  }else {
+			  userinfoTable.append("</th><th style='width:20%'><span class='glyphicon glyphicon-eye-open'></span> 사업자번호</th>");	
+		  }
+		  userinfoTable.append("<th style='width:20%'><span class='glyphicon glyphicon-home'></span> 지역");
+		  userinfoTable.append("<th style='width:20%'><span class='glyphicon glyphicon-thumbs-up'></span> 유저권한 승격/강등여부");
+		  if(map.get("kind").toString().equals("admin")) {
+			  userinfoTable.append("<div class='btn-group'><form class='form-inline' action='#' style='height:10px;display:inline-block;'><div class='form-group btn-xs' ><button type='submit' id='setBtn' class='btn btn-default btn-xs'>강등</button></div></form></div>");	
+		  }else if(map.get("kind").toString().equals("user")) {
+			  userinfoTable.append("<div class='btn-group'><form class='form-inline' action='#' style='height:10px;display:inline-block;'><div class='form-group btn-xs' ><input type='text' class='form-control' id='adminnick' name='adminnick' style='height:20px;width:100px;margin-top:0px' placeholder='nickname'><button type='submit' id='setBtn' class='btn btn-default btn-xs'>승격</button></div></form></div>");	
+		  }
+		  userinfoTable.append("</th></tr></thead><tbody id='tableBody'>");
+		  
+			if(list.size()==0){
+				userinfoTable.append("<tr style='text-align: center'><td colspan='5'>등록된 사람이 없어요</td></tr>");
+			}
+			for(UserinfoDTO record:list){
+				 if(map.get("kind").toString().equals("owner")) {
+					 userinfoTable.append("<tr><td>&nbsp&nbsp&nbsp"+record.getId()+"</td>");
+				 }else if(map.get("kind").toString().equals("admin")) {
+					 if(record.getAdminno()==Integer.parseInt(dto.getAdminno())) {
+						 userinfoTable.append("<tr><td>&nbsp&nbsp&nbsp&nbsp&nbsp"+record.getId()+"</td>");	
+					 }else {
+						 userinfoTable.append("<tr><td><input type='radio' name='id' value='"+record.getId()+"'>&nbsp&nbsp&nbsp"+record.getId()+"</td>");
+					 } 
+				 }else {
+					 userinfoTable.append("<tr><td><input type='radio' name='id' value='"+record.getId()+"'>&nbsp&nbsp&nbsp"+record.getId()+"</td>");
+				 }	
+				 userinfoTable.append("<td>"+record.getEmail()+"</td>"); 
+				 if(map.get("kind").toString().equals("user")) {
+					  userinfoTable.append("<td>"+record.getTel()+"</td>");	
+				 }else if(map.get("kind").toString().equals("admin")) {
+					  userinfoTable.append("<td>"+record.getAdminnick()+"</td>");	
+				 }else {
+					  userinfoTable.append("<td>"+record.getOwnerno()+"</td>");	
+				 }
+				 userinfoTable.append("<td>"+record.getRegion()+"</td>");
+				 if(map.get("kind").toString().equals("owner")) {
+					 userinfoTable.append("<td>불가능</td></tr>");	
+				 }else {
+					 if(map.get("kind").toString().equals("admin")&&(record.getAdminno()==Integer.parseInt(dto.getAdminno()))) {
+						 userinfoTable.append("<td>불가능</td></tr>");	
+					 }else {
+						 userinfoTable.append("<td>가능</td></tr>");
+					 }
+				 }
+			}
+		  userinfoTable.append("</tbody></table><div class='row'><div>"+pagingString+"</div></div>");		
+		return userinfoTable.toString();
+	}
+	@ResponseBody
+	@RequestMapping("/Admin/AddAdmin.Admin")
+	public String addAdmin(@RequestParam Map map) throws Exception{
+		return String.valueOf(adminService.insert(map));
+	}
+	@ResponseBody
+	@RequestMapping("/Admin/RemoveAdmin.Admin")
+	public String removeAdmin(@RequestParam Map map) throws Exception{
+		return String.valueOf(adminService.delete(map));
 	}
 	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
 	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작

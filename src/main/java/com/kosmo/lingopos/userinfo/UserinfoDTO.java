@@ -1,19 +1,32 @@
-package com.kosmo.lingopos.user;
+package com.kosmo.lingopos.userinfo;
 
-public class UserDTO {
+public class UserinfoDTO {
 	private String id;
-	private String pwd;
 	private String email;
 	private String tel;
 	private String region;
 	private java.sql.Timestamp regidate;
+	private int adminno;
+	private String adminnick;
+	private String ownerno;
 	
-	
-	public String getPwd() {
-		return pwd;
+	public String getOwnerno() {
+		return ownerno;
 	}
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setOwnerno(String ownerno) {
+		this.ownerno = ownerno;
+	}
+	public int getAdminno() {
+		return adminno;
+	}
+	public String getAdminnick() {
+		return adminnick;
+	}
+	public void setAdminno(int adminno) {
+		this.adminno = adminno;
+	}
+	public void setAdminnick(String adminnick) {
+		this.adminnick = adminnick;
 	}
 	public String getId() {
 		return id;
