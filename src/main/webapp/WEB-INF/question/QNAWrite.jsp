@@ -143,6 +143,7 @@ $(function(){
 				     <option value="예약관련">예약관련</option>
 				     <option value="POS관련">POS관련</option>
 				     <option value="신고관련">신고관련</option>
+				     <option value="가게정보 수정 관련">가게정보 수정 관련</option>
 				</select>
 				<label for="kind" class="error" style="color:red"></label>
 			</div>

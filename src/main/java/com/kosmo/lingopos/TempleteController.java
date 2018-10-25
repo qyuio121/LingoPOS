@@ -22,11 +22,7 @@ public class TempleteController {
 	@Resource(name="mapService")
 	private MapService mapService;
 	
-	//백엔드 블랙리스트신청
-	@RequestMapping("/Admin/blackList/blackApply.Admin")
-	public String adminBlackApply() throws Exception{
-		return "admin/blackList/blackApply.Admin";
-	}
+	
 
 
 	//샵 블랙리스트신청

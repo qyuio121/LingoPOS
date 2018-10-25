@@ -6,7 +6,29 @@ public class BlacklistDTO {
 	private int blackno;
 	private String reason;
 	private java.sql.Timestamp blackdate;
-	private boolean added;
+	private String email;
+	private String tel;
+	private String storename;
+	
+	
+	public String getEmail() {
+		return email;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public String getStorename() {
+		return storename;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public void setStorename(String storename) {
+		this.storename = storename;
+	}
 	public int getStoreno() {
 		return storeno;
 	}
@@ -22,9 +44,6 @@ public class BlacklistDTO {
 	public java.sql.Timestamp getBlackdate() {
 		return blackdate;
 	}
-	public boolean isAdded() {
-		return added;
-	}
 	public void setStoreno(int storeno) {
 		this.storeno = storeno;
 	}
@@ -39,8 +58,5 @@ public class BlacklistDTO {
 	}
 	public void setBlackdate(java.sql.Timestamp blackdate) {
 		this.blackdate = blackdate;
-	}
-	public void setAdded(boolean added) {
-		this.added = added;
 	}
 }

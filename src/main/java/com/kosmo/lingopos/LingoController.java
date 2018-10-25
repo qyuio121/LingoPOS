@@ -35,6 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.kosmo.lingopos.admin.AdminService;
+import com.kosmo.lingopos.blacklist.BlacklistDTO;
+import com.kosmo.lingopos.blacklist.BlacklistService;
 import com.kosmo.lingopos.comment.CommentService;
 import com.kosmo.lingopos.foodimg.FoodimgDTO;
 import com.kosmo.lingopos.foodimg.FoodimgService;
@@ -132,6 +134,15 @@ public class LingoController {
 	
 	@Resource(name="adminService") 
 	private AdminService adminService;
+	
+	@Resource(name="blacklistService") 
+	private BlacklistService blacklistService;
+	@Value("${blackPageSize}")
+	private int blackpageSize;
+	@Value("${blackBlockPage}")
+	private int blackblockPage;
+	
+	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
 	@ResponseBody
@@ -952,6 +963,29 @@ public class LingoController {
 			model.addAttribute("nowPage", nowPage);
 			
 			return "admin/question/QNA.Admin";
+		}
+		
+		//백엔드 블랙리스트신청
+		@RequestMapping("/Admin/blackList/blackApply.Admin")
+		public String adminBlackApply(HttpSession session,Model model,HttpServletRequest req,
+				@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+
+			int totalRecordCount = blacklistService.getTotalRecordApply();
+			
+			int start = (nowPage-1)*blackpageSize+1;
+			int end = nowPage*blackpageSize;
+			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, blackpageSize, blackblockPage, nowPage, req.getContextPath()+"/Admin/blackList/blackApply.Admin?");
+			map.put("start", start);
+			map.put("end", end);
+			
+			List<BlacklistDTO> list = blacklistService.selectAdminApply(map);
+			model.addAttribute("list", list);
+			model.addAttribute("pageString", pageString);
+			model.addAttribute("totalRecordCount", totalRecordCount);
+			model.addAttribute("pageSize", noticepageSize);
+			model.addAttribute("nowPage", nowPage);
+			
+			return "admin/blackList/blackApply.Admin";
 		}
 		
 		//백엔드 1:1문의 응답 
