@@ -9,7 +9,7 @@
 <!--메인 페이지 -->
 	<div class="wrapper content-panel">
 		<div class="row">
-			<h4><i class="fa fa-angle-right"></i>블랙리스트</h4>
+			<h4><span class="glyphicon glyphicon-user" aria-hidden="true" ></span>블랙리스트 신청</h4>
 		</div>
 		<!-- 검색창 -->
 		<div class="row">
@@ -44,55 +44,21 @@
 						</tr>
 					</thead>
 					<tbody id="blackApplyTable" >
-						<tr>
-							<td><input type="checkbox" name="check"></td>
-							<td>1</td>
-							<td>1</td>
-							<td>2</td>
-							<td>2</td>
-							<td>가게명</td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-danger btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
-
-						<tr>
-							<td><input type="checkbox" name="check"></td>
-							<td>2</td>
-							<td>2</td>
-							<td>1</td>
-							<td>1</td>
-							<td>가게명</td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-danger btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" name="check" checked="checked"></td>
-							<td>4</td>
-							<td>2</td>
-							<td>1</td>
-							<td>1</td>
-							<td>가게명</td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-danger btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</p>
-							</td>
-						</tr>
+					<%-- <c:forEach var="value" items="${records}">
+							<tr>			
+								<td>
+									<input type="checkbox" name="check">
+								</td>
+								<td>${value.id}</td>															
+								<td>${value.email}</td>														
+								<td>${value.tel}</td>															
+								<td>${value.reason}</td>														
+								<td>${value.storename}</td>																	
+								<td data-placement="top" data-toggle="tooltip" title="Delete">	
+									<button type="button" class="btn btn-primary btn-xs" style="margin-left:10px">승인</button>																
+								</td>																			
+							</tr>
+						</c:forEach> --%>
 					</tbody>
 				</table>
 			</div>
@@ -100,13 +66,11 @@
 		<!-- 검색창 끝-->
 	</div>
 		<!-- 삭제버튼 모달 -->
-		<div class="modal fade" id="delete" tabindex="-1" role="dialog"
-			aria-labelledby="edit" aria-hidden="true">
+		<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 						<h4 class="modal-title custom_align" id="Heading"></h4>
 					</div>
 					
@@ -117,11 +81,11 @@
 						</div>
 					</div>
 					
-					<div class="modal-footer ">
+					<div class="modal-footer " >
 						<button type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-ok-sign"></span> Yes
 						</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">
+						<button  type="button" class="btn btn-default" data-dismiss="modal">
 							<span class="glyphicon glyphicon-remove"></span> No
 						</button>
 					</div>
@@ -136,47 +100,62 @@
 <!--메인 페이지 -->
 <script>
 $(function() {
-	var maxCount = $("input[name=check]").length ;
 	var count = 0;
+	var tableList = [{'id':'nagasaki' , 'email':'1234@gmail.com','tel':'010-1234-5678','reason':'폭주','storename':'나가사키'},
+					 {'id':'nagasaki' , 'email':'1234@gmail.com','tel':'010-1234-5678','reason':'폭주','storename':'나가사키'}];
+	//테이블 뿌려주기
+	$.each(tableList,function(index,value){
+		$('#blackApplyTable').append(
+				'<tr>																				'+			
+				'	<td><input type="checkbox" name="check"></td>									'+
+				'	<td>'+value.id+'</td>															'+
+				'	<td>'+value.email+'</td>														'+
+				'	<td>'+value.tel+'</td>															'+
+				'	<td>'+value.reason+'</td>														'+
+				'	<td>'+value.storename+'</td>													'+
+				'	<td data-placement="top" data-toggle="tooltip" title="Delete">					'+
+				'		<button type="button" class="btn btn-primary btn-xs" style="margin-left:10px" > '+
+				'			승인 																		'+
+				'		</button>																	'+
+				'		<button type="button" class="btn btn-danger btn-xs" style="margin-left:20px" > '+
+				'			<span  class="glyphicon glyphicon-trash"></span>'+
+				'		</button>																	'+
+				'	</td>																			'+
+				'</tr>																				'
+		);
+	});
+	var maxCount = $("input[name=check]").length ;
     //최상단 체크박스 클릭
     $("#checkall").click(function(){
         //클릭되었으면
         if($("#checkall").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
             $("input[name=check]").prop("checked",true);
+            count = maxCount;
+            //console.log(maxCount)
             //클릭이 안되있으면
         }
         else{
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
             $("input[name=check]").prop("checked",false);
+            count = 0;
         }
     })
-    if($('#checkall').checked)
-    	$('input[name=check]').click(function(){
+   	$('input[name=check]').click(function(){
     	if(this.checked){
-			
-    		console.log(maxCount)
+   			//console.log(count)
+   			count+=1;
+    		if(count === maxCount){
+    			$("#checkall").prop('checked',true);
+    		}
     	}
     	else{
-    		
-    		console.log(maxCount)
+    		count-=1;
+    		//console.log(count === 0)
+    		if(count === maxCount-1){
+    			$("#checkall").prop('checked',false);
+    		}
     	}
-     })
-        
-/* <tr>
-<td><input type="checkbox" name="check"></td>
-<td>3</td>
-<td>1</td>
-<td>2</td>
-<td>2</td>
-<td>가게명</td>
-<td><p data-placement="top" data-toggle="tooltip"
-		title="Delete">
-		  <button type="button" class="btn btn-primary btn-xs">승인
-		  	<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-		  </button>
-		</button>
-	</p>
-</td>
-</tr> */
+    	});
+});
 </script>
