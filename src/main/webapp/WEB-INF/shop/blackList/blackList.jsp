@@ -43,16 +43,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						
+					<c:forEach var="value" items="${list}"> 
+						<tr>																							
+							<td><input type="checkbox" name="check"></td>									
+								<td>'+value.id+'</td>														
+								<td>'+value.email+'</td>														
+								<td>'+value.tel+'</td>															
+								<td>'+value.reason+'</td>														
+								<td>'+value.storename+'</td>	
 							<td><p data-placement="top" data-toggle="tooltip"
 									title="Delete">
-									<button class="btn btn-primary btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
+									<button class="btn btn-primary btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
 										<span class="glyphicon glyphicon-ok"></span>
 									</button>
 								</p>
 							</td>
 						</tr>
+					</c:forEach>
 					</tbody>
 				</table>
 			</div>

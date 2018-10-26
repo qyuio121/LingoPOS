@@ -5,22 +5,9 @@
 <div class="wrapper content-panel">
 	<div class="row">
 		<h4><span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>가게승인</h4>
+		<br/>
+		<br/>
 	</div>
-	<!-- 검색창 -->
-		<div class="row">
-			<div class="col-md-12">
-				<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
-					<div class="form-group">
-						<select name="searchColumn" class="form-control">
-							<option value="id">아이디</option>
-							<option value="name">이름</option>
-							<option value="content">신고한 가게</option>
-						</select> <input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
-					</div>
-					<button type="submit" class="btn btn-default" >검색</button>
-				</form>
-			</div>
-		</div>
 		<!-- 검색창 -->
 		<!-- 테이블 -->
 		<div class="row">

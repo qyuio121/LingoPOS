@@ -128,13 +128,13 @@ $(function() {
 							<td>가게아이디</td>
 							<td>사업증</td>
 							<td><span class="label label-info label-mini">승인</span></td>
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-danger btn-xs" data-title="Delete"
-										data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-trash"></span>
-									</button>
-								</p></td>
+							<td>
+							<p data-placement="top" data-toggle="tooltip" title="Delete">
+								<button class="btn btn-danger btn-xs" data-title="Delete"
+									data-toggle="modal" data-target="#delete">
+									<span class="glyphicon glyphicon-trash"></span>
+								</button>
+							</p></td>
 						</tr>
 					</tbody>
 				</table>
