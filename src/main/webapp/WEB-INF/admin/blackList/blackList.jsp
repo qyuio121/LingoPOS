@@ -62,7 +62,7 @@
 						</c:if>
 						<c:if test="${not result}">
 						 <tr>
-							<td colspan="7" align="center">
+							<td colspan="8" align="center">
 								블랙리스트가 없습니다.
 							</td>
 						 </tr>

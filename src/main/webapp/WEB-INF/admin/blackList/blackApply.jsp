@@ -56,7 +56,7 @@
 						</c:if>
 						<c:if test="${not result}">
 						 <tr>
-							<td colspan="6" align="center">
+							<td colspan="8" align="center">
 								블랙리스트 신청이 없습니다.
 							</td>
 						 </tr>
