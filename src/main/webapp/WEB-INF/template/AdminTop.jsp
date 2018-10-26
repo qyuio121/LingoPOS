@@ -19,6 +19,15 @@ $(function(){
 	    	}
 		}
     });
+	$.ajax({
+		url: "<c:url value='/Admin/Blacklist/AlertBlack.Admin'/>",
+		type: "get",
+	    success: function(data) {
+	    	if(data!='0'){
+	    		$("#black").append('<span class="label label-theme pull-right mail-info">'+data+'</span>');
+	    	}
+		}
+    });
 	
 });
 
@@ -73,11 +82,10 @@ $(function(){
               </a>
           </li>
           <li class="sub-menu">
-            <a class="menu" href="#">
+            <a id="black" class="menu" href="#">
               <i class="fa fa-tasks"></i>
                <span>블랙리스트</span>
-               <span class="label label-theme pull-right mail-info">2</span>
-              </a>
+             </a>
               <ul class="sub">
                <li><a href="<c:url value='/Admin/blackList/blackApply.Admin?active=3'/>">블랙리스트신청</a></li>
                <li><a href="<c:url value='/Admin/blackList/blackList.Admin?active=3'/>">블랙리스트관리</a></li>

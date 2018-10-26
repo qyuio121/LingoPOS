@@ -25,10 +25,10 @@
  	insert into blacklist(storeno,id,reason,added) value(#{storeno},#{id},#{reason},false)
  </insert>
  <update id="LingoBlackUpdate" parameterType="java.util.Map">
- 	update blacklist set added = true where id=#{id}
+ 	update blacklist set added = true where id=#{id} and storeno=#{storeno}
  </update>
  <delete id="LingoBlackDelete" parameterType="java.util.Map">
- 	delete from blacklist where id=#{id}
+ 	delete from blacklist where id=#{id} and storeno=#{storeno}
  </delete>
  <select id="LingoBlackSelect" parameterType="java.util.Map" resultType="blacklistDTO">
  	select id,reason,blackdate,added from blacklist where storeno = #{storeno} 
@@ -38,6 +38,20 @@
  </select>
   <select id="LingoBlackGetTotalRecordApply" resultType="int" >
  	select count(*) from blacklist where added = false
+ </select>
+  <select id="LingoBlackSelectAdminList" parameterType="java.util.Map" resultType="blacklistDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select b.*,u.tel,email,storename from blacklist b join user u on b.id=u.id join store s on s.storeno=b.storeno where added = true) t, (select @rownum:=0) b 
+ 		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		  where t.${searchColumn} like '%${searchWord}%'
+ 		</if>
+ 	 order by blackdate desc) tab where rnum between #{start} and #{end}
+ </select>
+  <select id="LingoBlackGetTotalRecordList" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from (select b.*,storename from blacklist b join store s on s.storeno=b.storeno) t where
+ 		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		  t.${searchColumn} like '%${searchWord}%' and
+ 		</if>
+ 	added = true
  </select>
  
  <insert id="LingoCommentInsert" parameterType="java.util.Map">

@@ -30,4 +30,10 @@ public class BlacklistService {
 	public int getTotalRecordApply() {
 		return dao.getTotalRecordApply();
 	}
+	public List<BlacklistDTO> selectAdminList(Map map) {
+		return dao.selectAdminList(map);
+	}
+	public int getTotalRecordList(Map map) {
+		return dao.getTotalRecordList(map);
+	}
 }

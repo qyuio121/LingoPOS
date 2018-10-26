@@ -920,11 +920,7 @@ public class LingoController {
 			return "admin/index/index.Admin";
 		}
 		
-		//백엔드 블랙리스트
-		@RequestMapping("/Admin/blackList/blackList.Admin")
-		public String adminBlackList() throws Exception{
-			return "admin/blackList/blackList.Admin";
-		}
+		
 		
 		//백엔드 가게승인
 		@RequestMapping("/Admin/shop/apply.Admin")
@@ -982,10 +978,63 @@ public class LingoController {
 			model.addAttribute("list", list);
 			model.addAttribute("pageString", pageString);
 			model.addAttribute("totalRecordCount", totalRecordCount);
-			model.addAttribute("pageSize", noticepageSize);
 			model.addAttribute("nowPage", nowPage);
 			
 			return "admin/blackList/blackApply.Admin";
+		}
+		//백엔드 블랙리스트
+		@RequestMapping("/Admin/blackList/blackList.Admin")
+		 	public String adminBlackList(HttpSession session,Model model,HttpServletRequest req,
+					@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+				int totalRecordCount = blacklistService.getTotalRecordList(map);
+				
+				int start = (nowPage-1)*blackpageSize+1;
+				int end = nowPage*blackpageSize;
+				
+				String pageString=null;
+				if(map.get("searchColumn")!=null) {
+					pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, blackpageSize, blackblockPage, nowPage, req.getContextPath()+"/Admin/blackList/blackList.Admin?",map.get("searchColumn").toString(),map.get("searchWord").toString());
+				}else {
+					pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, blackpageSize, blackblockPage, nowPage, req.getContextPath()+"/Admin/blackList/blackList.Admin?");
+				}
+				map.put("start", start);
+				map.put("end", end);
+				
+				List<BlacklistDTO> list = blacklistService.selectAdminList(map);
+				model.addAttribute("list", list);
+				model.addAttribute("pageString", pageString);
+				model.addAttribute("totalRecordCount", totalRecordCount);
+				model.addAttribute("nowPage", nowPage);
+			
+			return "admin/blackList/blackList.Admin";
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/blackList/blackApplyAdd.Admin")
+		public String blackApplyAdd(@RequestBody String selectlist) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("id", json.get("id").toString());
+				map.put("storeno", json.get("storeno").toString());
+				blacklistService.update(map);
+			}
+			return String.valueOf(array.size());
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/blackList/blackApplyRemove.Admin")
+		public String blackApplyRemove(@RequestBody String selectlist) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("id", json.get("id").toString());
+				map.put("storeno", json.get("storeno").toString());
+				blacklistService.delete(map);
+			}
+			return String.valueOf(array.size());
 		}
 		
 		//백엔드 1:1문의 응답 
@@ -998,6 +1047,11 @@ public class LingoController {
 		@RequestMapping("/Admin/question/AlertQNA.Admin")
 		public String alertQna(@RequestParam Map map) throws Exception{
 			return String.valueOf(qnaService.getTotalRecordAdmin());
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/Blacklist/AlertBlack.Admin")
+		public String alertBlack(@RequestParam Map map) throws Exception{
+			return String.valueOf(blacklistService.getTotalRecordApply());
 		}
 
 }
