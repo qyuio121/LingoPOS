@@ -28,7 +28,7 @@
 							<th style="width:35%"><span class="glyphicon glyphicon-pencil"></span> 신고사유</th>
 							<th style="width:10%"><span class="glyphicon glyphicon-sunglasses"></span> 신고한가게</th>
 							<th style="width:10%"><span class="glyphicon glyphicon-calendar"></span> 신고날짜</th>
-							<th style="width:7%"><span class="glyphicon glyphicon-ok"> </span>  승인/삭제</th>
+							<th style="width:10%"><span class="glyphicon glyphicon-ok"> </span>  승인/삭제</th>
 						</tr>
 					</thead>
 					<tbody id="blacklistTable" >
@@ -44,10 +44,10 @@
 									<td>${value.blackdate}</td>
 									<td>					
 									<button name="accept" value="${loop.index}" type="button" class="btn btn-primary btn-xs" style="margin-left:10px" >
-										<span class="glyphicon glyphicon-ok"></span>							
+										<span class="glyphicon glyphicon-ok"></span>승인							
 									</button>																						
 									<button name="denied" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
-										<span class="glyphicon glyphicon-trash"></span>							
+										<span class="glyphicon glyphicon-trash"></span>거절						
 									</button>																	
 									</td>
 									<td style="display:none">${value.storeno}</td>																														
