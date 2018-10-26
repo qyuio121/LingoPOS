@@ -34,7 +34,7 @@
 					cellspacing="0" width="100%">
 					<thead>
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
-						<tr>
+						<tr style="background-color:#D8D8D8">
 							<th>아이디</th>
 							<th>이메일</th>
 							<th>전화번호</th>
@@ -43,17 +43,16 @@
 						</tr>
 					</thead>
 					<tbody>
-					<c:forEach var="value" items="${list}"> 
+					<c:forEach var="value" items="${list}" > 
 						<tr>																							
 							<td><input type="checkbox" name="check"></td>									
-								<td>'+value.id+'</td>														
-								<td>'+value.email+'</td>														
-								<td>'+value.tel+'</td>															
-								<td>'+value.reason+'</td>														
-								<td>'+value.storename+'</td>	
-							<td><p data-placement="top" data-toggle="tooltip"
-									title="Delete">
-									<button class="btn btn-primary btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
+							<td>'+value.id+'</td>														
+							<td>'+value.email+'</td>														
+							<td>'+value.tel+'</td>															
+							<td>'+value.blackdate+'</td>														
+							<td>
+								<p data-placement="top" data-toggle="tooltip" title="Delete">
+									<button id="" class="btn btn-primary btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
 										<span class="glyphicon glyphicon-ok"></span>
 									</button>
 								</p>
@@ -115,6 +114,9 @@
 <!-- 페이징  끝-->
 <!-- 내용 끝 -->   
 </div>
+<c:forEach begin="0" end="${25-fn:length(list)}" step="1">
+	<br/>
+</c:forEach>
 <script>
 $(function() {
     //모달에서 버튼 클릭시 이벤트 처리

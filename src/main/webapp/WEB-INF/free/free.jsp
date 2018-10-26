@@ -68,6 +68,6 @@
 	
 	${pageString}
 </div>
-<c:forEach begin="0" end="${20-fn:length(list)}" step="1">
+<c:forEach begin="0" end="${25-fn:length(list)}" step="1">
 	<br/>
 </c:forEach>
