@@ -16,28 +16,32 @@
 					<thead>
 					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr style="background-color:#D8D8D8">
-							<th style="width:5%"><input type="checkbox" id="checkall"></th>
-							<th style="width:15%"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Id</th>
-							<th><span class="glyphicon glyphicon-send" aria-hidden="true"></span>  Email</th>
-							<th><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>  Tel</th>
-							<th><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 신고사유</th>
-							<th><i class=" fa fa-list-alt"></i>  등록된 날짜</th>
-							<th><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  제외</th>
+							<th style="width:12%"><input type="checkbox" id="checkall">  가게이름</th>
+							<th style="width:13%"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Id</th>
+							<th style="width:15%"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>  Tel</th>
+							<th style="width:17%"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  가게주소</th>
+							<th style="width:14%"> 사업등록증</th>
+							<th style="width:15"><i class=" fa fa-list-alt"></i>  등록된 날짜</th>
+							<th style="width:10%"><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  수락/제외</th>
 						</tr>
 					</thead>
-					<tbody id="blackListTable" >
-					<%-- <c:forEach var="value" items="${records}">
+					<tbody id="applyTable" >
+					<%-- <c:forEach var="value" items="${list}">
 							<tr>																							
-								<td><input type="checkbox" name="check"></td>									
-								<td>'+value.id+'</td>															
-								<td>'+value.email+'</td>														
-								<td>'+value.tel+'</td>															
-								<td>'+value.reason+'</td>														
-								<td>'+value.blackdate+'</td>													
+								<input type="checkbox" name="check" value="${loop.index}">									
+								<td>${value.storename}</td>															
+								<td>${value.id}</td>														
+								<td>${value.tel}</td>															
+								<td>${value.address}</td>														
+								<td>${value.ownerno}</td>													
+								<td>${value.startdate}</td>													
 								<td data-placement="top" data-toggle="tooltip" title="Delete">					
-									<button type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
-										<span class="glyphicon glyphicon-trash"></span>							
-									</button>																	
+									<button name="accept" value="${loop.index}" type="button" class="btn btn-primary btn-xs" style="margin-left:10px" >
+										<span class="glyphicon glyphicon-ok"></span>승인							
+									</button>																						
+									<button name="denied" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
+										<span class="glyphicon glyphicon-trash"></span>거절						
+									</button>																										
 								</td>																			
 							</tr>			
 						</c:forEach> --%>
@@ -59,10 +63,9 @@
 					<div class="modal-body">
 						<div class="alert alert-danger">
 							<span class="glyphicon glyphicon-warning-sign"></span>
-							해당 회원을 블랙리스트에서 제외하시겠습니까?
+							해당회원의 가게를 등록을 하시겠습니까?
 						</div>
 					</div>
-					
 					<div class="modal-footer " >
 						<button type="button" class="btn btn-success">
 							<span class="glyphicon glyphicon-ok-sign"></span> Yes
@@ -83,24 +86,27 @@
 <script>
 $(function() {
 	var count = 0;
-	var tableList = [{'id':'nagasaki' , 'email':'1234@gmail.com','tel':'010-1234-5678','reason':'폭주','blackdate':'2018-03-03'},
-					 {'id':'nom1' , 'email':'cri@gmail.com','tel':'010-4685-1235','reason':'난동','blackdate':'0001-01-01'}];
+	var tableList = [{'storename':'왕착한 만두','id':'만찐두빵','tel':'010-8032-1313','address':'가좌동','ownerno':'37190002','startdate':'1990-03-22'},
+					 {'storename':'악덕만두','id':'뚜루룯두','tel':'010-8032-1313','address':'우츠동','ownerno':'371901230','startdate':'2030-01-01'}];
 	//테이블 뿌려주기
 	$.each(tableList,function(index,value){
-		$('#blackApplyTable').append(
-				'<tr>																				'+			
-				'	<td><input type="checkbox" name="check"></td>									'+
-				'	<td>'+value.id+'</td>															'+
-				'	<td>'+value.email+'</td>														'+
-				'	<td>'+value.tel+'</td>															'+
-				'	<td>'+value.reason+'</td>														'+
-				'	<td>'+value.blackdate+'</td>													'+
-				'	<td data-placement="top" data-toggle="tooltip" title="Delete">					'+
-				'		<button type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >'+
-				'			<span class="glyphicon glyphicon-trash"></span>							'+
-				'		</button>																	'+
-				'	</td>																			'+
-				'</tr>																				'
+		$('#applyTable').append(				
+				'<tr>																														'+																							
+				'	<td><input type="checkbox" name="check" value="${loop.index}"> '+value.storename+'</td>																							'+
+				'	<td>'+value.id+'</td>																									'+
+				'	<td>'+value.tel+'</td>																									'+
+				'	<td>'+value.address+'</td>																								'+
+				'	<td>'+value.ownerno+'</td>																								'+
+				'	<td>'+value.startdate+'</td>																							'+
+				'	<td data-placement="top" data-toggle="tooltip" title="Delete">															'+
+				'		<button name="accept" value="${loop.index}" type="button" class="btn btn-primary btn-xs" style="margin-left:10px" >	'+
+				'			<span class="glyphicon glyphicon-ok"></span>승인																	'+
+				'		</button>																											'+
+				'		<button name="denied" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >	'+
+				'			<span class="glyphicon glyphicon-trash"></span>거절																'+
+				'		</button>																											'+
+				'	</td>																													'+
+				'</tr>																														'
 		);
 	});
 	var maxCount = $("input[name=check]").length ;
