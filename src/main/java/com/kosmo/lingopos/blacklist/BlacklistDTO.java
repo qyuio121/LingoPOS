@@ -9,8 +9,15 @@ public class BlacklistDTO {
 	private String email;
 	private String tel;
 	private String storename;
+	private boolean added;
 	
 	
+	public boolean isAdded() {
+		return added;
+	}
+	public void setAdded(boolean added) {
+		this.added = added;
+	}
 	public String getEmail() {
 		return email;
 	}

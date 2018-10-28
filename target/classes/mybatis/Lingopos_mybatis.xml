@@ -31,7 +31,10 @@
  	delete from blacklist where id=#{id} and storeno=#{storeno}
  </delete>
  <select id="LingoBlackSelect" parameterType="java.util.Map" resultType="blacklistDTO">
- 	select id,reason,blackdate,added from blacklist where storeno = #{storeno} 
+ 	select id,added from blacklist where storeno = #{storeno} 
+ </select>
+ <select id="LingoIsBlack" parameterType="java.util.Map" resultType="int">
+ 	select count(*) from blacklist where id= #{id} and storeno = #{storeno} 
  </select>
  <select id="LingoBlackSelectAdminApply" parameterType="java.util.Map" resultType="blacklistDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select b.*,u.tel,email,storename from blacklist b join user u on b.id=u.id join store s on s.storeno=b.storeno where added = false) t, (select @rownum:=0) b order by blackdate desc) tab where rnum between #{start} and #{end}
@@ -315,7 +318,22 @@
  	delete from visitlist where id=#{id}
  </delete>
  <select id="LingoVisitlistSelect" parameterType="java.util.Map" resultType="visitlistDTO">
- 	select * from visitlist where id=#{id} and storeno=#{storeno}
+	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select v.*,email,tel from visitlist v join user u on v.id=u.id where 
+		<if test="searchWord!=null and !searchWord.equals('')">
+ 		 	 u.id like '%${searchWord}%' and 
+ 		</if> 		
+	  storeno=#{storeno}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
+ </select>
+  <select id="LingoIsVisit" parameterType="java.util.Map" resultType="int">
+	select count(*) from visitlist where id=#{id} and storeno=#{storeno}
+ </select>
+ 
+ <select id="LingoVisitGetTotalRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from visitlist where
+ 	<if test="searchWord!=null and !searchWord.equals('')">
+ 		id like '%${searchWord}%' and
+ 	</if>
+ 	 storeno=#{storeno}
  </select>
  
  <select id="LingoAdminSelectUserlist" parameterType="java.util.Map" resultType="userinfoDTO">

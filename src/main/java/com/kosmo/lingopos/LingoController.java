@@ -1,10 +1,8 @@
 package com.kosmo.lingopos;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +10,6 @@ import java.util.Vector;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -23,14 +20,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -43,7 +37,6 @@ import com.kosmo.lingopos.foodimg.FoodimgService;
 import com.kosmo.lingopos.free.FreeDTO;
 import com.kosmo.lingopos.free.FreeService;
 import com.kosmo.lingopos.login.LoginDTO;
-import com.kosmo.lingopos.login.LoginService;
 import com.kosmo.lingopos.map.MapDTO;
 import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
@@ -64,6 +57,8 @@ import com.kosmo.lingopos.user.UserDTO;
 import com.kosmo.lingopos.user.UserService;
 import com.kosmo.lingopos.userinfo.UserinfoDTO;
 import com.kosmo.lingopos.userinfo.UserinfoService;
+import com.kosmo.lingopos.visitlist.VisitlistDTO;
+import com.kosmo.lingopos.visitlist.VisitlistService;
 
 /**
  * Handles requests for the application home page.
@@ -142,6 +137,12 @@ public class LingoController {
 	@Value("${blackBlockPage}")
 	private int blackblockPage;
 	
+	@Resource(name="visitlistService") 
+	private VisitlistService visitlistService;
+	@Value("${visitlistPageSize}")
+	private int visitlistpageSize;
+	@Value("${visitlistBlockPage}")
+	private int visitlistblockPage;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -630,8 +631,13 @@ public class LingoController {
 	}
 	@ResponseBody
 	@RequestMapping(value="/Review/Review.Lingo",produces="text/html; charset=UTF-8")
-	public String review(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage) throws Exception{
-		  
+	public String review(HttpSession session,@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage) throws Exception{
+		  LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+		  String storeno = map.get("storeno").toString();
+		  Map isMap = new HashMap();
+		  isMap.put("storeno", storeno);
+		  isMap.put("id", dto.getId());
+		  int isvisit = visitlistService.isVisit(isMap);
 		  int totalRecordCount= reviewService.getTotalRecord(map);		
 		  int start = (nowPage-1)*reviewpageSize+1;
 		  int end = nowPage*reviewpageSize;
@@ -642,8 +648,10 @@ public class LingoController {
 		  StringBuffer reviewTable = new StringBuffer();
 		  
 		  reviewTable.append("<div style='float: right;'>");
-		  reviewTable.append("<span>멋진 댓글을 작성해 주세요 </span> <input type='text' id='reviewText' style='width:300px'/> <button id='reviewWrite' class='btn btn-primary'>등록</button></div><div><br/></div>");	
-		  reviewTable.append("<table class='table table-bordered'><tr style='font-weight:bold; background-color: #EAEDED'><th style='width: 50%; text-align: center'>한줄리뷰</th><th style='width: 10%; text-align: center'>글쓴이</th><th style='width: 20%; text-align: center'>작성일</th></tr>");
+		  if(isvisit > 0) {
+			  reviewTable.append("<span>멋진 댓글을 작성해 주세요 </span> <input type='text' id='reviewText' style='width:300px'/> <button id='reviewWrite' class='btn btn-primary'>등록</button>");	
+		  }
+		  reviewTable.append("</div><div><br/></div><table class='table table-bordered'><tr style='font-weight:bold; background-color: #EAEDED'><th style='width: 50%; text-align: center'>한줄리뷰</th><th style='width: 10%; text-align: center'>글쓴이</th><th style='width: 20%; text-align: center'>작성일</th></tr>");
 			if(reviews.size()==0){
 				reviewTable.append("<tr style='text-align: center'><td colspan='4'>등록된 리뷰가 없어요</td></tr>");
 			}
@@ -762,10 +770,18 @@ public class LingoController {
 	//창선 추가로 등록한 QNA 수정 조회 상세보기 삭제  끝
 	//창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 시작
 	@RequestMapping("/Reservation/Detail.Lingo")
-	public String detail(Model model,HttpServletRequest req,//페이징용 메소드에 전달
+	public String detail(HttpSession session,Model model,HttpServletRequest req,//페이징용 메소드에 전달
 			  						@RequestParam(required=false,defaultValue="1") int nowPage,//페이징용 nowPage파라미터 받기용
 			  						@RequestParam Map map) throws Exception{
-	         
+			 LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			  String storeno = map.get("storeno").toString();
+			  Map isMap = new HashMap();
+			  isMap.put("storeno", storeno);
+			  isMap.put("id", dto.getId());
+			  int isBlack = blacklistService.isBlack(isMap);
+			  if(isBlack > 0) {
+				  model.addAttribute("isBlack",true);
+			  }
 			  StoreDTO store = storeService.select(map);
 			  List<FoodimgDTO> foodimg = foodimgService.select(map); 
 			  List<StoreimgDTO> storeimg = storeimgService.select(map);
@@ -961,6 +977,52 @@ public class LingoController {
 			return "admin/question/QNA.Admin";
 		}
 		
+		//샵 블랙리스트신청
+		@RequestMapping("/Shop/BlackList.Lingo")
+		public String blackList(HttpSession session,Model model,HttpServletRequest req,
+				@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+				
+				LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+				map.put("storeno", dto.getStoreno());
+			
+				int totalRecordCount = visitlistService.getTotalRecord(map);
+				
+				int start = (nowPage-1)*visitlistpageSize+1;
+				int end = nowPage*visitlistpageSize;
+				
+				String pageString=null;
+				if(map.get("searchWord")!=null) {
+					pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, visitlistpageSize, visitlistblockPage, nowPage, req.getContextPath()+"/Shop/BlackList.Lingo?","id",map.get("searchWord").toString());
+				}else {
+					pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, visitlistpageSize, visitlistblockPage, nowPage, req.getContextPath()+"/Shop/BlackList.Lingo?");
+				}
+				map.put("start", start);
+				map.put("end", end);
+				
+				List<VisitlistDTO> list = visitlistService.select(map);
+				List<BlacklistDTO> blacklist = blacklistService.select(map);
+				model.addAttribute("list", list);
+				model.addAttribute("blacklist", blacklist);
+				model.addAttribute("pageString", pageString);
+				model.addAttribute("totalRecordCount", totalRecordCount);
+				model.addAttribute("nowPage", nowPage);
+				
+			return "shop/blackList/blackList.tiles";
+		}
+		@ResponseBody
+		@RequestMapping("/Shop/BlackRemove.Lingo")
+		public String blackListDelete(HttpSession session,@RequestParam Map map) throws Exception{
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			map.put("storeno", dto.getStoreno());
+			return String.valueOf(blacklistService.delete(map));
+		}	
+		@RequestMapping("/Shop/BlackAdd.Lingo")
+		public String blackListAdd(HttpSession session,@RequestParam Map map) throws Exception{
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+			map.put("storeno", dto.getStoreno());
+			blacklistService.insert(map);
+			return "forward:/Shop/BlackList.Lingo";
+		}
 		//백엔드 블랙리스트신청
 		@RequestMapping("/Admin/blackList/blackApply.Admin")
 		public String adminBlackApply(HttpSession session,Model model,HttpServletRequest req,
@@ -982,6 +1044,7 @@ public class LingoController {
 			
 			return "admin/blackList/blackApply.Admin";
 		}
+		
 		//백엔드 블랙리스트
 		@RequestMapping("/Admin/blackList/blackList.Admin")
 		 	public String adminBlackList(HttpSession session,Model model,HttpServletRequest req,

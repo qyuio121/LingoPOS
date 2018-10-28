@@ -31,6 +31,9 @@ public class BlacklistDAO {
 	public int getTotalRecordApply() {
 		return template.selectOne("LingoBlackGetTotalRecordApply");
 	}
+	public int isBlack(Map map) {
+		return template.selectOne("LingoIsBlack",map);
+	}
 	public List<BlacklistDTO> selectAdminList(Map map) {
 		return template.selectList("LingoBlackSelectAdminList",map);
 	}

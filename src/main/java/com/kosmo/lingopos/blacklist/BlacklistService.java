@@ -30,6 +30,9 @@ public class BlacklistService {
 	public int getTotalRecordApply() {
 		return dao.getTotalRecordApply();
 	}
+	public int isBlack(Map map) {
+		return dao.isBlack(map);
+	}
 	public List<BlacklistDTO> selectAdminList(Map map) {
 		return dao.selectAdminList(map);
 	}

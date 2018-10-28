@@ -20,7 +20,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				
-				<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
+				<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='/Shop/BlackList.Lingo'/>" method="get">
 					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="아이디 검색">
 					<button type="submit" class="btn btn-default" >검색</button>
 				</form>
@@ -30,10 +30,9 @@
 		<!-- 테이블 -->
 		<div class="row">
 			<div class="col-md-12">
-				<table id="tablesort" class="tablesorter table table-striped table-bordered"
+				<table class="tablesorter table table-striped table-bordered"
 					cellspacing="0" width="100%">
 					<thead>
-					<!-- <input type="checkbox" name="check" id="check" value="check">동의합니다. -->
 						<tr style="background-color:#D8D8D8">
 							<th>아이디</th>
 							<th>이메일</th>
@@ -42,20 +41,35 @@
 							<th>승인요청</th>
 						</tr>
 					</thead>
-					<tbody>
-					<c:forEach var="value" items="${list}" > 
-						<tr>																							
-							<td><input type="checkbox" name="check"></td>									
-							<td>'+value.id+'</td>														
-							<td>'+value.email+'</td>														
-							<td>'+value.tel+'</td>															
-							<td>'+value.blackdate+'</td>														
+					<tbody id="tablesort" >
+					<c:forEach var="value" items="${list}" varStatus="loop">
+						<c:set var="loop_flag" value="false"/> 
+						<tr>																					
+							<td>${value.id}</td>														
+							<td>${value.email}</td>														
+							<td>${value.tel}</td>															
+							<td>${value.visitdate}</td>														
 							<td>
-								<p data-placement="top" data-toggle="tooltip" title="Delete">
-									<button id="" class="btn btn-primary btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
-										<span class="glyphicon glyphicon-ok"></span>
-									</button>
-								</p>
+								<c:forEach var="black" items="${blacklist}" varStatus="status">
+									   <c:if test="${not loop_flag }">
+									        <c:if test="${black.id == value.id}">
+									        	<c:if test="${black.added}">
+									            	블랙리스트 등록됨  <button name="calcelBtn" value='${loop.index}' class="btn btn-danger btn-xs">해제</button>
+									        	</c:if>
+									        	<c:if test="${not black.added}">
+									            	블랙리스트 기신청  <button name="calcelBtn" value='${loop.index}'  class="btn btn-danger btn-xs">취소</button>
+									        	</c:if>
+									        	<c:set var="loop_flag" value="true"/>
+									        </c:if>
+									   </c:if>
+								</c:forEach>
+								<c:if test="${not loop_flag}">
+									<p data-placement="top" data-toggle="tooltip" title="Delete">
+										<button name="blackBtn" class="btn btn-primary btn-xs" value='${loop.index}' data-title="Delete" data-toggle="modal" data-target="#delete">
+											<span class="glyphicon glyphicon-ok"></span>
+										</button>
+									</p>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>
@@ -80,17 +94,18 @@
 							<span class="glyphicon glyphicon-warning-sign"></span>
 							해당 회원을 블랙리스트 신청하시겠습니까?
 						</div>
-						<form id="frm" class="form-horizontal" action='<c:url value="#"/>' method="post" accept-charset="UTF-8">
+						<form id="frm" class="form-horizontal" action='<c:url value="/Shop/BlackAdd.Lingo"/>' method="post" accept-charset="UTF-8">	
 							<div class="form-group">
 								<label class="col-sm-2 control-label">신청사유</label>
-								<div class="col-sm-10">
-							        <input type="text" class="form-control" placeholder="신청사유를 입력해주세요" name="reason" id="reason">
-								</div>	
-								<div class="col-md-8">
-									<input type="hidden" id="reasonConfirm" name="reasonConfirm"/> 
-									<label class="col-sm-offset-3" style="color:red"></label>  	
+								<div class="col-sm-10"><input type="text" class="form-control" placeholder="신청사유를 입력해주세요" name="reason" id="reason">
 								</div>
-							</div>		
+								<div class="col-md-8">
+								<input type="hidden" id="reasonConfirm" name="reasonConfirm"/>
+								<label class="col-sm-offset-3" style="color:red"></label>
+								</div>
+								<div id="hidden" class="form-group">
+								</div>
+							</div>
 						</form>
 					</div>
 					
@@ -120,15 +135,34 @@
 <script>
 $(function() {
     //모달에서 버튼 클릭시 이벤트 처리
-    $('#confirm').click(function(){
-    	if($('#reason').val() !=""){$('#frm').submit();}
-    	else{
-    		$('#reasonConfirm').next().html("신청사유를 작성해주세요.");
-    		return false;
-    	}
-    })
-    $("#reason").on('input',function(){
-		$('#reasonConfirm').next().html("");	
-	})
+    
+	$('button[name="blackBtn"]').click(function(){
+		var htmlString ='<input type="hidden" name="id" value="'+$("#tablesort tr").eq($(this).val()).children("td:eq(0)").html()+'"/>';
+		$('#hidden').html(htmlString);
+		$('#confirm').click(function(){
+	    	if($('#reason').val() !=""){$('#frm').submit();}
+	    	else{
+	    		$('#reasonConfirm').next().html("신청사유를 작성해주세요.");
+	    		return false;
+	    	}
+	    });
+	    $("#reason").on('input',function(){
+			$('#reasonConfirm').next().html("");	
+		});
+	});
+	$('button[name="calcelBtn"]').click(function(){
+		if(confirm("해당 회원을 해제 하시겠습니까?")){
+		var id = $("#tablesort tr").eq($(this).val()).children("td:eq(0)").html();
+			$.ajax({
+				url:"<c:url value='/Shop/BlackRemove.Lingo'/>",
+				data:"id="+id,
+				dataType:"text",
+				type:'post',
+				success:function(data){
+					location.replace("<c:url value='/Shop/BlackList.Lingo'/>")
+				}			
+			});
+		}
+	});
 });
 </script>

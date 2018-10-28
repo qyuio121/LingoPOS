@@ -51,6 +51,7 @@ $(function(){
 		showCommentsWrite(${param.storeno});
 		return false;
 	});
+	showCommentsWrite(${param.storeno});
 });
 
 //해당 글번호에 대한 코멘트 목록을 가져오는 함수
@@ -87,7 +88,7 @@ var showCommentsPage = function(key,nowPage){
 };
 //해당 글번호에 대한 코멘트 목록을 뿌려주는 함수 
 var displayComments	 = function(data){
-	$('#tab4').html(data);
+	$('#tab3').html(data);
 	$('#reviewWrite').click(function(){
 		var comment = $('#reviewText').val();
 		if(comment==''){
@@ -102,7 +103,10 @@ var displayComments	 = function(data){
 function getReview(nowPage){
 	showCommentsPage(${param.storeno},nowPage);
 }
-
+if(${not empty isBlack}){
+	alert('해당 가게에 블랙리스트 등록되어 예약을 하실수 없습니다');
+	location.replace("<c:url value='/'/>")
+}
 </script>
 
 <style>
@@ -195,7 +199,7 @@ function getReview(nowPage){
 	<!-- jquery.swichTab.js  여기서  맵에 표시할 x/y 좌표 2개 넣기 -->
 <!-- DB연결용 미리 만들어논거 끝 -->
 <!-- 가게위치 끝 -->	
-		<div id="tab3" class="swichtab-panel" data-swichtab="target">
+		<div id="tab2" class="swichtab-panel" data-swichtab="target">
 			<div style="text-align: center;width:100%;">
 				<c:forEach items="${foodimgs}" var="foodimg">
 					<div style="display:inline-table;width:45%">
@@ -216,7 +220,7 @@ function getReview(nowPage){
 <!-- 메뉴갤러리 끝 -->		
 <!-- 리뷰 시작 -->	
 
-	 	<div id="tab4" class="swichtab-panel" data-swichtab="target">\
+	 	<div id="tab3" class="swichtab-panel" data-swichtab="target">\
 	 		<div style="float: right;">
 				<span>멋진 댓글을 작성해 주세요 </span> <input type="text" id="reviewText" style="width:300px"/> <button id="reviewWrite" class="btn btn-primary">등록</button>			
 			</div>

@@ -41,11 +41,7 @@ public class TempleteController {
 	private int noticeblockPage;
 	
 
-	//샵 블랙리스트신청
-	@RequestMapping("/Shop/BlackList.Lingo")
-	public String blackList() throws Exception{
-		return "shop/blackList/blackList.tiles";
-	}	
+	
 	
 	//안드로이드 토탈 맵 
 	@ResponseBody

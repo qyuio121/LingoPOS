@@ -22,4 +22,10 @@ public class VisitlistDAO {
 	public List<VisitlistDTO> select(Map map) {
 		return template.selectList("LingoVisitlistSelect",map);
 	}
+	public int isVisit(Map map) {
+		return template.selectOne("LingoIsVisit",map);
+	}
+	public int getTotalRecord(Map map) {
+		return template.selectOne("LingoVisitGetTotalRecord",map);
+	}
 }

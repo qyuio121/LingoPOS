@@ -5,4 +5,45 @@ public class VisitlistDTO {
 	private String id;
 	private int storeno;
 	private java.sql.Timestamp visitdate;
+	private String email;
+	private String tel;
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public int getVisitno() {
+		return visitno;
+	}
+	public void setVisitno(int visitno) {
+		this.visitno = visitno;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public int getStoreno() {
+		return storeno;
+	}
+	public void setStoreno(int storeno) {
+		this.storeno = storeno;
+	}
+	public java.sql.Timestamp getVisitdate() {
+		return visitdate;
+	}
+	public void setVisitdate(java.sql.Timestamp visitdate) {
+		this.visitdate = visitdate;
+	}
+	
+	
 }
