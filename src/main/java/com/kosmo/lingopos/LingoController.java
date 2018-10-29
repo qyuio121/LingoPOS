@@ -1090,6 +1090,7 @@ public class LingoController {
 					storeimgService.delete(map);
 					foodimgService.delete(map);
 					mapService.delete(map);
+					visitlistService.deletebyStoreno(map);
 					storeService.delete(map);
 				}
 				ownerService.updatefalse(map);

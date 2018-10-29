@@ -18,6 +18,9 @@ public class VisitlistService {
 	public int delete(Map map) {
 		return dao.delete(map);
 	}
+	public int deletebyStoreno(Map map) {
+		return dao.deletebyStoreno(map);
+	}
 	public List<VisitlistDTO> select(Map map) {
 		return dao.select(map);
 	}

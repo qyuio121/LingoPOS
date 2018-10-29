@@ -19,6 +19,9 @@ public class VisitlistDAO {
 	public int delete(Map map) {
 		return template.delete("LingoVisitlistDelete",map);
 	}
+	public int deletebyStoreno(Map map) {
+		return template.delete("LingoVisitlistDeletebyStoreno",map);
+	}
 	public List<VisitlistDTO> select(Map map) {
 		return template.selectList("LingoVisitlistSelect",map);
 	}

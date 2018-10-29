@@ -339,6 +339,9 @@
  <delete id="LingoVisitlistDelete" parameterType="java.util.Map">
  	delete from visitlist where id=#{id}
  </delete>
+ <delete id="LingoVisitlistDeletebyStoreno" parameterType="java.util.Map">
+ 	delete from visitlist where storeno=#{storeno}
+ </delete>
  <select id="LingoVisitlistSelect" parameterType="java.util.Map" resultType="visitlistDTO">
 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select v.*,email,tel from visitlist v join user u on v.id=u.id where 
 		<if test="searchWord!=null and !searchWord.equals('')">
