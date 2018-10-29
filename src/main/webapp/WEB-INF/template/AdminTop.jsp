@@ -107,7 +107,7 @@ $(function(){
               </a>
 			<ul class="sub">
               <li><a href="<c:url value='/Notice/Notice.Lingo?active=4'/>">공지사항</a></li>
-              <li><a href="<c:url value='/Free/Free.Lingo??active=4'/>">자유게시판</a></li>
+              <li><a href="<c:url value='/Free/Free.Lingo?active=4'/>">자유게시판</a></li>
             </ul>
           </li>
           <li>
