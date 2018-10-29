@@ -74,7 +74,7 @@
  	insert into foodimg(img,storeno,name,price) value(#{img},#{storeno},#{name},#{price})
  </insert>
  <delete id="LingoFoodimgDelete" parameterType="java.util.Map">
- 	delete from foodimg where imgno=#{imgno}
+ 	delete from foodimg where storeno=#{storeno}
  </delete>
  <select id="LingoFoodimgSelect" parameterType="java.util.Map" resultType="foodimgDTO">
  	select * from foodimg where storeno = #{storeno} 
@@ -168,17 +168,39 @@
  </select>
  
  <insert id="LingoOwnerInsert" parameterType="java.util.Map">
- 	insert into owner value(#{ownerno},#{storename},#{storedoc},#{id},true)
+ 	insert into owner value(#{ownerno},#{storename},#{storedoc},#{id},false)
  </insert>
  <update id="LingoOwnerUpdate" parameterType="java.util.Map">
- 	update owner set isallowed = true where ownerno=#{ownerno}
+ 	update owner set isallowed = true where id=#{id}
+ </update>
+ <update id="LingoOwnerUpdatefalse" parameterType="java.util.Map">
+ 	update owner set isallowed = false where id=#{id}
  </update>
  <delete id="LingoOwnerDelete" parameterType="java.util.Map">
- 	delete from owner where ownerno=#{ownerno}
+ 	delete from owner where id=#{id}
  </delete>
- <select id="LingoOwnerSelectAdmin" resultType="ownerDTO">
- 	select * from owner where isallowed = false
+ <select id="LingoOwnerSelectAdminApply" parameterType="java.util.Map" resultType="ownerDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select o.*,regidate,tel from owner o join user u on o.id=u.id where isallowed = false) t, (select @rownum:=0) b  order by regidate desc) tab where rnum between #{start} and #{end}
  </select>
+ <select id="LingoOwnerGetTotalRecordApply" resultType="int" >
+ 	select count(*) from owner where isallowed = false
+ </select>
+  <select id="LingoOwnerSelectAdminList" parameterType="java.util.Map" resultType="ownerDTO">
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select o.*,regidate,tel from owner o join user u on o.id=u.id where isallowed = true) t, (select @rownum:=0) b 
+ 		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		  where t.${searchColumn} like '%${searchWord}%'
+ 		</if>
+ 	 order by regidate desc) tab where rnum between #{start} and #{end}
+ </select>
+  <select id="LingoOwnerGetTotalRecordList" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from owner t where
+ 		<if test="searchColumn!=null and !searchColumn.equals('')">
+ 		  t.${searchColumn} like '%${searchWord}%' and
+ 		</if>
+ 	isallowed = true
+ </select>
+ 
+ 
  <select id="LingoOwnerSelect" parameterType="java.util.Map" resultType="ownerDTO">
  	select storename from owner where ownerno = #{ownerno}
  </select>
@@ -279,7 +301,7 @@
  <select id="LingoStoreSelect" parameterType="java.util.Map" resultType="storeDTO">
  	select storename,address,tel,opentime,closetime,tablenum,bigkind,atable from store where storeno=#{storeno}
  </select>
- <select id="LingoStoreSelectbyID" parameterType="java.util.Map" resultType="int">
+ <select id="LingoStoreSelectbyID" parameterType="java.util.Map" resultType="java.lang.String">
  	select storeno from store where id=#{id}
  </select>
 
@@ -287,7 +309,7 @@
  	insert into storeimg(img,storeno) value(#{img},#{storeno})
  </insert>
  <delete id="LingoStoreimgDelete" parameterType="java.util.Map">
- 	delete from storeimg where imgno=#{imgno}
+ 	delete from storeimg where storeno=#{storeno}
  </delete>
  <select id="LingoStoreimgSelect" parameterType="java.util.Map" resultType="storeimgDTO">
  	select * from storeimg where storeno = #{storeno} 

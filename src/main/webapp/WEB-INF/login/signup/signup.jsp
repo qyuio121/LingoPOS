@@ -82,7 +82,7 @@
  })
  </script>
 <div style="margin-top:150px;padding-bottom:150px">
-<form id="frm" action="<c:url value='/Login/Signup/Signup.Lingo'/>" method="post">
+<form id="frm" action="<c:url value='/Login/Signup/Signup.Lingo'/>" method="post" enctype="multipart/form-data">
 	<h1>LingoPOS 회원가입</h1>
 	<div class="col-sm-6">
 		<div class="form-group">
@@ -137,9 +137,9 @@
 		</div>
 		<div class="form-group">
 			<label>사업자 등록증</label> 
-			<input type="text"
-				class="form-control" name="storedoc" placeholder="사업자 등록증을 등록해주세요">
-		<label for="storedoc" class="error" style="color:red"></label>
+			<input type="file"
+				name="storedoc" placeholder="사업자 등록증을 등록해주세요" accept="image/*">
+			<label for="storedoc" class="error" style="color:red"></label>
 		</div>
 		</c:if>
 		<button type="submit" class="btn btn-primary" id="submit">가입하기</button>

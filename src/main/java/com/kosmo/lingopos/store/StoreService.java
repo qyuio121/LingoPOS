@@ -24,7 +24,7 @@ public class StoreService {
 	public StoreDTO select(Map map) {
 		return dao.select(map);
 	}
-	public int selectbyID(Map map) {
+	public String selectbyID(Map map) {
 		return dao.selectbyID(map);
 	}
 }

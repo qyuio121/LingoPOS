@@ -14,6 +14,7 @@
 	<link href="../../lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	-->
 	<link href="<c:url value="/lib/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!-- 
 	<link href="../../lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
 	 -->
@@ -43,6 +44,8 @@
 	 -->
 	<script src="<c:url value="/lib/jquery/jquery.min.js"/>"></script>
 	
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	<style>
 /*body의 최소 크기를 2000px로 하여 컨텐츠의 영역을  일부러
    확장하여 스크롤바가 생기도록 css를 설정함-네비게이션바가 상단에 고정되는지 테스트 하기 위함*/

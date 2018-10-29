@@ -6,6 +6,22 @@ public class OwnerDTO {
 	private String storedoc;
 	private String id;
 	private boolean isallowed;
+	private String tel;
+	private java.sql.Timestamp regidate;
+	
+	
+	public String getTel() {
+		return tel;
+	}
+	public java.sql.Timestamp getRegidate() {
+		return regidate;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public void setRegidate(java.sql.Timestamp regidate) {
+		this.regidate = regidate;
+	}
 	public String getOwnerno() {
 		return ownerno;
 	}

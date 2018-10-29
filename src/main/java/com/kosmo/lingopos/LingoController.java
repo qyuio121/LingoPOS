@@ -87,6 +87,10 @@ public class LingoController {
 	
 	@Resource(name="ownerService")
 	private OwnerService ownerService;
+	@Value("${ownerPageSize}")
+	private int ownerpageSize;
+	@Value("${ownerBlockPage}")
+	private int ownerblockPage;
 	
 	@Resource(name="storeService")
 	private StoreService storeService;
@@ -143,6 +147,8 @@ public class LingoController {
 	private int visitlistpageSize;
 	@Value("${visitlistBlockPage}")
 	private int visitlistblockPage;
+	
+	
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -815,6 +821,15 @@ public class LingoController {
 	}
 	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.POST)
 	public String updateOk(@RequestParam Map map) throws Exception{
+		/*
+		if(!map.get("newpwd").toString().trim().equals("")) {
+			String pwd = null;
+			try {
+				pwd = PBKDF2.createHash(map.get("newpwd").toString());
+			}catch (Exception e) {
+			}
+			map.put("pwd",pwd);
+		}*/
 		if(!map.get("newpwd").toString().trim().equals("")) {
 			map.put("pwd", map.get("newpwd"));
 		}
@@ -841,6 +856,12 @@ public class LingoController {
 	@RequestMapping("/Login/Update/Valicate.Lingo")
 	public String valicate(@RequestParam Map map) throws Exception{
 		UserDTO dto =userService.select(map);
+		/*
+		if(PBKDF2.validatePassword(map.get("pwd").toString(), dto.getPwd())) {
+			return "0";
+		}else {
+			return "1";
+		}*/
 		if(dto.getPwd().equals(map.get("pwd"))) {
 			return "0";
 		}else {
@@ -854,13 +875,49 @@ public class LingoController {
 		return "login/signup/signup.tiles";
 	}
 	@RequestMapping(value="/Login/Signup/Signup.Lingo",method=RequestMethod.POST)
-	public String signupOk(@RequestParam Map map,Model model) throws Exception{
+	public String signupOk(MultipartHttpServletRequest mhsr) throws Exception{
+
+		Map map = new HashMap();
+		map.put("id",mhsr.getParameter("id").toString());
+		/*
+		String pwd = null;
+		try {
+			pwd = PBKDF2.createHash(mhsr.getParameter("pwd").toString());
+		}catch (Exception e) {
+		}
+		map.put("pwd",pwd);*/
+		map.put("pwd",mhsr.getParameter("pwd").toString());
+		map.put("email",mhsr.getParameter("email").toString());
+		map.put("tel",mhsr.getParameter("tel").toString());
+		map.put("region",mhsr.getParameter("region").toString());
+		
 		userService.insert(map);
-		if(map.get("ownerno")!=null) {
+		
+		if(mhsr.getParameter("ownerno")!=null) {
+			String phicalPath=mhsr.getServletContext().getRealPath("/Images/storedoc");
+			
+			MultipartFile upload= mhsr.getFile("storedoc");
+			
+			String newFilename=FileUpDownUtils.getNewFileName(phicalPath, upload.getOriginalFilename());
+			File file = new File(phicalPath+File.separator+newFilename);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+				
+			upload.transferTo(file);
+			
+			String localIP = InetAddress.getLocalHost().getHostAddress();
+			
+			String storedoc= "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/storedoc/" + newFilename;
+			//String storedoc= "https://www.lingopos.co.kr/lingopos/Images/storedoc/" + newFilename;
+			map.put("ownerno",mhsr.getParameter("ownerno").toString());
+			map.put("storedoc",storedoc);
+			map.put("storename",mhsr.getParameter("storename").toString());
 			ownerService.insert(map);
 		}
 		return "forward:/";
 	}
+	
 	
 	@RequestMapping(value="/Shop/Apply.Lingo",method=RequestMethod.GET)
 	public String apply(HttpSession session,Model model) throws Exception{
@@ -879,8 +936,8 @@ public class LingoController {
 		map.put("atable",map.get("tablenum"));
 		map.put("address",map.get("addr1")+" "+map.get("addr2")+" "+map.get("addr3"));
 		storeService.insert(map);
-		int storeno= storeService.selectbyID(map);
-		logindto.setStoreno(String.valueOf(storeno));
+		String storeno= storeService.selectbyID(map);
+		logindto.setStoreno(storeno);
 		session.setAttribute("loginDTO", logindto);
 		map.put("storeno", storeno);
 		String[] storeimg = map.get("hiddenStore").toString().split(",");
@@ -940,13 +997,104 @@ public class LingoController {
 		
 		//백엔드 가게승인
 		@RequestMapping("/Admin/shop/apply.Admin")
-		public String adminApply() throws Exception{
+		public String adminApply(@RequestParam Map map,Model model,HttpServletRequest req,
+				 @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+			
+			int totalRecordCount = ownerService.getTotalRecordApply();
+			
+			int start = (nowPage-1)*ownerpageSize+1;
+			int end = nowPage*ownerpageSize;
+			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, ownerpageSize, ownerblockPage, nowPage, req.getContextPath()+"/Admin/shop/apply.Admin?");
+			map.put("start", start);
+			map.put("end", end);
+			
+			List<OwnerDTO> list = ownerService.selectAdminApply(map);
+			model.addAttribute("list", list);
+			model.addAttribute("pageString", pageString);
+			model.addAttribute("totalRecordCount", totalRecordCount);
+			model.addAttribute("nowPage", nowPage);
+			
 			return "admin/shop/apply.Admin";
 		}
-		//백엔드 가게승인
+		//백엔드 가게관리
 		@RequestMapping("/Admin/shop/delete.Admin")
-		public String adminDelete() throws Exception{
+		public String adminDelete(HttpSession session,Model model,HttpServletRequest req,
+				@RequestParam Map map, @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
+			int totalRecordCount = ownerService.getTotalRecordList(map);
+			
+			int start = (nowPage-1)*ownerpageSize+1;
+			int end = nowPage*ownerpageSize;
+			
+			String pageString=null;
+			if(map.get("searchColumn")!=null) {
+				pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, ownerpageSize, ownerblockPage, nowPage, req.getContextPath()+"/Admin/shop/delete.Admin?",map.get("searchColumn").toString(),map.get("searchWord").toString());
+			}else {
+				pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, ownerpageSize, ownerblockPage, nowPage, req.getContextPath()+"/Admin/shop/delete.Admin?");
+			}
+			map.put("start", start);
+			map.put("end", end);
+			
+			List<OwnerDTO> list = ownerService.selectAdminList(map);
+			model.addAttribute("list", list);
+			model.addAttribute("pageString", pageString);
+			model.addAttribute("totalRecordCount", totalRecordCount);
+			model.addAttribute("nowPage", nowPage);
+			
 			return "admin/shop/delete.Admin";
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/Shop/ApplyAdd.Admin")
+		public String shopApplyAdd(@RequestBody String selectlist) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("id", json.get("id").toString());
+				ownerService.update(map);
+			}
+			return String.valueOf(array.size());
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/Shop/ApplyRemove.Admin")
+		public String shopApplyRemove(@RequestBody String selectlist) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("id", json.get("id").toString());
+				ownerService.delete(map);
+				userService.delete(map);
+			}
+			return String.valueOf(array.size());
+		}
+		@ResponseBody
+		@RequestMapping("/Admin/Shop/Remove.Admin")
+		public String shopRemove(@RequestBody String selectlist,HttpServletRequest req) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("id", json.get("id").toString());
+				String storeno = storeService.selectbyID(map);
+				System.out.println(storeno);
+				if(storeno !=null) {
+					map.put("storeno", storeno);
+					String phicalPath=req.getServletContext().getRealPath("/Images/")+json.get("id").toString();
+					File file = new File(phicalPath);
+					if(file.exists()) {
+						//deleteAllFiles(phicalPath);
+					}
+					storeimgService.delete(map);
+					foodimgService.delete(map);
+					mapService.delete(map);
+					storeService.delete(map);
+				}
+				ownerService.updatefalse(map);
+			}
+			return String.valueOf(array.size());
 		}
 		//백엔드 회원관리시스템
 		@RequestMapping("/Admin/member/member.Admin")
@@ -1116,5 +1264,27 @@ public class LingoController {
 		public String alertBlack(@RequestParam Map map) throws Exception{
 			return String.valueOf(blacklistService.getTotalRecordApply());
 		}
+		@ResponseBody
+		@RequestMapping("/Admin/Shop/AlertShop.Admin")
+		public String alertShop(@RequestParam Map map) throws Exception{
+			return String.valueOf(ownerService.getTotalRecordApply());
+		}
+		public static void deleteAllFiles(String path){ 
+
+			   File file = new File(path); 
+			   //폴더내 파일을 배열로 가져온다. 
+			   File[] tempFile = file.listFiles(); 
+
+			   if(tempFile.length >0){ 
+			      for (int i = 0; i < tempFile.length; i++) { 
+			         if(tempFile[i].isFile()){ 
+			            tempFile[i].delete(); // 디렉토리 안의 내용물을 지운다.
+			         }else{ //재귀함수 
+			            deleteAllFiles(tempFile[i].getPath()); // 폴더 안에 또 폴더가 있으면 그 안의 내용물도 다 지운다.
+			         } // else
+			      tempFile[i].delete(); // 내용물을 다 지우고 폴더를 지운다.
+			      } // for
+			   } // if
+			}
 
 }

@@ -25,7 +25,7 @@ public class StoreDAO {
 	public StoreDTO select(Map map) {
 		return template.selectOne("LingoStoreSelect",map);
 	}
-	public int selectbyID(Map map) {
+	public String selectbyID(Map map) {
 		return template.selectOne("LingoStoreSelectbyID",map);
 	}
 	

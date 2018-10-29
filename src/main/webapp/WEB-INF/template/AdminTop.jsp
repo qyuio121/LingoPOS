@@ -28,7 +28,15 @@ $(function(){
 	    	}
 		}
     });
-	
+	$.ajax({
+		url: "<c:url value='/Admin/Shop/AlertShop.Admin'/>",
+		type: "get",
+	    success: function(data) {
+	    	if(data!='0'){
+	    		$("#shop").append('<span class="label label-theme pull-right mail-info">'+data+'</span>');
+	    	}
+		}
+    });
 });
 
 
@@ -65,11 +73,10 @@ $(function(){
               </a>
           </li>
           <li class="sub-menu">
-            <a class="menu" href="#">
+            <a id="shop" class="menu" href="#">
               <i class="fa fa-cogs"></i>
               <span>가게</span>
-			  <span class="label label-theme pull-right mail-info">2</span>
-              </a>
+			  </a>
               <ul class="sub">
               	<li><a href="<c:url value='/Admin/shop/apply.Admin?active=1'/>">가게승인</a></li>
               	<li><a href="<c:url value='/Admin/shop/delete.Admin?active=1'/>">가게관리</a></li>

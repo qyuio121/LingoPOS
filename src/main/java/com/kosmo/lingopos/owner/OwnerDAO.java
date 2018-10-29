@@ -19,11 +19,23 @@ public class OwnerDAO {
 	public int update(Map map) {
 		return template.update("LingoOwnerUpdate",map);
 	}
+	public int updatefalse(Map map) {
+		return template.update("LingoOwnerUpdatefalse",map);
+	}
 	public int delete(Map map) {
 		return template.delete("LingoOwnerDelete",map);
 	}
-	public List<OwnerDTO> selectAdmin() {
-		return template.selectList("LingoOwnerSelectAdmin");
+	public List<OwnerDTO> selectAdminApply(Map map) {
+		return template.selectList("LingoOwnerSelectAdminApply",map);
+	}
+	public int getTotalRecordApply() {
+		return template.selectOne("LingoOwnerGetTotalRecordApply");
+	}
+	public List<OwnerDTO> selectAdminList(Map map) {
+		return template.selectList("LingoOwnerSelectAdminList",map);
+	}
+	public int getTotalRecordList(Map map) {
+		return template.selectOne("LingoOwnerGetTotalRecordList",map);
 	}
 	public OwnerDTO select(Map map) {
 		return template.selectOne("LingoOwnerSelect",map);
