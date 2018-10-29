@@ -5,15 +5,17 @@
   <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
   <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
 	
 <script>
 </script>
+
 <div class="container" >
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
 	<div class="row">
-		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 50px" />공지글</h2>
+		<div class="col-xs-12">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />공지게시판</h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
