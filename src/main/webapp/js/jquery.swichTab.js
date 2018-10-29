@@ -68,7 +68,7 @@ THE SOFTWARE.
                     	var x = document.getElementById("x");
                     	var y = document.getElementById("y");
                     	//var storename = document.getElementById("storename");
-                    	console.log("x : "+x.value+" "+"y : "+y.value);
+                    	//console.log("x : "+x.value+" "+"y : "+y.value);
                     var mapContainer = document.getElementById('map'), 
                     mapOption = { 
 //여기다가 좌표값 넣어줄거	
