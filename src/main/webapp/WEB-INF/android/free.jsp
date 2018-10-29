@@ -9,12 +9,12 @@
     
 	<div class="container">
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-7">
 			<h2>
 				<img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 30px" /> 자유게시판
 			</h2>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-xs-5">
 			<form class="navbar-form navbar-right" id="gtBtn" style="margin-top: 50px" action="<c:url value='/Android/Free.Lingo'/>" method="get">
 				<div class="form-group">
 					<select name="searchColumn" class="form-control">
