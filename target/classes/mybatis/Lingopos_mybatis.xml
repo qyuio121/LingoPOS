@@ -251,10 +251,10 @@
  	delete from reservedtable where reserveno=#{reserveno}
  </delete>
  <select id="LingoReservedtableSelect" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from reservedtable where storeno = #{storeno} order by startdate desc
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.storeno = #{storeno}) t, (select @rownum:=0) b order by startdate desc) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoReservedtableSelectbyId" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from reservedtable where id = #{id} order by startdate desc
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where id = #{id}) t, (select @rownum:=0) b order by startdate desc) tab where rnum between #{start} and #{end}
  </select>
   <select id="LingoReservedtableGetTotalRecord" parameterType="java.util.Map" resultType="int" >
  	select count(*) from reservedtable where storeno=#{storeno}
@@ -370,7 +370,7 @@
 		<if test="searchWord!=null and !searchWord.equals('')">
  		 	 ${searchColumn} like '%${searchWord}%' and 
  		</if> 		
-	  id=${id}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
+	  v.id=#{id}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
  </select>
   <select id="LingoIsVisit" parameterType="java.util.Map" resultType="int">
 	select count(*) from visitlist where id=#{id} and storeno=#{storeno}

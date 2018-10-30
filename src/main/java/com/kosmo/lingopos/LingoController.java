@@ -1,6 +1,7 @@
 package com.kosmo.lingopos;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import java.util.Vector;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -29,10 +31,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.google.android.gcm.server.Message;
+import com.google.android.gcm.server.MulticastResult;
+import com.google.android.gcm.server.Result;
+import com.google.android.gcm.server.Sender;
 import com.kosmo.lingopos.admin.AdminService;
 import com.kosmo.lingopos.blacklist.BlacklistDTO;
 import com.kosmo.lingopos.blacklist.BlacklistService;
 import com.kosmo.lingopos.comment.CommentService;
+import com.kosmo.lingopos.fcm.FCMDTO;
 import com.kosmo.lingopos.fcm.FCMService;
 import com.kosmo.lingopos.foodimg.FoodimgDTO;
 import com.kosmo.lingopos.foodimg.FoodimgService;
@@ -1261,9 +1268,28 @@ public class LingoController {
 		public String fcmRegister(@RequestParam Map map) throws Exception{
 			return String.valueOf(fcmService.insert(map));
 		}
-		@RequestMapping("/FCM/FCMPush.Admin")
-		public String fcmPush(@RequestParam Map map) throws Exception{
-			return String.valueOf(fcmService.insert(map));
+		@ResponseBody
+		@RequestMapping(value="/FCM/FCMPush.Admin",produces="text/html; charset=UTF-8")
+		public void fcmPush(@RequestParam Map map,HttpServletResponse res) throws Exception{
+			List<FCMDTO> list = fcmService.select();
+			PrintWriter out = res.getWriter();
+		    String simpleApiKey = "AAAA9dEVNuo:APA91bGbjHNXD7QWaeFUsbz3iYkKmyA8jkkQOKZmujN2Bm_Wsr-ozOtTwD8l1Ep6LmFd_XxXUQChHxzduXjZMaZl69ayyXbsw04zh7RBjWWncfQJvcoPDCm40nP4xFNTm_sGErxXX3xh";
+		    //String gcmURL = "https://android.googleapis.com/fcm/send";    
+		    String gcmURL ="https://fcm.googleapis.com/fcm/send";
+		    String message = map.get("message").toString();
+		    String title = map.get("title").toString();
+		    int successTokens=0;
+		    Sender sender = new Sender(simpleApiKey);
+		    Message msg = new Message.Builder().addData("message",message).addData("title",title).build();
+			for(FCMDTO dto:list) {
+				Result result = sender.send(msg,dto.getToken(),3);//3는 메시지 전송실패시 재시도 횟수
+			     if(result != null) {
+			    	 if(result.getMessageId()!=null) {
+			    		 successTokens++;
+			    	 }
+			     }      
+			}
+			out.println("<script>");
 		}
 		@ResponseBody
 		@RequestMapping("/Admin/question/AlertQNA.Admin")
