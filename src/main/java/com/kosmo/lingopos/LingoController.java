@@ -1261,7 +1261,10 @@ public class LingoController {
 		public String fcmRegister(@RequestParam Map map) throws Exception{
 			return String.valueOf(fcmService.insert(map));
 		}
-		
+		@RequestMapping("/FCM/FCMPush.Admin")
+		public String fcmPush(@RequestParam Map map) throws Exception{
+			return String.valueOf(fcmService.insert(map));
+		}
 		@ResponseBody
 		@RequestMapping("/Admin/question/AlertQNA.Admin")
 		public String alertQna(@RequestParam Map map) throws Exception{

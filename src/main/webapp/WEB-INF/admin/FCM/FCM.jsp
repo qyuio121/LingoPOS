@@ -17,7 +17,7 @@ $(function(){
 		</div>
 	</div>	    
 	<!-- 폼 시작 -->
-	 <form id="frm" class="form-horizontal" action="PushToPhone.jsp" method="post">
+	 <form id="frm" class="form-horizontal" action="<c:url value='/FCM/FCMPush.Admin'/>" method="post">
 	<!-- 제목 시작 -->
 			<div class="form-group">
 				<label class="col-sm-2 control-label">제목</label>

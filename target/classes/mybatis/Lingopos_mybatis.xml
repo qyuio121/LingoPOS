@@ -388,7 +388,7 @@
  	<if test="searchWord!=null and !searchWord.equals('')">
  		${searchColumn} like '%${searchWord}%' and
  	</if>
- 	 id=#{id}
+ 	 v.id=#{id}
  </select>
  <select id="LingoAdminSelectUserlist" parameterType="java.util.Map" resultType="userinfoDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.* from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
