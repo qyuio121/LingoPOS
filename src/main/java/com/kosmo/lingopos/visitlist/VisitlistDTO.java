@@ -7,7 +7,21 @@ public class VisitlistDTO {
 	private java.sql.Timestamp visitdate;
 	private String email;
 	private String tel;
+	private String storename;
+	private String address;
 	
+	public String getStorename() {
+		return storename;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setStorename(String storename) {
+		this.storename = storename;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public String getEmail() {
 		return email;
 	}

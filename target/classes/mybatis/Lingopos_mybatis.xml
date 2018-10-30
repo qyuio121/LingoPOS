@@ -253,6 +253,15 @@
  <select id="LingoReservedtableSelect" parameterType="java.util.Map" resultType="reservedtableDTO">
  	select * from reservedtable where storeno = #{storeno} order by startdate desc
  </select>
+ <select id="LingoReservedtableSelectbyId" parameterType="java.util.Map" resultType="reservedtableDTO">
+ 	select * from reservedtable where id = #{id} order by startdate desc
+ </select>
+  <select id="LingoReservedtableGetTotalRecord" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from reservedtable where storeno=#{storeno}
+ </select>
+ <select id="LingoReservedtableGetTotalRecordbyId" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from reservedtable where id=#{id}
+ </select>
  
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
  	select * from usedtable where storeno = #{storeno}
@@ -349,6 +358,13 @@
  		</if> 		
 	  storeno=#{storeno}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
  </select>
+ <select id="LingoVisitlistSelectbyUser" parameterType="java.util.Map" resultType="visitlistDTO">
+	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select v.*,storename,tel,address from visitlist v join store s on v.storeno=s.storeno 
+		<if test="searchWord!=null and !searchWord.equals('')">
+ 		 	 ${searchColumn} like '%${searchWord}%' and 
+ 		</if> 		
+	  id=${id}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
+ </select>
   <select id="LingoIsVisit" parameterType="java.util.Map" resultType="int">
 	select count(*) from visitlist where id=#{id} and storeno=#{storeno}
  </select>
@@ -360,7 +376,13 @@
  	</if>
  	 storeno=#{storeno}
  </select>
- 
+ <select id="LingoVisitGetTotalRecordbyUser" parameterType="java.util.Map" resultType="int" >
+ 	select count(*) from visitlist v join store s on v.storeno=s.storeno where
+ 	<if test="searchWord!=null and !searchWord.equals('')">
+ 		${searchColumn} like '%${searchWord}%' and
+ 	</if>
+ 	 id=#{id}
+ </select>
  <select id="LingoAdminSelectUserlist" parameterType="java.util.Map" resultType="userinfoDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.* from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
 		<if test="searchColumn!=null and !searchColumn.equals('')">
