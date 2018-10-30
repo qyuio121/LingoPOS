@@ -72,7 +72,7 @@
 							<c:if test="${not result}">
 								<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>
 							</c:if>
-							<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>
+							<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">입출고내역서</a></li>
 						</c:if>
 						<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 						<li class="divider"></li>	
@@ -96,7 +96,7 @@
 					<c:if test="${not result}">
 						<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>
 					</c:if>
-					<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">매출계산기</a></li>
+					<li><a href="<c:url value='/Shop/SalesCal.Lingo'/>">입출고내역서</a></li>
 				</c:if>
 				<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 				<li class="divider"></li>				

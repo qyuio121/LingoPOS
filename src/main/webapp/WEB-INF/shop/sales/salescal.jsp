@@ -24,8 +24,8 @@ $(function(){
 	getStoreName('${sessionScope.loginDTO.id}');
 	function autoCalcSetup() {
 	        $('form[name=cart]').jAutoCalc('destroy');
-	        $('form[name=cart] tr[name=line_items]').jAutoCalc({keyEventsFire: true, decimalPlaces: 2, emptyAsZero: true});
-	        $('form[name=cart]').jAutoCalc({decimalPlaces: 2});
+	        $('form[name=cart] tr[name=line_items]').jAutoCalc({keyEventsFire: true, decimalPlaces: -1, emptyAsZero: true,thousandOpts:['','','']});
+	        $('form[name=cart]').jAutoCalc({decimalPlaces: 0,thousandOpts:['','','']});
 	    }
 	    autoCalcSetup();
 	
@@ -57,8 +57,18 @@ $(function(){
 	     nowTime += '-' + (now.getMonth() + 1);
 	     nowTime += '-' + now.getDate();
 	     nowTime += '_' + now.getHours()+"시";
-	     var blob = new Blob(["\ufeff한글\r\n입력,Hello"], {type:"text/csv;charset=UTF-8"});
-	     var filename = storename+"_"+nowTime+"_계산서.csv";
+	     var output = "\ufeff"+storename+"_"+nowTime+"_입출고계산서,,,\n사용내역,수량,금액,총 금액";
+	     $.each($("tr[name=line_items]"),function(index,data){
+	    	 output += "\n"+$("input[name=item]").eq(index).val()+","
+	    	 +$("input[name=qty]").eq(index).val()+","
+	    	 +$("input[name=price]").eq(index).val()+","
+	    	 +$("input[name=item_total]").eq(index).val();
+	     });
+	     output +="\n,,세금전 합산,"+$("input[name=sub_total]").val();
+	     output +="\n,,세금"+$("#tax :selected").text()+":,"+$("input[name=tax_total]").val();
+	     output +="\n,,총합,"+$("input[name=grand_total]").val();
+	     var blob = new Blob([output], {type:"text/csv;charset=UTF-8"});
+	     var filename = storename+"_"+nowTime+"_입출고내역서.csv";
 	     saveAs(blob, filename);  
 	});
 });
@@ -69,7 +79,10 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-12">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />내 가게<small>매출계산기</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />내 가게<small>입출고 내역서 서비스</small></h2>
+		</div>
+		<div class="col-xs-12">
+			<h3>가게 회원님들을 위한 입출고 내역서 파일 제작 서비스 입니다.</h3>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
@@ -109,9 +122,9 @@ $(function(){
 						<td colspan="3">&nbsp;</td>
 						<td>
 						세금:
-						<select name="tax">
-							<option value=".1">부가가치세 포함</option>
-							<option selected value=".00">부가가치세 미포함</option>
+						<select name="tax" id="tax">
+							<option value=".1">(부가가치세 포함)</option>
+							<option selected value=".00">(부가가치세 미포함)</option>
 						</select>
 						</td>
 						<td><input type="text" name="tax_total" value="" jAutoCalc="{sub_total} * {tax}"></td>
@@ -126,6 +139,7 @@ $(function(){
 						<td colspan="99"><button name="add"  class="btn btn-primary">추가</button> <button id="save" class="col-md-offset-9 btn btn-info">파일로 저장</button></td>
 					</tr>
 				</table>
+				<br/><br/><br/><br/>
 			</div>
 		</form>
 	</div>	
