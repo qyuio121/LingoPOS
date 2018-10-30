@@ -40,7 +40,7 @@
 						</tr>
 					</thead>
 					<tbody id="shopTable" >
-					<c:forEach var="value" items="${list}">
+					<c:forEach var="value" items="${list}" varStatus="loop">
 							<tr>																																	
 								<td><input type="checkbox" name="check" value="${loop.index}"/>&nbsp&nbsp${value.storename}</td>															
 								<td>${value.id}</td>														
@@ -168,6 +168,7 @@ $(function() {
    			var select=[];
    			var id = $("#shopTable tr").eq($(this).val()).children('td:eq(1)').html();
     		select.push({id:id});
+    		console.log(select);
    			$.ajax({
    				url:'<c:url value="/Admin/Shop/Remove.Admin"/>',
    				type:'post',

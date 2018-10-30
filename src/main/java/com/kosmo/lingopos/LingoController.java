@@ -47,12 +47,15 @@ import com.kosmo.lingopos.qna.QnaDTO;
 import com.kosmo.lingopos.qna.QnaService;
 import com.kosmo.lingopos.reply.ReplyDTO;
 import com.kosmo.lingopos.reply.ReplyService;
+import com.kosmo.lingopos.reservedtable.ReservedtableService;
 import com.kosmo.lingopos.review.ReviewDTO;
 import com.kosmo.lingopos.review.ReviewService;
+import com.kosmo.lingopos.sale.SaleService;
 import com.kosmo.lingopos.store.StoreDTO;
 import com.kosmo.lingopos.store.StoreService;
 import com.kosmo.lingopos.storeimg.StoreimgDTO;
 import com.kosmo.lingopos.storeimg.StoreimgService;
+import com.kosmo.lingopos.usedtable.UsedtableService;
 import com.kosmo.lingopos.user.UserDTO;
 import com.kosmo.lingopos.user.UserService;
 import com.kosmo.lingopos.userinfo.UserinfoDTO;
@@ -147,8 +150,6 @@ public class LingoController {
 	private int visitlistpageSize;
 	@Value("${visitlistBlockPage}")
 	private int visitlistblockPage;
-	
-	
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -1085,12 +1086,9 @@ public class LingoController {
 					String phicalPath=req.getServletContext().getRealPath("/Images/")+json.get("id").toString();
 					File file = new File(phicalPath);
 					if(file.exists()) {
-						//deleteAllFiles(phicalPath);
+						deleteAllFiles(phicalPath);
+						file.delete();
 					}
-					storeimgService.delete(map);
-					foodimgService.delete(map);
-					mapService.delete(map);
-					visitlistService.deletebyStoreno(map);
 					storeService.delete(map);
 				}
 				ownerService.updatefalse(map);

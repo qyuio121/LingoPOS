@@ -31,7 +31,7 @@
 						</tr>
 					</thead>
 					<tbody id="applyTable" >
-						<c:forEach var="value" items="${list}">
+						<c:forEach var="value" items="${list}" varStatus="loop">
 							<tr>																																	
 								<td><input type="checkbox" name="check" value="${loop.index}"/>&nbsp&nbsp${value.storename}</td>															
 								<td>${value.id}</td>														
