@@ -316,6 +316,10 @@
  <select id="LingoStoreSelectbyID" parameterType="java.util.Map" resultType="java.lang.String">
  	select storeno from store where id=#{id}
  </select>
+ <select id="LingoStoreSelectStoreNamebyID" parameterType="java.util.Map" resultType="java.lang.String">
+ 	select storename from store where id=#{id}
+ </select>
+ 
 
  <insert id="LingoStoreimgInsert" parameterType="java.util.Map">
  	insert into storeimg(img,storeno) value(#{img},#{storeno})

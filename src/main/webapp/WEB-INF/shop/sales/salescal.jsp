@@ -4,11 +4,25 @@
 
 <!-- 계산기 API -->
 <script type="text/javascript" src="../js/jautocalc.js"></script>
-
+<script type="text/javascript" src="../js/FileSaver.js"></script>
 <script>
+
 $(function(){
-	//계산기	 			
-	 function autoCalcSetup() {
+	//계산기
+	var storename;
+	function getStoreName(key){	
+	 $.ajax({
+			url:"<c:url value='/SalesCal/GetStoreName.Lingo'/>",
+			data: "id="+key,
+			dataType:"text",
+			type:'post',
+			success:function(data){
+				storename=data;
+			}			
+		});
+	}
+	getStoreName('${sessionScope.loginDTO.id}');
+	function autoCalcSetup() {
 	        $('form[name=cart]').jAutoCalc('destroy');
 	        $('form[name=cart] tr[name=line_items]').jAutoCalc({keyEventsFire: true, decimalPlaces: 2, emptyAsZero: true});
 	        $('form[name=cart]').jAutoCalc({decimalPlaces: 2});
@@ -24,7 +38,7 @@ $(function(){
 	
 	    });
 	
-	    $('button[name=add]').click(function(e) {
+	   $('button[name=add]').click(function(e) {
 	        e.preventDefault();
 	
 	        var $table = $(this).parents('table');
@@ -35,6 +49,17 @@ $(function(){
 	        $new.insertBefore($top);
 	        $new.find('input[type=text]').val('');
 	        autoCalcSetup();
+	});
+	 $('#save').click(function(e) {
+	     e.preventDefault();
+	     var now = new Date();
+	     var nowTime = now.getFullYear();
+	     nowTime += '-' + (now.getMonth() + 1);
+	     nowTime += '-' + now.getDate();
+	     nowTime += '_' + now.getHours()+"시";
+	     var blob = new Blob(["\ufeff한글\r\n입력,Hello"], {type:"text/csv;charset=UTF-8"});
+	     var filename = storename+"_"+nowTime+"_계산서.csv";
+	     saveAs(blob, filename);  
 	});
 });
 </script>
@@ -58,7 +83,6 @@ $(function(){
 						<th>사용내역</th>
 						<th>수량</th>
 						<th>금액</th>
-						<th>&nbsp;</th>
 						<th>총 금액</th>
 					</tr>			
 <!-- 실질적 입력 시작 -->			
@@ -67,21 +91,18 @@ $(function(){
 						<td><input type="text" name="item" placeholder="사용내역을 입력하세요"></td>
 						<td><input type="text" name="qty" placeholder="수량을 입력하세요"></td>
 						<td><input type="text" name="price" placeholder="금액을 입력하세요"></td>
-						<td>&nbsp;</td>
 						<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
 					</tr>
 					<tr name="line_items">
 						<td><button name="remove" class="btn btn-danger">제거</button></td>
 						<td><input type="text" name="item" placeholder="사용내역을 입력하세요"></td>
 						<td><input type="text" name="qty" placeholder="수량을 입력하세요"></td>
-						<td><input type="text" name="price" placeholder="지출 ex)-1,000"></td>
-						<td>&nbsp;</td>
+						<td><input type="text" name="price" placeholder="금액을 입력하세요"></td>
 						<td><input type="text" name="item_total" value="" jAutoCalc="{qty} * {price}"></td>
 					</tr>
 					<tr>
 						<td colspan="3">&nbsp;</td>
 						<td>세금 전 합산</td>
-						<td>&nbsp;</td>
 						<td><input type="text" name="sub_total" value="" jAutoCalc="SUM({item_total})"></td>
 					</tr>
 					<tr>
@@ -93,18 +114,16 @@ $(function(){
 							<option selected value=".00">부가가치세 미포함</option>
 						</select>
 						</td>
-						<td>&nbsp;</td>
 						<td><input type="text" name="tax_total" value="" jAutoCalc="{sub_total} * {tax}"></td>
 					</tr>
 <!-- 실질적 입력 끝 -->				
 					<tr>
 						<td colspan="3">&nbsp;</td>
 						<td>총합</td>
-						<td>&nbsp;</td>
 						<td><input type="text" name="grand_total" value="" jAutoCalc="{sub_total} + {tax_total}"></td>
 					</tr>
 					<tr>
-						<td colspan="99"><button name="add"  class="btn btn-primary">추가</button></td>
+						<td colspan="99"><button name="add"  class="btn btn-primary">추가</button> <button id="save" class="col-md-offset-9 btn btn-info">파일로 저장</button></td>
 					</tr>
 				</table>
 			</div>

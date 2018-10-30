@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -1284,6 +1285,11 @@ public class LingoController {
 			      tempFile[i].delete(); // 내용물을 다 지우고 폴더를 지운다.
 			      } // for
 			   } // if
-			}
+		}
+		@ResponseBody
+		@RequestMapping(value="/SalesCal/GetStoreName.Lingo",produces="text/html; charset=UTF-8")
+		public String getStoreName(@RequestParam Map map) throws Exception{
+			return storeService.selectStoreNamebyID(map);
+		}
 
 }
