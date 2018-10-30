@@ -104,6 +104,11 @@
 			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>com.google.gcm</groupId>
+		    <artifactId>gcm-server</artifactId>
+		    <version>1.0.0</version>
+		</dependency>
 <!-- 창선/getServletContext() 사용을 위한  버전업 끝 -->
 <!-- 창선/MultipartHttpServletRequest() 사용을 위한  등록 시적  -->
 		<dependency>
