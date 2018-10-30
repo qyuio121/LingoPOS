@@ -266,6 +266,9 @@
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
  	select * from usedtable where storeno = #{storeno}
 </select>
+<delete id="LingoUsedtableDelete" parameterType="java.util.Map">
+ 	delete from usedtable where storeno = #{storeno}
+</delete>
 
 <insert id="LingoReviewInsert" parameterType="java.util.Map">
  	insert into review(comment,storeno,id) value(#{comment},#{storeno},#{id})
@@ -284,7 +287,7 @@
  	insert into sale(salesprice,storeno) value(#{salesprice},#{storeno})
  </insert>
  <delete id="LingoSaleDelete" parameterType="java.util.Map">
- 	delete from sale where salesno=#{salesno}
+ 	delete from sale where storeno=#{storeno}
  </delete>
  <select id="LingoSaleSelectUser" parameterType="java.util.Map" resultType="saleDTO">
  	select * from sale where storeno = #{storeno} order by salesdate desc
