@@ -222,4 +222,10 @@ public class TempleteController {
 		}
 		return JSONArray.toJSONString(list);
 	}
+	
+	//안드로이드 예약하기
+	@RequestMapping("/Android/Reservation.Lingo")
+	public String reservation() throws Exception{
+		return "android/reservation";
+	}
 }
