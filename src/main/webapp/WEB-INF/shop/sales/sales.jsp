@@ -17,20 +17,20 @@ $(function() {
 </script>
 
 <!--메인 페이지 -->
-<div class="container" style="padding-top: 60px; margin-top: 60px;">
+<div class="container" style="margin-top: 60px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />가맹점<small>매출확인</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px;" />가맹점<small>매출확인</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
 	<section id="main-content">
 <!-- 가게삭제, 매출계산기  시작 -->
 	 	<section class="wrapper">	
-     		<button type="button" class="btn btn-primary nav pull-right" id="storeDelete" style="margin-left:10px"> 가게삭제</button>
-			<button type="button" class="btn btn-primary nav pull-right" id="salescal"> 매출계산기</button>
+     		<button type="button" class="btn-lg btn-danger nav pull-right" id="storeDelete" style="margin-left:10px"> 가게삭제</button>
+			<button type="button" class="btn-lg btn-primary nav pull-right" id="salescal"> 매출계산기</button>
      	</section>
 <!-- 가게삭제, 매출계산기  시작 -->
 <!-- 출력3개  시작 -->
