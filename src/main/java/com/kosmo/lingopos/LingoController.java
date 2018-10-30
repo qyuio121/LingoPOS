@@ -1270,9 +1270,8 @@ public class LingoController {
 		}
 		@ResponseBody
 		@RequestMapping(value="/FCM/FCMPush.Admin",produces="text/html; charset=UTF-8")
-		public void fcmPush(@RequestParam Map map,HttpServletResponse res) throws Exception{
+		public String fcmPush(@RequestParam Map map,HttpServletRequest req) throws Exception{
 			List<FCMDTO> list = fcmService.select();
-			PrintWriter out = res.getWriter();
 		    String simpleApiKey = "AAAA9dEVNuo:APA91bGbjHNXD7QWaeFUsbz3iYkKmyA8jkkQOKZmujN2Bm_Wsr-ozOtTwD8l1Ep6LmFd_XxXUQChHxzduXjZMaZl69ayyXbsw04zh7RBjWWncfQJvcoPDCm40nP4xFNTm_sGErxXX3xh";
 		    //String gcmURL = "https://android.googleapis.com/fcm/send";    
 		    String gcmURL ="https://fcm.googleapis.com/fcm/send";
@@ -1289,7 +1288,9 @@ public class LingoController {
 			    	 }
 			     }      
 			}
-			out.println("<script>");
+			
+			String returnString="<script>alert('"+successTokens+"개의 기기에 메시지가 전송되었어요...');location.href='"+req.getContextPath()+"/Admin/FCM/FCM.Admin';</script>";
+			return returnString;
 		}
 		@ResponseBody
 		@RequestMapping("/Admin/question/AlertQNA.Admin")
