@@ -154,8 +154,8 @@ if(${not empty isBlack}){
 	<div class="tabGroup tabGroup2">
 		<ul class="swichtab-controller">
 	        <li data-swichtab="controller"><a href="#tab1">가게정보</a></li>
-	        <li data-swichtab="controller"><a href="#tab3">메뉴</a></li>
-	        <li data-swichtab="controller"><a href="#tab4">리뷰</a></li>
+	        <li data-swichtab="controller"><a href="#tab2">메뉴</a></li>
+	        <li data-swichtab="controller"><a href="#tab3">리뷰</a></li>
 	    </ul>
 <!-- 탭 바 끝-->
 <!-- 탭 바 내 내용 시작 -->
@@ -182,23 +182,8 @@ if(${not empty isBlack}){
 				<br/>
 			</c:forEach>
 		</div>	
-<!-- 가게정보 끝 -->		
-<!-- 가게위치 시작 -->	
-<!--  
-	<form>
-		<input id="x" type="hidden" value="37.473567"/>
-		<input id="y" type="hidden" value="126.874399"/>
-	</form>
-	<div id="tab2" class="swichtab-panel" data-swichtab="target">
-		<div class="bg_wrap">
-			<div id="map" style="height:240px;width:400px;display:inline-block" ></div>
-		</div>	
-	</div>
--->
-<!-- DB연결용 미리 만들어논거 시작 -->
-	<!-- jquery.swichTab.js  여기서  맵에 표시할 x/y 좌표 2개 넣기 -->
-<!-- DB연결용 미리 만들어논거 끝 -->
-<!-- 가게위치 끝 -->	
+<!-- 가게정보 끝 -->	
+
 		<div id="tab2" class="swichtab-panel" data-swichtab="target">
 			<div style="text-align: center;width:100%;">
 				<c:forEach items="${foodimgs}" var="foodimg">
