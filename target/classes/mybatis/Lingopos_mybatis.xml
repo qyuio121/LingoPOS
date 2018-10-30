@@ -362,7 +362,7 @@
 	  storeno=#{storeno}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoVisitlistSelectbyUser" parameterType="java.util.Map" resultType="visitlistDTO">
-	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select v.*,storename,tel,address from visitlist v join store s on v.storeno=s.storeno 
+	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select v.*,storename,tel,address from visitlist v join store s on v.storeno=s.storeno where
 		<if test="searchWord!=null and !searchWord.equals('')">
  		 	 ${searchColumn} like '%${searchWord}%' and 
  		</if> 		
