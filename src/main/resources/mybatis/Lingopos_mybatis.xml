@@ -432,4 +432,14 @@
  	</if>
  	 ownerno is not null and adminno is null
  </select>
+ 
+ 
+ <insert id="LingoFCMinsert" parameterType="java.util.Map">
+ 	insert into fcm(token) values(#{token})
+ </insert>
+ <select id="LingoFCMselect" resultType="fcmDTO" >
+ 	select token from fcm
+ </select>
+  
+ 
 </mapper>

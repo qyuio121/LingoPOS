@@ -33,6 +33,7 @@ import com.kosmo.lingopos.admin.AdminService;
 import com.kosmo.lingopos.blacklist.BlacklistDTO;
 import com.kosmo.lingopos.blacklist.BlacklistService;
 import com.kosmo.lingopos.comment.CommentService;
+import com.kosmo.lingopos.fcm.FCMService;
 import com.kosmo.lingopos.foodimg.FoodimgDTO;
 import com.kosmo.lingopos.foodimg.FoodimgService;
 import com.kosmo.lingopos.free.FreeDTO;
@@ -151,6 +152,9 @@ public class LingoController {
 	private int visitlistpageSize;
 	@Value("${visitlistBlockPage}")
 	private int visitlistblockPage;
+	
+	@Resource(name="fcmService") 
+	private FCMService fcmService;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -1252,6 +1256,10 @@ public class LingoController {
 		@RequestMapping("/Admin/FCM/FCM.Admin")
 		public String FCM() throws Exception{
 			return "admin/FCM/FCM.Admin";
+		}
+		@RequestMapping("/FCM/FCMRegister.Admin")
+		public String fcmRegister(@RequestParam Map map) throws Exception{
+			return String.valueOf(fcmService.insert(map));
 		}
 		
 		@ResponseBody
