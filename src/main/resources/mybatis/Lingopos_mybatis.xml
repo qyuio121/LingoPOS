@@ -273,9 +273,9 @@
  	select count(*) from reservedtable where id=#{id}
  </select>
  <select id="LingoReservedtableGetTotalRecordAdmin" parameterType="java.util.Map" resultType="int" >
- 	select count(*) from (select r.*,storename from reservedtable r join store s on r.storeno=s.storeno)
+ 	select count(*) from (select r.*,storename from reservedtable r join store s on r.storeno=s.storeno) t
  		<if test="searchColumn!=null and !searchColumn.equals('')">
- 		 	where ${searchColumn} like '%${searchWord}%' 
+ 		 	where t.${searchColumn} like '%${searchWord}%' 
  		</if> 
  </select>
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
