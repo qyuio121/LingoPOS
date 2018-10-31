@@ -107,6 +107,9 @@ if(${not empty isBlack}){
 	alert('해당 가게에 블랙리스트 등록되어 예약을 하실수 없습니다');
 	location.replace("<c:url value='/'/>")
 }
+function reserve(){
+	location.href='<c:url value="/Reservation/Reservation.Lingo?storeno='+${store.storeno}+'"/>';
+}
 </script>
 
 <style>
@@ -174,7 +177,14 @@ if(${not empty isBlack}){
 						<tr><td class="text-center"><h4>가게주소</h4></td><td><h5>${store.address}</h5></td><tr>
 						<tr><td class="text-center"><h4>영업시간</h4></td><td><h5>${store.opentime} ~ ${store.closetime}</h5></td><tr>
 						<tr><td class="text-center"><h4>사용 가능한 테이블수</h4></td><td><h5>${store.atable} / ${store.tablenum}</h5></td><tr>
-						<tr><td class="text-center"><h4>예약하기</h4></td><td><button class="btn btn-primary">예약하기</button></td></tr>
+						<tr><td class="text-center"><h4>예약하기</h4></td>
+						<c:if test="${store.atable>0}" var="result">
+							<td><button onclick="reserve()" class="btn btn-primary">예약하기</button></td>
+						</c:if>
+						<c:if test="${not result}">
+							<td>예약 가능한 테이블이 없습니다.</td>
+						</c:if>
+						</tr>
 					</tbody>	
 				</table>
 			</div>
@@ -205,7 +215,7 @@ if(${not empty isBlack}){
 <!-- 메뉴갤러리 끝 -->		
 <!-- 리뷰 시작 -->	
 
-	 	<div id="tab3" class="swichtab-panel" data-swichtab="target">\
+	 	<div id="tab3" class="swichtab-panel" data-swichtab="target">
 	 		<div style="float: right;">
 				<span>멋진 댓글을 작성해 주세요 </span> <input type="text" id="reviewText" style="width:300px"/> <button id="reviewWrite" class="btn btn-primary">등록</button>			
 			</div>

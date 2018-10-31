@@ -823,7 +823,9 @@ public class LingoController {
 		}
 	 //창선 DB연결 전 연결용 파일객체 넘기는거 알고 있음 끝
 	@RequestMapping("/Reservation/Reservation.Lingo")
-	public String reservation() throws Exception{
+	public String reservation(@RequestParam Map map,Model model) throws Exception{
+		StoreDTO store = storeService.select(map);
+		model.addAttribute("store",store);
 		return "reservation/reservation.tiles";
 	}
 	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.GET)

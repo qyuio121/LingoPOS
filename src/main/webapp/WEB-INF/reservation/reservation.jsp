@@ -75,7 +75,7 @@ $(function() {
 	})
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: false,minutesInterval:30,now: "1:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:30,now: "1:00"});
 	
 	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
 	$(".time").on('change',function(){
@@ -185,7 +185,7 @@ html {
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />DB연결시 가게 이름<small>예약하기</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />${store.storename}<small>예약하기</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->

@@ -25,5 +25,8 @@ public class MapDAO {
 	public List<MapDTO> select() {
 		return template.selectList("LingoMapSelect");
 	}
+	public MapDTO selectbyStoreno(Map map) {
+		return template.selectOne("LingoMapSelectbyStoreno",map);
+	}
 
 }

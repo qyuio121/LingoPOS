@@ -144,6 +144,9 @@
  <select id="LingoMapSelect" resultType="mapDTO">
  	select m.*,storename,address,tel,bigkind from store s join map m on s.storeno=m.storeno
  </select>
+ <select id="LingoMapSelectbyStoreno" parameterType="java.util.Map" resultType="mapDTO">
+ 	select * from map where storeno = #{storeno}
+ </select>
  
  <insert id="LingoNoticeInsert" parameterType="java.util.Map">
  	insert into notice(title,content,adminno) value(#{title},#{content},#{adminno})
@@ -311,7 +314,7 @@
  	delete from store where storeno=#{storeno}
  </delete>
  <select id="LingoStoreSelect" parameterType="java.util.Map" resultType="storeDTO">
- 	select storename,address,tel,opentime,closetime,tablenum,bigkind,atable from store where storeno=#{storeno}
+ 	select * from store where storeno=#{storeno}
  </select>
  <select id="LingoStoreSelectbyID" parameterType="java.util.Map" resultType="java.lang.String">
  	select storeno from store where id=#{id}

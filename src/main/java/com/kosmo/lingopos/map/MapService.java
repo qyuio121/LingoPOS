@@ -24,4 +24,7 @@ public class MapService {
 	public List<MapDTO> select() {
 		return dao.select();
 	}
+	public MapDTO selectbyStoreno(Map map) {
+		return dao.selectbyStoreno(map);
+	}
 }
