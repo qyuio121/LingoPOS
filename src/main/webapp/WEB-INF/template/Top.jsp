@@ -101,7 +101,12 @@
 				<!-- 테스트용 임시 (나중에 데이터 베이스 연동할때 수정) -->
 				<li class="divider"></li>				
 				<li><a href="<c:url value='/Reservation/Reservation.Lingo'/>">상세예약</a></li>
-				<li><a href="<c:url value='/Reservation/ReservationList.Lingo'/>">예약목록</a></li>
+				<c:if test="${empty sessionScope.loginDTO.ownerno}">
+					<li><a href="<c:url value='/Reservation/ReservationList.Lingo'/>">예약목록</a></li>
+				</c:if>
+				<c:if test="${not empty sessionScope.loginDTO.ownerno ? not empty sessionScope.loginDTO.storeno ? true : false : false }">
+					<li><a href="<c:url value='/Reservation/reservationOwnerList.Lingo'/>">가게예약목록</a></li>
+				</c:if>
 				<li class="divider"></li>
 				<!-- 임시끝 -->
 			</ul>
