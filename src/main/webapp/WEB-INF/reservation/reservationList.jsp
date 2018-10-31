@@ -37,10 +37,10 @@
 			  	<table class="table table-bordered">
 			  		<thead>
 						<tr style="text-align: center; font-weight: bold; background-color: #EAEDED">
-							<th style="width:15%"><input type="checkbox" id="allCheck" />&nbsp&nbsp가게이름</td>
-							<th style="width:30%">가게주소</td>
-							<th style="width:17%">가게전화번호</td>
-							<th style="width:22%">예약날짜</td>
+							<th style="width:15%"><input type="checkbox" id="allCheck" />&nbsp&nbsp가게이름</th>
+							<th style="width:30%">가게주소</th>
+							<th style="width:17%">가게전화번호</th>
+							<th style="width:22%">예약날짜</th>
 							<th>예약취소</th>
 						</tr>
 					</thead>

@@ -25,10 +25,16 @@ public class ReservedtableDAO {
 	public List<ReservedtableDTO> selectbyid(Map map) {
 		return template.selectList("LingoReservedtableSelectbyId",map);
 	}
+	public List<ReservedtableDTO> selectadmin(Map map) {
+		return template.selectList("LingoReservedtableSelectAdmin",map);
+	}
 	public int getTotalRecord(Map map) {
 		return template.selectOne("LingoReservedtableGetTotalRecord",map);
 	}
 	public int getTotalRecordbyid(Map map) {
 		return template.selectOne("LingoReservedtableGetTotalRecordbyId",map);
+	}
+	public int getTotalRecordadmin(Map map) {
+		return template.selectOne("LingoReservedtableGetTotalRecordAdmin",map);
 	}
 }

@@ -24,10 +24,16 @@ public class ReservedtableService {
 	public List<ReservedtableDTO> selectbyid(Map map) {
 		return dao.selectbyid(map);
 	}
+	public List<ReservedtableDTO> selectadmin(Map map) {
+		return dao.selectadmin(map);
+	}
 	public int getTotalRecord(Map map) {
 		return dao.getTotalRecord(map);
 	}
 	public int getTotalRecordbyid(Map map) {
 		return dao.getTotalRecordbyid(map);
+	}
+	public int getTotalRecordadmin(Map map) {
+		return dao.getTotalRecordadmin(map);
 	}
 }
