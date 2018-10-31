@@ -7,7 +7,7 @@
             <!--CUSTOM CHART START -->
 <!-- 차트 타이틀-->			
             <div class="border-head">
-              <h3>금일 방문자</h3>
+              <h3>금일 예약시스템사용자</h3>
             </div>
 <!-- 차트 타이틀-->			
 <!-- 차트-->			

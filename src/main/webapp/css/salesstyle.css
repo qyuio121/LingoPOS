@@ -925,7 +925,7 @@ PANELS CONFIGURATIONS
 /*Panel Size*/
 
 .pn {
-	height: 250px;
+	height: 200px;
 	box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -1138,7 +1138,7 @@ PANELS CONFIGURATIONS
 
 /* Weather 3 */
 .weather-3 {
-	background: #ffcf00;
+	background: #4ECDC4;
 }
 
 .weather-3 i {

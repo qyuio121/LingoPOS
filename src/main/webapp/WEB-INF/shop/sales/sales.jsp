@@ -15,7 +15,25 @@ $(function() {
 	
 });
 </script>
-
+<style>
+	.pn {
+		height: 200px;
+		box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
+	}
+	.weather-3 {
+	background: #4ECDC4;	
+	}
+	
+	.weather-3 .info h3 {
+	font-weight: 700;
+	margin-bottom: 0px;
+	background: white;	
+	}
+	.weather-3 .info {
+	background: white;
+}
+}
+</style>
 <!--메인 페이지 -->
 <div class="container" style="margin-top: 60px;">
 <!-- 내용 시작 -->
@@ -34,6 +52,7 @@ $(function() {
      	</section>
 <!-- 가게삭제, 매출계산기  시작 -->
 <!-- 출력3개  시작 -->
+<!-- 
 		<div class="col-md-4 col-sm-4 mb">
 			<div class="darkblue-panel pn">
 				<div class="darkblue-header">
@@ -76,7 +95,45 @@ $(function() {
                 		</footer>
               	</div>
 		</div>
+-->
 <!-- 출력3개  끝 -->			
+		<div class="col-lg-4 col-md-4 col-sm-4 mb">
+           <div class="weather-3 pn centered">
+             <i class="fa fa-user"></i>
+             <h1>금일 사용자</h1>
+             <div class="info">
+               <div class="row">
+                 <h3 class="centered">100명</h3>
+               
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="weather-3 pn centered">
+                  <i class="fa fa-usd"></i>
+                  <h1>일별 총 매출액</h1>
+                  <div class="info">
+                    <div class="row">
+                      <h3 class="centered">100만원</h3>
+            
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-4 mb">
+                <div class="weather-3 pn centered">
+                  <i class="fa fa-usd"></i>
+                  <h1>월별 총 매출액</h1>
+                  <div class="info">
+                    <div class="row">
+                      <h3 class="centered">1,000만원</h3>
+              
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
 <!-- 차트 시작 -->
 <!-- 차트 타이틀-->
 		<section class="wrapper">			
