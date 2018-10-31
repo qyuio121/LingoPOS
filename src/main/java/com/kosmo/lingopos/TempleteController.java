@@ -76,6 +76,7 @@ public class TempleteController {
 			map.put("storename",dto.getStorename());
 			map.put("tel",dto.getTel());
 			map.put("storeno",dto.getStoreno());
+			System.out.println(dto.getStoreno());
 			maplist.add(map);
 		}
 		System.out.println(maplist);
@@ -233,8 +234,15 @@ public class TempleteController {
 	//안드로이드 예약하기
 	@RequestMapping("/Android/Reservation.Lingo")
 	public String reservation(@RequestParam Map map,Model model) throws Exception{
+		LoginDTO loginDTO = loginService.select(map);
+		System.out.println(loginDTO);
+		System.out.println(map.get("id"));
+		System.out.println(map.get("pwd"));
+		System.out.println(map.get("storename"));
+		System.out.println(map.get("storeno"));
+		model.addAttribute("loginDTO",loginDTO);
 		model.addAttribute("storename", map.get("storename"));
-		
+		model.addAttribute("storeno", map.get("storeno"));
 		return "android/reservation";
 	}
 	
@@ -242,75 +250,36 @@ public class TempleteController {
 		@ResponseBody
 		@RequestMapping(value="/Android/ReservationList.Lingo",produces="text/html; charset=UTF-8")
 		public String androidReservationList(@RequestParam Map map) throws Exception {
-			System.out.println(map.get("id"));
-			System.out.println(map.get("pwd"));
+			
 			LoginDTO loginDTO = loginService.select(map);
-			System.out.println(loginDTO);
-			
-			
+			try {
 				Map visitMap = new HashMap();
 				Map reservedMap = new HashMap(); 
-				
 				visitMap.put("id", loginDTO.getId());
 				reservedMap.put("id",loginDTO.getId());
-				
-				
 				List<ReservedtableDTO> reservedList = reservedtableService.selectbyandroid(reservedMap);
-				
-				
-				System.out.println(reservedList);
-				
 				Map mapMap = new HashMap();
 				mapMap.put("storeno", reservedList.get(0).getStoreno());
-				
 				MapDTO mapList = mapService.selectbyStoreno(mapMap);
-						
 				System.out.println("storename : "+reservedList.get(0).getStorename());
 				System.out.println("address : "+reservedList.get(0).getAddress());
 				System.out.println("tel : "+reservedList.get(0).getTel());
 				System.out.println("startdate : "+reservedList.get(0).getStartdate());
 				System.out.println("x : "+mapList.getX());
 				System.out.println("y : "+mapList.getY());
-				
 				JSONObject json = new JSONObject();
-				
 				json.put("storename",reservedList.get(0).getStorename());
 				json.put("address",reservedList.get(0).getAddress());
 				json.put("tel",reservedList.get(0).getTel());
 				json.put("startdate",reservedList.get(0).getStartdate().toString());
 				json.put("x",mapList.getX());
 				json.put("y",mapList.getY());
-				/*
-				List<Map> maplist= new Vector<Map>();
-				Map list = new HashMap();
-				list.put("storename", reservedList.get(0).getStorename());
-				list.put("address",reservedList.get(0).getAddress());
-				list.put("tel",reservedList.get(0).getTel());
-				list.put("startdate",reservedList.get(0).getStartdate());
-				list.put("x",mapList.getX());
-				list.put("y",mapList.getY());
-				maplist.add(list);
-				*/
-				/*List<MapDTO> list = mapService.select();
-					List<Map> maplist= new Vector<Map>();
-					for(MapDTO dto:list) {
-						Map map = new HashMap();
-						map.put("x",dto.getX());
-						map.put("y",dto.getY());
-						map.put("storename",dto.getStorename());
-						map.put("tel",dto.getTel());
-						map.put("storeno",dto.getStoreno());
-						maplist.add(map);
-					}
-					System.out.println(maplist);
-					return JSONArray.toJSONString(maplist);
-				 * 
-				
-				
-				System.out.println(maplist);
-			return JSONArray.toJSONString(maplist);
-			 */
 				System.out.println(json);
 				return json.toJSONString();
+			}
+			catch (Exception e) {
+				JSONObject json = new JSONObject();
+				return json.toJSONString();
+			}
 		}
 }
