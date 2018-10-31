@@ -25,6 +25,9 @@ public class ReservedtableDAO {
 	public List<ReservedtableDTO> selectbyid(Map map) {
 		return template.selectList("LingoReservedtableSelectbyId",map);
 	}
+	public List<ReservedtableDTO> selectbyandroid(Map map) {
+		return template.selectList("LingoReservedtableSelectbyAndroid",map);
+	}
 	public List<ReservedtableDTO> selectadmin(Map map) {
 		return template.selectList("LingoReservedtableSelectAdmin",map);
 	}
