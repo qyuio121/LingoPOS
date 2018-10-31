@@ -42,6 +42,7 @@ public class ReservationController {
 	@Value("${visitlistBlockPage}")
 	private int visitlistblockPage;
 	
+	//유저 예약관리
 	@RequestMapping("/Reservation/ReservationList.Lingo")
 	public String ReservationList(@RequestParam Map map,@RequestParam(required=false, defaultValue="1") int nowPage,
 									Model model,HttpSession session,HttpServletRequest req) throws Exception {
@@ -98,9 +99,11 @@ public class ReservationController {
 		
 	}
 	
+	//오너 예약목록 리스트
 	@RequestMapping("/Reservation/reservationOwnerList.Lingo")
 	public String ReservationOwnerList(	HttpSession session, HttpServletRequest req,
-										@RequestParam(required=false, defaultValue="1") int nowPage, Model model) {
+										@RequestParam(required=false, defaultValue="1") int nowPage, Model model)
+										throws Exception{
 		
 		LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
 		Map map = new HashMap(); 
@@ -119,10 +122,31 @@ public class ReservationController {
 		
 		model.addAttribute("list",list);
 		model.addAttribute("pageString",PageString);
-		model.addAttribute("TotalRecordCount", TotalRecordCount);
+		model.addAttribute("totalRecordCount", TotalRecordCount);
 		model.addAttribute("pageSize",reservedtablepageSize);
 		model.addAttribute("nowPage", nowPage);
 		return "reservation/reservationOwnerList.tiles";
 	}
 	
+	//관리자페이지 예약관리
+	@RequestMapping("/Admin/reservation/reservationList.Admin")
+	public String AdminReservationList(@RequestParam Map map, HttpSession session, HttpServletRequest req,
+			@RequestParam(required=false, defaultValue="1") int nowPage, Model model)
+			throws Exception{
+		
+		int totalRecordCount = reservedtableService.getTotalRecordadmin(map);
+		int start = (nowPage-1)*reservedtableblockPage+1;
+		int end = nowPage*reservedtablepageSize;
+		map.put("start", start);
+		map.put("end", end);
+		
+		String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, reservedtablepageSize, reservedtableblockPage, nowPage, req.getContextPath()+"/Admin/reservation/reservationList.Admin?");
+		List<ReservedtableDTO> list =reservedtableService.selectadmin(map);
+		model.addAttribute("list", list);
+		model.addAttribute("pageString",pageString);
+		model.addAttribute("totalRecordCount", totalRecordCount);
+		model.addAttribute("pageSize",reservedtablepageSize);
+		model.addAttribute("nowPage", nowPage);
+		return "admin/reservation/adminReservationList.Admin";
+	}
 }

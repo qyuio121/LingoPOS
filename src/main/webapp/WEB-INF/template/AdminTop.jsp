@@ -82,6 +82,12 @@ $(function(){
               	<li><a href="<c:url value='/Admin/shop/delete.Admin?active=1'/>">가게관리</a></li>
               </ul>
 		  </li>
+		  <li class="sub-menu">
+		  	<a class="menu" href="<c:url value='/Admin/reservation/reservationList.Admin'/>">
+		  		<i class="fa fa-tasks"></i>
+             	<span>예약관리</span>
+		  	</a>
+		  </li>
           <li class="sub-menu">
             <a class="menu" href="<c:url value='/Admin/member/member.Admin?active=2'/>">
               <i class="fa fa-tasks"></i>

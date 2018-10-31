@@ -69,7 +69,7 @@
 							<div class="form-group">
 								<select name="searchColumn" class="form-control">
 							       <option value="storename">가게이름</option>
-							       <option value="visitdate">예약날짜</option>
+							       <option value="address">가게주소</option>
 							    </select>
 								<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 							</div>
