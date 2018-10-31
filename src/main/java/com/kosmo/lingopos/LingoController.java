@@ -56,6 +56,7 @@ import com.kosmo.lingopos.qna.QnaDTO;
 import com.kosmo.lingopos.qna.QnaService;
 import com.kosmo.lingopos.reply.ReplyDTO;
 import com.kosmo.lingopos.reply.ReplyService;
+import com.kosmo.lingopos.reservedtable.ReservedtableDTO;
 import com.kosmo.lingopos.reservedtable.ReservedtableService;
 import com.kosmo.lingopos.review.ReviewDTO;
 import com.kosmo.lingopos.review.ReviewService;
@@ -162,6 +163,13 @@ public class LingoController {
 	
 	@Resource(name="fcmService") 
 	private FCMService fcmService;
+	
+	@Resource(name="reservedtableService")
+	private ReservedtableService reservedtableService;
+	@Value("${reservedtablePageSize}")
+	private int reservedtablepageSize;
+	@Value("${reservedtableBlockPage}")
+	private int reservedtableblockPage;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -1330,6 +1338,52 @@ public class LingoController {
 		@RequestMapping(value="/SalesCal/GetStoreName.Lingo",produces="text/html; charset=UTF-8")
 		public String getStoreName(@RequestParam Map map) throws Exception{
 			return storeService.selectStoreNamebyID(map);
+		}
+		//오너 예약목록 리스트
+		@RequestMapping("/Reservation/reservationOwnerList.Lingo")
+		public String ReservationOwnerList(	HttpSession session, HttpServletRequest req,
+											@RequestParam(required=false, defaultValue="1") int nowPage, Model model)
+											throws Exception{
+			
+			LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
+			Map map = new HashMap(); 
+			
+			//getTotalRecord()사용을 위한 storeno 입력
+			map.put("storeno", dto.getStoreno());
+			//totalRecordCount사용하여 int값 얻기
+			int TotalRecordCount = reservedtableService.getTotalRecord(map);
+			int start = (nowPage-1)*reservedtableblockPage+1;
+			int end = nowPage*reservedtablepageSize;
+			map.put("start", start);
+			map.put("end", end);
+			
+			String PageString = PagingUtil.pagingBootStrapStyle(TotalRecordCount, reservedtablepageSize, reservedtableblockPage, nowPage, req.getContextPath()+"/Reservation/reservationOwnerList.Lingo?");
+			List<ReservedtableDTO> list = reservedtableService.select(map);
+			
+			model.addAttribute("list",list);
+			model.addAttribute("pageString",PageString);
+			model.addAttribute("nowPage", nowPage);
+			return "reservation/reservationOwnerList.tiles";
+		}
+		
+		//관리자페이지 예약관리
+		@RequestMapping("/Admin/reservation/reservationList.Admin")
+		public String AdminReservationList(@RequestParam Map map, HttpSession session, HttpServletRequest req,
+				@RequestParam(required=false, defaultValue="1") int nowPage, Model model)
+				throws Exception{
+			
+			int totalRecordCount = reservedtableService.getTotalRecordadmin(map);
+			int start = (nowPage-1)*reservedtableblockPage+1;
+			int end = nowPage*reservedtablepageSize;
+			map.put("start", start);
+			map.put("end", end);
+			
+			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, reservedtablepageSize, reservedtableblockPage, nowPage, req.getContextPath()+"/Admin/reservation/reservationList.Admin?");
+			List<ReservedtableDTO> list =reservedtableService.selectadmin(map);
+			model.addAttribute("list", list);
+			model.addAttribute("pageString",pageString);
+			model.addAttribute("nowPage", nowPage);
+			return "admin/reservation/adminReservationList.Admin";
 		}
 
 }

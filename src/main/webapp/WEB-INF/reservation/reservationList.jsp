@@ -20,48 +20,17 @@
 	<!-- 탭 바 시작-->
 	<div class="tabGroup tabGroup2">
 		<ul class="swichtab-controller">
-	        <li data-swichtab="controller"><a href="#tab1">현재 예약목록</a></li>
-	        <li data-swichtab="controller"><a href="#tab2">지난 예약목록들</a></li>
+	        <li data-swichtab="controller"><a href="#tab1">지난 예약목록</a></li>
+	        <li data-swichtab="controller"><a href="#tab2">현재 예약목록들</a></li>
     	</ul>
 		<!-- 탭 바 끝-->	
 		<!-- 탭 바 내 아코디언 시작-->
 		<div class="swichtab-contents">
 			  <!-- #faq1 -->	
-			  <div id="tab1" class="swichtab-panel" data-swichtab="target">
-			  	<h3>현재 예약목록</h3>
-			  	<div class="row" style="margin-bottom: 10px;margin-right: 10px">
-				  	<div class="text-right">
-						<button id="deniedBtn" class="btn btn-danger">일괄거절</button>
-					</div>
-				</div>
-			  	<table class="table table-bordered">
-			  		<thead>
-						<tr style="text-align: center; font-weight: bold; background-color: #EAEDED">
-							<th style="width:15%"><input type="checkbox" id="allCheck" />&nbsp&nbsp가게이름</th>
-							<th style="width:30%">가게주소</th>
-							<th style="width:17%">가게전화번호</th>
-							<th style="width:22%">예약날짜</th>
-							<th>예약취소</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="list" items="${reservedList}" >
-							<tr>
-								<td><input type="checkbox" id="check" />&nbsp&nbsp$ {list.storename }</td>
-								<td>${list.address }</td>
-								<td>${list.tel }</td>
-								<td>${list.startdate }</td>
-								<td><button id="cancelBtn"  class="btn btn-danger btn-xs">취소</button></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-				 ${reservedPageString}
-			  </div>
-			 
+			  
 			<!-- #faq1 -->
 			<!-- #faq2 -->	
-			<div id="tab2" class="swichtab-panel" data-swichtab="target">
+			<div id="tab1" class="swichtab-panel" data-swichtab="target">
 				<h3>지난 예약목록</h3>
 				<div class="row" >
 				  	<div class="text-right">
@@ -76,13 +45,14 @@
 							<button type="submit" class="btn btn-default" style="margin-left: -3px">검색</button>
 						</form>
 					</div>
+					
 					<table class="table table-bordered">
 						<thead>
 							<tr style="text-align: center; font-weight: bold; background-color: #EAEDED">
-							<th style="width:15%">가게이름</td>
-							<th style="width:30%">가게주소</td>
-							<th style="width:17%">가게전화번호</td>
-							<th style="width:22%">예약날짜</td>
+							<th style="width:15%">가게이름</th>
+							<th style="width:30%">가게주소</th>
+							<th style="width:17%">가게전화번호</th>
+							<th style="width:22%">예약날짜</th>
 						</tr>
 						</thead>
 						<tbody>
@@ -99,9 +69,16 @@
 					${visitPageString}
 				</div>  
 			</div>
-			
-		<!-- #faq2 -->				
-		</div>
+			<div id="tab2" class="swichtab-panel" data-swichtab="target">
+			  	<h3>현재 예약목록</h3>
+			  	<div class="row" style="margin-bottom: 10px;margin-right: 10px">
+				  	<div class="text-right">
+						<button id="deniedBtn" class="btn btn-danger">일괄거절</button>
+					</div>
+				</div>
+				<div id="currentTable">
+				</div>			
+			</div>
 	</div >
 	<div id="footerBrResult">
 		<c:forEach begin="0" step="1" end="13">
@@ -115,6 +92,7 @@ $(function() {
 	var count = 0;
 	var maxCount = $("input[name=check]").length;
 	var selectlist=[];
+	showCurrent(${sessionScope.loginDTO.id});
     //최상단 체크박스 클릭
     $("#checkall").click(function(){
         //클릭되었으면
@@ -182,10 +160,20 @@ $(function() {
     	}
     	return false;
     });
-	
+	var showCurrent = function(key){		
+		$.ajax({
+			url:"<c:url value='/Reservation/CurrentReservationList.Lingo'/>",
+			data: "id="+key,
+			dataType:"text",
+			type:'post',
+			success:function(data){
+				$('#currentTable').html(data);
+			}			
+		});
+	};
 	
 	//탭
-	 $('.tabGroup2').swichTab({
+	$('.tabGroup2').swichTab({
      cahngePanel: 'fade',
      swiper: true,
      index: 0,

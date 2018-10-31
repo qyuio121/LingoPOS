@@ -18,18 +18,18 @@
   	<table class="table table-bordered">
   		<thead>
 			<tr style="text-align: center; font-weight: bold; background-color: #EAEDED">
-				<th style="width:10%"><input type="checkbox" id="allCheck" />&nbsp&nbsp 예약순서</td>
-				<th style="width:20%">아이디</td>
-				<th style="width:13%">예약인원</td>
-				<th style="width:13%">테이블번호</td>
-				<th style="width:30%">예약날짜</td>
+				<th style="width:3%"><input type="checkbox" id="allCheck" /></th>
+				<th style="width:20%">아이디</th>
+				<th style="width:13%">예약인원</th>
+				<th style="width:13%">테이블번호</th>
+				<th style="width:30%">예약날짜</th>
 				<th>예약취소</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${list}" var="value">
 				<tr>
-					<td><input type="checkbox" name="check" value="${loop.index}">&nbsp&nbsp ${value.reserveno}</td>
+					<td><input type="checkbox" name="check" value="${loop.index}"></td>
 					<td>${value.id}</td>
 					<td>${value.people}</td>
 					<td>${value.tableno}</td>

@@ -60,7 +60,7 @@
 					<c:if test="${not result}">
 					 <tr>
 						<td colspan="8" align="center">
-							블랙리스트 신청이 없습니다.
+							현재 예약이 없습니다.
 						</td>
 					 </tr>
 					</c:if>
