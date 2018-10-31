@@ -70,6 +70,7 @@ public class TempleteController {
 			map.put("y",dto.getY());
 			map.put("storename",dto.getStorename());
 			map.put("tel",dto.getTel());
+			map.put("storeno",dto.getStoreno());
 			maplist.add(map);
 		}
 		System.out.println(maplist);
@@ -223,9 +224,12 @@ public class TempleteController {
 		return JSONArray.toJSONString(list);
 	}
 	
+//이것도 나중에 고치기	
 	//안드로이드 예약하기
 	@RequestMapping("/Android/Reservation.Lingo")
-	public String reservation() throws Exception{
+	public String reservation(@RequestParam Map map,Model model) throws Exception{
+		model.addAttribute("storename", map.get("storename"));
+		
 		return "android/reservation";
 	}
 }
