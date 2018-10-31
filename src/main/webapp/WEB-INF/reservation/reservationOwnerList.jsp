@@ -29,7 +29,7 @@
 		<tbody>
 			<c:forEach items="${list}" var="value">
 				<tr>
-					<td>${value.reserveno}</td>
+					<td><input type="checkbox" name="check" value="${loop.index}">&nbsp&nbsp ${value.reserveno}</td>
 					<td>${value.id}</td>
 					<td>${value.people}</td>
 					<td>${value.tableno}</td>

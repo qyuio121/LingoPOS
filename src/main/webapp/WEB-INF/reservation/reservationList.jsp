@@ -47,7 +47,7 @@
 					<tbody>
 						<c:forEach var="list" items="${reservedList}" >
 							<tr>
-								<td>${list.storename }</td>
+								<td><input type="checkbox" id="check" />&nbsp&nbsp$ {list.storename }</td>
 								<td>${list.address }</td>
 								<td>${list.tel }</td>
 								<td>${list.startdate }</td>
