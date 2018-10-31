@@ -12,7 +12,7 @@ public class PBKDF2 {
 	//PBKDF2WithHmacSHA1는 160bit의 해쉬를 생성
 	//public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 	//PBKDF2WithHmacSHA512는 512bit의 해쉬를 생성
-	public static final String PBKDF2_ALGORITHM =   "PBKDF2WithHmacSHA512";
+	public static final String PBKDF2_ALGORITHM  =   "PBKDF2WithHmacSHA512";
 
     // The following constants may be changed without breaking existing hashes.
     public static final int SALT_BYTES = 24;//192 bits

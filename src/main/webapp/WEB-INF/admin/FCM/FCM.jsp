@@ -38,8 +38,8 @@ $(function(){
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10" >
-		 			<button type="button" value="button타입" class="btn btn-primary col-sm-offset-3" id="confirm">등록하기</button>     
-					<button type="button" value="button타입" class="btn btn-default" id="cancel">취소</button>     
+		 			<input type="submit" class="btn btn-primary col-sm-offset-3" id="confirm" value="등록하기" />     
+					<button type="button" class="btn btn-default" id="cancel">취소</button>     
 		  		</div>
 			</div>
 	</form>		

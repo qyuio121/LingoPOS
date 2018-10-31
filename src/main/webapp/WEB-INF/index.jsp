@@ -16,7 +16,7 @@
 				<div class="carousel-inner">
 					<div class="item active">
 						<a href="http://www.naver.com"> 
-							<img src="<c:url  value='/Images/eventImages/event1.jpg'/>" alt="슬라이드1" style="width: 100%; height: 500px">
+							<img src="<c:url value='/Images/eventImages/event1.jpg'/>" alt="슬라이드1" style="width: 100%; height: 500px">
 						</a>
 						<div class="carousel-caption">
 						</div>
