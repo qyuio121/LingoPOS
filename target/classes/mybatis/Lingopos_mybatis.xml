@@ -260,11 +260,11 @@
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.id = #{id}) t, (select @rownum:=0) b order by startdate) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoReservedtableSelectAdmin" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno) t, (select @rownum:=0) b order by startdate) tab where
  		<if test="searchColumn!=null and !searchColumn.equals('')">
- 		 	where r.${searchColumn} like '%${searchWord}%' 
+ 		 	tab.${searchColumn} like '%${searchWord}%' and
  		</if> 
- 	) t, (select @rownum:=0) b order by startdate) tab where rnum between #{start} and #{end}
+ 	 rnum between #{start} and #{end}
  </select>
   <select id="LingoReservedtableGetTotalRecord" parameterType="java.util.Map" resultType="int" >
  	select count(*) from reservedtable where storeno=#{storeno}
@@ -400,7 +400,7 @@
  </select>
  <select id="LingoVisitGetTotalRecordbyUser" parameterType="java.util.Map" resultType="int" >
  	select count(*) from visitlist v join store s on v.storeno=s.storeno where
- 	<if test="searchWord!=null and !searchWord.equals('')">
+ 	<if test="searchColumn!=null and !searchColumn.equals('')">
  		${searchColumn} like '%${searchWord}%' and
  	</if>
  	 v.id=#{id}
