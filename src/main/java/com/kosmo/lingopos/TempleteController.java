@@ -23,12 +23,15 @@ import com.kosmo.lingopos.map.MapDTO;
 import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
+import com.kosmo.lingopos.reservedtable.ReservedtableService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import com.kosmo.lingopos.reservedtable.ReservedtableDTO;
 
 @Controller
 @SessionAttributes("loginDTO")
@@ -57,6 +60,8 @@ public class TempleteController {
 	@Resource(name="commentService")
 	private CommentService commentService;
 	
+	@Resource(name="reservedtableService")
+	private ReservedtableService reservedtableService;
 	
 	//안드로이드 토탈 맵 
 	@ResponseBody
@@ -71,6 +76,7 @@ public class TempleteController {
 			map.put("storename",dto.getStorename());
 			map.put("tel",dto.getTel());
 			map.put("storeno",dto.getStoreno());
+			System.out.println(dto.getStoreno());
 			maplist.add(map);
 		}
 		System.out.println(maplist);
@@ -228,8 +234,52 @@ public class TempleteController {
 	//안드로이드 예약하기
 	@RequestMapping("/Android/Reservation.Lingo")
 	public String reservation(@RequestParam Map map,Model model) throws Exception{
+		LoginDTO loginDTO = loginService.select(map);
+		System.out.println(loginDTO);
+		System.out.println(map.get("id"));
+		System.out.println(map.get("pwd"));
+		System.out.println(map.get("storename"));
+		System.out.println(map.get("storeno"));
+		model.addAttribute("loginDTO",loginDTO);
 		model.addAttribute("storename", map.get("storename"));
-		
+		model.addAttribute("storeno", map.get("storeno"));
 		return "android/reservation";
 	}
+	
+	//안드로이드 예약확인
+		@ResponseBody
+		@RequestMapping(value="/Android/ReservationList.Lingo",produces="text/html; charset=UTF-8")
+		public String androidReservationList(@RequestParam Map map) throws Exception {
+			
+			LoginDTO loginDTO = loginService.select(map);
+			try {
+				Map visitMap = new HashMap();
+				Map reservedMap = new HashMap(); 
+				visitMap.put("id", loginDTO.getId());
+				reservedMap.put("id",loginDTO.getId());
+				List<ReservedtableDTO> reservedList = reservedtableService.selectbyandroid(reservedMap);
+				Map mapMap = new HashMap();
+				mapMap.put("storeno", reservedList.get(0).getStoreno());
+				MapDTO mapList = mapService.selectbyStoreno(mapMap);
+				System.out.println("storename : "+reservedList.get(0).getStorename());
+				System.out.println("address : "+reservedList.get(0).getAddress());
+				System.out.println("tel : "+reservedList.get(0).getTel());
+				System.out.println("startdate : "+reservedList.get(0).getStartdate());
+				System.out.println("x : "+mapList.getX());
+				System.out.println("y : "+mapList.getY());
+				JSONObject json = new JSONObject();
+				json.put("storename",reservedList.get(0).getStorename());
+				json.put("address",reservedList.get(0).getAddress());
+				json.put("tel",reservedList.get(0).getTel());
+				json.put("startdate",reservedList.get(0).getStartdate().toString());
+				json.put("x",mapList.getX());
+				json.put("y",mapList.getY());
+				System.out.println(json);
+				return json.toJSONString();
+			}
+			catch (Exception e) {
+				JSONObject json = new JSONObject();
+				return json.toJSONString();
+			}
+		}
 }

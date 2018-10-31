@@ -24,6 +24,9 @@ public class ReservedtableService {
 	public List<ReservedtableDTO> selectbyid(Map map) {
 		return dao.selectbyid(map);
 	}
+	public List<ReservedtableDTO> selectbyandroid(Map map) {
+		return dao.selectbyandroid(map);
+	}
 	public List<ReservedtableDTO> selectadmin(Map map) {
 		return dao.selectadmin(map);
 	}
