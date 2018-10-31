@@ -254,30 +254,29 @@
  	delete from reservedtable where reserveno=#{reserveno}
  </delete>
  <select id="LingoReservedtableSelect" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.storeno = #{storeno}) t, (select @rownum:=0) b order by startdate) tab where rnum between #{start} and #{end} and startdate > now()
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.storeno = #{storeno}) t, (select @rownum:=0) b where startdate > now() order by startdate) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoReservedtableSelectbyId" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.id = #{id}) t, (select @rownum:=0) b order by startdate) tab where rnum between #{start} and #{end}
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.id = #{id}) t, (select @rownum:=0) b where startdate > now() order by startdate) tab where rnum between #{start} and #{end}
  </select>
  <select id="LingoReservedtableSelectAdmin" parameterType="java.util.Map" resultType="reservedtableDTO">
- 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno) t, (select @rownum:=0) b order by startdate) tab where
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno) t, (select @rownum:=0) b where startdate > now() order by startdate) tab where
  		<if test="searchColumn!=null and !searchColumn.equals('')">
  		 	tab.${searchColumn} like '%${searchWord}%' and
  		</if> 
- 	 rnum between #{start} and #{end} and startdate > now()
+ 	 rnum between #{start} and #{end}
  </select>
   <select id="LingoReservedtableGetTotalRecord" parameterType="java.util.Map" resultType="int" >
  	select count(*) from reservedtable where storeno=#{storeno} and startdate > now()
  </select>
  <select id="LingoReservedtableGetTotalRecordbyId" parameterType="java.util.Map" resultType="int" >
- 	select count(*) from reservedtable where id=#{id}
+ 	select count(*) from reservedtable where id=#{id} and startdate > now()
  </select>
  <select id="LingoReservedtableGetTotalRecordAdmin" parameterType="java.util.Map" resultType="int" >
- 	select count(*) from (select r.*,storename from reservedtable r join store s on r.storeno=s.storeno) t where 
+ 	select count(*) from (select r.*,storename from reservedtable r join store s on r.storeno=s.storeno where startdate > now()) t 
  		<if test="searchColumn!=null and !searchColumn.equals('')">
- 		 	 t.${searchColumn} like '%${searchWord}%' and  
+ 		 	where t.${searchColumn} like '%${searchWord}%'  
  		</if> 
- 	 startdate > now()
  </select>
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
  	select * from usedtable where storeno = #{storeno}

@@ -43,14 +43,15 @@
 					<tbody id="adminReservedTable" >
 					<c:if test="${not empty list}" var="result">
 						<c:forEach var="value" items="${list}" varStatus="loop">
-							<tr>																							
+							<tr>		
+								<td style="display:none">${value.reserveno}</td>																					
 								<td><input type="checkbox" name="check" value="${loop.index}"></td>									
 								<td>${value.id}</td>														
 								<td>${value.storename}</td>														
 								<td>${value.tel}</td>															
 								<td>${value.startdate}</td>														
 								<td>																								
-								<button name="denied" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
+								<button name="cancelBtn" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
 									<span class="glyphicon glyphicon-trash"></span>취소			
 								</button>																	
 								</td>																														
@@ -81,11 +82,11 @@
 <!--메인 페이지 -->
 <script>
 $(function() {
+	var selectlist=[];
 	var count = 0;
 	var maxCount = $("input[name=check]").length;
-	var selectlist=[];
-    //최상단 체크박스 클릭
-    $("#checkall").click(function(){
+	
+	$("#checkall").click(function(){
         //클릭되었으면
         if($("#checkall").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
@@ -95,9 +96,8 @@ $(function() {
             //클릭이 안되있으면
             selectlist=[];
             for(var i=0;i<maxCount;i++){
-            	var id = $("#blacklistTable tr").eq(i).children('td:eq(1)').html();
-        		var storeno = $("#blacklistTable tr").eq(i).children('td:eq(8)').html();
-        		selectlist.push({id:id,storeno:storeno});
+            	var reserveno = $("#adminReservedTable tr").eq(i).children('td:eq(0)').html();
+        		selectlist.push({reserveno:reserveno});
             }
         }
         else{
@@ -114,9 +114,8 @@ $(function() {
     		if(count === maxCount){
     			$("#checkall").prop('checked',true);
     		}
-    		var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		selectlist.push({id:id,storeno:storeno});
+    		var reserveno = $("#adminReservedTable tr").eq($(this).val()).children('td:eq(0)').html();
+    		selectlist.push({reserveno:reserveno});
     	}
     	else{
     		count-=1;
@@ -124,95 +123,50 @@ $(function() {
     		if(count < maxCount){
     			$("#checkall").prop('checked',false);
     		}
-    		var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		selectlist=selectlist.filter(el => el.id != id && el.storeno != storeno);
+    		var reserveno = $("#adminReservedTable tr").eq($(this).val()).children('td:eq(0)').html();
+    		selectlist=selectlist.filter(el => el.reserveno != reserveno);
     	}
     });
-    $('#acceptBtn').click(function(){
-    	if(selectlist.length==0){
-    		alert('사람을 선택해주세요');
-    		return false;
-    	}else{
-    		if(confirm('회원들을 일괄등록하시겠습니까?')){
-    			$.ajax({
-    				url:'<c:url value="/Admin/blackList/blackApplyAdd.Admin"/>',
-    				type:'post',
-    				dataType:'json',
-    				contentType:'application/json',
-    				data:JSON.stringify(selectlist),
-    				success:function(data){
-    					alert(data+"명이 추가되었습니다.");
-    					location.replace("<c:url value='/Admin/blackList/blackApply.Admin'/>")
-    				}
-    			});
-    		}
-    	}
-    	return false;
+    $("button[name=cancelBtn]").click(function(){
+    	var select = [];
+    	var reserveno = $("#adminReservedTable tr").eq($(this).val()).children('td:eq(0)').html();
+    	select.push({reserveno:reserveno});
+    	if(confirm('해당 예약을 취소하시겠습니까?')){
+			$.ajax({
+				url:'<c:url value="/Reservation/RemoveReservation.Lingo"/>',
+				type:'post',
+				dataType:'json',
+				contentType:'application/json',
+				data:JSON.stringify(select),
+				success:function(data){
+					alert(data+"개의 예약이 취소되었습니다.");
+					location.replace("<c:url value='/Admin/reservation/reservationList.Admin'/>")
+				}
+			});
+		}
     });
-	$('#deniedBtn').click(function(){
+    
+    $('#deniedBtn').click(function(){
 		if(selectlist.length==0){
-    		alert('사람을 선택해주세요');
+    		alert('해당예약을 선택해주세요');
     		return false;
     	}else{
-    		if(confirm('회원들을 일괄거절하시겠습니까?')){
+    		if(confirm('예약을 일괄취소하시겠습니까?')){
     			$.ajax({
-    				url:'<c:url value="/Admin/blackList/blackApplyRemove.Admin"/>',
+    				url:'<c:url value="/Reservation/RemoveReservation.Lingo"/>',
     				type:'post',
     				dataType:'json',
     				contentType:'application/json',
     				data:JSON.stringify(selectlist),
     				success:function(data){
-    					alert(data+"명이 거절되었습니다.");
-    					location.replace("<c:url value='/Admin/blackList/blackApply.Admin'/>")
+    					alert(data+"개의 예약이 취소되었습니다.");
+    					location.replace("<c:url value='/Admin/reservation/reservationList.Admin'/>")
     				}
     			});
     		}
     	}
-    	return false;
-    });
-	$('button[name="accept"]').click(function(){
-   		if(confirm('해당 회원을 등록하시겠습니까?')){
-   			var select=[];
-   			var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		select.push({id:id,storeno:storeno});
-   			$.ajax({
-   				url:'<c:url value="/Admin/blackList/blackApplyAdd.Admin"/>',
-   				type:'post',
-   				dataType:'json',
-   				contentType:'application/json',
-   				data:JSON.stringify(select),
-   				success:function(data){
-   					alert(data+"명이 추가되었습니다.");
-   					location.replace("<c:url value='/Admin/blackList/blackApply.Admin'/>")
-   				}
-   			});
-   		}
-    	return false;
-    });
-	$('button[name="denied"]').click(function(){
-		
-   		if(confirm('해당 회원을 거절하시겠습니까?')){
-   			var select=[];
-   			var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		select.push({id:id,storeno:storeno});
-   			$.ajax({
-   				url:'<c:url value="/Admin/blackList/blackApplyRemove.Admin"/>',
-   				type:'post',
-   				dataType:'json',
-   				contentType:'application/json',
-   				data:JSON.stringify(select),
-   				success:function(data){
-   					alert(data+"명이 거절되었습니다.");
-   					location.replace("<c:url value='/Admin/blackList/blackApply.Admin'/>")
-   				}
-   			});
-   		}
-    	
     	return false;
     });
 	
-});
+})
 </script>

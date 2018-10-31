@@ -26,17 +26,27 @@
 				<th>예약취소</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${list}" var="value">
-				<tr>
-					<td><input type="checkbox" name="check" value="${loop.index}"></td>
-					<td>${value.id}</td>
-					<td>${value.people}</td>
-					<td>${value.tableno}</td>
-					<td>${value.startdate}</td>
-					<td><button id="cancelBtn"  class="btn btn-danger btn-xs">취소</button></td>
-				</tr>
-			</c:forEach>
+		<tbody id="reserve">
+			<c:if test="${not empty list}" var="result">
+				<c:forEach items="${list}" var="value" varStatus="loop">
+					<tr>
+						<td style="display:none">${value.reserveno}</td>
+						<td><input type="checkbox" name="check" value="${loop.index}"></td>
+						<td>${value.id}</td>
+						<td>${value.people}</td>
+						<td>${value.tableno}</td>
+						<td>${value.startdate}</td>
+						<td><button name="cancelBtn" value="${loop.index}"  class="btn btn-danger btn-xs">취소</button></td>
+					</tr>
+				</c:forEach>
+			</c:if>
+			<c:if test="${not result}">
+				 <tr>
+					<td colspan="6" align="center">
+						현재 예약이 없습니다.
+					</td>
+				 </tr>
+			</c:if>
 		</tbody>
 	</table>
   ${pageString}
@@ -48,11 +58,11 @@
 </div>	
 <script>
 $(function() {
+	var selectlist=[];
 	var count = 0;
 	var maxCount = $("input[name=check]").length;
-	var selectlist=[];
-    //최상단 체크박스 클릭
-    $("#checkall").click(function(){
+	
+	$("#checkall").click(function(){
         //클릭되었으면
         if($("#checkall").prop("checked")){
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 true로 정의
@@ -62,9 +72,8 @@ $(function() {
             //클릭이 안되있으면
             selectlist=[];
             for(var i=0;i<maxCount;i++){
-            	var id = $("#blacklistTable tr").eq(i).children('td:eq(1)').html();
-        		var storeno = $("#blacklistTable tr").eq(i).children('td:eq(8)').html();
-        		selectlist.push({id:id,storeno:storeno});
+            	var reserveno = $("#reserve tr").eq(i).children('td:eq(0)').html();
+        		selectlist.push({reserveno:reserveno});
             }
         }
         else{
@@ -81,9 +90,8 @@ $(function() {
     		if(count === maxCount){
     			$("#checkall").prop('checked',true);
     		}
-    		var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		selectlist.push({id:id,storeno:storeno});
+    		var reserveno = $("#reserve tr").eq($(this).val()).children('td:eq(0)').html();
+    		selectlist.push({reserveno:reserveno});
     	}
     	else{
     		count-=1;
@@ -91,27 +99,44 @@ $(function() {
     		if(count < maxCount){
     			$("#checkall").prop('checked',false);
     		}
-    		var id = $("#blacklistTable tr").eq($(this).val()).children('td:eq(1)').html();
-    		var storeno = $("#blacklistTable tr").eq($(this).val()).children('td:eq(8)').html();
-    		selectlist=selectlist.filter(el => el.id != id && el.storeno != storeno);
+    		var reserveno = $("#reserve tr").eq($(this).val()).children('td:eq(0)').html();
+    		selectlist=selectlist.filter(el => el.reserveno != reserveno);
     	}
     });
+    $("button[name=cancelBtn]").click(function(){
+    	var select = [];
+    	var reserveno = $("#reserve tr").eq($(this).val()).children('td:eq(0)').html();
+    	select.push({reserveno:reserveno});
+    	if(confirm('해당 예약을 취소하시겠습니까?')){
+			$.ajax({
+				url:'<c:url value="/Reservation/RemoveReservation.Lingo"/>',
+				type:'post',
+				dataType:'json',
+				contentType:'application/json',
+				data:JSON.stringify(select),
+				success:function(data){
+					alert(data+"개의 예약이 취소되었습니다.");
+					location.replace("<c:url value='/Reservation/reservationOwnerList.Lingo'/>")
+				}
+			});
+		}
+    });
     
-	$('#deniedBtn').click(function(){
+    $('#deniedBtn').click(function(){
 		if(selectlist.length==0){
     		alert('해당예약을 선택해주세요');
     		return false;
     	}else{
     		if(confirm('예약을 일괄취소하시겠습니까?')){
     			$.ajax({
-    				url:'<c:url value="/Admin/blackList/blackApplyRemove.Admin"/>',
+    				url:'<c:url value="/Reservation/RemoveReservation.Lingo"/>',
     				type:'post',
     				dataType:'json',
     				contentType:'application/json',
     				data:JSON.stringify(selectlist),
     				success:function(data){
     					alert(data+"개의 예약이 취소되었습니다.");
-    					location.replace("<c:url value='/Admin/blackList/blackApply.Admin'/>")
+    					location.replace("<c:url value='/Reservation/reservationOwnerList.Lingo'/>")
     				}
     			});
     		}

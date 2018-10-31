@@ -1339,6 +1339,95 @@ public class LingoController {
 		public String getStoreName(@RequestParam Map map) throws Exception{
 			return storeService.selectStoreNamebyID(map);
 		}
+		
+		//유저 예약관리
+		@RequestMapping("/Reservation/ReservationList.Lingo")
+		public String reservationList(@RequestParam Map map,@RequestParam(required=false, defaultValue="1") int nowPage,
+										Model model,HttpSession session,HttpServletRequest req) throws Exception {
+			return "reservation/reservationList.tiles";	
+		}
+		@ResponseBody
+		@RequestMapping(value="/Reservation/CurrentReservationList.Lingo",produces="text/html; charset=UTF-8")
+		public String currentReservationList(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage,HttpSession session) throws Exception{
+			
+			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");  
+			  int start = (nowPage-1)*reservedtablepageSize+1;
+			  int end = nowPage*reservedtablepageSize;
+			  map.put("start", start);
+			  map.put("end", end);
+			  map.put("id", dto.getId());
+			  int totalRecordCount= reservedtableService.getTotalRecordbyid(map);
+			  String pagingString=PagingUtil.pagingBootStrapStyleReview(totalRecordCount, reservedtablepageSize, reservedtableblockPage, nowPage);
+			  
+			  List<ReservedtableDTO> reservedList = reservedtableService.selectbyid(map);
+			  StringBuffer currentTable = new StringBuffer();
+			  int count = 0;
+			  currentTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'><input type='checkbox' id='allCheck' />&nbsp&nbsp가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th><th>예약취소</th></tr></thead><tbody id='reserve'>");		
+			  if(reservedList.size()<1) {
+				  currentTable.append( "<tr><td colspan='5' align='center'>현재 예약이 없습니다.</td></tr>");
+			  }else {
+				  for(ReservedtableDTO record:reservedList) {
+					  currentTable.append("<tr><td style='display:none'>"+record.getReserveno()+"</td><td><input type='checkbox' name='check' value='"+count+"'/>&nbsp&nbsp"+record.getStorename()
+					  +"</td><td>"+record.getAddress()+"</td><td>"+record.getTel()+"</td><td>"
+					  +record.getStartdate()+"</td><td><button name='cancelBtn' value='"+count+"' class='btn btn-danger btn-xs'>취소</button></td></tr>");
+					  count++;
+				  }
+			  }
+			  currentTable.append("</tbody></table><div class='row'><div>"+pagingString+"</div></div>");
+			 
+			 return currentTable.toString();
+		}
+		@ResponseBody
+		@RequestMapping(value="/Reservation/VisitList.Lingo",produces="text/html; charset=UTF-8")
+		public String visitedList(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage,HttpSession session) throws Exception{
+			
+			  LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");  
+			  int start = (nowPage-1)*visitlistpageSize+1;
+			  int end = nowPage*visitlistpageSize;
+			  map.put("start", start);
+			  map.put("end", end);
+			  map.put("id", dto.getId());
+			  
+			  int totalRecordCount= visitlistService.getTotalRecordbyUser(map);
+			  String pagingString=null;
+			  if(map.get("searchColumn")!=null) {
+				  pagingString=PagingUtil.pagingBootStrapStyleReviewSearch(totalRecordCount, visitlistpageSize, visitlistblockPage, nowPage,map.get("searchColumn").toString(),map.get("searchWord").toString());
+			  }else {
+				  pagingString=PagingUtil.pagingBootStrapStyleReviewSearch(totalRecordCount, visitlistpageSize, visitlistblockPage, nowPage,"","");
+			  }
+			  
+			  List<VisitlistDTO> visitlist = visitlistService.selectbyuser(map);
+				
+			  StringBuffer visitTable = new StringBuffer();
+			  visitTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'>가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th></tr></thead><tbody>");		
+			  if(visitlist.size()<1) {
+				  visitTable.append( "<tr><td colspan='4' align='center'>현재 이용하신 가게가 없습니다.</td></tr>");
+			  }else {
+				  for(VisitlistDTO record:visitlist) {
+					  visitTable.append("<tr><td>"+record.getStorename()
+					  +"</td><td>"+record.getAddress()+"</td><td>"+record.getTel()+"</td><td>"
+					  +record.getVisitdate()+"</td></tr>");
+				  }
+			  }
+			  visitTable.append("</tbody></table><div class='row'><div>"+pagingString+"</div></div>");
+			 
+			 return visitTable.toString();
+		}
+		@ResponseBody
+		@RequestMapping("/Reservation/RemoveReservation.Lingo")
+		public String removeReservation(@RequestBody String selectlist) throws Exception{
+			JSONParser parser = new JSONParser();
+			JSONArray array=(JSONArray)parser.parse(selectlist);
+			for(Object record:array) {
+				JSONObject json = (JSONObject)record;
+				Map map = new HashMap();
+				map.put("reserveno", json.get("reserveno").toString());
+				reservedtableService.delete(map);
+			}
+			return String.valueOf(array.size());
+		}
+		
+		
 		//오너 예약목록 리스트
 		@RequestMapping("/Reservation/reservationOwnerList.Lingo")
 		public String ReservationOwnerList(	HttpSession session, HttpServletRequest req,
