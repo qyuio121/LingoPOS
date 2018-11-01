@@ -322,10 +322,7 @@ public class LingoController {
 	public String index() throws Exception{
 		return "index.tiles";
 	}
-	@RequestMapping("/Shop/Sales.Lingo")
-	public String sales() throws Exception{
-		return "shop/sales/sales.tiles";
-	}
+	
 	@RequestMapping("/Reservation/Search.Lingo")
 	public String search() throws Exception{
 		return "reservation/search.tiles";

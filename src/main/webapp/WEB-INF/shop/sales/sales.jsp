@@ -21,101 +21,206 @@ $(function() {
 		box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 	}
 	.weather-3 {
-	background: #4ECDC4;	
+		background: #4ECDC4;	
 	}
 	
 	.weather-3 .info h3 {
-	font-weight: 700;
-	margin-bottom: 0px;
-	background: white;	
+		font-weight: 700;
+		margin-bottom: 0px;
+		background: white;	
 	}
 	.weather-3 .info {
-	background: white;
-}
+		background: white;
+	}
+	.out {
+		 width:100%;
+		 text-align: center;
+	}
+	.in{
+		display: inline-block;
+		height:210px;
+		
+		margin: auto;
+	}
 }
 </style>
 <!--메인 페이지 -->
-<div class="container" style="margin-top: 60px;">
+<div class="container" style="margin-top: 70px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
-	<div class="row">
+	<div class="row" style="margin-bottom: 30px">
 		<div class="col-xs-6">
 			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px;" />가맹점<small>매출확인</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
 	<section id="main-content">
-<!-- 가게삭제, 매출계산기  시작 -->
-	 	<section class="wrapper">	
-     		<button type="button" class="btn-lg btn-danger nav pull-right" id="storeDelete" style="margin-left:10px"> 가게삭제</button>
-			<button type="button" class="btn-lg btn-primary nav pull-right" id="salescal"> 매출계산기</button>
-     	</section>
-<!-- 가게삭제, 매출계산기  시작 -->
-<!-- 출력3개  끝 -->			
-		<div class="col-lg-4 col-md-4 col-sm-4 mb">
-           <div class="weather-3 pn centered">
-             <i class="fa fa-user"></i>
-             <h1>금일 방문팀</h1>
-             <div class="info">
-               <div class="row">
-                 <h3 class="centered">${count}</h3>
-               </div>
-             </div>
-           </div>
-         </div>
-         <div class="col-lg-4 col-md-4 col-sm-4 mb">
-                <div class="weather-3 pn centered">
-                  <i class="fa fa-usd"></i>
-                  <h1>일별 총 매출액</h1>
-                  <div class="info">
-                    <div class="row">
-                      <h3 class="centered">${salesprice}</h3>
-            
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-4 mb">
-                <div class="weather-3 pn centered">
-                  <i class="fa fa-usd"></i>
-                  <h1>월별 총 매출액</h1>
-                  <div class="info">
-                    <div class="row">
-                      <h3 class="centered">${salesprices}</h3>
-              		</div>
-                  </div>
-                </div>
-              </div>
-              
-<!-- 차트 시작 -->
-<!-- 차트 타이틀-->
-		<section class="wrapper">			
-		    <div class="border-head">
-				<h3>금일 메뉴별 판매량</h3>
-			</div>
-<!-- 차트 타이틀-->			
-<!-- 차트-->			
-			<div class="custom-bar-chart">
-<!-- y축-->			
-		    	<ul class="y-axis">
-					<li><span>100</span></li>
-					<li><span>80</span></li>
-					<li><span>60</span></li>
-					<li><span>40</span></li>
-					<li><span>20</span></li>
-					<li><span>0</span></li>
-				</ul>
-<!-- y축-->	
-<!-- x축-->		
-				<c:forEach items="${numberOfProducts}" var="products">
-					<div class="bar">
-						<div class="title">${products.product}</div>
-						<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+<!-- 출력3개  끝 -->
+		<div class="out" style="height: 220px">
+			<div class="in" style="width:100%;" >
+				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>금일 매출액</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${count}</h3>
+							</div>
+						</div>
 					</div>
-		        </c:forEach>
-<!-- x축-->					  
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>금월 매출액</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${salesprice}</h3>
+	
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>올해 매출액</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${salesprices}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</section>	
+		</div>
+			<div class="out" style="margin-top: 20px;height:220px">
+				<div class="in" style="width:66%">
+					<div class="col-lg-6 col-md-6 col-sm-6 mb" style="margin:auto;">
+						<div class="weather-3 pn centered">
+							<i class="fa fa-cutlery"></i>
+							<h1>금일 최다 판매메뉴</h1>
+							<div class="info">
+								<div class="row">
+									<h3 class="centered">${count}</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-sm-6 mb">
+						<div class="weather-3 pn centered">
+							<i class="fa fa-cutlery"></i>
+							<h1>금일 최저 판매메뉴</h1>
+							<div class="info">
+								<div class="row">
+									<h3 class="centered">${count}</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+<!-- 첫번째 차트 시작 -->
+<!-- 차트 타이틀-->
+		<div class="col-xs-4">	
+			<section class="wrapper">
+			    <div class="border-head">
+					<h3>금일 매출액</h3>
+				</div>
+			
+<!-- 차트 타이틀-->			
+<!-- 차트 -->			
+				<div class="custom-bar-chart">
+	<!-- y축-->			
+			    	<ul class="y-axis">
+						<li><span>100</span></li>
+						<li><span>80</span></li>
+						<li><span>60</span></li>
+						<li><span>40</span></li>
+						<li><span>20</span></li>
+						<li><span>0</span></li>
+					</ul>
+	<!-- y축-->	
+	<!-- x축-->		
+					<c:forEach items="${numberOfProducts}" var="products">
+						<div class="bar">
+							<div class="title">${products.product}</div>
+							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+						</div>
+			        </c:forEach>
+	<!-- x축-->					  
+				</div>
+			</section>
+		</div>
+<!-- 차트 끝 -->
+	
+<!-- 두번째 차트 시작 -->
+<!-- 차트 타이틀-->
+		<div class="col-xs-4">	
+			<section class="wrapper">
+			    <div class="border-head">
+					<h3>금월 매출액</h3>
+				</div>
+			
+<!-- 차트 타이틀-->			
+<!-- 차트 -->			
+				<div class="custom-bar-chart">
+	<!-- y축-->			
+			    	<ul class="y-axis">
+						<li><span>100</span></li>
+						<li><span>80</span></li>
+						<li><span>60</span></li>
+						<li><span>40</span></li>
+						<li><span>20</span></li>
+						<li><span>0</span></li>
+					</ul>
+	<!-- y축-->	
+	<!-- x축-->		
+					<c:forEach items="${numberOfProducts}" var="products">
+						<div class="bar">
+							<div class="title">${products.product}</div>
+							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+						</div>
+			        </c:forEach>
+	<!-- x축-->					  
+				</div>
+			</section>
+		</div>
+<!-- 차트 끝 -->
+	
+<!-- 첫번째 차트 시작 -->
+<!-- 차트 타이틀-->
+		<div class="col-xs-4">	
+			<section class="wrapper">
+			    <div class="border-head">
+					<h3>올해 매출액</h3>
+				</div>
+			
+<!-- 차트 타이틀-->			
+<!-- 차트 -->			
+				<div class="custom-bar-chart">
+	<!-- y축-->			
+			    	<ul class="y-axis">
+						<li><span>100</span></li>
+						<li><span>80</span></li>
+						<li><span>60</span></li>
+						<li><span>40</span></li>
+						<li><span>20</span></li>
+						<li><span>0</span></li>
+					</ul>
+	<!-- y축-->	
+	<!-- x축-->		
+					<c:forEach items="${numberOfProducts}" var="products">
+						<div class="bar">
+							<div class="title">${products.product}</div>
+							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+						</div>
+			        </c:forEach>
+	<!-- x축-->					  
+				</div>
+			</section>
+		</div>
 <!-- 차트 끝 -->
 <!-- 테이블 시작 -->
 		
