@@ -1399,14 +1399,14 @@ public class LingoController {
 			  List<VisitlistDTO> visitlist = visitlistService.selectbyuser(map);
 				
 			  StringBuffer visitTable = new StringBuffer();
-			  visitTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'>가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th></tr></thead><tbody>");		
+			  visitTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'>가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th><th>방문여부</th></tr></thead><tbody>");		
 			  if(visitlist.size()<1) {
-				  visitTable.append( "<tr><td colspan='4' align='center'>현재 이용하신 가게가 없습니다.</td></tr>");
+				  visitTable.append( "<tr><td colspan='5' align='center'>현재 이용하신 가게가 없습니다.</td></tr>");
 			  }else {
 				  for(VisitlistDTO record:visitlist) {
 					  visitTable.append("<tr><td>"+record.getStorename()
 					  +"</td><td>"+record.getAddress()+"</td><td>"+record.getTel()+"</td><td>"
-					  +record.getVisitdate()+"</td></tr>");
+					  +record.getVisitdate()+"</td><td>"+(record.isIsvisited()?"방문":"미방문")+"</td></tr>");
 				  }
 			  }
 			  visitTable.append("</tbody></table><div class='row'><div>"+pagingString+"</div></div>");
