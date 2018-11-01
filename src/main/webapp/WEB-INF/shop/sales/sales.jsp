@@ -99,7 +99,7 @@ $(function() {
 					<div class="col-lg-6 col-md-6 col-sm-6 mb" style="margin:auto;">
 						<div class="weather-3 pn centered">
 							<i class="fa fa-cutlery"></i>
-							<h1>금일 최다 판매메뉴</h1>
+							<h1>Best 메뉴</h1>
 							<div class="info">
 								<div class="row">
 									<h3 class="centered">${count}</h3>
@@ -110,7 +110,7 @@ $(function() {
 					<div class="col-lg-6 col-md-6 col-sm-6 mb">
 						<div class="weather-3 pn centered">
 							<i class="fa fa-cutlery"></i>
-							<h1>금일 최저 판매메뉴</h1>
+							<h1>Worst 메뉴</h1>
 							<div class="info">
 								<div class="row">
 									<h3 class="centered">${count}</h3>
@@ -123,10 +123,10 @@ $(function() {
 		
 <!-- 첫번째 차트 시작 -->
 <!-- 차트 타이틀-->
-		<div class="col-xs-4">	
+		
 			<section class="wrapper">
 			    <div class="border-head">
-					<h3>금일 매출액</h3>
+					<h3>당월 메뉴별 판매갯수</h3>
 				</div>
 			
 <!-- 차트 타이틀-->			
@@ -143,84 +143,15 @@ $(function() {
 					</ul>
 	<!-- y축-->	
 	<!-- x축-->		
-					<c:forEach items="${numberOfProducts}" var="products">
+					<c:forEach items="${saleList}" var="list">
 						<div class="bar">
-							<div class="title">${products.product}</div>
-							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+							<div class="title">${list.product}</div>
+							<div class="value tooltips" data-original-title="${list.salesprice}" data-toggle="tooltip" data-placement="top">10%</div>
 						</div>
-			        </c:forEach>
-	<!-- x축-->					  
+					</c:forEach>
+	<!-- x축-->
 				</div>
 			</section>
-		</div>
-<!-- 차트 끝 -->
-	
-<!-- 두번째 차트 시작 -->
-<!-- 차트 타이틀-->
-		<div class="col-xs-4">	
-			<section class="wrapper">
-			    <div class="border-head">
-					<h3>금월 매출액</h3>
-				</div>
-			
-<!-- 차트 타이틀-->			
-<!-- 차트 -->			
-				<div class="custom-bar-chart">
-	<!-- y축-->			
-			    	<ul class="y-axis">
-						<li><span>100</span></li>
-						<li><span>80</span></li>
-						<li><span>60</span></li>
-						<li><span>40</span></li>
-						<li><span>20</span></li>
-						<li><span>0</span></li>
-					</ul>
-	<!-- y축-->	
-	<!-- x축-->		
-					<c:forEach items="${numberOfProducts}" var="products">
-						<div class="bar">
-							<div class="title">${products.product}</div>
-							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
-						</div>
-			        </c:forEach>
-	<!-- x축-->					  
-				</div>
-			</section>
-		</div>
-<!-- 차트 끝 -->
-	
-<!-- 첫번째 차트 시작 -->
-<!-- 차트 타이틀-->
-		<div class="col-xs-4">	
-			<section class="wrapper">
-			    <div class="border-head">
-					<h3>올해 매출액</h3>
-				</div>
-			
-<!-- 차트 타이틀-->			
-<!-- 차트 -->			
-				<div class="custom-bar-chart">
-	<!-- y축-->			
-			    	<ul class="y-axis">
-						<li><span>100</span></li>
-						<li><span>80</span></li>
-						<li><span>60</span></li>
-						<li><span>40</span></li>
-						<li><span>20</span></li>
-						<li><span>0</span></li>
-					</ul>
-	<!-- y축-->	
-	<!-- x축-->		
-					<c:forEach items="${numberOfProducts}" var="products">
-						<div class="bar">
-							<div class="title">${products.product}</div>
-							<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
-						</div>
-			        </c:forEach>
-	<!-- x축-->					  
-				</div>
-			</section>
-		</div>
 <!-- 차트 끝 -->
 <!-- 테이블 시작 -->
 		
