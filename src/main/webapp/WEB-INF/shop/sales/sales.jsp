@@ -51,60 +51,14 @@ $(function() {
 			<button type="button" class="btn-lg btn-primary nav pull-right" id="salescal"> 매출계산기</button>
      	</section>
 <!-- 가게삭제, 매출계산기  시작 -->
-<!-- 출력3개  시작 -->
-<!-- 
-		<div class="col-md-4 col-sm-4 mb">
-			<div class="darkblue-panel pn">
-				<div class="darkblue-header">
-                   	<h5>일별 방문고객 수</h5>
-               	</div>
-               	<h1 class="mt"><i class="fa fa-user fa-3x"></i></h1>
-               	</br>
-               	<footer>
-					<div class="centered">
-        	  			<h4><i class="fa fa-play"></i> 100명</h4>
-               		</div>
-           		</footer>
-           	</div>
-		</div>
-		<div class="col-md-4 col-sm-4 mb">
-			<div class="darkblue-panel pn">
-				<div class="darkblue-header">
-                   	<h5>일별 총 매출액</h5>
-               	</div>
-               	<h1 class="mt"><i class="fa fa-usd fa-3x"></i></h1>
-               	</br>
-               	<footer>
-                  		<div class="centered">
-                    			<h4><i class="fa fa-play"></i> 100만원</h4>
-                  		</div>
-                		</footer>
-              	</div>
-		</div>
-		<div class="col-md-4 col-sm-4 mb">
-			<div class="darkblue-panel pn">
-				<div class="darkblue-header">
-                   	<h5>월별 총 매출액</h5>
-               	</div>
-               	<h1 class="mt"><i class="fa fa-usd fa-3x"></i></h1>
-               	</br>
-               	<footer>
-                  		<div class="centered">
-                    			<h4><i class="fa fa-play"></i> 1,000만원</h4>
-                  		</div>
-                		</footer>
-              	</div>
-		</div>
--->
 <!-- 출력3개  끝 -->			
 		<div class="col-lg-4 col-md-4 col-sm-4 mb">
            <div class="weather-3 pn centered">
              <i class="fa fa-user"></i>
-             <h1>금일 사용자</h1>
+             <h1>금일 방문팀</h1>
              <div class="info">
                <div class="row">
-                 <h3 class="centered">100명</h3>
-               
+                 <h3 class="centered">${count}</h3>
                </div>
              </div>
            </div>
@@ -115,7 +69,7 @@ $(function() {
                   <h1>일별 총 매출액</h1>
                   <div class="info">
                     <div class="row">
-                      <h3 class="centered">100만원</h3>
+                      <h3 class="centered">${salesprice}</h3>
             
                     </div>
                   </div>
@@ -127,9 +81,8 @@ $(function() {
                   <h1>월별 총 매출액</h1>
                   <div class="info">
                     <div class="row">
-                      <h3 class="centered">1,000만원</h3>
-              
-                    </div>
+                      <h3 class="centered">${salesprices}</h3>
+              		</div>
                   </div>
                 </div>
               </div>
@@ -138,50 +91,28 @@ $(function() {
 <!-- 차트 타이틀-->
 		<section class="wrapper">			
 		    <div class="border-head">
-				<h3>일별 매출</h3>
+				<h3>금일 메뉴별 판매량</h3>
 			</div>
 <!-- 차트 타이틀-->			
 <!-- 차트-->			
 			<div class="custom-bar-chart">
 <!-- y축-->			
 		    	<ul class="y-axis">
-					<li><span>500</span></li>
-					<li><span>400</span></li>
-					<li><span>300</span></li>
-					<li><span>200</span></li>
 					<li><span>100</span></li>
+					<li><span>80</span></li>
+					<li><span>60</span></li>
+					<li><span>40</span></li>
+					<li><span>20</span></li>
 					<li><span>0</span></li>
 				</ul>
 <!-- y축-->	
-<!-- x축-->			  
-				<div class="bar">
-					<div class="title">1일</div>
-					<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">85%</div>
-				</div>
-		        <div class="bar ">
-					<div class="title">5일</div>
-					<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">50%</div>
-				</div>
-		       	<div class="bar ">
-		        	<div class="title">10일</div>
-		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">60%</div>
-				</div>
-		        <div class="bar ">
-		        	<div class="title">15일</div>
-		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">45%</div>
-				</div>
-		        <div class="bar">
-		            <div class="title">20일</div>
-		            <div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">32%</div>
-				</div>
-		        <div class="bar ">
-		            <div class="title">25일</div>
-		        	<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">62%</div>
-				</div>
-				<div class="bar ">
-		            <div class="title">30일</div>
-		        	<div class="value tooltips" data-original-title="오버시 들어갈 데이타" data-toggle="tooltip" data-placement="top">62%</div>
-				</div>
+<!-- x축-->		
+				<c:forEach items="${numberOfProducts}" var="products">
+					<div class="bar">
+						<div class="title">${products.product}</div>
+						<div class="value tooltips" data-original-title="${products.qty}" data-toggle="tooltip" data-placement="top">${products.qty}%</div>
+					</div>
+		        </c:forEach>
 <!-- x축-->					  
 			</div>
 		</section>	
