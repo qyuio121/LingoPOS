@@ -308,13 +308,13 @@
  	delete from sale where storeno=#{storeno}
  </delete>
  <select id="LingoSaleSelectinDay" parameterType="java.util.Map" resultType="saleDTO">
- 	select * from sale where storeno = #{storeno} where year(salesdate) = year(now()) and month(salesdate) = month(now()) and  day(salesdate) = day(now()) order by salesdate desc
+ 	select * from sale where storeno = #{storeno} and year(salesdate) = year(now()) and month(salesdate) = month(now()) and  day(salesdate) = day(now()) order by salesdate desc
  </select>
  <select id="LingoSaleSelectinMonth" parameterType="java.util.Map" resultType="saleDTO">
- 	 select * from sale where storeno = #{storeno} where year(salesdate) = year(now()) and month(salesdate) = month(now()) order by salesdate desc
+ 	 select * from sale where storeno = #{storeno} and year(salesdate) = year(now()) and month(salesdate) = month(now()) order by salesdate desc
  </select>
  <select id="LingoSaleSelectinYear" parameterType="java.util.Map" resultType="saleDTO">
- 	 	select * from sale where storeno = #{storeno} where year(salesdate) = year(now()) order by salesdate desc
+ 	 	select * from sale where storeno = #{storeno} and year(salesdate) = year(now()) order by salesdate desc
  </select>
 <select id="LingoSaleSelectAdmin" resultType="saleDTO">
  	select * from sale order by salesdate desc
