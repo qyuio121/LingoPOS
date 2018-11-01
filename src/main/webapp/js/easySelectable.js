@@ -36,16 +36,21 @@ Author: mee4dy@gmail.com
 						el.on('mouseover', options.item, function(e){
 							if(prev_el==$(this).index()) return true;
 							prev_el = $(this).index();
-							var hasClass2 = $(this).hasClass('es-selected');
+							
 						});
 						if(!hasClass){
+							$('.serviceable').addClass('create-used');
+							$('.serviceable').html('이미 테이블을 선택하셨습니다');
 							$(this).addClass('es-selected').trigger('selected');
+							$(this).removeClass('create-used');
 							$(this).html("선택");
 							el.trigger('selected');
 							options.onSelecting($(this));
 							options.onSelected($(this));
 						}
 						else{
+							$('.serviceable').removeClass('create-used');
+							$('.serviceable').html('예약가능(4인)');
 							$(this).removeClass('es-selected').trigger('unselected');
 							$(this).html("예약가능(4인)");
 							el.trigger('unselected');

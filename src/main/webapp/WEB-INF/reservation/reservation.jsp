@@ -228,7 +228,7 @@ html {
 			<div class="col-sm-7">
 				<ul id="easySelectable">
 					<c:forEach begin="1" end="9" var="i" >	
-						<li>예약가능(4인)</li>
+						<li class="serviceable">예약가능(4인)</li>
 					</c:forEach>	
 						<li class="create-used">사용중</li>
 				</ul>

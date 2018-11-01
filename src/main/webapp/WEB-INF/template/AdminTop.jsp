@@ -83,13 +83,13 @@ $(function(){
               </ul>
 		  </li>
 		  <li class="sub-menu">
-		  	<a class="menu" href="<c:url value='/Admin/reservation/reservationList.Admin'/>">
+		  	<a class="menu" href="<c:url value='/Admin/reservation/reservationList.Admin?active=2'/>">
 		  		<i class="fa fa-tasks"></i>
              	<span>예약관리</span>
 		  	</a>
 		  </li>
           <li class="sub-menu">
-            <a class="menu" href="<c:url value='/Admin/member/member.Admin?active=2'/>">
+            <a class="menu" href="<c:url value='/Admin/member/member.Admin?active=3'/>">
               <i class="fa fa-tasks"></i>
               <span>회원관리시스템</span>
               </a>
@@ -100,8 +100,8 @@ $(function(){
                <span>블랙리스트</span>
              </a>
               <ul class="sub">
-               <li><a href="<c:url value='/Admin/blackList/blackApply.Admin?active=3'/>">블랙리스트신청</a></li>
-               <li><a href="<c:url value='/Admin/blackList/blackList.Admin?active=3'/>">블랙리스트관리</a></li>
+               <li><a href="<c:url value='/Admin/blackList/blackApply.Admin?active=4'/>">블랙리스트신청</a></li>
+               <li><a href="<c:url value='/Admin/blackList/blackList.Admin?active=4'/>">블랙리스트관리</a></li>
             </ul>
 		  </li>
           
@@ -112,18 +112,18 @@ $(function(){
               <span>게시판관리시스템</span>
               </a>
 			<ul class="sub">
-              <li><a href="<c:url value='/Notice/Notice.Lingo?active=4'/>">공지사항</a></li>
-              <li><a href="<c:url value='/Free/Free.Lingo?active=4'/>">자유게시판</a></li>
+              <li><a href="<c:url value='/Notice/Notice.Lingo?active=5'/>">공지사항</a></li>
+              <li><a href="<c:url value='/Free/Free.Lingo?active=5'/>">자유게시판</a></li>
             </ul>
           </li>
           <li>
-            <a id="qna" class="menu" href="<c:url value='/Admin/question/QNA.Admin?active=5'/>">
+            <a id="qna" class="menu" href="<c:url value='/Admin/question/QNA.Admin?active=6'/>">
               <i class="fa fa-envelope"></i>
               <span>1:1문의 응답</span>
             </a>
           </li>
            <li>
-            <a class="menu" href="<c:url value='/Admin/FCM/FCM.Admin?active=6'/>">
+            <a class="menu" href="<c:url value='/Admin/FCM/FCM.Admin?active=7'/>">
               <i class="fa fa-envelope"></i>
               <span>FCM</span>
               </a>
