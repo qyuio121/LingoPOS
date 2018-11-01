@@ -13,8 +13,8 @@ public class SaleslistDAO {
 	@Resource(name="mybatisTemplate")
 	private SqlSessionTemplate template;
 
-	public List<SaleslistDTO> selectUser(Map map) {
-		return template.selectList("LingoSaleslistSelectUser",map);
+	public List<SaleslistDTO> select(Map map) {
+		return template.selectList("LingoSaleslistSelect",map);
 	}
 	
 }

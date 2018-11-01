@@ -18,8 +18,14 @@ public class SaleService {
 	public int delete(Map map) {
 		return dao.delete(map);
 	}
-	public List<SaleDTO> selectUser(Map map) {
-		return dao.selectUser(map);
+	public List<SaleDTO> selectDay(Map map) {
+		return dao.selectDay(map);
+	}
+	public List<SaleDTO> selectMonth(Map map) {
+		return dao.selectMonth(map);
+	}
+	public List<SaleDTO> selectYear(Map map) {
+		return dao.selectYear(map);
 	}
 	public List<SaleDTO> selectAdmin() {
 		return dao.selectAdmin();

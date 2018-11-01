@@ -1386,7 +1386,7 @@ public class LingoController {
 			  List<ReservedtableDTO> reservedList = reservedtableService.selectbyid(map);
 			  StringBuffer currentTable = new StringBuffer();
 			  int count = 0;
-			  currentTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'><input type='checkbox' id='allCheck' />&nbsp&nbsp가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th><th>예약취소</th></tr></thead><tbody id='reserve'>");		
+			  currentTable.append("<table class='table table-bordered'><thead><tr style='text-align: center; font-weight: bold; background-color: #EAEDED'><th style='width:15%'><input type='checkbox' id='checkall' />&nbsp&nbsp가게이름</th><th style='width:30%'>가게주소</th><th style='width:17%'>가게전화번호</th><th style='width:22%'>예약날짜</th><th>예약취소</th></tr></thead><tbody id='reserve'>");		
 			  if(reservedList.size()<1) {
 				  currentTable.append( "<tr><td colspan='5' align='center'>현재 예약이 없습니다.</td></tr>");
 			  }else {

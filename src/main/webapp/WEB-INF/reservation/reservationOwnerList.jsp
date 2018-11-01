@@ -18,7 +18,7 @@
   	<table class="table table-bordered">
   		<thead>
 			<tr style="text-align: center; font-weight: bold; background-color: #EAEDED">
-				<th style="width:3%"><input type="checkbox" id="allCheck" /></th>
+				<th style="width:3%"><input type="checkbox" id="checkall" /></th>
 				<th style="width:20%">아이디</th>
 				<th style="width:13%">예약인원</th>
 				<th style="width:13%">테이블번호</th>

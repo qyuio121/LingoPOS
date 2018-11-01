@@ -12,8 +12,8 @@ public class SaleslistService {
 	@Resource(name="saleslistDAO")
 	private SaleslistDAO dao;
 
-	public List<SaleslistDTO> selectUser(Map map) {
-		return dao.selectUser(map);
+	public List<SaleslistDTO> select(Map map) {
+		return dao.select(map);
 	}
 	
 }
