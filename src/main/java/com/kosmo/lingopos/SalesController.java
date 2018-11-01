@@ -47,6 +47,7 @@ public class SalesController {
 				map.put("day", ((SaleDTO)value).getSalesprice());
 			}
 		}
+		map.put("day", map.get("day").toString()+"원");
 		//월 총 매출액구하기
 		list = saleService.selectMonth(map);
 		for(Object value: list) {
@@ -57,6 +58,7 @@ public class SalesController {
 				map.put("month", ((SaleDTO)value).getSalesprice());
 			}
 		}
+		map.put("month", map.get("month").toString()+"원");
 		//연 총 매출액구하기
 		list = saleService.selectYear(map);
 		for(Object value: list) {
@@ -67,6 +69,7 @@ public class SalesController {
 				map.put("year", ((SaleDTO)value).getSalesprice());
 			}
 		}
+		map.put("year", map.get("year").toString()+"원");
 		//베스트,워스트메뉴 구하기
 		list = foodimgService.select(map);
 		map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
