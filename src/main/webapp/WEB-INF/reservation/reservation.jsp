@@ -75,7 +75,7 @@ $(function() {
 	})
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:30,now: "1:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:1,now: "00:00"});
 	
 	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
 	$(".time").on('change',function(){
@@ -84,38 +84,41 @@ $(function() {
 		
 	//validate
 	$('#confirm').click(function(){
-		if($('#frm').valid() && $('#tableno').val() != "" && $('#starttime').val() !="1 : 00 오전" && $('#startdate').val() != "" ){
+		if($('#frm').valid() && $('#tableno').val() != "" &&  $('#startdate').val() != "" ){
 			$('#frm').submit();
 		}
 		if($('#startdate').val() =="")
 			$('#startdate').next().html("예약날짜를 선택하세요.");
 		if($('#tableno').val() == "")
-			$('#tableno').next().html("테이블을 선택하세요.");
-		if($('#starttime').val()=="1 : 00 오전")
-			$('.timeError').html("예약시간을 선택하세요.");	
+			$('#tableno').next().html("테이블을 선택하세요.");	
 	})
 	
 	var now = new Date();
-	
+	var myDate = new Date();
+	myDate.setMonth(myDate.getMonth() + 1);
 	//datepicker
     $('#two').calendar({
     	onSelected: function (view, date, data) {
     		$('#startdate').next().html("");
     		console.log('date:' + date);
     		function getFormatDate(date){
-				var year = date.getFullYear();                                 //yyyy
-				var month = (1 + date.getMonth());                     //M
-				month = month >= 10 ? month : '0' + month;     // month 두자리로 저장
-				var day = date.getDate();                                        //d
-				day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
-				return  year + '-' + month + '-' + day;
-			}
+    			var year = date.getFullYear();                                 //yyyy
+    			var month = (1 + date.getMonth());                     //M
+    			month = month >= 10 ? month : '0' + month;     // month 두자리로 저장
+    			var day = date.getDate();                                        //d
+    			day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
+    			return  year + '-' + month + '-' + day;
+    		}
     		date = getFormatDate(date);
     		console.log('date:' + date);
     		$('#startdate').val(date);
     	},
+    	 selectedRang: [now,myDate],
     });
+    $('#startdate').val(new Date().format("yyyy-mm-dd"));
+	console.log($('#startdate').val());
 });
+
 </script>
 <style>
 <!-- 테이블 -->
@@ -190,7 +193,7 @@ html {
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 예약하기 폼 시작 -->
-	<form id="frm" class="form-horizontal" action='#'>
+	<form id="frm" class="form-horizontal" action='<c:url value="/Reserved/ReserveOk.Lingo"/>'>
 <!-- 예약인원 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">예약인원 수</label>
@@ -227,24 +230,23 @@ html {
 			<label class="col-sm-2 control-label">테이블선택</label>
 			<div class="col-sm-7">
 				<ul id="easySelectable">
-					<c:forEach begin="1" end="9" var="i" >	
-						<li class="serviceable">예약가능(4인)</li>
+					<c:forEach begin="1" end="${store.tablenum}" var="i" >	
+						<li name ="table" class="serviceable">예약가능(4인)</li>
 					</c:forEach>	
-						<li class="create-used">사용중</li>
+						<!--li class="create-used">사용중</li-->
 				</ul>
 				<input type="hidden" name="tableno" id="tableno" value="" />
 				<label  style="color:red"></label>  
 			</div>
 		</div>		
 <!-- 테이블 끝 -->
-<!-- 버튼 2개 시작 - 문의하기 / 취소  -->
 		<div class="form-group">
 		  	<div class="col-sm-offset-2 col-sm-10">
-		   		<button type="button" value="button타입" class="btn btn-primary" id="confirm">예약하기</button><!-- 문의하기 -->     
-		   		<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button><!-- 취소 -->     
+		  	<input type="hidden" name="storeno" id="tableno" value="${store.storeno}" />
+		   		<button type="button" value="button타입" class="btn btn-primary" id="confirm">예약하기</button>     
+		   		<button type="button" value="button타입" class="btn btn-default" id="cancle">취소</button>     
 		  	</div>
 		</div>
-<!-- 버튼 2개 끝 - 문의하기 / 취소  -->	 
 	</form>
 <!-- 예약하기 폼 끝 -->
 <!-- 내용 끝 -->	

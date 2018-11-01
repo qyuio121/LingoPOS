@@ -87,7 +87,9 @@
         // 参数同上
         onMouseenter: $.noop,
 
-        onClose: $.noop
+        onClose: $.noop,
+        
+        minDate: "-1D"
     },
 
         // static variable

@@ -60,7 +60,9 @@ import com.kosmo.lingopos.reservedtable.ReservedtableDTO;
 import com.kosmo.lingopos.reservedtable.ReservedtableService;
 import com.kosmo.lingopos.review.ReviewDTO;
 import com.kosmo.lingopos.review.ReviewService;
+import com.kosmo.lingopos.sale.SaleDTO;
 import com.kosmo.lingopos.sale.SaleService;
+import com.kosmo.lingopos.saleslist.SaleslistService;
 import com.kosmo.lingopos.store.StoreDTO;
 import com.kosmo.lingopos.store.StoreService;
 import com.kosmo.lingopos.storeimg.StoreimgDTO;
@@ -170,6 +172,11 @@ public class LingoController {
 	private int reservedtablepageSize;
 	@Value("${reservedtableBlockPage}")
 	private int reservedtableblockPage;
+	
+	@Resource(name="saleService")
+	private SaleService saleService;
+	@Resource(name="saleslistService")
+	private SaleslistService saleslistService;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -1497,6 +1504,80 @@ public class LingoController {
 			model.addAttribute("pageString",pageString);
 			model.addAttribute("nowPage", nowPage);
 			return "admin/reservation/adminReservationList.Admin";
+		}
+		
+		@RequestMapping("/Reserved/ReserveOk.Lingo")
+		public String reserveOk(HttpSession session,@RequestParam Map map,Model model) throws Exception{
+			LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
+			map.put("id", dto.getId());
+			map.put("tableno",Integer.parseInt(map.get("tableno").toString())+1);
+			String[] time = map.get("starttime").toString().trim().split(" ");
+			StringBuffer starttime = new StringBuffer();
+			for(String temp:time) {
+				starttime.append(temp);
+			}
+			map.put("startdate",map.get("startdate").toString()+" "+starttime.toString()+":00");
+			reservedtableService.insert(map);
+			return "forward:/";
+		}
+
+		
+		@RequestMapping("/Shop/Sales.Lingo")
+		public String sales(@RequestParam Map map,HttpSession session,Model model) throws Exception{
+			LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
+			map.put("storeno", dto.getStoreno());
+			//금일 매출액구하기
+			List list = saleService.selectDay(map);
+			for(Object value: list) {
+				if(map.get("day") != null) {
+					map.put("day", Integer.parseInt(map.get("day").toString())+((SaleDTO)value).getSalesprice());
+				}
+				else {
+					map.put("day", ((SaleDTO)value).getSalesprice());
+				}
+			}
+			map.put("day", map.get("day").toString()+"원");
+			//월 총 매출액구하기
+			list = saleService.selectMonth(map);
+			for(Object value: list) {
+				if(map.get("month") != null) {
+					map.put("month", Integer.parseInt(map.get("month").toString())+((SaleDTO)value).getSalesprice());
+				}
+				else {
+					map.put("month", ((SaleDTO)value).getSalesprice());
+				}
+			}
+			map.put("month", map.get("month").toString()+"원");
+			//연 총 매출액구하기
+			list = saleService.selectYear(map);
+			for(Object value: list) {
+				if(map.get("year") != null) {
+					map.put("year", Integer.parseInt(map.get("year").toString())+((SaleDTO)value).getSalesprice());
+				}
+				else {
+					map.put("year", ((SaleDTO)value).getSalesprice());
+				}
+			}
+			map.put("year", map.get("year").toString()+"원");
+			//베스트,워스트메뉴 구하기
+			list = foodimgService.select(map);
+			map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
+			map.put("bestName2", ((FoodimgDTO)list.get(1)).getName()+" "+((FoodimgDTO)list.get(1)).getCount()+"개");
+			map.put("bestName3", ((FoodimgDTO)list.get(2)).getName()+" "+((FoodimgDTO)list.get(2)).getCount()+"개");
+			map.put("worstName1",((FoodimgDTO)list.get(list.size()-1)).getName()+" "+((FoodimgDTO)list.get(list.size()-1)).getCount()+"개");
+			map.put("worstName2",((FoodimgDTO)list.get(list.size()-2)).getName()+" "+((FoodimgDTO)list.get(list.size()-2)).getCount()+"개");
+			map.put("worstName3",((FoodimgDTO)list.get(list.size()-3)).getName()+" "+((FoodimgDTO)list.get(list.size()-3)).getCount()+"개");
+			
+			list = saleslistService.select(map);
+			
+			
+			model.addAttribute("saleList", map);
+			 
+			
+			
+			
+			
+			return "shop/sales/sales.tiles";
 		}
 
 }
