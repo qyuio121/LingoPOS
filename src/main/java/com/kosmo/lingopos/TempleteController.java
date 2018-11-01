@@ -3,7 +3,7 @@ package com.kosmo.lingopos;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import com.kosmo.lingopos.store.StoreService;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -24,6 +24,7 @@ import com.kosmo.lingopos.map.MapService;
 import com.kosmo.lingopos.notice.NoticeDTO;
 import com.kosmo.lingopos.notice.NoticeService;
 import com.kosmo.lingopos.reservedtable.ReservedtableService;
+import com.kosmo.lingopos.store.StoreDTO;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.json.simple.JSONArray;
@@ -62,6 +63,9 @@ public class TempleteController {
 	
 	@Resource(name="reservedtableService")
 	private ReservedtableService reservedtableService;
+	
+	@Resource(name="storeService")
+	private StoreService storeService;
 	
 	//안드로이드 토탈 맵 
 	@ResponseBody
@@ -229,57 +233,70 @@ public class TempleteController {
 		}
 		return JSONArray.toJSONString(list);
 	}
-	
-//이것도 나중에 고치기	
-	//안드로이드 예약하기
-	@RequestMapping("/Android/Reservation.Lingo")
-	public String reservation(@RequestParam Map map,Model model) throws Exception{
+
+	//안드로이드 예약확인
+	@ResponseBody
+	@RequestMapping(value="/Android/ReservationList.Lingo",produces="text/html; charset=UTF-8")
+	public String androidReservationList(@RequestParam Map map) throws Exception {
+		
 		LoginDTO loginDTO = loginService.select(map);
-		System.out.println(loginDTO);
-		System.out.println(map.get("id"));
-		System.out.println(map.get("pwd"));
-		System.out.println(map.get("storename"));
-		System.out.println(map.get("storeno"));
+		try {
+			Map visitMap = new HashMap();
+			Map reservedMap = new HashMap(); 
+			visitMap.put("id", loginDTO.getId());
+			reservedMap.put("id",loginDTO.getId());
+			List<ReservedtableDTO> reservedList = reservedtableService.selectbyandroid(reservedMap);
+			Map mapMap = new HashMap();
+			mapMap.put("storeno", reservedList.get(reservedList.size()-1).getStoreno());
+			MapDTO mapList = mapService.selectbyStoreno(mapMap);
+			System.out.println("storename : "+reservedList.get(reservedList.size()-1).getStorename());
+			System.out.println("address : "+reservedList.get(reservedList.size()-1).getAddress());
+			System.out.println("tel : "+reservedList.get(reservedList.size()-1).getTel());
+			System.out.println("startdate : "+reservedList.get(reservedList.size()-1).getStartdate());
+			System.out.println("x : "+mapList.getX());
+			System.out.println("y : "+mapList.getY());
+			JSONObject json = new JSONObject();
+			json.put("storename",reservedList.get(reservedList.size()-1).getStorename());
+			json.put("address",reservedList.get(reservedList.size()-1).getAddress());
+			json.put("tel",reservedList.get(reservedList.size()-1).getTel());
+			json.put("startdate",reservedList.get(reservedList.size()-1).getStartdate().toString());
+			json.put("x",mapList.getX());
+			json.put("y",mapList.getY());
+			System.out.println(json);
+			return json.toJSONString();
+		}
+		catch (Exception e) {
+			JSONObject json = new JSONObject();
+			return json.toJSONString();
+		}
+	}
+		
+	//안드로이드 예약하기
+	@RequestMapping(value="/Android/Reservation.Lingo",produces="text/html; charset=UTF-8")
+	public String androidReservation(@RequestParam Map map,Model model) throws Exception{
+		LoginDTO loginDTO = loginService.select(map);
 		model.addAttribute("loginDTO",loginDTO);
-		model.addAttribute("storename", map.get("storename"));
-		model.addAttribute("storeno", map.get("storeno"));
+		Map storeMap = new HashMap();
+		storeMap.put("storeno", map.get("storeno"));
+		StoreDTO store = storeService.select(storeMap);
+		System.out.println(store);
+		model.addAttribute("store",store);
 		return "android/reservation";
 	}
 	
-	//안드로이드 예약확인
-		@ResponseBody
-		@RequestMapping(value="/Android/ReservationList.Lingo",produces="text/html; charset=UTF-8")
-		public String androidReservationList(@RequestParam Map map) throws Exception {
-			
-			LoginDTO loginDTO = loginService.select(map);
-			try {
-				Map visitMap = new HashMap();
-				Map reservedMap = new HashMap(); 
-				visitMap.put("id", loginDTO.getId());
-				reservedMap.put("id",loginDTO.getId());
-				List<ReservedtableDTO> reservedList = reservedtableService.selectbyandroid(reservedMap);
-				Map mapMap = new HashMap();
-				mapMap.put("storeno", reservedList.get(reservedList.size()-1).getStoreno());
-				MapDTO mapList = mapService.selectbyStoreno(mapMap);
-				System.out.println("storename : "+reservedList.get(reservedList.size()-1).getStorename());
-				System.out.println("address : "+reservedList.get(reservedList.size()-1).getAddress());
-				System.out.println("tel : "+reservedList.get(reservedList.size()-1).getTel());
-				System.out.println("startdate : "+reservedList.get(reservedList.size()-1).getStartdate());
-				System.out.println("x : "+mapList.getX());
-				System.out.println("y : "+mapList.getY());
-				JSONObject json = new JSONObject();
-				json.put("storename",reservedList.get(reservedList.size()-1).getStorename());
-				json.put("address",reservedList.get(reservedList.size()-1).getAddress());
-				json.put("tel",reservedList.get(reservedList.size()-1).getTel());
-				json.put("startdate",reservedList.get(reservedList.size()-1).getStartdate().toString());
-				json.put("x",mapList.getX());
-				json.put("y",mapList.getY());
-				System.out.println(json);
-				return json.toJSONString();
-			}
-			catch (Exception e) {
-				JSONObject json = new JSONObject();
-				return json.toJSONString();
-			}
+	@RequestMapping("/Android/ReserveOk.Lingo")
+	public String androidReserveOk(HttpSession session,@RequestParam Map map,Model model) throws Exception{
+		LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
+		map.put("id", dto.getId());
+		map.put("tableno",Integer.parseInt(map.get("tableno").toString())+1);
+		String[] time = map.get("starttime").toString().trim().split(" ");
+		StringBuffer starttime = new StringBuffer();
+		for(String temp:time) {
+			starttime.append(temp);
 		}
+		map.put("startdate",map.get("startdate").toString()+" "+starttime.toString()+":00");
+		reservedtableService.insert(map);
+		return "android/reservationOk";
+	}
+				
 }

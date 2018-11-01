@@ -2,41 +2,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
- <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-  <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
 <!-- datepicker -->
-<!-- 
-<script src="http://localhost:8080/lingopos/js/calendar.js"></script>
-<link rel="stylesheet" href="http://localhost:8080/lingopos/css/calendar.css">
- -->
- <script src="../js/calendar.js"></script>
+<script src="../js/calendar.js"></script>
 <link rel="stylesheet" href="../css/calendar.css">
+
 <!-- 테이블 css  -->
-<!-- 
-<link type="text/css" rel="stylesheet" href="http://localhost:8080/lingopos/css/easySelectable.css" />
-<link rel="stylesheet" href="http://localhost:8080/lingopos/css/easySelectablestyle.css">
-<link rel="stylesheet" href="http://localhost:8080/lingopos/css/sunburst.css">
- -->
- <link type="text/css" rel="stylesheet" href="../css/easySelectable.css" />
+<link type="text/css" rel="stylesheet" href="../css/easySelectable.css" />
 <link rel="stylesheet" href="../css/easySelectablestyle.css">
 <link rel="stylesheet" href="../css/sunburst.css">
  
-
-
 <!-- 테이블 js -->
-<!-- 
-<script src="http://localhost:8080/lingopos/js/easySelectable.js"></script>
- -->
 <script src="../js/easySelectable.js"></script>
  
 <!-- 영업시간 -->
-<!-- 
-<link rel="stylesheet" href="http://localhost:8080/lingopos/css/wickedpicker.css">
-<script type="text/javascript" src="http://localhost:8080/lingopos/js/wickedpicker.js"></script>
- -->
 <link rel="stylesheet" href="../css/wickedpicker.css">
 <script type="text/javascript" src="../js/wickedpicker.js"></script>
 
@@ -84,27 +66,36 @@ $(function() {
 	})
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: false,minutesInterval:30,now: "1:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:1,now: "00:00"});
 
 	var now = new Date();
+	var myDate = new Date();
+	myDate.setMonth(myDate.getMonth() + 1);
 	//datepicker
-    $('#two').calendar({
-    	onSelected: function (view, date, data) {
-    		$('#startdate').next().html("");
-    		console.log('date:' + date);
-    		function getFormatDate(date){
-				var year = date.getFullYear();                                 //yyyy
-				var month = (1 + date.getMonth());                     //M
-				month = month >= 10 ? month : '0' + month;     // month 두자리로 저장
-				var day = date.getDate();                                        //d
-				day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
-				return  year + '-' + month + '-' + day;
-			}
-    		date = getFormatDate(date);
-    		console.log('date:' + date);
-    		$('#startdate').val(date);
-    	},
-    });
+	 $('#two').calendar({
+	    	onSelected: function (view, date, data) {
+	    		$('#startdate').next().html("");
+	    		console.log('date:' + date);
+	    		function getFormatDate(date){
+	    			var year = date.getFullYear();                                 //yyyy
+	    			var month = (1 + date.getMonth());                     //M
+	    			month = month >= 10 ? month : '0' + month;     // month 두자리로 저장
+	    			var day = date.getDate();                                        //d
+	    			day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
+	    			return  year + '-' + month + '-' + day;
+	    		}
+	    		date = getFormatDate(date);
+	    		console.log('date:' + date);
+	    		$('#startdate').val(date);
+	    	},
+	    	 selectedRang: [now,myDate],
+	    });
+	    $('#startdate').val(new Date().format("yyyy-mm-dd"));
+		console.log($('#startdate').val());
+		
+		$('#confirm').click(function(){
+			$('#frm').submit();
+		})
 });
 </script>
 <style>
@@ -171,18 +162,18 @@ html {
 	※테이블 사용중/예약중 기능 만듬
 		<li class="create-used">사용중</li>
 	※테이블 사용가능
-		<li>예약가능(4인)</li>
+		<li class="serviceable">예약가능(4인)</li>
  -->	
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-12">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />${storename}<small>예약하기</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />${store.storename}<small>예약하기</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
 <!-- 예약하기 폼 시작 -->
-	<form id="frm" class="form-horizontal" action='#'>
+	<form id="frm" class="form-horizontal" action='<c:url value="/Android/ReserveOk.Lingo"/>'>
 <!-- 예약인원 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">예약인원 수</label>
@@ -219,23 +210,22 @@ html {
 			<label class="col-sm-2 control-label">테이블선택</label>
 			<div class="col-sm-7">
 				<ul id="easySelectable">
-					<c:forEach begin="1" end="9" var="i" >	
-						<li>예약가능(4인)</li>
+					<c:forEach begin="1" end="${store.tablenum}" var="i" >	
+						<li name ="table" class="serviceable">예약가능(4인)</li>
 					</c:forEach>	
-						<li class="create-used">사용중</li>
+						<!--li class="create-used">사용중</li-->
 				</ul>
 				<input type="hidden" name="tableno" id="tableno" value="" />
 				<label  style="color:red"></label>  
 			</div>
 		</div>		
 <!-- 테이블 끝 -->
-<!-- 버튼 2개 시작 - 문의하기 / 취소  -->
 		<div class="form-group">
 		  	<div class="col-sm-offset-2 col-sm-10">
-		   		<button type="button" value="button타입" class="btn btn-primary" id="confirm">예약하기</button><!-- 문의하기 -->     
+		  	<input type="hidden" name="storeno" id="tableno" value="${store.storeno}" />
+		   		<button type="button" value="button타입" class="btn btn-primary" id="confirm">예약하기</button>     
 		   	</div>
 		</div>
-<!-- 버튼 2개 끝 - 문의하기 / 취소  -->	 
 	</form>
 <!-- 예약하기 폼 끝 -->
 <!-- 내용 끝 -->	
@@ -243,4 +233,3 @@ html {
 <c:forEach begin="0" end="10" step="1">
 	<br/>
 </c:forEach>
-
