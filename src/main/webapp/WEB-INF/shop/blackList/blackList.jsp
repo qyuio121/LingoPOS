@@ -38,6 +38,7 @@
 							<th>이메일</th>
 							<th>전화번호</th>
 							<th>방문날짜</th>
+							<th>방문여부</th>
 							<th>승인요청</th>
 						</tr>
 					</thead>
@@ -48,7 +49,8 @@
 							<td>${value.id}</td>														
 							<td>${value.email}</td>														
 							<td>${value.tel}</td>															
-							<td>${value.visitdate}</td>														
+							<td>${value.visitdate}</td>	
+							<th>${value.isvisited?'방문':'미방문'}</th>													
 							<td>
 								<c:forEach var="black" items="${blacklist}" varStatus="status">
 									   <c:if test="${not loop_flag }">

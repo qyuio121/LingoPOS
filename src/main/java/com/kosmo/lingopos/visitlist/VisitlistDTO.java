@@ -9,7 +9,14 @@ public class VisitlistDTO {
 	private String tel;
 	private String storename;
 	private String address;
+	private boolean isvisited;
 	
+	public boolean isIsvisited() {
+		return isvisited;
+	}
+	public void setIsvisited(boolean isvisited) {
+		this.isvisited = isvisited;
+	}
 	public String getStorename() {
 		return storename;
 	}
