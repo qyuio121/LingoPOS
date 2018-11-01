@@ -35,6 +35,7 @@ $(function() {
 	.out {
 		 width:100%;
 		 text-align: center;
+		 display: block;
 	}
 	.in{
 		display: inline-block;
@@ -56,38 +57,39 @@ $(function() {
 <!-- 바디 헤더 끝-->
 	<section id="main-content">
 <!-- 출력3개  끝 -->
+	<div class="row">
 		<div class="out" style="height: 220px">
 			<div class="in" style="width:100%;" >
-				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
 					<div class="weather-3 pn centered">
 						<i class="fa fa-usd"></i>
 						<h1>금일 매출액</h1>
 						<div class="info">
 							<div class="row">
-								<h3 class="centered">${count}</h3>
+								<h3 class="centered">${saleList.day}</h3>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
 					<div class="weather-3 pn centered">
 						<i class="fa fa-usd"></i>
 						<h1>금월 매출액</h1>
 						<div class="info">
 							<div class="row">
-								<h3 class="centered">${salesprice}</h3>
+								<h3 class="centered">${saleList.month}</h3>
 	
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-4 mb">
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
 					<div class="weather-3 pn centered">
 						<i class="fa fa-usd"></i>
 						<h1>올해 매출액</h1>
 						<div class="info">
 							<div class="row">
-								<h3 class="centered">${salesprices}</h3>
+								<h3 class="centered">${saleList.year}</h3>
 							</div>
 						</div>
 					</div>
@@ -96,67 +98,108 @@ $(function() {
 		</div>
 			<div class="out" style="margin-top: 20px;height:220px">
 				<div class="in" style="width:66%">
-					<div class="col-lg-6 col-md-6 col-sm-6 mb" style="margin:auto;">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb">
 						<div class="weather-3 pn centered">
 							<i class="fa fa-cutlery"></i>
 							<h1>Best 메뉴</h1>
 							<div class="info">
 								<div class="row">
-									<h3 class="centered">${count}</h3>
+									<h3 class="centered">${saleList.bestName1}</h3>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 mb">
+					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb">
 						<div class="weather-3 pn centered">
 							<i class="fa fa-cutlery"></i>
 							<h1>Worst 메뉴</h1>
 							<div class="info">
 								<div class="row">
-									<h3 class="centered">${count}</h3>
+									<h3 class="centered">${saleList.worstName1}</h3>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		
-<!-- 첫번째 차트 시작 -->
-<!-- 차트 타이틀-->
-		
-			<section class="wrapper">
-			    <div class="border-head">
-					<h3>당월 메뉴별 판매갯수</h3>
-				</div>
-			
-<!-- 차트 타이틀-->			
-<!-- 차트 -->			
-				<div class="custom-bar-chart">
-	<!-- y축-->			
-			    	<ul class="y-axis">
-						<li><span>100</span></li>
-						<li><span>80</span></li>
-						<li><span>60</span></li>
-						<li><span>40</span></li>
-						<li><span>20</span></li>
-						<li><span>0</span></li>
-					</ul>
-	<!-- y축-->	
-	<!-- x축-->		
-					<c:forEach items="${saleList}" var="list">
-						<div class="bar">
-							<div class="title">${list.product}</div>
-							<div class="value tooltips" data-original-title="${list.salesprice}" data-toggle="tooltip" data-placement="top">10%</div>
+			<div style="margin-bottom:50px;height: 240px;">
+				<p style="margin-bottom:50px;font-weight: bold;font-size: 80px">Best메뉴 Top3</p>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb" style="margin-bottom:50px ">
+						<div class="weather-3 pn centered">
+							<i class="fa fa-usd"></i>
+							<h1>Best1</h1>
+							<div class="info">
+								<div class="row">
+									<h3 class="centered">${saleList.bestName1}</h3>
+								</div>
+							</div>
 						</div>
-					</c:forEach>
-	<!-- x축-->
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
+						<div class="weather-3 pn centered">
+							<i class="fa fa-usd"></i>
+							<h1>Best2</h1>
+							<div class="info">
+								<div class="row">
+									<h3 class="centered">${saleList.bestName2}</h3>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
+						<div class="weather-3 pn centered">
+							<i class="fa fa-usd"></i>
+							<h1>Best3</h1>
+							<div class="info">
+								<div class="row">
+									<h3 class="centered">${saleList.bestName3}</h3>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
-			</section>
-<!-- 차트 끝 -->
-<!-- 테이블 시작 -->
-		
-<!-- 테이블 끝 -->
-	</section>
+				<div style="margin-bottom:80px;height: 300px;margin-top:50px">
+				<p style="margin-bottom:50px;font-weight: bold;font-size: 80px">Worst메뉴 Top3</>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb" >
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>Worst1</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${saleList.worstName1}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>Worst2</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${saleList.worstName2}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb">
+					<div class="weather-3 pn centered">
+						<i class="fa fa-usd"></i>
+						<h1>Worst3</h1>
+						<div class="info">
+							<div class="row">
+								<h3 class="centered">${saleList.worstName3}</h3>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="height:250px"></div>
+	<!-- 테이블 시작 -->
+			
+	<!-- 테이블 끝 -->
+		</section>
+	</div>
 <!-- 내용 끝 -->
 </div>
 
