@@ -77,7 +77,7 @@
  	delete from foodimg where storeno=#{storeno}
  </delete>
  <select id="LingoFoodimgSelect" parameterType="java.util.Map" resultType="foodimgDTO">
- 	select * from foodimg where storeno = #{storeno} 
+ 	select * from foodimg where storeno = #{storeno} order by count desc 
  </select>
  
  <insert id="LingoFreeInsert" parameterType="java.util.Map">
