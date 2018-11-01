@@ -3,9 +3,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 $(function(){
-	if(${param.active!=null}){
+	if(${active!=null}){
 		$(".menu").removeClass('active');
-		$(".menu").eq(${param.active}).addClass('active');
+		$(".menu").eq(${active}).addClass('active');
 	}else{
 		$(".menu").eq(0).addClass('active');
 	}
@@ -15,7 +15,8 @@ $(function(){
 		type: "get",
 	    success: function(data) {
 	    	if(data!='0'){
-	    		$("#qna").append('<span class="label label-theme pull-right mail-info">'+data+'</span>');
+	    		$("#qna").html(data);
+	    		$("#qna").addClass("label label-theme pull-right mail-info");
 	    	}
 		}
     });
@@ -24,7 +25,8 @@ $(function(){
 		type: "get",
 	    success: function(data) {
 	    	if(data!='0'){
-	    		$("#black").append('<span class="label label-theme pull-right mail-info">'+data+'</span>');
+	    		$("#black").html(data);
+	    		$("#black").addClass("label label-theme pull-right mail-info");
 	    	}
 		}
     });
@@ -33,7 +35,8 @@ $(function(){
 		type: "get",
 	    success: function(data) {
 	    	if(data!='0'){
-	    		$("#shop").append('<span class="label label-theme pull-right mail-info">'+data+'</span>');
+	    		$("#shop").html(data);
+	    		$("#shop").addClass("label label-theme pull-right mail-info");
 	    	}
 		}
     });
@@ -67,41 +70,45 @@ $(function(){
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
 		  <li class="mt">
-            <a class="menu" href="<c:url value='/Admin/Index/Index.Admin?active=0'/>">
+            <a class="menu" href="<c:url value='/Admin/Index/Index.Admin'/>">
               <i class="fa fa-desktop"></i>
               <span>메인페이지</span>
               </a>
           </li>
           <li class="sub-menu">
-            <a id="shop" class="menu" href="#">
+            <a class="menu" href="#">
               <i class="fa fa-cogs"></i>
               <span>가게</span>
-			  </a>
+              <span id="shop">
+              </span>
+			 </a>
               <ul class="sub">
-              	<li><a href="<c:url value='/Admin/shop/apply.Admin?active=1'/>">가게승인</a></li>
-              	<li><a href="<c:url value='/Admin/shop/delete.Admin?active=1'/>">가게관리</a></li>
+              	<li><a href="<c:url value='/Admin/shop/apply.Admin'/>">가게승인</a></li>
+              	<li><a href="<c:url value='/Admin/shop/delete.Admin'/>">가게관리</a></li>
               </ul>
 		  </li>
 		  <li class="sub-menu">
-		  	<a class="menu" href="<c:url value='/Admin/reservation/reservationList.Admin?active=2'/>">
+		  	<a class="menu" href="<c:url value='/Admin/reservation/reservationList.Admin'/>">
 		  		<i class="fa fa-tasks"></i>
              	<span>예약관리</span>
 		  	</a>
 		  </li>
           <li class="sub-menu">
-            <a class="menu" href="<c:url value='/Admin/member/member.Admin?active=3'/>">
+            <a class="menu" href="<c:url value='/Admin/member/member.Admin'/>">
               <i class="fa fa-tasks"></i>
               <span>회원관리시스템</span>
               </a>
           </li>
           <li class="sub-menu">
-            <a id="black" class="menu" href="#">
+            <a class="menu" href="#">
               <i class="fa fa-tasks"></i>
                <span>블랙리스트</span>
+               <span id="black">
+               </span>
              </a>
               <ul class="sub">
-               <li><a href="<c:url value='/Admin/blackList/blackApply.Admin?active=4'/>">블랙리스트신청</a></li>
-               <li><a href="<c:url value='/Admin/blackList/blackList.Admin?active=4'/>">블랙리스트관리</a></li>
+               <li><a href="<c:url value='/Admin/blackList/blackApply.Admin'/>">블랙리스트신청</a></li>
+               <li><a href="<c:url value='/Admin/blackList/blackList.Admin'/>">블랙리스트관리</a></li>
             </ul>
 		  </li>
           
@@ -112,18 +119,20 @@ $(function(){
               <span>게시판관리시스템</span>
               </a>
 			<ul class="sub">
-              <li><a href="<c:url value='/Notice/Notice.Lingo?active=5'/>">공지사항</a></li>
-              <li><a href="<c:url value='/Free/Free.Lingo?active=5'/>">자유게시판</a></li>
+              <li><a href="<c:url value='/Notice/Notice.Lingo'/>">공지사항</a></li>
+              <li><a href="<c:url value='/Free/Free.Lingo'/>">자유게시판</a></li>
             </ul>
           </li>
           <li>
-            <a id="qna" class="menu" href="<c:url value='/Admin/question/QNA.Admin?active=6'/>">
+            <a class="menu" href="<c:url value='/Admin/question/QNA.Admin'/>">
               <i class="fa fa-envelope"></i>
               <span>1:1문의 응답</span>
+              <span id="qna">
+              </span>
             </a>
           </li>
            <li>
-            <a class="menu" href="<c:url value='/Admin/FCM/FCM.Admin?active=7'/>">
+            <a class="menu" href="<c:url value='/Admin/FCM/FCM.Admin'/>">
               <i class="fa fa-envelope"></i>
               <span>FCM</span>
               </a>

@@ -355,11 +355,14 @@ public class LingoController {
 		//관리자
 		try {
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-		if (dto.getAdminno() != null)
-			return "notice/notice.Admin";
-		//고객
-		else
-			return "notice/notice.tiles";}
+			if (dto.getAdminno() != null) {
+				model.addAttribute("active",5);
+				return "notice/notice.Admin";
+			//고객
+			}else {
+				return "notice/notice.tiles";
+			}	
+		}
 		catch(Exception e) {
 			//로그인 안하고 바로 접근시
 			return "notice/notice.tiles";
@@ -367,23 +370,24 @@ public class LingoController {
 	}
 //창선 추가로 등록한 NOTICE 수정 조회 상세보기 삭제 시작
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.GET)
-		public String noticeWrite(HttpSession session) throws Exception{
+		public String noticeWrite(HttpSession session,Model model) throws Exception{
 			//사용자 유형에 따른 페이지 이동 
 			//관리자
 			
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-			if (dto.getAdminno() != null)
+			if (dto.getAdminno() != null) {
+				model.addAttribute("active",5);
 				return "notice/noticeWrite.Admin";
-			//고객
-			else
+			}//고객
+			else {
 				return "notice/noticeWrite.tiles";
-	
+			}
 		
 		}
 		@RequestMapping(value="/Notice/NoticeWrite.Lingo",method=RequestMethod.POST)
-		public String noticeWriteOk(HttpSession session,@RequestParam Map map) throws Exception{
-			noticeService.insert(map);
-			
+		public String noticeWriteOk(HttpSession session,@RequestParam Map map,Model model) throws Exception{
+				noticeService.insert(map);
+				model.addAttribute("active",5);
 				return "forward:/Notice/Notice.Lingo";
 			
 		}
@@ -391,16 +395,19 @@ public class LingoController {
 		public String noticeEdit(Model model,@RequestParam Map map) throws Exception{
 			NoticeDTO dto = noticeService.selectOne(map);
 			model.addAttribute("record", dto);
+			model.addAttribute("active",5);
 			return "notice/noticeEdit.Admin";
 		}
 		@RequestMapping(value="/Notice/NoticeEdit.Lingo",method=RequestMethod.POST)
-		public String noticeEditOk(@RequestParam Map map) throws Exception{
+		public String noticeEditOk(@RequestParam Map map,Model model) throws Exception{
 			noticeService.update(map);
+			model.addAttribute("active",5);
 			return "forward:/Notice/NoticeView.Lingo?noticeno="+map.get("noticeno");
 		}
 		@RequestMapping("/Notice/NoticeDelete.Lingo")
-		public String noticeDelete(@RequestParam Map map) throws Exception{
+		public String noticeDelete(@RequestParam Map map,Model model) throws Exception{
 			noticeService.delete(map);
+			model.addAttribute("active",5);
 			return "forward:/Notice/Notice.Lingo";
 		}
 		@RequestMapping("/Notice/NoticeView.Lingo")
@@ -413,13 +420,15 @@ public class LingoController {
 			//사용자 유형에 따른 페이지 이동 
 			//관리자
 			try {
-			LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
-			if (dto1.getAdminno() != null)
-				return "notice/noticeView.Admin";
-			//고객
-			else
-				return "notice/noticeView.tiles";}
-			catch(Exception e) {
+				LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+				if (dto1.getAdminno() != null) {
+					model.addAttribute("active",5);
+					return "notice/noticeView.Admin";
+				//고객
+				}else {
+					return "notice/noticeView.tiles";
+				}
+			}catch(Exception e) {
 				//로그인 안하고 바로 접근시
 				return "notice/noticeView.tiles";
 			}
@@ -453,13 +462,15 @@ public class LingoController {
 		//사용자 유형에 따른 페이지 이동 
 				//관리자
 				try {
-				LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-				if (dto.getAdminno() != null)
-					return "free/free.Admin";
-				//고객
-				else
-					return "free/free.tiles";}
-				catch(Exception e) {
+					LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
+					if (dto.getAdminno() != null) {
+						model.addAttribute("active",5);
+						return "free/free.Admin";
+					//고객
+					}else {
+						return "free/free.tiles";
+					}
+				}catch(Exception e) {
 					//로그인 안하고 바로 접근시
 					return "free/free.tiles";
 				}
@@ -468,46 +479,48 @@ public class LingoController {
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 시작
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.GET)
-	public String freeWrite(HttpSession session) throws Exception{
+	public String freeWrite(HttpSession session,Model model) throws Exception{
 		//사용자 유형에 따른 페이지 이동 
 		//관리자
 		
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-		if (dto.getAdminno() != null)
+		if (dto.getAdminno() != null) {
+			model.addAttribute("active",5);
 			return "free/freeWrite.Admin";
 		//고객
-		else
+		}else {
 			return "free/freeWrite.tiles";
-		
 		}
+	}
 		
 	
 	@RequestMapping(value="/Free/FreeWrite.Lingo",method=RequestMethod.POST)
-	public String freeWriteOk(@RequestParam Map map) throws Exception{
+	public String freeWriteOk(@RequestParam Map map,Model model) throws Exception{
 		freeService.insert(map);
+		model.addAttribute("active",5);
 		return "forward:/Free/Free.Lingo";
 	}
 	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.GET)
 	public String freeEdit(HttpSession session,Model model,@RequestParam Map map) throws Exception{
 		FreeDTO dto = freeService.selectOne(map);
 		model.addAttribute("record", dto);
-		
-		
 		//사용자 유형에 따른 페이지 이동 
 				//관리자
-				
-				LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
-				if (dto1.getAdminno() != null)
-					return "free/freeEdit.Admin";
-				//고객
-				else
-					return "free/freeEdit.tiles";
-				
+		
+		LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+		if (dto1.getAdminno() != null) {
+			model.addAttribute("active",5);
+			return "free/freeEdit.Admin";
+		//고객
+		}else {
+			return "free/freeEdit.tiles";
+		}
 	}
 		
 	@RequestMapping(value="/Free/FreeEdit.Lingo",method=RequestMethod.POST)
-	public String freeEditOk(@RequestParam Map map) throws Exception{
+	public String freeEditOk(@RequestParam Map map,Model model) throws Exception{
 		freeService.update(map);
+		model.addAttribute("active",5);
 		return "forward:/Free/FreeView.Lingo?freeno="+map.get("freeno");
 	}
 	@RequestMapping("/Free/FreeView.Lingo")
@@ -521,22 +534,25 @@ public class LingoController {
 		
 		//사용자 유형에 따른 페이지 이동 
 				//관리자
-				try {
-				LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
-				if (dto1.getAdminno() != null)
-					return "free/freeView.Admin";
-				//고객
-				else
-					return "free/freeView.tiles";}
-				catch(Exception e) {
-					//로그인 안하고 바로 접근시
-					return "free/freeView.tiles";
-				}
+		try {
+			LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
+			if (dto1.getAdminno() != null) {
+				model.addAttribute("active",5);
+				return "free/freeView.Admin";
+			//고객
+			}else {
+				return "free/freeView.tiles";
+			}
+		}catch(Exception e) {
+			//로그인 안하고 바로 접근시
+			return "free/freeView.tiles";
+		}
 	}
 	@RequestMapping("/Free/FreeDelete.Lingo")
-	public String freeDelete(@RequestParam Map map) throws Exception{
+	public String freeDelete(@RequestParam Map map,Model model) throws Exception{
 		commentService.deletebyno(map);
 		freeService.delete(map);
+		model.addAttribute("active",5);
 		return "forward:/Free/Free.Lingo";
 	}
 //창선 추가로 등록한 FREE 수정 조회 상세보기 삭제 끝
@@ -599,10 +615,12 @@ public class LingoController {
 		ReplyDTO reply = replyService.select(map);
 		model.addAttribute("reply", reply);
 		LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
-		if (dto1.getAdminno() != null)
+		if (dto1.getAdminno() != null) {
+			model.addAttribute("active",6);
 			return "question/QNAEdit.Admin";
-		else
+		}else {
 			return "question/QNAEdit.tiles";
+		}
 	}
 	@RequestMapping(value="/Question/QNAEdit.Lingo",method=RequestMethod.POST)
 	public String qnaEditOk(@RequestParam Map map) throws Exception{
@@ -614,14 +632,16 @@ public class LingoController {
 		return "question/QNAWrite.tiles";
 	}
 	@RequestMapping(value="/Question/QNAWrite.Lingo",method=RequestMethod.POST)
-	public String qnaWriteOk(HttpSession session,@RequestParam Map map) throws Exception{
+	public String qnaWriteOk(HttpSession session,@RequestParam Map map,Model model) throws Exception{
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 		map.put("id", dto.getId());
 		qnaService.insert(map);
-		if (dto.getAdminno() != null)
+		if (dto.getAdminno() != null) {
+			model.addAttribute("active",6);
 			return "forward:/Admin/question/QNA.Admin";
-		else
+		}else {
 			return "forward:/Question/QNA.Lingo";
+		}
 	}
 	@RequestMapping("/Question/QNAView.Lingo")
 	public String qnaView(@RequestParam Map map,Model model,HttpSession session) throws Exception{
@@ -631,20 +651,24 @@ public class LingoController {
 		model.addAttribute("reply", reply);
 		model.addAttribute("nowPage", map.get("nowPage"));
 		LoginDTO dto1=(LoginDTO)session.getAttribute("loginDTO");
-		if (dto1.getAdminno() != null)
+		if (dto1.getAdminno() != null) {
+			model.addAttribute("active",6);
 			return "question/QNAView.Admin";
-		else
+		}else {
 			return "question/QNAView.tiles";
+		}
 	}
 	@RequestMapping("/Question/QNADelete.Lingo")
-	public String qnaDelete(@RequestParam Map map,HttpSession session) throws Exception{
+	public String qnaDelete(@RequestParam Map map,HttpSession session,Model model) throws Exception{
 		replyService.deleteByQNA(map);
 		qnaService.delete(map);
 		LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
-		if (dto.getAdminno() != null)
+		if (dto.getAdminno() != null) {
+			model.addAttribute("active",6);
 			return "forward:/Admin/question/QNA.Admin";
-		else
+		}else {
 			return "forward:/Question/QNA.Lingo";
+		}
 	}
 	@RequestMapping("/Reply/ReplyWrite.Lingo")
 	public String replyWrite(@RequestParam Map map) throws Exception{
@@ -700,13 +724,13 @@ public class LingoController {
 	
 	@ResponseBody
 	@RequestMapping(value="/Admin/Member.Admin",produces="text/html; charset=UTF-8")
-	public String member(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage,HttpSession session) throws Exception{
+	public String member(@RequestParam Map map,@RequestParam(required=false,defaultValue="1") int nowPage,HttpSession session,Model model) throws Exception{
 		  LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");  
 		  int start = (nowPage-1)*userinfopageSize+1;
 		  int end = nowPage*userinfopageSize;
 		  map.put("start", start);
 		  map.put("end", end);
-		  
+		  model.addAttribute("active",3);
 		  int totalRecordCount = 0;
 		  List<UserinfoDTO> list = null;
 		  
@@ -1012,7 +1036,8 @@ public class LingoController {
 	
 	//백엔드 인덱스
 		@RequestMapping("/Admin/Index/Index.Admin")
-		public String adminIndex() throws Exception{
+		public String adminIndex(Model model) throws Exception{
+			model.addAttribute("active",0);
 			return "admin/index/index.Admin";
 		}
 		
@@ -1030,7 +1055,7 @@ public class LingoController {
 			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, ownerpageSize, ownerblockPage, nowPage, req.getContextPath()+"/Admin/shop/apply.Admin?");
 			map.put("start", start);
 			map.put("end", end);
-			
+			model.addAttribute("active",1);
 			List<OwnerDTO> list = ownerService.selectAdminApply(map);
 			model.addAttribute("list", list);
 			model.addAttribute("pageString", pageString);
@@ -1047,7 +1072,7 @@ public class LingoController {
 			
 			int start = (nowPage-1)*ownerpageSize+1;
 			int end = nowPage*ownerpageSize;
-			
+			model.addAttribute("active",1);
 			String pageString=null;
 			if(map.get("searchColumn")!=null) {
 				pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, ownerpageSize, ownerblockPage, nowPage, req.getContextPath()+"/Admin/shop/delete.Admin?",map.get("searchColumn").toString(),map.get("searchWord").toString());
@@ -1119,7 +1144,8 @@ public class LingoController {
 		}
 		//백엔드 회원관리시스템
 		@RequestMapping("/Admin/member/member.Admin")
-		public String adminMember() throws Exception{
+		public String adminMember(Model model) throws Exception{
+			model.addAttribute("active",3);
 			return "admin/member/member.Admin";
 		}
 		
@@ -1129,7 +1155,7 @@ public class LingoController {
 				 @RequestParam(required=false, defaultValue="1") int nowPage) throws Exception{
 			LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 			Map map = new HashMap();
-			
+			model.addAttribute("active",6);
 			int totalRecordCount = qnaService.getTotalRecordAdmin();
 			int start = (nowPage-1)*qnapageSize+1;
 			int end = nowPage*qnapageSize;
@@ -1153,7 +1179,7 @@ public class LingoController {
 				
 				LoginDTO dto=(LoginDTO)session.getAttribute("loginDTO");
 				map.put("storeno", dto.getStoreno());
-			
+				model.addAttribute("active",4);
 				int totalRecordCount = visitlistService.getTotalRecord(map);
 				
 				int start = (nowPage-1)*visitlistpageSize+1;
@@ -1204,7 +1230,7 @@ public class LingoController {
 			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, blackpageSize, blackblockPage, nowPage, req.getContextPath()+"/Admin/blackList/blackApply.Admin?");
 			map.put("start", start);
 			map.put("end", end);
-			
+			model.addAttribute("active",4);
 			List<BlacklistDTO> list = blacklistService.selectAdminApply(map);
 			model.addAttribute("list", list);
 			model.addAttribute("pageString", pageString);
@@ -1222,7 +1248,7 @@ public class LingoController {
 				
 				int start = (nowPage-1)*blackpageSize+1;
 				int end = nowPage*blackpageSize;
-				
+				model.addAttribute("active",4);
 				String pageString=null;
 				if(map.get("searchColumn")!=null) {
 					pageString = PagingUtil.pagingBootStrapStyleSearch(totalRecordCount, blackpageSize, blackblockPage, nowPage, req.getContextPath()+"/Admin/blackList/blackList.Admin?",map.get("searchColumn").toString(),map.get("searchWord").toString());
@@ -1271,7 +1297,8 @@ public class LingoController {
 		
 		//백엔드 1:1문의 응답 
 		@RequestMapping("/Admin/FCM/FCM.Admin")
-		public String FCM() throws Exception{
+		public String FCM(Model model) throws Exception{
+			model.addAttribute("active",7);
 			return "admin/FCM/FCM.Admin";
 		}
 		@RequestMapping("/FCM/FCMRegister.Admin")
@@ -1466,7 +1493,7 @@ public class LingoController {
 			int end = nowPage*reservedtablepageSize;
 			map.put("start", start);
 			map.put("end", end);
-			
+			model.addAttribute("active",2);
 			String pageString = PagingUtil.pagingBootStrapStyle(totalRecordCount, reservedtablepageSize, reservedtableblockPage, nowPage, req.getContextPath()+"/Admin/reservation/reservationList.Admin?");
 			List<ReservedtableDTO> list =reservedtableService.selectadmin(map);
 			model.addAttribute("list", list);
