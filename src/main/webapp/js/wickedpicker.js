@@ -483,7 +483,7 @@
          * @param {object} The input element
          */
         setText: function (input) {
-            $(input).val(this.formatTime(this.selectedHour, this.selectedMin, this.selectedMeridiem, this.selectedSec)).change();
+            $(input).val(this.formatTime(this.selectedHour,this.selectedMin,this.selectedMeridiem, this.selectedSec)).change();
         },
 
         /*
@@ -507,15 +507,15 @@
          * @return {string}
          */
         formatTime: function (hour, min, meridiem, seconds) {
-            var formattedTime = hour + ' : ' + min;
+            var formattedTime = hour + ':' + min;
             if (this.options.twentyFour) {
-                formattedTime = hour + ' : ' + min;
+                formattedTime = hour + ':' + min;
             }
             if (this.options.showSeconds) {
-                formattedTime += ' : ' + seconds;
+                formattedTime += ':' + seconds;
             }
             if (this.options.twentyFour === false) {
-                formattedTime += ' ' + meridiem;
+                formattedTime += '' + meridiem;
             }
             return formattedTime;
         },

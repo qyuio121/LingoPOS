@@ -66,11 +66,11 @@
                   <script>
                     var doughnutData = [{
                         value: 70,
-                        color: "#FF6B6B"
+                        color: "#fdfdfd"
                       },
                       {
                         value: 30,
-                        color: "#fdfdfd"
+                        color: "#FF6B6B"
                       }
                     ];
                     var myDoughnut = new Chart(document.getElementById("serverstatus01").getContext("2d")).Doughnut(doughnutData);
@@ -80,7 +80,7 @@
                       <p>신규 고객<br/>증가량</p>
                     </div>
                     <div class="col-sm-6 col-xs-6">
-                      <h2>30%</h2>
+                      <h2>${newUser/totalUser*100}</h2>
                     </div>
                   </div>
                 </div>
@@ -108,7 +108,7 @@
                   <p> </p>
                   <footer>
                     <div class="pull-left">
-                      <h5><i class="fa fa-hdd-o"></i>사업자회원 / 일반회원비율</h5>
+                      <h5><i class="fa fa-hdd-o"></i>사업자회원 /일반회원</h5>
                     </div>
                     <div class="pull-right">
                       <h5>40% / 60%</h5>
