@@ -289,12 +289,7 @@ public class TempleteController {
 		LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
 		map.put("id", dto.getId());
 		map.put("tableno",Integer.parseInt(map.get("tableno").toString())+1);
-		String[] time = map.get("starttime").toString().trim().split(" ");
-		StringBuffer starttime = new StringBuffer();
-		for(String temp:time) {
-			starttime.append(temp);
-		}
-		map.put("startdate",map.get("startdate").toString()+" "+starttime.toString()+":00");
+		map.put("startdate",map.get("startdate").toString()+" "+map.get("starttime").toString()+":00");
 		reservedtableService.insert(map);
 		return "android/reservationOk";
 	}

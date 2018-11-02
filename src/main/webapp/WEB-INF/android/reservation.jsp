@@ -66,7 +66,7 @@ $(function() {
 	})
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:1,now: "00:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,now:"00:00"});
 
 	var now = new Date();
 	var myDate = new Date();
