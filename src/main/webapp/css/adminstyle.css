@@ -1016,10 +1016,11 @@ PANELS CONFIGURATIONS
 /*My Panel*/
 .my-panel {
 	text-align: center;
-	background: #F5F6CE;
+	background: #ffffff;
+	border: thin solid lightgray;
 }
 .my-panel .my-header {
-	background: #F2F5A9;
+	background: #eeeeee;
 	padding: 3px;
 	margin-bottom: 15px;
 }
