@@ -41,7 +41,7 @@
 
         // 默认日期为当前日期
         date: new Date(),
-        format: 'yyyy/mm/dd',
+        format: 'yyyy-mm-dd',
 
         // 一周的第一天
         // 0表示周日，依次类推

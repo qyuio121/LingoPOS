@@ -95,7 +95,9 @@ $(function() {
 					</div>
 				</div>
 			</div>
+			</div>
 		</div>
+		<div class="row">
 			<div class="out" style="margin-top: 20px;height:220px">
 				<div class="in" style="width:66%">
 					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb">
@@ -109,19 +111,21 @@ $(function() {
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mb">
 						<div class="weather-3 pn centered">
-							<i class="fa fa-cutlery"></i>
-							<h1>Worst 메뉴</h1>
-							<div class="info">
-								<div class="row">
-									<h3 class="centered">${saleList.worstName1}</h3>
+								<i class="fa fa-cutlery"></i>
+								<h1>Worst 메뉴</h1>
+								<div class="info">
+									<div class="row">
+										<h3 class="centered">${saleList.worstName1}</h3>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<div class="row">
 			<div style="margin-bottom:50px;height: 240px;">
 				<p style="margin-bottom:50px;font-weight: bold;font-size: 80px">Best메뉴 Top3</p>
 					<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb" style="margin-bottom:50px ">
@@ -158,8 +162,12 @@ $(function() {
 						</div>
 					</div>
 				</div>
-				<div style="margin-bottom:80px;height: 300px;margin-top:50px">
-				<p style="margin-bottom:50px;font-weight: bold;font-size: 80px">Worst메뉴 Top3</>
+			</div>
+			<div class="row">
+			<div style="margin-bottom:50px;height: 240px;">
+				<div style="text-align:left;">
+					<p style="margin-bottom:50px;font-weight: bold;font-size: 80px">Worst메뉴 Top3</p>
+				</div>
 				<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb" >
 					<div class="weather-3 pn centered">
 						<i class="fa fa-usd"></i>
@@ -196,12 +204,11 @@ $(function() {
 			</div>
 			<div style="height:250px"></div>
 	<!-- 테이블 시작 -->
-			
+		</div>
 	<!-- 테이블 끝 -->
 		</section>
 	</div>
 <!-- 내용 끝 -->
-</div>
 
 <script src="<c:url value="/lib/jquery.dcjqaccordion.2.7.js"/>"></script>
 <script src="<c:url value="/lib/jquery.scrollTo.min.js"/>"></script>

@@ -1511,12 +1511,7 @@ public class LingoController {
 			LoginDTO dto = (LoginDTO)session.getAttribute("loginDTO");
 			map.put("id", dto.getId());
 			map.put("tableno",Integer.parseInt(map.get("tableno").toString())+1);
-			String[] time = map.get("starttime").toString().trim().split(" ");
-			StringBuffer starttime = new StringBuffer();
-			for(String temp:time) {
-				starttime.append(temp);
-			}
-			map.put("startdate",map.get("startdate").toString()+" "+starttime.toString()+":00");
+			map.put("startdate",map.get("startdate").toString()+" "+map.get("starttime").toString()+":00");
 			reservedtableService.insert(map);
 			return "forward:/";
 		}
@@ -1528,55 +1523,79 @@ public class LingoController {
 			map.put("storeno", dto.getStoreno());
 			//금일 매출액구하기
 			List list = saleService.selectDay(map);
-			for(Object value: list) {
-				if(map.get("day") != null) {
-					map.put("day", Integer.parseInt(map.get("day").toString())+((SaleDTO)value).getSalesprice());
+			if(list.size() !=0) {
+				for(Object value: list) {
+					if(map.get("day") != null) {
+						map.put("day", Integer.parseInt(map.get("day").toString())+((SaleDTO)value).getSalesprice());
+					}
+					else {
+						map.put("day", ((SaleDTO)value).getSalesprice());
+					}
 				}
-				else {
-					map.put("day", ((SaleDTO)value).getSalesprice());
-				}
+				map.put("day", map.get("day").toString()+"원");
+			}else {
+				map.put("day", "0원");
 			}
-			map.put("day", map.get("day").toString()+"원");
 			//월 총 매출액구하기
 			list = saleService.selectMonth(map);
-			for(Object value: list) {
-				if(map.get("month") != null) {
-					map.put("month", Integer.parseInt(map.get("month").toString())+((SaleDTO)value).getSalesprice());
+			if(list.size() !=0) {
+				for(Object value: list) {
+					if(map.get("month") != null) {
+						map.put("month", Integer.parseInt(map.get("month").toString())+((SaleDTO)value).getSalesprice());
+					}
+					else {
+						map.put("month", ((SaleDTO)value).getSalesprice());
+					}
 				}
-				else {
-					map.put("month", ((SaleDTO)value).getSalesprice());
-				}
+				map.put("month", map.get("month").toString()+"원");
+			}else {
+				map.put("month", "0원");
 			}
-			map.put("month", map.get("month").toString()+"원");
 			//연 총 매출액구하기
 			list = saleService.selectYear(map);
-			for(Object value: list) {
-				if(map.get("year") != null) {
-					map.put("year", Integer.parseInt(map.get("year").toString())+((SaleDTO)value).getSalesprice());
+			if(list.size() !=0) {
+				for(Object value: list) {
+					if(map.get("year") != null) {
+						map.put("year", Integer.parseInt(map.get("year").toString())+((SaleDTO)value).getSalesprice());
+					}
+					else {
+						map.put("year", ((SaleDTO)value).getSalesprice());
+					}
 				}
-				else {
-					map.put("year", ((SaleDTO)value).getSalesprice());
-				}
+				map.put("year", map.get("year").toString()+"원");
+			}else {
+				map.put("year", "0원");
 			}
-			map.put("year", map.get("year").toString()+"원");
+			
 			//베스트,워스트메뉴 구하기
 			list = foodimgService.select(map);
-			map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
-			map.put("bestName2", ((FoodimgDTO)list.get(1)).getName()+" "+((FoodimgDTO)list.get(1)).getCount()+"개");
-			map.put("bestName3", ((FoodimgDTO)list.get(2)).getName()+" "+((FoodimgDTO)list.get(2)).getCount()+"개");
-			map.put("worstName1",((FoodimgDTO)list.get(list.size()-1)).getName()+" "+((FoodimgDTO)list.get(list.size()-1)).getCount()+"개");
-			map.put("worstName2",((FoodimgDTO)list.get(list.size()-2)).getName()+" "+((FoodimgDTO)list.get(list.size()-2)).getCount()+"개");
-			map.put("worstName3",((FoodimgDTO)list.get(list.size()-3)).getName()+" "+((FoodimgDTO)list.get(list.size()-3)).getCount()+"개");
+			if(list.size()>2) {
+				map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
+				map.put("bestName2", ((FoodimgDTO)list.get(1)).getName()+" "+((FoodimgDTO)list.get(1)).getCount()+"개");
+				map.put("bestName3", ((FoodimgDTO)list.get(2)).getName()+" "+((FoodimgDTO)list.get(2)).getCount()+"개");
+				map.put("worstName1",((FoodimgDTO)list.get(list.size()-1)).getName()+" "+((FoodimgDTO)list.get(list.size()-1)).getCount()+"개");
+				map.put("worstName2",((FoodimgDTO)list.get(list.size()-2)).getName()+" "+((FoodimgDTO)list.get(list.size()-2)).getCount()+"개");
+				map.put("worstName3",((FoodimgDTO)list.get(list.size()-3)).getName()+" "+((FoodimgDTO)list.get(list.size()-3)).getCount()+"개");
+			}else if(list.size()==2) {
+				map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
+				map.put("bestName2", ((FoodimgDTO)list.get(1)).getName()+" "+((FoodimgDTO)list.get(1)).getCount()+"개");
+				map.put("bestName3", "상품이 없습니다.");
+				map.put("worstName1",((FoodimgDTO)list.get(list.size()-1)).getName()+" "+((FoodimgDTO)list.get(list.size()-1)).getCount()+"개");
+				map.put("worstName2",((FoodimgDTO)list.get(list.size()-2)).getName()+" "+((FoodimgDTO)list.get(list.size()-2)).getCount()+"개");
+				map.put("worstName3","상품이 없습니다.");
+			}else if(list.size()==1) {
+				map.put("bestName1", ((FoodimgDTO)list.get(0)).getName()+" "+((FoodimgDTO)list.get(0)).getCount()+"개");
+				map.put("bestName2", "상품이 없습니다.");
+				map.put("bestName3", "상품이 없습니다.");
+				map.put("worstName1",((FoodimgDTO)list.get(list.size()-1)).getName()+" "+((FoodimgDTO)list.get(list.size()-1)).getCount()+"개");
+				map.put("worstName2","상품이 없습니다.");
+				map.put("worstName3","상품이 없습니다.");
 			
+			}
 			list = saleslistService.select(map);
-			
 			
 			model.addAttribute("saleList", map);
 			 
-			
-			
-			
-			
 			return "shop/sales/sales.tiles";
 		}
 

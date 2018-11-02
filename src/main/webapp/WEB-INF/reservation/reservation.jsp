@@ -75,7 +75,7 @@ $(function() {
 	})
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:1,now: "00:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,now:"00:00"});
 	
 	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
 	$(".time").on('change',function(){

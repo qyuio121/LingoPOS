@@ -144,9 +144,10 @@ var showCurrentPage = function(nowPage){
 };
 var displayCurrent = function(data){
 	var count = 0;
-	var maxCount = $("input[name=check]").length;
+	
 	
 	$('#currentTable').html(data);
+	var maxCount = $("input[name=check]").length;
 	$("#checkall").click(function(){
         //클릭되었으면
         if($("#checkall").prop("checked")){
@@ -160,6 +161,7 @@ var displayCurrent = function(data){
             	var reserveno = $("#reserve tr").eq(i).children('td:eq(0)').html();
         		selectlist.push({reserveno:reserveno});
             }
+            console.log(selectlist);
         }
         else{
             //input태그의 name이 chk인 태그들을 찾아서 checked옵션을 false로 정의
@@ -177,6 +179,7 @@ var displayCurrent = function(data){
     		}
     		var reserveno = $("#reserve tr").eq($(this).val()).children('td:eq(0)').html();
     		selectlist.push({reserveno:reserveno});
+    		 console.log(selectlist);
     	}
     	else{
     		count-=1;
@@ -186,6 +189,7 @@ var displayCurrent = function(data){
     		}
     		var reserveno = $("#reserve tr").eq($(this).val()).children('td:eq(0)').html();
     		selectlist=selectlist.filter(el => el.reserveno != reserveno);
+    		 console.log(selectlist);
     	}
     });
     $("button[name=cancelBtn]").click(function(){

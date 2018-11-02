@@ -397,7 +397,7 @@
 	  v.id=#{id}) t, (select @rownum:=0) b order by visitdate desc) tab where rnum between #{start} and #{end}
  </select>
   <select id="LingoIsVisit" parameterType="java.util.Map" resultType="int">
-	select count(*) from visitlist where id=#{id} and storeno=#{storeno} and isvisit = true;
+	select count(*) from visitlist where id=#{id} and storeno=#{storeno} and isvisited = true;
  </select>
  
  <select id="LingoVisitGetTotalRecord" parameterType="java.util.Map" resultType="int" >
