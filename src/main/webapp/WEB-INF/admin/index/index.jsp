@@ -107,7 +107,7 @@
                       <h5><i class="fa fa-hdd-o"></i>사업자회원 /일반회원</h5>
                     </div>
                     <div class="pull-right">
-                      <h5>${ownerUser/totalUser*100}%/${(totalUser-storeUser)/totalUser*100}%</h5>
+                      <h5>${ownerUser/totalUser*100}%/${(totalUser-storeUser-adminUser)/totalUser*100}%</h5>
                     </div>
                   </footer>
                 </div>
