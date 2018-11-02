@@ -966,10 +966,10 @@ PANELS CONFIGURATIONS
 
 .darkblue-panel {
 	text-align: center;
-	background: #444c57;
+	background: #585858;
 }
 .darkblue-panel .darkblue-header {
-	background: transparent;
+	background: #444c57;
 	padding: 3px;
 	margin-bottom: 15px;
 }
@@ -1011,6 +1011,29 @@ PANELS CONFIGURATIONS
 }
 .green-panel p {
 	color: white;
+}
+
+/*My Panel*/
+.my-panel {
+	text-align: center;
+	background: #F5F6CE;
+}
+.my-panel .my-header {
+	background: #F2F5A9;
+	padding: 3px;
+	margin-bottom: 15px;
+}
+.my-panel h5 {
+	color:black;
+	font-weight: 200;
+	margin-top: 10px;
+}
+.my-panel h3 {
+	color:black;
+	font-weight: 100;
+}
+.my-panel p {
+	color:black;
 }
 
 /*White Panel */

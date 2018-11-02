@@ -84,8 +84,8 @@
 	<!--1번 원형차트-->			  
 	<!--2번 원형차트-->			  
               <div class="col-md-4 col-sm-4 mb">
-                <div class="darkblue-panel pn">
-                  <div class="darkblue-header">
+                <div class="my-panel pn" >
+                  <div class="my-header">
                     <h5>사업자회원 / 일반고객 </h5>
                   </div>
                   <canvas id="serverstatus02" height="120" width="120"></canvas>
@@ -115,8 +115,8 @@
 	<!--2번 원형차트-->			
 	<!--3번 원형차트-->	
               <div class="col-md-4 col-sm-4 mb">
-                <div class="green-panel pn">
-                  <div class="green-header">
+                <div class="darkblue-panel pn">
+                  <div class="darkblue-header">
                     <h5>금일 예약 시스템 사용자</h5>
                   </div>
                   <canvas id="serverstatus03" height="120" width="120"></canvas>
