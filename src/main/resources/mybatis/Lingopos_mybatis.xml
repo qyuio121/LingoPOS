@@ -2,10 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- <!-- namespace는 설정파일의 완전한 경로를 적어준다 -->
- <!-- ibatis와 다르게 id값에 . 사용 불가 -->
-  <!-- 기본 테이블들에 대한 crud -->
-  <!-- 카운트 늘리는 것은 트리거로 작업할 예정 -->
+
 <mapper namespace="mybatis.Lingopos_mybatis">
 
 <select id="LingoLoginResult" parameterType="java.util.Map" resultType="loginDTO">
@@ -189,7 +186,7 @@
  	select count(*) from owner where isallowed = false
  </select>
   <select id="LingoOwnerSelectAdminList" parameterType="java.util.Map" resultType="ownerDTO">
- 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select o.*,regidate,tel from owner o join user u on o.id=u.id where isallowed = true) t, (select @rownum:=0) b 
+ 	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select o.*,regidate,u.tel,storeno from owner o join user u on o.id=u.id left join store s on o.id=s.id where isallowed = true) t, (select @rownum:=0) b 
  		<if test="searchColumn!=null and !searchColumn.equals('')">
  		  where t.${searchColumn} like '%${searchWord}%'
  		</if>

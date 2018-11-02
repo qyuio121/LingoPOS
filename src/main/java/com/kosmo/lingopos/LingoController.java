@@ -1131,7 +1131,6 @@ public class LingoController {
 				Map map = new HashMap();
 				map.put("id", json.get("id").toString());
 				String storeno = storeService.selectbyID(map);
-				System.out.println(storeno);
 				if(storeno !=null) {
 					map.put("storeno", storeno);
 					String phicalPath=req.getServletContext().getRealPath("/Images/")+json.get("id").toString();

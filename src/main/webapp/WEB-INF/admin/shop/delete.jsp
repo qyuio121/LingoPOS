@@ -30,12 +30,13 @@
 				<table class="table table-bordered">
 					<thead>
 						<tr style="background-color:#D8D8D8">
-							<th style="width:12%"><input type="checkbox" id="checkall">&nbsp&nbsp가게이름</th>
+							<th style="width:17%"><input type="checkbox" id="checkall">&nbsp&nbsp가게이름</th>
 							<th style="width:13%"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>  Id</th>
 							<th style="width:15%"><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span>  Tel</th>
 							<th style="width:17%"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>  사업자번호</th>
-							<th style="width:14%"> 사업자등록증</th>
-							<th style="width:15"><i class=" fa fa-list-alt"></i>  등록된 날짜</th>
+							<th style="width:10%"> 사업자등록증</th>
+							<th style="width:15%"><i class=" fa fa-list-alt"></i>  등록된 날짜</th>
+							<th style="width:13%"> 가게등록여부</th>
 							<th style="width:10%"><span class="glyphicon glyphicon-ok" aria-hidden="true"> </span>  제거</th>
 						</tr>
 					</thead>
@@ -51,7 +52,8 @@
 										<span class="glyphicon glyphicon-align-justify"></span> 보기						
 								</button>
 								</td>													
-								<td>${value.regidate}</td>													
+								<td>${value.regidate}</td>	
+								<td>${value.storeno==0?"미등록":"등록완료"}</td>												
 								<td data-placement="top" data-toggle="tooltip" title="Delete">					
 									<button name="denied" value="${loop.index}" type="button" class="btn btn-danger btn-xs" style="margin-left:10px" >
 										<span class="glyphicon glyphicon-trash"></span> 삭제						

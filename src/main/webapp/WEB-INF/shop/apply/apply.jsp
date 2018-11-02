@@ -143,8 +143,8 @@ $(function(){
 	});
 	
 	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:30,now: "1:00"});
-	$('.timepicker-two').wickedpicker({twentyFour: true,minutesInterval:30,now: "1:00"});
+	$('.timepicker').wickedpicker({twentyFour: true,minutesInterval:10,now: "0:00"});
+	$('.timepicker-two').wickedpicker({twentyFour: true,minutesInterval:10,now: "0:00"});
 	
 });
 </script>

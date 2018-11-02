@@ -8,8 +8,15 @@ public class OwnerDTO {
 	private boolean isallowed;
 	private String tel;
 	private java.sql.Timestamp regidate;
+	private int storeno;
 	
 	
+	public int getStoreno() {
+		return storeno;
+	}
+	public void setStoreno(int storeno) {
+		this.storeno = storeno;
+	}
 	public String getTel() {
 		return tel;
 	}
