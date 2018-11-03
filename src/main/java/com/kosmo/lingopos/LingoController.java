@@ -177,6 +177,8 @@ public class LingoController {
 	private SaleService saleService;
 	@Resource(name="saleslistService")
 	private SaleslistService saleslistService;
+	@Resource(name="usedtableService")
+	private UsedtableService usedtableService;
 	
 	//DB연결시 한글 깨지는거 방지
 	//창선 사진 등록 - 서머노트 Controller
@@ -1597,5 +1599,25 @@ public class LingoController {
 			 
 			return "shop/sales/sales.tiles";
 		}
+		
+		@ResponseBody
+		@RequestMapping(value="/Reservation/GetReservation.Lingo",produces="text/html; charset=UTF-8")
+		public String getReserve(@RequestParam Map map) throws Exception{
+			List<Map> list = reservedtableService.selectValidate(map);
+			for(Map record:list) {
+				record.put("startdate", (record.get("startdate").toString()));
+			}
+			return JSONArray.toJSONString(list);
+		}
+		@ResponseBody
+		@RequestMapping(value="/Reservation/GetUsed.Lingo",produces="text/html; charset=UTF-8")
+		public String getUsed(@RequestParam Map map) throws Exception{
+			List<Map> list = usedtableService.selectValidate(map);
+			for(Map record:list) {
+				record.put("startdate", (record.get("startdate").toString()));
+			}
+			return JSONArray.toJSONString(list);
+		}
+		
 
 }

@@ -28,7 +28,35 @@
 <script>
 $(function() {
 	var selectedliTag = [];
-	
+	var getReservation = function(){		
+		$.ajax({
+			url:"<c:url value='/Reservation/GetReservation.Lingo'/>",
+			data:{storeno:${store.storeno},startdate:$('#startdate').val()},
+			dataType:'json',
+			type:'post',
+			success:function(data){
+				console.log(data);
+			}		
+		});
+	};
+	var getUsed = function(){		
+		$.ajax({
+			url:"<c:url value='/Reservation/GetUsed.Lingo'/>",
+			data:{storeno:${store.storeno},startdate:$('#startdate').val()},
+			dataType:'json',
+			type:'post',
+			success:function(data){
+				
+				var currentDate = new Date(data[i].startdate);
+				console.log(JSON.stringify(data));
+				console.log(currentDate);
+			}		
+		});
+	};
+	var datevalidate = function(){
+		getReservation();
+		getUsed();
+	}
 	//유효성검사
 	$('#frm').validate({
 		rules:{
@@ -116,7 +144,7 @@ $(function() {
     	 selectedRang: [now,myDate],
     });
     $('#startdate').val(new Date().format("yyyy-mm-dd"));
-	console.log($('#startdate').val());
+	setInterval(datevalidate,3000)
 });
 
 </script>

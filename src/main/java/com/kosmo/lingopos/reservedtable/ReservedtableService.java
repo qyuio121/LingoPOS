@@ -30,6 +30,9 @@ public class ReservedtableService {
 	public List<ReservedtableDTO> selectadmin(Map map) {
 		return dao.selectadmin(map);
 	}
+	public List<Map> selectValidate(Map map) {
+		return dao.selectValidate(map);
+	}
 	public int getTotalRecord(Map map) {
 		return dao.getTotalRecord(map);
 	}

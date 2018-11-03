@@ -105,30 +105,7 @@
  		where ${searchColumn} like '%${searchWord}%' 
  	</if>
  </select>
- 
- <insert id="LingoLingoasInsert" parameterType="java.util.Map">
- 	insert into lingoas(reason,ispaid,asprice,posno) value(#{reason},#{ispaid},#{asprice},#{posno})
- </insert>
- <delete id="LingoLingoasDelete" parameterType="java.util.Map">
- 	delete from lingoas where asno=#{asno}
- </delete>
- <select id="LingoLingoasSelect" resultType="lingoasDTO">
- 	select * from lingoas
- </select>
- 
- <insert id="LingoLingoposInsert">
- 	insert into lingopos(outdate) value(null)
- </insert>
- <update id="LingoLingoposUpdate" parameterType="java.util.Map">
- 	update lingopos set outdate = defalut from posno = #{posno}
- </update>
- <delete id="LingoLingoposDelete" parameterType="java.util.Map">
- 	delete lingopos where posno=#{posno}
- </delete>
- <select id="LingoLingoposSelect" resultType="lingoposDTO">
- 	select * from lingopos
- </select>
- 
+
  <insert id="LingoMapInsert" parameterType="java.util.Map">
  	insert into map(x,y,storeno,img) value(#{x},#{y},#{storeno},#{img})
  </insert>
@@ -253,6 +230,9 @@
  <select id="LingoReservedtableSelect" parameterType="java.util.Map" resultType="reservedtableDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.storeno = #{storeno}) t, (select @rownum:=0) b where startdate > now() order by startdate) tab where rnum between #{start} and #{end}
  </select>
+  <select id="LingoReservedtableValidate" parameterType="java.util.Map"  resultType="java.util.Map">
+ 	select tableno,startdate from reservedtable where storeno = #{storeno} and year(startdate) = year(#{startdate}) and month(startdate) = month(#{startdate}) and  day(startdate) = day(#{startdate}) order by startdate
+ </select>
  <select id="LingoReservedtableSelectbyId" parameterType="java.util.Map" resultType="reservedtableDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select r.*,tel,address,storename from reservedtable r join store s on r.storeno=s.storeno where r.id = #{id}) t, (select @rownum:=0) b where startdate > now() order by startdate) tab where rnum between #{start} and #{end}
  </select>
@@ -281,6 +261,9 @@
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
  	select * from usedtable where storeno = #{storeno}
 </select>
+  <select id="LingoUsedtableValidate" parameterType="java.util.Map"  resultType="java.util.Map">
+ 	select tableno,startdate from usedtable where storeno = #{storeno} and year(startdate) = year(#{startdate}) and month(startdate) = month(#{startdate}) and  day(startdate) = day(#{startdate}) order by startdate
+ </select>
 <delete id="LingoUsedtableDelete" parameterType="java.util.Map">
  	delete from usedtable where storeno = #{storeno}
 </delete>

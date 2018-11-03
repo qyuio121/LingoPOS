@@ -16,6 +16,9 @@ public class UsedtableDAO {
 	public List<UsedtableDTO> select(Map map) {
 		return template.selectList("LingoUsedtableSelect",map);
 	}
+	public List<Map> selectValidate(Map map) {
+		return template.selectList("LingoUsedtableValidate",map);
+	}
 	public int delete(Map map) {
 		return template.delete("LingoUsedtableDelete",map);
 	}

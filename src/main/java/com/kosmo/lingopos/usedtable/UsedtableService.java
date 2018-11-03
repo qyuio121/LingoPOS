@@ -14,6 +14,9 @@ public class UsedtableService {
 	public List<UsedtableDTO> select(Map map) {
 		return dao.select(map);
 	}
+	public List<Map> selectValidate(Map map) {
+		return dao.selectValidate(map);
+	}
 	public int delete(Map map) {
 		return dao.delete(map);
 	}

@@ -9,8 +9,6 @@
   	<typeAlias alias="commentDTO" type="com.kosmo.lingopos.comment.CommentDTO"/>
   	<typeAlias alias="foodimgDTO" type="com.kosmo.lingopos.foodimg.FoodimgDTO"/>
   	<typeAlias alias="freeDTO" type="com.kosmo.lingopos.free.FreeDTO"/>
-  	<typeAlias alias="lingoasDTO" type="com.kosmo.lingopos.lingoas.LingoasDTO"/>
-  	<typeAlias alias="lingoposDTO" type="com.kosmo.lingopos.lingopos.LingoposDTO"/>
   	<typeAlias alias="mapDTO" type="com.kosmo.lingopos.map.MapDTO"/>
   	<typeAlias alias="noticeDTO" type="com.kosmo.lingopos.notice.NoticeDTO"/>
   	<typeAlias alias="ownerDTO" type="com.kosmo.lingopos.owner.OwnerDTO"/>
