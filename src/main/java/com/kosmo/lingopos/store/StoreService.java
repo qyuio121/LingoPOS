@@ -30,5 +30,7 @@ public class StoreService {
 	public String selectStoreNamebyID(Map map) {
 		return dao.selectStoreNamebyID(map);
 	}
-	
+	public StoreDTO selectBest() {
+		return dao.selectBest();
+	}
 }

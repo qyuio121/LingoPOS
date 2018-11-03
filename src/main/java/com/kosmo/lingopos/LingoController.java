@@ -1044,6 +1044,27 @@ public class LingoController {
 		@RequestMapping("/Admin/Index/Index.Admin")
 		public String adminIndex(Model model) throws Exception{
 			model.addAttribute("active",0);
+			int totaluser = userService.count();
+			int newuser = userService.countNew();
+			int owner = ownerService.count();
+			int admin = adminService.count();
+			int reserve = reservedtableService.count();
+			int visit = visitlistService.count();
+			int notvisit = visitlistService.notcount();
+			List<FoodimgDTO> list = foodimgService.menu();
+			StoreDTO best = storeService.selectBest();
+			
+			model.addAttribute("totaluser",totaluser);
+			model.addAttribute("newuser",newuser);
+			model.addAttribute("owner",owner);
+			model.addAttribute("admin",admin);
+			model.addAttribute("reserve",reserve);
+			model.addAttribute("visit",visit);
+			model.addAttribute("notvisit",notvisit);
+			model.addAttribute("bestmenu",list.get(0));
+			model.addAttribute("worstmenu",list.get(list.size()-1));
+			model.addAttribute("beststore",best);
+			
 			return "admin/index/index.Admin";
 		}
 		

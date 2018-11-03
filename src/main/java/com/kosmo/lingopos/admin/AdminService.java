@@ -20,4 +20,7 @@ public class AdminService {
 	public int delete(Map map) {
 		return dao.delete(map);
 	}
+	public int count() {
+		return dao.count();
+	}
 }

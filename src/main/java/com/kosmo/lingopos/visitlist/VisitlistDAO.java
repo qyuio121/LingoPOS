@@ -37,4 +37,11 @@ public class VisitlistDAO {
 	public int getTotalRecordbyUser(Map map) {
 		return template.selectOne("LingoVisitGetTotalRecordbyUser",map);
 	}
+	public int count() {
+		return template.selectOne("LingoVisitCount");
+	}
+	public int notcount() {
+		return template.selectOne("LingoVisitNotCount");
+	}
+	
 }

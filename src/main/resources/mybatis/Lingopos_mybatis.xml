@@ -6,7 +6,7 @@
 <mapper namespace="mybatis.Lingopos_mybatis">
 
 <select id="LingoLoginResult" parameterType="java.util.Map" resultType="loginDTO">
-	select u.id,o.ownerno,adminno,storeno from user u left join owner o on u.id=o.id left join admin a on u.id=a.id left join store s on u.id=s.id where u.id = #{id} and u.pwd = #{pwd};
+	select u.id,o.ownerno,adminno,storeno from user u left join owner o on u.id=o.id left join admin a on u.id=a.id left join store s on u.id=s.id where u.id = #{id} and u.pwd = #{pwd}
 </select>
  <insert id="LingoAdminInsert" parameterType="java.util.Map">
  	insert into admin(adminnick,id) value(#{adminnick},#{id})
@@ -17,7 +17,10 @@
  <delete id="LingoAdminDelete" parameterType="java.util.Map">
  	delete from admin where id=#{id}
  </delete>
- 
+ <select id="LingoAdminCount" resultType="int">
+	select count(*) from admin
+ </select>
+
  <insert id="LingoBlackInsert" parameterType="java.util.Map">
  	insert into blacklist(storeno,id,reason,added) value(#{storeno},#{id},#{reason},false)
  </insert>
@@ -77,7 +80,7 @@
  	select * from foodimg where storeno = #{storeno} order by count desc 
  </select>
  <select id="LingoFoodimgMenu" resultType="foodimgDTO">
- 	select name,count,storename from foodimg f join store s on f.storeno=s.storeno where order by count desc
+ 	select name,count,storename from foodimg f join store s on f.storeno=s.storeno order by count desc
  </select>
  
  
@@ -334,8 +337,10 @@
  <select id="LingoStoreSelectStoreNamebyID" parameterType="java.util.Map" resultType="java.lang.String">
  	select storename from store where id=#{id}
  </select>
+ <select id="LingoStoreSelectBest" resultType="storeDTO">
+ 	select storename,sum(price) totalprice from store t join sale s on t.storeno=s.storeno join saleslist l on s.salesno=l.salesno group by s.storeno order by sum(price) desc limit 1;
+ </select>
  
-
  <insert id="LingoStoreimgInsert" parameterType="java.util.Map">
  	insert into storeimg(img,storeno) value(#{img},#{storeno})
  </insert>
@@ -410,6 +415,13 @@
  	</if>
  	 v.id=#{id}
  </select>
+ <select id="LingoVisitCount" resultType="int">
+	select count(*) from visitlist where isvisited = true;
+ </select>
+ <select id="LingoVisitNotCount" resultType="int">
+	select count(*) from visitlist where isvisited = false;
+ </select>
+ 
  <select id="LingoAdminSelectUserlist" parameterType="java.util.Map" resultType="userinfoDTO">
  	select * from (select @rownum:=@rownum+1 as rnum,t.* from (select u.* from user u left join admin a on u.id=a.id left join owner o on u.id=o.id where
 		<if test="searchColumn!=null and !searchColumn.equals('')">

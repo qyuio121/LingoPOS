@@ -12,6 +12,15 @@ public class StoreDTO {
 	private String bigkind;
 	private int storeno;
 	private int atable;
+	private int totalprice;
+	
+	
+	public int getTotalprice() {
+		return totalprice;
+	}
+	public void setTotalprice(int totalprice) {
+		this.totalprice = totalprice;
+	}
 	public String getOwnerno() {
 		return ownerno;
 	}

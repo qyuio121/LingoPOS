@@ -21,4 +21,7 @@ public class AdminDAO {
 	public int delete(Map map) {
 		return template.delete("LingoAdminDelete",map);
 	}
+	public int count() {
+		return template.selectOne("LingoAdminCount");
+	}
 }

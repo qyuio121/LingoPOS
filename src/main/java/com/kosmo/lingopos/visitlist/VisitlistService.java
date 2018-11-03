@@ -36,4 +36,10 @@ public class VisitlistService {
 	public int getTotalRecordbyUser(Map map) {
 		return dao.getTotalRecordbyUser(map);
 	}
+	public int count() {
+		return dao.count();
+	}
+	public int notcount() {
+		return dao.notcount();
+	}
 }

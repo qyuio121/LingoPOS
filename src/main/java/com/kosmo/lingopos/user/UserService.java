@@ -31,6 +31,6 @@ public class UserService {
 		return dao.count();
 	}
 	public int countNew() {
-		return dao.count();
+		return dao.countNew();
 	}
 }

@@ -31,6 +31,8 @@ public class StoreDAO {
 	public String selectStoreNamebyID(Map map) {
 		return template.selectOne("LingoStoreSelectStoreNamebyID",map);
 	}
-	
+	public StoreDTO selectBest() {
+		return template.selectOne("LingoStoreSelectBest");
+	}
 	
 }

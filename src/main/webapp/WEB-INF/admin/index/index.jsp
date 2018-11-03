@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -19,7 +20,7 @@
 								<h1>Best 메뉴</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${storename}의 ${name} : ${count}회 주문</h3>
+										<h3 class="centered">${bestmenu.storename}의 ${bestmenu.name} : ${bestmenu.count}회 주문</h3>
 									</div>
 								</div>
 							</div>
@@ -30,7 +31,7 @@
 								<h1>Worst 메뉴</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${storename}의 ${name} : ${count}회 주문</h3>
+										<h3 class="centered">${worstmenu.storename}의 ${worstmenu.name} : ${worstmenu.count}회 주문</h3>
 									</div>
 								</div>
 							</div>
@@ -41,7 +42,7 @@
 								<h1>인기가게</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${storename}의 매출 : ${totalprice}원</h3>
+										<h3 class="centered">${beststore.storename}의 매출 : ${beststore.totalprice}원</h3>
 									</div>
 								</div>
 							</div>
@@ -61,11 +62,11 @@
                   <canvas id="serverstatus01" height="120" width="120"></canvas>
                   <script>
                     var doughnutData = [{
-                        value: 70,
+                        value: ${(totaluser-newuser)/totaluser},
                         color: "#fdfdfd"
                       },
                       {
-                        value: 30,
+                        value: ${newuser/totaluser},
                         color: "#FF6B6B"
                       }
                     ];
@@ -76,7 +77,7 @@
                       <p>신규 고객<br/>증가량</p>
                     </div>
                     <div class="col-sm-6 col-xs-6">
-                      <h2>${newUser/totalUser*100}%</h2>
+                      <h2><fmt:formatNumber value="${((newuser/totaluser)*100)}" pattern=".00"/>%</h2>
                     </div>
                   </div>
                 </div>
@@ -91,11 +92,11 @@
                   <canvas id="serverstatus02" height="120" width="120"></canvas>
                   <script>
                     var doughnutData = [{
-                        value: 60,
+                        value: ${owner/(totaluser-admin)},
                         color: "#1c9ca7"
                       },
                       {
-                        value: 40,
+                        value: ${(totaluser-admin-owner)/(totaluser-admin)},
                         color: "#f68275"
                       }
                     ];
@@ -107,7 +108,7 @@
                       <h5><i class="fa fa-hdd-o"></i>사업자회원 /일반회원</h5>
                     </div>
                     <div class="pull-right">
-                      <h5>${ownerUser/totalUser*100}%/${(totalUser-storeUser-adminUser)/totalUser*100}%</h5>
+                      <h5><fmt:formatNumber value="${(owner/(totaluser-admin))*100}" pattern=".00"/>%/<fmt:formatNumber value="${((totaluser-admin-owner)/(totaluser-admin))*100}" pattern=".00"/>%</h5>
                     </div>
                   </footer>
                 </div>
@@ -117,28 +118,32 @@
               <div class="col-md-4 col-sm-4 mb">
                 <div class="darkblue-panel pn">
                   <div class="darkblue-header">
-                    <h5>현제 예약 건수</h5>
+                    <h5>현재 예약 건수</h5>
                   </div>
                   <canvas id="serverstatus03" height="120" width="120"></canvas>
                   <script>
                     var doughnutData = [{
-                        value: 90,
+                        value: ${reserve}/${reserve+visit+notvisit},
                         color: "#1c9ca7"
                       },
                       {
-                        value: 10,
+                        value: ${visit}/${reserve+visit+notvisit},
                         color: "#fdfdfd"
-                      }
+                      },
+                      {
+                          value: ${notvisit}/${reserve+visit+notvisit},
+                          color: "#f68275"
+                       }
                     ];
                     var myDoughnut = new Chart(document.getElementById("serverstatus03").getContext("2d")).Doughnut(doughnutData);
                   </script>
                   <p> </p>
                   <footer>
                     <div class="pull-left">
-                      <h5><i class="fa fa-hdd-o"></i>금일 사용자 /총 일반고객</h5>
+                      <h5><i class="fa fa-hdd-o"></i>현재 예약 건수/방문 건수/미방문 건수</h5>
                     </div>
                     <div class="pull-right">
-                      <h5>${todayReservation/totalUser*100}%/${(totalUser-todayReservation)/totalUser*100}%</h5>
+                      <h5>${reserve}건/${visit}건/${notvisit}건</h5>
                     </div>
                   </footer>
                 </div>
