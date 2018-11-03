@@ -117,7 +117,7 @@
               <div class="col-md-4 col-sm-4 mb">
                 <div class="darkblue-panel pn">
                   <div class="darkblue-header">
-                    <h5>금일 예약 시스템 사용자</h5>
+                    <h5>현제 예약 건수</h5>
                   </div>
                   <canvas id="serverstatus03" height="120" width="120"></canvas>
                   <script>

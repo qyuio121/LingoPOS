@@ -35,7 +35,18 @@ $(function() {
 			dataType:'json',
 			type:'post',
 			success:function(data){
-				console.log(data);
+				var currentDate = new Date($('#startdate').val()+' '+$('#starttime').val()+":00").getTime();
+			
+				$.each(data,function(index,value){
+					var valuetime=new Date(value.startdate).getTime();
+					if(valuetime-(60*30*1000)<=currentDate && valuetime+(60*60*1000)>=currentDate){
+						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('선 예약중');;
+						if($('li[name="table"]').eq((value.tableno)-1).hasClass('es-selected')){
+							$('li[name="table"]').eq((value.tableno)-1).removeClass('es-selected');
+							$('li[name="table"]').html('예약가능(4인)');
+						}
+					}
+				});
 			}		
 		});
 	};
@@ -46,14 +57,26 @@ $(function() {
 			dataType:'json',
 			type:'post',
 			success:function(data){
+				var currentDate = new Date($('#startdate').val()+' '+$('#starttime').val()+":00").getTime();
 				
-				var currentDate = new Date(data[i].startdate);
-				console.log(JSON.stringify(data));
-				console.log(currentDate);
+				$.each(data,function(index,value){
+					var valuetime=new Date(value.startdate).getTime();
+					if(valuetime<=currentDate && valuetime+(60*60*1000)>=currentDate){
+						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('사용중');
+						if($('li[name="table"]').eq((value.tableno)-1).hasClass('es-selected')){
+							$('li[name="table"]').eq((value.tableno)-1).removeClass('es-selected');
+							$('li[name="table"]').html('예약가능(4인)');
+						}
+					}
+				});
 			}		
 		});
 	};
 	var datevalidate = function(){
+		if(!$('li[name="table"]').hasClass('es-selected')){
+			$('li[name="table"]').removeClass('create-used');
+			$('li[name="table"]').html('예약가능(4인)');
+		}
 		getReservation();
 		getUsed();
 	}
@@ -61,24 +84,28 @@ $(function() {
 	$('#frm').validate({
 		rules:{
 			people:"required"
+			,starttime:{vaildtime:true}
 		},messages:{	
 			people:"예약 인원 수를 입력하세요."
-		}});
-	
+	}});
+		jQuery.validator.addMethod('vaildtime', function(){ 
+			var opentime = new Date("1970-01-01"+" "+"${store.opentime}").getTime();
+			var closetime = new Date("1970-01-01"+" "+"${store.closetime}").getTime();
+			var starttime = new Date("1970-01-01"+" "+$("#starttime").val()).getTime();
+			if(opentime == closetime){
+				return true;
+			}else if(opentime > closetime){
+				if(!(opentime>starttime&&starttime>closetime)){
+					return true;
+				}
+			}
+			if(opentime<=starttime&&starttime<=closetime){
+				return true;
+			}
+			return false;
+		}, "영업시간내로 선택해 주세요. (${store.opentime}~${store.closetime})");
 	//테이블 보여주기
-	$('#easySelectable').easySelectable({
-		
-			item: 'li',
-			state: true,
-			onSelecting: function(){
-			},
-			onSelected: function(){
-				
-			},
-			onUnSelected: function(){
-	   		}
-		
-	});
+	$('#easySelectable').easySelectable();
 	
 	//내가 만든 선택된 테이블 인덱스 구하기
 	$('#easySelectable li').click(function(index){
@@ -87,18 +114,14 @@ $(function() {
 			//선택되지 않은것이 선택된경우
 			if(selectedliTag.indexOf(number)==-1){
 				selectedliTag.push(number);
-				console.log("새롭게 선택된 테이블 인덱스"+number);
 			}
 			//선택되었던 것이 선택된경우
 			else{
 				selectedliTag = jQuery.grep(selectedliTag, function(value) { 
 	        		return value != number; });
-				console.log("선택 제거된 테이블 인덱스 "+number);
 			}
-			console.log("현재 선택된 테이블 인덱스들 DB연결시 넘길 값"+selectedliTag);
 			$('#tableno').val(selectedliTag.toString());
 			$('#tableno').next().html("");
-			console.log("hidden타입으로 넘어갈 값 : "+selectedliTag.toString());
 		}	
 	})
 	
@@ -106,8 +129,8 @@ $(function() {
 	$('.timepicker').wickedpicker({twentyFour: true,now:"00:00"});
 	
 	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
-	$(".time").on('change',function(){
-		$('.timeError').html("");	
+	$(".timepicker").on('change',function(){
+		$('#frm').valid();	
 	})
 		
 	//validate
@@ -128,7 +151,6 @@ $(function() {
     $('#two').calendar({
     	onSelected: function (view, date, data) {
     		$('#startdate').next().html("");
-    		console.log('date:' + date);
     		function getFormatDate(date){
     			var year = date.getFullYear();                                 //yyyy
     			var month = (1 + date.getMonth());                     //M
@@ -138,13 +160,12 @@ $(function() {
     			return  year + '-' + month + '-' + day;
     		}
     		date = getFormatDate(date);
-    		console.log('date:' + date);
     		$('#startdate').val(date);
     	},
     	 selectedRang: [now,myDate],
     });
     $('#startdate').val(new Date().format("yyyy-mm-dd"));
-	setInterval(datevalidate,3000)
+	setInterval(datevalidate,300)
 });
 
 </script>
@@ -249,7 +270,7 @@ html {
 			<div class="col-sm-2">
 				<input type="text" id="starttime" name="starttime" class="timepicker form-control time" ><br>
 	       		
-	       		<label class="timeError" style="color:red"></label>  	
+	       		<label for="starttime" class="error" style="color:red"></label>  	
 	       	</div>
 		</div>
 <!-- 예약시간 끝 -->	

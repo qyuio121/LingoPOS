@@ -42,4 +42,7 @@ public class ReservedtableService {
 	public int getTotalRecordadmin(Map map) {
 		return dao.getTotalRecordadmin(map);
 	}
+	public int count() {
+		return dao.count();
+	}
 }

@@ -23,5 +23,8 @@ public class FoodimgDAO {
 	public List<FoodimgDTO> select(Map map) {
 		return template.selectList("LingoFoodimgSelect",map);
 	}
+	public List<FoodimgDTO> menu() {
+		return template.selectList("LingoFoodimgMenu");
+	}
 	
 }

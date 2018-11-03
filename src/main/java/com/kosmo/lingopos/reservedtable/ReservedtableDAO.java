@@ -43,4 +43,7 @@ public class ReservedtableDAO {
 	public int getTotalRecordadmin(Map map) {
 		return template.selectOne("LingoReservedtableGetTotalRecordAdmin",map);
 	}
+	public int count() {
+		return template.selectOne("LingoReservedtableCount");
+	}
 }

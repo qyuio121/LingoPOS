@@ -7,6 +7,14 @@ public class FoodimgDTO {
 	private String name;
 	private int price;
 	private int count;
+	private String storename;
+	
+	public String getStorename() {
+		return storename;
+	}
+	public void setStorename(String storename) {
+		this.storename = storename;
+	}
 	public String getImg() {
 		return img;
 	}

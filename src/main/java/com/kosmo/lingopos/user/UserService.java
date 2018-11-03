@@ -27,4 +27,10 @@ public class UserService {
 	public UserDTO select(Map map) {
 		return dao.select(map);
 	}
+	public int count() {
+		return dao.count();
+	}
+	public int countNew() {
+		return dao.count();
+	}
 }

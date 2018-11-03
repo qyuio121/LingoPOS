@@ -28,4 +28,10 @@ public class UserDAO {
 	public UserDTO select(Map map) {
 		return template.selectOne("LingoUserSelectOne",map);
 	}
+	public int count() {
+		return template.selectOne("LingoUserCount");
+	}
+	public int countNew() {
+		return template.selectOne("LingoUserCountNew");
+	}
 }

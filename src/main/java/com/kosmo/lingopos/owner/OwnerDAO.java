@@ -40,4 +40,7 @@ public class OwnerDAO {
 	public OwnerDTO select(Map map) {
 		return template.selectOne("LingoOwnerSelect",map);
 	}
+	public int count() {
+		return template.selectOne("LingoOwnerCount");
+	}
 }

@@ -39,4 +39,7 @@ public class OwnerService {
 	public OwnerDTO select(Map map) {
 		return dao.select(map);
 	}
+	public int count() {
+		return dao.count();
+	}
 }

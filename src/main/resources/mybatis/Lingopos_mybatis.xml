@@ -76,6 +76,10 @@
  <select id="LingoFoodimgSelect" parameterType="java.util.Map" resultType="foodimgDTO">
  	select * from foodimg where storeno = #{storeno} order by count desc 
  </select>
+ <select id="LingoFoodimgMenu" resultType="foodimgDTO">
+ 	select name,count,storename from foodimg f join store s on f.storeno=s.storeno where order by count desc
+ </select>
+ 
  
  <insert id="LingoFreeInsert" parameterType="java.util.Map">
  	insert into free(title,content,id) value(#{title},#{content},#{id})
@@ -176,7 +180,9 @@
  		</if>
  	isallowed = true
  </select>
- 
+ <select id="LingoOwnerCount" resultType="int" >
+ 	select count(*) from owner
+ </select>
  
  <select id="LingoOwnerSelect" parameterType="java.util.Map" resultType="ownerDTO">
  	select storename from owner where ownerno = #{ownerno}
@@ -258,6 +264,11 @@
  		 	where t.${searchColumn} like '%${searchWord}%'  
  		</if> 
  </select>
+ <select id="LingoReservedtableCount" resultType="int" >
+ 	select count(*) from reservedtable
+ </select>
+ 
+ 
 <select id="LingoUsedtableSelect" parameterType="java.util.Map" resultType="usedtableDTO">
  	select * from usedtable where storeno = #{storeno}
 </select>
@@ -297,7 +308,7 @@
  	 	select * from sale where storeno = #{storeno} and year(salesdate) = year(now()) order by salesdate desc
  </select>
 <select id="LingoSaleSelectAdmin" resultType="saleDTO">
- 	select * from sale order by salesdate desc
+ 	select sa.*,storename from sale sa join store s on sa.storeno=s.storeno order by salesdate desc
 </select>
 
 <select id="LingoSaleslistSelect" parameterType="java.util.Map" resultType="saleslistDTO">
@@ -351,7 +362,12 @@
  <select id="LingoUserSelectOne" parameterType="java.util.Map" resultType="userDTO">
  	select * from user where id=#{id}
  </select>
-
+ <select id="LingoUserCount" resultType="int">
+ 	select count(*) from user;
+ </select>
+ <select id="LingoUserCountNew" resultType="int">
+ 	select count(*) from user where year(regidate)=year(now()) and month(regidate)=month(now());
+ </select>
 <insert id="LingoVisitlistInsert" parameterType="java.util.Map">
  	insert into visitlist(id,storeno)
  	 value(#{id},#{storeno})

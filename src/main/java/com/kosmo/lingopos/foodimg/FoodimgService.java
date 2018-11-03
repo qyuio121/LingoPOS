@@ -20,4 +20,7 @@ public class FoodimgService {
 	public List<FoodimgDTO> select(Map map) {
 		return dao.select(map);
 	}
+	public List<FoodimgDTO> menu() {
+		return dao.menu();
+	}
 }

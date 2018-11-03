@@ -5,6 +5,15 @@ public class SaleDTO {
 	private java.sql.Timestamp salesdate;
 	private int salesprice;
 	private int storeno;
+	private String storename;
+	
+	
+	public String getStorename() {
+		return storename;
+	}
+	public void setStorename(String storename) {
+		this.storename = storename;
+	}
 	public int getSalesno() {
 		return salesno;
 	}
