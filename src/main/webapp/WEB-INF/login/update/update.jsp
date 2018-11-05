@@ -67,9 +67,9 @@
 		 	});
  })
  </script>
+ <h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> LingoPOS 회원수정</h2>
 <form id="frm" action="<c:url value='/Login/Update/Update.Lingo'/>" method="post">
 <div style="margin-top:150px">
-	<h1>LingoPOS 회원수정</h1>
 	<div class="col-sm-6">
 		<div class="form-group">
 			<label>아이디</label> 

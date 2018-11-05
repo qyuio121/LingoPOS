@@ -40,11 +40,11 @@ $(function() {
 				$.each(data,function(index,value){
 					var valuetime=new Date(value.startdate).getTime();
 					if(valuetime-(60*30*1000)<=currentDate && valuetime+(60*60*1000)>=currentDate){
-						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('선 예약중');;
 						if($('li[name="table"]').eq((value.tableno)-1).hasClass('es-selected')){
 							$('li[name="table"]').eq((value.tableno)-1).removeClass('es-selected');
 							$('li[name="table"]').html('예약가능(4인)');
 						}
+						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('선 예약중');;
 					}
 				});
 			}		
@@ -62,11 +62,11 @@ $(function() {
 				$.each(data,function(index,value){
 					var valuetime=new Date(value.startdate).getTime();
 					if(valuetime<=currentDate && valuetime+(60*60*1000)>=currentDate){
-						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('사용중');
 						if($('li[name="table"]').eq((value.tableno)-1).hasClass('es-selected')){
 							$('li[name="table"]').eq((value.tableno)-1).removeClass('es-selected');
 							$('li[name="table"]').html('예약가능(4인)');
 						}
+						$('li[name="table"]').eq((value.tableno)-1).addClass("create-used").html('사용중');
 					}
 				});
 			}		
@@ -165,7 +165,7 @@ $(function() {
     	 selectedRang: [now,myDate],
     });
     $('#startdate').val(new Date().format("yyyy-mm-dd"));
-	setInterval(datevalidate,300)
+	setInterval(datevalidate,1000)
 });
 
 </script>
@@ -204,40 +204,17 @@ html {
             margin: 0;
         }
 
-        input {
-            margin: 10px 0;
-            height: 28px;
-            width: 200px;
-            padding: 0 6px;
-            border: 1px solid #ccc;
-            outline: none;
-        }
 </style>
 
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 	
 <!-- 이 페이지 설명 -->
-<!-- 	
-	form으로 파라메터 전달 - 모든값 저장 완료
-	예약날짜/예약시간/예약테이블 - 플러그인 사용 
-	유효성검사완료
-	작성 후 연결 컨트롤러 따로 만들지는 않음
 
-	예약인원 파라메타명 (하나) : people 
-	예약날짜 파라메타명 (하나) : startdate - 파라미터가 2018-10-26 형식으로 저장될 수 있게 바꿈  - function getFormatDate(date){}
-	예약시간 파라메타명 (하나) : starttime 
-	예약테이블 파라메타명 (배열) : tableno - 파라미터가 5,4,2,8,7,1,3 형식으로 저장될 수 있게 바꿈 - $('#easySelectable li').click(function(index){}
-	
-	※테이블 사용중/예약중 기능 만듬
-		<li class="create-used">사용중</li>
-	※테이블 사용가능
-		<li>예약가능(4인)</li>
- -->	
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->
 	<div class="row">
-		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" />${store.storename}<small>예약하기</small></h2>
+		<div class="col-xs-10">
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> ${store.storename}<small>예약하기</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
@@ -247,8 +224,13 @@ html {
 		<div class="form-group">
 			<label class="col-sm-2 control-label">예약인원 수</label>
 			<div class="col-sm-3">
-				<input type="text" class="form-control" placeholder="예약인원 수를 입력해주세요"   name="people" id="people">
-			    
+				<select class="form-control col-sm-4" id="people" name="people">
+					<option value="" >인원을 선택해 주세요</option>
+				     <option value="1">1</option>
+				     <option value="2">2</option>
+				     <option value="3">3</option>
+				     <option value="4">4</option>
+				</select>
 			    <label for="people" class="error" style="color:red"></label>
 			</div>
 		</div>

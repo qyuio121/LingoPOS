@@ -81,9 +81,10 @@
 	 	
  })
  </script>
-<div style="margin-top:150px;padding-bottom:150px">
+<div class="container" style="margin-top:60px;padding-top:60px">
+<div>
+<h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> LingoPOS 회원가입</h2>
 <form id="frm" action="<c:url value='/Login/Signup/Signup.Lingo'/>" method="post" enctype="multipart/form-data">
-	<h1>LingoPOS 회원가입</h1>
 	<div class="col-sm-6">
 		<div class="form-group">
 			<label>아이디</label> 
@@ -146,5 +147,5 @@
 		<br/><br/><br/><br/>
 	</div>
 </form>
-
+</div>
 </div>

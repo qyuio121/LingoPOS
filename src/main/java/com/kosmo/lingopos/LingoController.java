@@ -1011,10 +1011,6 @@ public class LingoController {
 		}
 		return "forward:/";
 	}
-	@RequestMapping("/Shop/Edit.Lingo")
-	public String edit() throws Exception{
-		return "shop/edit/edit.tiles";
-	}
 	@RequestMapping("/Shop/SalesCal.Lingo")
 	public String cal() throws Exception{
 		return "shop/sales/salescal.tiles";

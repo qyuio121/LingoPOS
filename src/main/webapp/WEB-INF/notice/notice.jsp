@@ -8,7 +8,7 @@
 		</div>
 		<div >
 			<div class="row">
-				<div class="col-xs-6">
+				<div class="col-xs-10">
 					<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 공지사항</h2>
 				</div>
 			</div>

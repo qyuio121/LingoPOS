@@ -4,12 +4,12 @@
     pageEncoding="UTF-8"%>
 <div class="container" style="margin-top:60px;padding-top:60px">
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-md-6 col-xs-10">
 			<h2>
 				<img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 자유게시판
 			</h2>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-md-6">
 			<form class="navbar-form navbar-right" id="gtBtn" style="margin-top: 50px" action="<c:url value='/Free/Free.Lingo'/>" method="get">
 				<div class="form-group">
 					<select name="searchColumn" class="form-control">

@@ -12,7 +12,7 @@
 	<!-- 내용 시작 -->
 	<!-- 바디 헤더 시작-->
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-10">
 			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 예약목록</h2>
 		</div>
 	</div>		
@@ -38,7 +38,6 @@
 			</div>
 			<div id="tab2" class="swichtab-panel" data-swichtab="target">
 				<h3>지난 예약목록</h3>
-				<div class="row" >
 				  	<div class="text-right">
 						<form class="navbar-form navbar-right"  action="#" method="get">
 							<div class="form-group">
@@ -52,8 +51,7 @@
 						</form>
 					</div>
 					<div id="visitTable">
-					</div>
-				</div>	
+					</div>	
 			</div>
 
 	</div >
@@ -63,6 +61,7 @@
 		</c:forEach>
 	</div>
 	<!-- 내용 끝 -->
+	</div>
 </div>
 <script>
 var selectlist=[];
@@ -106,7 +105,7 @@ $(function() {
 				'</c:forEach>'
 			)
 		}
-		else if(this.innerHTML == '지난 예약목록들'){
+		else if(this.innerHTML == '지난 예약목록'){
 			$('#footerBrResult').html(
 				'<c:forEach begin="0" end="20" step="1">'+
 					'<br>'	+

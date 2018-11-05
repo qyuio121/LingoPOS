@@ -4,7 +4,7 @@
 
 
 <div class="container" style="padding-top:60px; margin-top:60px;">
-	<h2>이용약관</h2>
+  <h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 이용약관</h2>
   <ul id="myTab" class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#home"  role="tab" id="home-tab" data-toggle="tab" aria-controls="home" aria-expanded="true">이용약관</a></li>
     <li role="presentation" class=""><a href="#profile1" role="tab" id="profile-tab1" data-toggle="tab" aria-controls="profile" aria-expanded="false">개인정보 처리방침</a></li>
@@ -15,8 +15,8 @@
   
     <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab" style="overflow:scroll; width:1150px; height:600px">
       <p>링고포스 이용약관</p>
-   	   링고포스 이용약관 제1조 (목적) 본 약관은   링고(이하 “회사”라 함)가 운영하는 "링고포스"
-			사이트(www.lingo.com) 또는 “링고포스” 모바일 애플리케이션에서 제공하는 서비스(이하 "서비스"라 함)를
+   	   링고포스 이용약관 제1조 (목적) 본 약관은   링고(이하 “회사”라 함)가 운영하는 "링고포스"사이트(www.lingo.com) 
+   	   		또는 “링고포스” 모바일 애플리케이션에서 제공하는 서비스(이하 "서비스"라 함)를
 			이용함에 있어 ”링고포스”와 이용자의 권리, 의무 및 책임 사항을 규정함을 목적으로 합니다. 제2조 (정의) ① "링고포스"란
 			회사가 “서비스”를 이용자에게 제공하기 위하여 컴퓨터 등 정보통신설비를 이용하여 식당예약및 포스시스템을 사용할 수 있도록
 			설정한 가상의 영업장을 말하며, 아울러 ”링고포스”를 운영하는 사업자의 의미로도 사용합니다. ② “링고포스서비스”란 회사가
