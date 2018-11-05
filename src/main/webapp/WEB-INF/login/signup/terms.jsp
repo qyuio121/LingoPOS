@@ -251,7 +251,7 @@
 			분명하지 않거나 외국 거주자의 경우에는 민사소송법상의 관할법원에 따릅니다. ② "링고포스"과 이용자간의 분쟁은 본 약관 및
 			한국법을 적용합니다.  부칙 [제1조] 본 약관은 2018년 9월 1일에 개정되었으며, 2018년 9월 1일부터 시행됩니다.
     </div>
-    <div role="tabpanel" class="tab-pane fade" id="profile1" aria-labelledby="profile-tab">
+    <div role="tabpanel" class="tab-pane fade" id="profile1" aria-labelledby="profile-tab" style="overflow:scroll; width:1150px; height:600px">
       <p>개인정보 처리방침</p>
     	   링고(이하 ‘회사’라고 합니다)의 개인정보 취급방침은 아래의 내용을 담고 있습니다. 제1조 목적 제2조
 			수집하는 개인정보의 항목 제3조 개인정보 수집에 대한 동의 제4조 개인정보의 수집 및 이용목적 제5조 쿠키에 의한 개인정보
@@ -385,7 +385,7 @@
 			7일 전(단, 중요한 내용 변경의 경우 30일 전)부터 홈페이지의 '공지'란 또는 이메일을 통해 고지할 것입니다. -
 			버전번호 : v3.7 - 개정일자 : 2018.08.27. - 시행일자 : 2018.09.17.
     </div>
-     <div role="tabpanel" class="tab-pane fade" id="profile2" aria-labelledby="profile-tab">
+     <div role="tabpanel" class="tab-pane fade" id="profile2" aria-labelledby="profile-tab" style="overflow:scroll; width:1150px; height:600px">
       <p>개인정보 제3자 제공동의</p>
     	개인정보 제3자 제공동의 제1조 (목적) 회사는 귀하로부터 수집한 개인정보는 "개인정보처리방침"에서 고지한 범위내에서만
 			사용하며, 회원의 동의 없이는 해당 범위를 초과하여 이용하거나 제3자에게 제공하지않습니다. 다만, 양질의 서비스제공을 위하여
@@ -408,7 +408,7 @@
 			부득이하게 고지를 하지 못할 수도 있습니다. 본래의 수집목적 및 이용목적에 반하여 무분별하게 정보가 제공되지 않도록 최대한
 			노력하겠습니다.
     </div>
-     <div role="tabpanel" class="tab-pane fade" id="profile3" aria-labelledby="profile-tab">
+     <div role="tabpanel" class="tab-pane fade" id="profile3" aria-labelledby="profile-tab" style="overflow:scroll; width:1150px; height:600px">
       <p>위치기반 서비스 이용약관</p>
     	  위치기반서비스 이용약관 제1조 (목적) 본 약관은 이용자(링고포스 서비스를 이용하는 모든 사람을 말합니다. 이하 “이용자”라고
 			합니다.)가   링고(이하 “회사”라고 합니다.)가 제공하는 링고포스 서비스(이하 “서비스”라고 합니다.)를
