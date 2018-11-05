@@ -6,7 +6,7 @@
 <!--메인 페이지 -->
 	<div class="wrapper content-panel">
 		<div class="row">
-			<h4><span class="glyphicon glyphicon-user" aria-hidden="true" ></span>블랙리스트 관리</h4>
+			<h4><span class="glyphicon glyphicon-user" aria-hidden="true" ></span> 블랙리스트 관리</h4>
 		</div>
 		<!-- 테이블 -->
 		<div class="row">
@@ -21,7 +21,7 @@
 						    </select>
 							<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 						</div>
-						<button type="submit" class="btn btn-default" style="margin-left: -3px">검색</button>
+						<button type="submit" id="searchBtn" class="btn btn-default" style="margin-left: -3px">검색</button>
 					</form>
 				</div>
 			</div>
@@ -175,6 +175,10 @@ $(function() {
     	
     	return false;
     });
-	
+	$('#searchWord').keydown(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger('click');
+		}
+	});
 });
 </script>

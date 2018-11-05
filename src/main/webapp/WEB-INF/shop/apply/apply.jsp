@@ -174,7 +174,7 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-10">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게<small>등록하기</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게 <small>등록하기</small></h2>
 		</div>
 	</div>
 <!-- 바디 헤더 끝-->

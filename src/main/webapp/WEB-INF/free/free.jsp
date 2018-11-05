@@ -2,6 +2,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<script>
+$('#searchWord').keydown(function(e){
+	if(e.keyCode == 13){
+		$('#searchBtn').trigger('click');
+	}
+});
+</script>
 <div class="container" style="margin-top:60px;padding-top:60px">
 	<div class="row">
 		<div class="col-md-6 col-xs-10">
@@ -19,7 +26,7 @@
 				    </select>
 					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="검색">
 				</div>
-				<button type="submit" class="btn btn-default" style="margin-left: -3px">검색</button>
+				<button type="submit" class="btn btn-default" id="searchBtn" style="margin-left: -3px">검색</button>
 			</form>
 		</div>
 	</div>

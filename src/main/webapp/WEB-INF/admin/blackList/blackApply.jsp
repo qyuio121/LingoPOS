@@ -6,7 +6,7 @@
 <!--메인 페이지 -->
 	<div class="wrapper content-panel">
 		<div class="row">
-			<h4><span class="glyphicon glyphicon-user" aria-hidden="true" ></span>블랙리스트 신청</h4>
+			<h4><span class="glyphicon glyphicon-user" aria-hidden="true" ></span> 블랙리스트 신청</h4>
 		</div>
 		<!-- 테이블 -->
 		<div class="row">

@@ -122,6 +122,11 @@ $(function() {
 		showVisitSearch(searchColumn,searchWord);
 		return false;
 	});
+	$('#searchWord').keydown(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger('click');
+		}
+	});
 });
 var showCurrent = function(){		
 	$.ajax({
@@ -130,6 +135,7 @@ var showCurrent = function(){
 		type:'post',
 		success:displayCurrent			
 	});
+	
 };
 
 var showCurrentPage = function(nowPage){		

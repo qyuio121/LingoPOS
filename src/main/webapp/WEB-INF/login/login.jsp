@@ -54,9 +54,6 @@
 		        $("#saveId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
 		    }
 		    $('#loginform').keydown(function(e){
-		    	var key = e.keyCode
-		    	console.log(typeof(key))
-		    	console.log(key)
 		    	if(e.keyCode == 13){
 		    		$('#submit').trigger('click');
 		    	}

@@ -85,7 +85,7 @@
 <div>
 <h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> LingoPOS 회원가입</h2>
 <form id="frm" action="<c:url value='/Login/Signup/Signup.Lingo'/>" method="post" enctype="multipart/form-data">
-	<div class="col-sm-6">
+	<div class="col-sm-7">
 		<div class="form-group">
 			<label>아이디</label> 
 			<input type="text" class="form-control" name="id" id="id" placeholder="아이디를 입력해 주세요">

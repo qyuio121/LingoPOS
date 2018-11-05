@@ -67,10 +67,13 @@
 		 	});
  })
  </script>
- <h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> LingoPOS 회원수정</h2>
+ 
+
+
+<div class="container" style="padding-top: 60px; margin-top: 60px;">
+<h2><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> LingoPOS 회원수정</h2>
 <form id="frm" action="<c:url value='/Login/Update/Update.Lingo'/>" method="post">
-<div style="margin-top:150px">
-	<div class="col-sm-6">
+	<div class="col-sm-7">
 		<div class="form-group">
 			<label>아이디</label> 
 			<input type="text" readOnly
@@ -114,6 +117,7 @@
 		<button type="submit" id="submit" class="btn btn-primary">정보수정</button>
 		<br/><br/><br/><br/>
 	</div>	
+	</form>
 </div>
-</form>
+
 

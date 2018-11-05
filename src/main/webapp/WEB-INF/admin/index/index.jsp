@@ -8,7 +8,7 @@
 <!-- 걍 설명 -->          
 			<div class="row" style="margin-bottom: 30px">
 				<div class="col-xs-6">
-					<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px;" />LingoPOS<small>보고서</small></h2>
+					<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px;" /> LingoPOS <small>보고서</small></h2>
 				</div>
 			</div>		
 			<div class="row">
@@ -20,7 +20,7 @@
 								<h1>Best 메뉴</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${bestmenu.storename}의 ${bestmenu.name} : ${bestmenu.count}회 주문</h3>
+										<h3 class="centered">${bestmenu.storename} 의<br/>${bestmenu.name}<br/>${bestmenu.count}회 주문</h3>
 									</div>
 								</div>
 							</div>
@@ -31,7 +31,7 @@
 								<h1>Worst 메뉴</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${worstmenu.storename}의 ${worstmenu.name} : ${worstmenu.count}회 주문</h3>
+										<h3 class="centered">${worstmenu.storename} 의<br/>${worstmenu.name}<br/>${worstmenu.count}회 주문</h3>
 									</div>
 								</div>
 							</div>
@@ -42,7 +42,7 @@
 								<h1>인기가게</h1>
 								<div class="info">
 									<div class="row">
-										<h3 class="centered">${beststore.storename}의 매출 : ${beststore.totalprice}원</h3>
+										<h3 class="centered">${beststore.storename}<br/><br/>${beststore.totalprice}원</h3>
 									</div>
 								</div>
 							</div>
@@ -50,6 +50,7 @@
 					</div>
 				</div>
 			</div>
+			<br/><br/><br/>
 <!-- 걍 설명 -->   						
 <!-- 원형차트 혹시 모르니 대기 -->			
             <div class="row mt">
@@ -104,12 +105,8 @@
                   </script>
                   <p> </p>
                   <footer>
-                    <div class="pull-left">
                       <h5><i class="fa fa-hdd-o"></i>사업자회원 /일반회원</h5>
-                    </div>
-                    <div class="pull-right">
-                      <h5><fmt:formatNumber value="${(owner/(totaluser-admin))*100}" pattern=".00"/>%/<fmt:formatNumber value="${((totaluser-admin-owner)/(totaluser-admin))*100}" pattern=".00"/>%</h5>
-                    </div>
+                      <h5><fmt:formatNumber value="${(owner/(totaluser-admin))*100}" pattern=".00"/>%/<fmt:formatNumber value="${((totaluser-admin-owner)/(totaluser-admin))*100}" pattern=".00"/>%</h5>    
                   </footer>
                 </div>
               </div>
@@ -139,12 +136,8 @@
                   </script>
                   <p> </p>
                   <footer>
-                    <div class="pull-left">
                       <h5><i class="fa fa-hdd-o"></i>현재 예약 건수/방문 건수/미방문 건수</h5>
-                    </div>
-                    <div class="pull-right">
                       <h5>${reserve}건/${visit}건/${notvisit}건</h5>
-                    </div>
                   </footer>
                 </div>
               </div>

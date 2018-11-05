@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>    
 <div class="wrapper content-panel">
 	<div class="row">
-		<h4><span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>가게승인</h4>
+		<h4><span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span> 가게승인</h4>
 		<br/>
 		<br/>
 	</div>

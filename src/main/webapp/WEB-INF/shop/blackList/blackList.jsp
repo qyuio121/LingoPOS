@@ -12,7 +12,7 @@
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-10">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게<small>블랙리스트 추가요청</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게 <small>블랙리스트 추가요청</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
@@ -22,7 +22,7 @@
 				
 				<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='/Shop/BlackList.Lingo'/>" method="get">
 					<input type="text" class="form-control" id="searchWord" name="searchWord" placeholder="아이디 검색">
-					<button type="submit" class="btn btn-default" >검색</button>
+					<button type="submit" id="searchBtn" class="btn btn-default" >검색</button>
 				</form>
 			</div>
 		</div>
@@ -137,7 +137,11 @@
 <script>
 $(function() {
     //모달에서 버튼 클릭시 이벤트 처리
-    
+    $('#searchWord').keydown(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger('click');
+		}
+	});
 	$('button[name="blackBtn"]').click(function(){
 		var htmlString ='<input type="hidden" name="id" value="'+$("#tablesort tr").eq($(this).val()).children("td:eq(0)").html()+'"/>';
 		$('#hidden').html(htmlString);

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -8,7 +9,7 @@
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-10">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> QNA<small>1:1문의 리스트</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> QNA <small>1:1문의 리스트</small></h2>
 		</div>
 	</div>	
 <!-- 바디 헤더 끝-->
@@ -57,5 +58,8 @@
 		<div>${pageString}</div>
 	</div>
 <!-- 페이징  끝-->
-<!-- 내용 끝 -->   
+<!-- 내용 끝 -->  
+<c:forEach begin="0" end="${25-fn:length(records)}" step="1">
+	<br/>
+</c:forEach>
 </div>

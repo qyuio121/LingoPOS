@@ -79,7 +79,7 @@ $(function(){
 <!-- 바디 헤더 시작-->
 	<div class="row">
 		<div class="col-xs-12">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게<small>입출고 내역서 서비스</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 내 가게 <small>입출고 내역서 서비스</small></h2>
 		</div>
 		<div class="col-xs-12">
 			<h3>가게 회원님들을 위한 입출고 내역서 파일 제작 서비스 입니다.</h3>

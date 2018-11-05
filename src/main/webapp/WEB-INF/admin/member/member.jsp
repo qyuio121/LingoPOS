@@ -4,8 +4,8 @@
     pageEncoding="UTF-8"%>
 <div class="wrapper content-panel">    
    	<div class='row'> 
-	   	<h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span>회원관리 시스템</h4>
-	   	<div class="col-md-1" style="height:50px;line-height: 50px" >
+	   	<h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 회원관리 시스템</h4>
+	   	<div class="col-md-2" style="height:50px;line-height: 50px" >
 	   		<div class="form-group" style="margin-top:8px" >
 				<select id="statusList" class="form-control">
 					<option value="user">user</option>
@@ -14,7 +14,7 @@
 				</select> 
 			</div>
 	   	</div>
-	   	<div class="col-md-11">	   	
+	   	<div class="col-xs-10">	   	
 			<form class="navbar-form navbar-right" id="gtBtn" action="<c:url value='#'/>" method="get">
 				<div class="form-group">
 					<select id="searchColumn" class="form-control">
@@ -52,6 +52,11 @@ $(function(){
 		});
 		
 		return false;
+	});
+	$('#searchWord').keydown(function(e){
+		if(e.keyCode == 13){
+			$('#searchBtn').trigger('click');
+		}
 	});
 });
 

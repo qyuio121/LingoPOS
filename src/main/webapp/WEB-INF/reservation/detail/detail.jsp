@@ -2,11 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
-<!-- 가게 위치  -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8b1f17eca567f307bb9f9a105ef8e9f&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript" src="../js/search.js"></script>
-
 <!-- 슬라이드 js -->
 <script src="../js/infiniteslidev2.js"></script>
 <!-- 슬라이드 css  -->
@@ -28,6 +23,30 @@
 
 <script>
 $(function(){
+	$('.swichtab-controller li a').click(function(){
+		$('#footerBrResult').empty();
+		if(this.innerHTML == '가게정보'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="10" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+		else if(this.innerHTML == '메뉴'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="10" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+		else if(this.innerHTML == '리뷰'){
+			$('#footerBrResult').html(
+				'<c:forEach begin="0" end="10" step="1">'+
+					'<br>'	+
+				'</c:forEach>'
+			)
+		}
+	});
 	//탭
 	 $('.tabGroup2').swichTab({
     cahngePanel: 'fade',
@@ -99,6 +118,11 @@ var displayComments	 = function(data){
 		showCommentsWrite(${param.storeno});
 		return false;
 	});
+	$('#reviewText').keydown(function(e){
+    	if(e.keyCode == 13){
+    		$('#reviewWrite').trigger('click');
+    	}
+    });
 };
 function getReview(nowPage){
 	showCommentsPage(${param.storeno},nowPage);
@@ -188,9 +212,6 @@ function reserve(){
 					</tbody>	
 				</table>
 			</div>
-			<c:forEach begin="0" end="5" step="1">
-				<br/>
-			</c:forEach>
 		</div>	
 <!-- 가게정보 끝 -->	
 
@@ -250,6 +271,11 @@ function reserve(){
 <!-- 리뷰 끝 -->	
 	</div>
 <!-- 탭 바 내 내용 끝 -->
-	</div>	
+	</div>
+<div id="footerBrResult">
+	<c:forEach begin="0" step="1" end="13">
+		<br/>
+	</c:forEach>
+</div>	
 <!-- 내용 끝 -->	
 </div>
