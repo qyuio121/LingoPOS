@@ -29,7 +29,7 @@
 			commentString+='<td align="left">'+comment['comment']+'</td>'; 
 			commentString+='<td>'+comment['commentdate']+'</td>';
 			commentString+='<td>';
-			if('${sessionScope.loginDTO.id}' == comment["id"])
+			if('${sessionScope.loginDTO.id}' == comment["id"] || ${not empty sessionScope.loginDTO.adminno})
 				commentString+='<span class="commentDelete" title="'+comment["commentno"]+'" style="cursor: pointer; color: green; font-size: 1.4em; font-weight: bold">삭제</span>';
 			else
 				commentString+='<span style="color: gray; font-size: 0.7em; font-weight: bold">삭제불가</span>';
@@ -63,7 +63,12 @@
 		showComments(${record.freeno});
 	
 		//코멘트 입력처리]
-		$('#submit').click(function(){				
+		$('#submit').click(function(e){
+			e.preventDefault();
+			if($("#comment").val()==""){
+				alert("댓글내용이 없습니다 내용을 입력해주세요");
+				return false;
+			}
 			$.ajax({
 				url:"<c:url value='/Comment/CommentWrite.Lingo'/>",
 				data:$('#frm').serialize(),
@@ -78,6 +83,11 @@
 		$('#del_memo').click(function(){
 			if(confirm("정말 삭제 하시겠습니까")){
 				location.replace("<c:url value='/Free/FreeDelete.Lingo?freeno=${record.freeno}'/>");
+			}
+		});
+		$('#comment').keydown(function(e){
+			if(e.keyCode == 13){
+				$('#submit').trigger('click');
 			}
 		});
 	});
@@ -115,7 +125,7 @@
 <!-- 상세보기 내용 예시 끝  -->
 	<div class="row">
 		<div class="text-center">
-			<c:if test="${sessionScope.loginDTO.id==record.id }">
+			<c:if test="${sessionScope.loginDTO.id==record.id || not empty sessionScope.loginDTO.adminno}">
 				<a href="<c:url value='/Free/FreeEdit.Lingo?freeno=${record.freeno}'/>" class="btn btn-primary">수정</a>
 				<a id="del_memo" href="#" class="btn btn-primary">삭제</a>
 			</c:if>
@@ -131,7 +141,7 @@
 				<!-- 수정 및 삭제용 파라미터 -->
 				<input type="hidden" name="id" value="${sessionScope.loginDTO.id}" />
 				<input placeholder="댓글을 입력하세요" id="comment" class="form-control" type="text" size="50" name="comment" />
-				<input class="btn btn-primary" id="submit" type="button" value="등록" />	
+				<input type="button" class="btn btn-primary" id="submit" value="등록"/>	
 			</form>
 		</c:if>
 	</div>

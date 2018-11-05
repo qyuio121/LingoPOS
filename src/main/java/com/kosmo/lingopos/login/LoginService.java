@@ -15,4 +15,7 @@ public class LoginService {
 	public LoginDTO select(Map map) {
 		return dao.select(map);
 	}
+	public String getPwd(Map map) {
+		return dao.getPwd(map);
+	}
 }

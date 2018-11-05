@@ -5,6 +5,14 @@ public class LoginDTO {
 	private String ownerno;
 	private String adminno;
 	private String storeno;
+	private boolean isallowed;
+	
+	public boolean isIsallowed() {
+		return isallowed;
+	}
+	public void setIsallowed(boolean isallowed) {
+		this.isallowed = isallowed;
+	}
 	public String getId() {
 		return id;
 	}

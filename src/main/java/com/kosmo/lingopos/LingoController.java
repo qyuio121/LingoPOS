@@ -205,8 +205,8 @@ public class LingoController {
 		mhsr.setAttribute("realImage", newFilename);
 		mhsr.setAttribute("totalImage", upload.getOriginalFilename());
 		//6]서머노트에 데이타 전달
-		return "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
-		//return "https://www.lingopos.co.kr/lingopos/Images/summernote/" + newFilename;
+		//return "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/summernote/" + newFilename;
+		return "https://www.lingopos.co.kr/Images/summernote/" + newFilename;
 	}
 	//창선 사진 삭제 - 서머노트 Controller
 	@ResponseBody
@@ -252,8 +252,8 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
-				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
+				//String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/store/"+ newFilename;
+				String localAddress = "https://www.lingopos.co.kr/Images/"+dto.getId()+"/store/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
@@ -303,8 +303,8 @@ public class LingoController {
 				String realAddress = phicalPath+File.separator+newFilename;
 				//로컬 호스트 전달값
 				String localIP = InetAddress.getLocalHost().getHostAddress();
-				String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
-				//String localAddress = "https://www.lingopos.co.kr/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
+				//String localAddress = "http://"+localIP+ ":"+mhsr.getServerPort() +"/lingopos/Images/"+dto.getId()+"/menu/"+ newFilename;
+				String localAddress = "https://www.lingopos.co.kr/Images/"+dto.getId()+"/menu/"+ newFilename;
 				
 				record.put("realAddress",realAddress);
 				record.put("localAddress",localAddress);
@@ -874,7 +874,7 @@ public class LingoController {
 	}
 	@RequestMapping(value="/Login/Update/Update.Lingo",method=RequestMethod.POST)
 	public String updateOk(@RequestParam Map map) throws Exception{
-		/*
+		
 		if(!map.get("newpwd").toString().trim().equals("")) {
 			String pwd = null;
 			try {
@@ -882,10 +882,11 @@ public class LingoController {
 			}catch (Exception e) {
 			}
 			map.put("pwd",pwd);
-		}*/
+		}
+		/*
 		if(!map.get("newpwd").toString().trim().equals("")) {
 			map.put("pwd", map.get("newpwd"));
-		}
+		}*/
 		userService.update(map);
 		return "forward:/";
 	}
@@ -909,17 +910,18 @@ public class LingoController {
 	@RequestMapping("/Login/Update/Valicate.Lingo")
 	public String valicate(@RequestParam Map map) throws Exception{
 		UserDTO dto =userService.select(map);
-		/*
+		
 		if(PBKDF2.validatePassword(map.get("pwd").toString(), dto.getPwd())) {
 			return "0";
 		}else {
 			return "1";
-		}*/
+		}
+		/*
 		if(dto.getPwd().equals(map.get("pwd"))) {
 			return "0";
 		}else {
 			return "1";
-		}
+		}*/
 	
 	}
 	@RequestMapping(value="/Login/Signup/Signup.Lingo",method=RequestMethod.GET)
@@ -932,14 +934,14 @@ public class LingoController {
 
 		Map map = new HashMap();
 		map.put("id",mhsr.getParameter("id").toString());
-		/*
+		
 		String pwd = null;
 		try {
 			pwd = PBKDF2.createHash(mhsr.getParameter("pwd").toString());
 		}catch (Exception e) {
 		}
-		map.put("pwd",pwd);*/
-		map.put("pwd",mhsr.getParameter("pwd").toString());
+		map.put("pwd",pwd);
+		//map.put("pwd",mhsr.getParameter("pwd").toString());
 		map.put("email",mhsr.getParameter("email").toString());
 		map.put("tel",mhsr.getParameter("tel").toString());
 		map.put("region",mhsr.getParameter("region").toString());
@@ -961,8 +963,8 @@ public class LingoController {
 			
 			String localIP = InetAddress.getLocalHost().getHostAddress();
 			
-			String storedoc= "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/storedoc/" + newFilename;
-			//String storedoc= "https://www.lingopos.co.kr/lingopos/Images/storedoc/" + newFilename;
+			//String storedoc= "http://"+localIP+ ":"+mhsr.getLocalPort() +"/lingopos/Images/storedoc/" + newFilename;
+			String storedoc= "https://www.lingopos.co.kr/Images/storedoc/" + newFilename;
 			map.put("ownerno",mhsr.getParameter("ownerno").toString());
 			map.put("storedoc",storedoc);
 			map.put("storename",mhsr.getParameter("storename").toString());
@@ -1057,8 +1059,10 @@ public class LingoController {
 			model.addAttribute("reserve",reserve);
 			model.addAttribute("visit",visit);
 			model.addAttribute("notvisit",notvisit);
-			model.addAttribute("bestmenu",list.get(0));
-			model.addAttribute("worstmenu",list.get(list.size()-1));
+			if(list.size()>0) {
+				model.addAttribute("bestmenu",list.get(0));
+				model.addAttribute("worstmenu",list.get(list.size()-1));
+			}
 			model.addAttribute("beststore",best);
 			
 			return "admin/index/index.Admin";

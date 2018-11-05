@@ -121,7 +121,7 @@ $(function(){
 		
 		directUpload : {
 			status: true, // activate direct upload
-			url:'/lingopos/Shop/Store.Lingo',
+			url:'<c:url value="/Shop/Store.Lingo"/>',
 			loaderIcon: '<i class="fas fa-sync fa-spin"></i>',
 			success : function(data, textStatus, jqXHR){
 				$('#hiddenFile').next().html("");	
@@ -134,7 +134,7 @@ $(function(){
 		
 		directUpload : {
 			status: true, // activate direct upload
-			url:'/lingopos/Shop/Menu.Lingo',
+			url:'<c:url value="/Shop/Menu.Lingo"/>',
 			loaderIcon: '<i class="fas fa-sync fa-spin"></i>',
 			success : function(data, textStatus, jqXHR){
 				$('#hiddenFile1').next().html("");	

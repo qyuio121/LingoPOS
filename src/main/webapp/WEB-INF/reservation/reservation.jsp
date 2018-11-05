@@ -84,7 +84,8 @@ $(function() {
 	$('#frm').validate({
 		rules:{
 			people:"required"
-			,starttime:{vaildtime:true}
+			,starttime:{vaildtime:true,
+						currenttime:true}
 		},messages:{	
 			people:"예약 인원 수를 입력하세요."
 	}});
@@ -104,6 +105,16 @@ $(function() {
 			}
 			return false;
 		}, "영업시간내로 선택해 주세요. (${store.opentime}~${store.closetime})");
+		
+		jQuery.validator.addMethod('currenttime', function(){ 
+			var currenttime = new Date().getTime();
+			var nowtime = new Date($('#startdate').val()+' '+$('#starttime').val()+":59").getTime();
+			
+			if(currenttime < nowtime){
+				return true;
+			}
+			return false;
+		}, "현재 시간 이후에만 예약이 가능합니다.");
 	//테이블 보여주기
 	$('#easySelectable').easySelectable();
 	
@@ -165,7 +176,7 @@ $(function() {
     	 selectedRang: [now,myDate],
     });
     $('#startdate').val(new Date().format("yyyy-mm-dd"));
-	setInterval(datevalidate,1000)
+	setInterval(datevalidate,500)
 });
 
 </script>
@@ -246,6 +257,9 @@ html {
 	       	</div>
 		</div>
 <!-- 예약날짜 끝 -->	
+		
+		<h4 class="col-md-offset-2">영업 시간 : ${store.opentime} ~ ${store.closetime}</h4>
+		<br/>
 <!-- 예약시간 시작 -->
 		<div class="form-group">
 			<label class="col-sm-2 control-label">예약시간</label>

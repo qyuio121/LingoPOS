@@ -16,4 +16,7 @@ public class LoginDAO {
 	public LoginDTO select(Map map) {
 		return template.selectOne("LingoLoginResult",map);
 	}
+	public String getPwd(Map map) {
+		return template.selectOne("LingoLoginGetPwd",map);
+	}
 }

@@ -21,7 +21,7 @@ function initDaumMap(position) {
 
 function setCurrentPosition(){
 	$.ajax({
-		url: "/lingopos/Map/Map.Lingo",
+		url: "/Map/Map.Lingo",
 		type: "GET",
 		data: null,
 		dataType:'json',
@@ -30,7 +30,7 @@ function setCurrentPosition(){
 	    		var marker = new daum.maps.Marker({
 		    		map:mapInfo.map,
 		    		position: new daum.maps.LatLng(value.y,value.x),
-    		   		image:new daum.maps.MarkerImage('/lingopos/Images/search/marker2.png',
+    		   		image:new daum.maps.MarkerImage('/Images/search/marker2.png',
     		   										new daum.maps.Size(64, 69),
     		   										{offset: new daum.maps.Point(27, 69)})
     			});
@@ -40,7 +40,7 @@ function setCurrentPosition(){
 		   	    	              '    <div class="markerRow" style="background-color:white">' + 
 		   	    	              '        <div class="title">' +
 		   	    	              '            <div class ="titleText" style="width:250px">'+
-		   	    	              '            <a href="/lingopos/Reservation/Detail.Lingo?storeno='+value.storeno+'" class="link">'+value.storename +'</a></div>'+
+		   	    	              '            <a href="/Reservation/Detail.Lingo?storeno='+value.storeno+'" class="link">'+value.storename +'</a></div>'+
 		   	    	              '            <div class="close btnOverlayClose" data-overlay-index="'+index+'" title="닫기"></div>' + 
 		   	    	              '        </div>' + 
 		   	    	              '        <div class="body">' + 
@@ -127,7 +127,7 @@ function searchTableList(result){
 						'<table class="table" style="border-right:0.1px solid #888;border-bottom:0.1px solid #E5E2E5;height:70px" >'+
 								"<tr style='height:20px'>"+
 									"<td class='titleText' style='font-weight: bold;font-size:15px;display:inline-block;width:250px'>" +
-										'<a href="/lingopos/Reservation/Detail.Lingo?storeno='+value.storeno+'">'+value.storename +"</a>" +
+										'<a href="/Reservation/Detail.Lingo?storeno='+value.storeno+'">'+value.storename +"</a>" +
 									"</td>"+
 								"</tr>"+
 								"<tr>"+

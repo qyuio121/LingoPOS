@@ -67,7 +67,12 @@
 						</c:if>
 						<c:if test="${not empty sessionScope.loginDTO.ownerno}">
 							<c:if test="${empty sessionScope.loginDTO.storeno}" var="result">
-								<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
+								<c:if test="${sessionScope.loginDTO.isallowed}">
+									<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
+								</c:if>
+								<c:if test="${not sessionScope.loginDTO.isallowed}">
+									<li><a href="#">가게승인 대기중</a></li>
+								</c:if>
 							</c:if>
 							<c:if test="${not result}">
 								<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>
@@ -90,7 +95,12 @@
 				</c:if>
 				<c:if test="${not empty sessionScope.loginDTO.ownerno}">
 					<c:if test="${empty sessionScope.loginDTO.storeno}" var="result">
-						<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
+						<c:if test="${sessionScope.loginDTO.isallowed}">
+							<li><a href="<c:url value='/Shop/Apply.Lingo'/>">가게등록</a></li>
+						</c:if>
+						<c:if test="${not sessionScope.loginDTO.isallowed}">
+							<li><a href="#">가게승인 대기중</a></li>
+						</c:if>
 					</c:if>
 					<c:if test="${not result}">
 						<li><a href="<c:url value='/Shop/BlackList.Lingo'/>">블랙리스트신청</a></li>

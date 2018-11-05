@@ -32,9 +32,16 @@ public class LoginController {
 	@RequestMapping("/Login/LoginProcess.Lingo")
 	public String loginprocess(@RequestParam Map map, Model model) throws Exception{
 		LoginDTO loginDTO = loginService.select(map);
+		
 		if(loginDTO!=null) {
-			model.addAttribute("loginDTO",loginDTO);
-			return "index.tiles";
+			String pwd=loginService.getPwd(map);
+			if(PBKDF2.validatePassword(map.get("pwd").toString(),pwd)) {
+				model.addAttribute("loginDTO",loginDTO);
+				return "index.tiles";
+			}else {
+				model.addAttribute("notcorrect","아이디나 비밀번호가 틀렸습니다.");
+				return "forward:/Login/Login.Lingo";
+			}
 		}else {
 			model.addAttribute("notcorrect","아이디나 비밀번호가 틀렸습니다.");
 			return "forward:/Login/Login.Lingo";
@@ -53,24 +60,23 @@ public class LoginController {
 		LoginDTO loginDTO = loginService.select(map);
 		JSONObject json = new JSONObject();
 		if(loginDTO!=null) {
-			if(loginDTO.getOwnerno() != null) {
-				json.put("isMember","seller");
-				System.out.println("점주에 들어옴");
-				return json.toJSONString();
+			String pwd=loginService.getPwd(map);
+			if(PBKDF2.validatePassword(map.get("pwd").toString(),pwd)) {
+				if(loginDTO.getOwnerno() != null) {
+					json.put("isMember","seller");
+				}
+				else if(loginDTO.getAdminno() != null) {
+					json.put("isMember","admin");
+				}
+				else {
+					json.put("isMember","customer");
+				}
+			}else {
+				json.put("isMember","false");
 			}
-			else if(loginDTO.getAdminno() != null) {
-				json.put("isMember","admin");
-				System.out.println("관리자에 들어옴");
-				return json.toJSONString();
-			}
-			else
-				json.put("isMember","customer");
-			System.out.println("고객에 들어옴");
-				return json.toJSONString();
 		}else {
 			json.put("isMember","false");
-			System.out.println("그냥 틀린거에 들어옴");
-			return json.toJSONString();
 		}
+		return json.toJSONString();
 	}
 }

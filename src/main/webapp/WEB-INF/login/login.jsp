@@ -78,7 +78,7 @@
 		});	
 	});
 	  
-    $.backstretch("http://localhost:8080/lingopos/Images/login.jpg", {
+    $.backstretch("https://www.lingopos.co.kr/Images/login.jpg", {
       speed: 1000
     });
   </script>

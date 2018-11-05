@@ -41,5 +41,5 @@
 		</table>
 	</div>
 </div>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e8b1f17eca567f307bb9f9a105ef8e9f&libraries=services,clusterer,drawing"></script>
-<script type="text/javascript" src="<c:url value='/js/search.js'/>"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da1e05139c89159059ef2c519421cae8&libraries=services,clusterer,drawing"></script>
+<script type="text/javascript" src="<c:url value='/js/search.js?version=20181101'/>"></script>
