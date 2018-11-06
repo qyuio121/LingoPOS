@@ -36,7 +36,7 @@ import com.kosmo.lingopos.reservedtable.ReservedtableDTO;
 
 @Controller
 @SessionAttributes("loginDTO")
-public class TempleteController {
+public class AndroidController {
 	
 	@Resource(name="mapService")
 	private MapService mapService;
@@ -249,20 +249,14 @@ public class TempleteController {
 			Map mapMap = new HashMap();
 			mapMap.put("storeno", reservedList.get(0).getStoreno());
 			MapDTO mapList = mapService.selectbyStoreno(mapMap);
-			System.out.println("storename : "+reservedList.get(0).getStorename());
-			System.out.println("address : "+reservedList.get(0).getAddress());
-			System.out.println("tel : "+reservedList.get(0).getTel());
-			System.out.println("startdate : "+reservedList.get(0).getStartdate());
-			System.out.println("x : "+mapList.getX());
-			System.out.println("y : "+mapList.getY());
 			JSONObject json = new JSONObject();
 			json.put("storename",reservedList.get(0).getStorename());
 			json.put("address",reservedList.get(0).getAddress());
 			json.put("tel",reservedList.get(0).getTel());
 			json.put("startdate",reservedList.get(0).getStartdate().toString());
+			json.put("reserveno",reservedList.get(0).getReserveno());
 			json.put("x",mapList.getX());
 			json.put("y",mapList.getY());
-			System.out.println(json);
 			return json.toJSONString();
 		}
 		catch (Exception e) {
@@ -270,7 +264,12 @@ public class TempleteController {
 			return json.toJSONString();
 		}
 	}
-		
+	//안드로이드 예약확인
+	@ResponseBody
+	@RequestMapping(value="/Android/ReservationDelete.Lingo",produces="text/html; charset=UTF-8")
+	public void androidReservationDelete(@RequestParam Map map) throws Exception {
+			reservedtableService.delete(map);
+	}
 	//안드로이드 예약하기
 	@RequestMapping(value="/Android/Reservation.Lingo",produces="text/html; charset=UTF-8")
 	public String androidReservation(@RequestParam Map map,Model model) throws Exception{
