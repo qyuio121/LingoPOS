@@ -267,8 +267,9 @@ public class AndroidController {
 	//안드로이드 예약확인
 	@ResponseBody
 	@RequestMapping(value="/Android/ReservationDelete.Lingo",produces="text/html; charset=UTF-8")
-	public void androidReservationDelete(@RequestParam Map map) throws Exception {
+	public String androidReservationDelete(@RequestParam Map map) throws Exception {
 			reservedtableService.delete(map);
+			return "1";
 	}
 	//안드로이드 예약하기
 	@RequestMapping(value="/Android/Reservation.Lingo",produces="text/html; charset=UTF-8")

@@ -27,77 +27,6 @@
 
 
 <script>
-/*
-$(function() {
-	var selectedliTag = [];
-	//테이블 보여주기
-	$('#easySelectable').easySelectable({
-		
-			item: 'li',
-			state: true,
-			onSelecting: function(){
-			},
-			onSelected: function(){
-				
-			},
-			onUnSelected: function(){
-	   		}
-	});
-	
-	//내가 만든 선택된 테이블 인덱스 구하기
-	$('#easySelectable li').click(function(index){
-		if(!$(this).hasClass('create-used')){
-			var number = $('#easySelectable li').index(this);
-			//선택되지 않은것이 선택된경우
-			if(selectedliTag.indexOf(number)==-1){
-				selectedliTag.push(number);
-				console.log("새롭게 선택된 테이블 인덱스"+number);
-			}
-			//선택되었던 것이 선택된경우
-			else{
-				selectedliTag = jQuery.grep(selectedliTag, function(value) { 
-	        		return value != number; });
-				console.log("선택 제거된 테이블 인덱스 "+number);
-			}
-			console.log("현재 선택된 테이블 인덱스들 DB연결시 넘길 값"+selectedliTag);
-			$('#tableno').val(selectedliTag.toString());
-			$('#tableno').next().html("");
-			console.log("hidden타입으로 넘어갈 값 : "+selectedliTag.toString());
-		}	
-	})
-	
-	//영업시간
-	$('.timepicker').wickedpicker({twentyFour: true,now:"00:00"});
-
-	var now = new Date();
-	var myDate = new Date();
-	myDate.setMonth(myDate.getMonth() + 1);
-	//datepicker
-	 $('#two').calendar({
-	    	onSelected: function (view, date, data) {
-	    		$('#startdate').next().html("");
-	    		console.log('date:' + date);
-	    		function getFormatDate(date){
-	    			var year = date.getFullYear();                                 //yyyy
-	    			var month = (1 + date.getMonth());                     //M
-	    			month = month >= 10 ? month : '0' + month;     // month 두자리로 저장
-	    			var day = date.getDate();                                        //d
-	    			day = day >= 10 ? day : '0' + day;                            //day 두자리로 저장
-	    			return  year + '-' + month + '-' + day;
-	    		}
-	    		date = getFormatDate(date);
-	    		console.log('date:' + date);
-	    		$('#startdate').val(date);
-	    	},
-	    	 selectedRang: [now,myDate],
-	    });
-	    $('#startdate').val(new Date().format("yyyy-mm-dd"));
-		console.log($('#startdate').val());
-		
-		$('#confirm').click(function(){
-			$('#frm').submit();
-		})
-});*/
 $(function() {
 	var selectedliTag = [];
 	var getReservation = function(){		
@@ -152,41 +81,7 @@ $(function() {
 		getReservation();
 		getUsed();
 	}
-	//유효성검사
-	$('#frm').validate({
-		rules:{
-			people:"required"
-			,starttime:{vaildtime:true,
-						currenttime:true}
-		},messages:{	
-			people:"예약 인원 수를 입력하세요."
-	}});
-		jQuery.validator.addMethod('vaildtime', function(){ 
-			var opentime = new Date("1970-01-01"+" "+"${store.opentime}").getTime();
-			var closetime = new Date("1970-01-01"+" "+"${store.closetime}").getTime();
-			var starttime = new Date("1970-01-01"+" "+$("#starttime").val()).getTime();
-			if(opentime == closetime){
-				return true;
-			}else if(opentime > closetime){
-				if(!(opentime>starttime&&starttime>closetime)){
-					return true;
-				}
-			}
-			if(opentime<=starttime&&starttime<=closetime){
-				return true;
-			}
-			return false;
-		}, "영업시간내로 선택해 주세요. (${store.opentime}~${store.closetime})");
-		
-		jQuery.validator.addMethod('currenttime', function(){ 
-			var currenttime = new Date().getTime();
-			var nowtime = new Date($('#startdate').val()+' '+$('#starttime').val()+":59").getTime();
-			
-			if(currenttime < nowtime){
-				return true;
-			}
-			return false;
-		}, "현재 시간 이후에만 예약이 가능합니다.");
+	
 	//테이블 보여주기
 	$('#easySelectable').easySelectable();
 	
@@ -211,22 +106,6 @@ $(function() {
 	//영업시간
 	$('.timepicker').wickedpicker({twentyFour: true,now:"00:00"});
 	
-	//영업시간 유효성검사 후 재 선택시 유효성 검사 끄기
-	$(".timepicker").on('change',function(){
-		$('#frm').valid();	
-	})
-		
-	//validate
-	$('#confirm').click(function(){
-		if($('#frm').valid() && $('#tableno').val() != "" &&  $('#startdate').val() != "" ){
-			$('#frm').submit();
-		}
-		if($('#startdate').val() =="")
-			$('#startdate').next().html("예약날짜를 선택하세요.");
-		if($('#tableno').val() == "")
-			$('#tableno').next().html("테이블을 선택하세요.");	
-	})
-	
 	var now = new Date();
 	var myDate = new Date();
 	myDate.setMonth(myDate.getMonth() + 1);
@@ -249,6 +128,9 @@ $(function() {
     });
     $('#startdate').val(new Date().format("yyyy-mm-dd"));
 	setInterval(datevalidate,500)
+	$('#confirm').click(function(){
+		$('#frm').submit();
+	})
 });
 
 </script>
