@@ -15,21 +15,21 @@
 				<!-- Wrapper for slides -->
 				<div class="carousel-inner">
 					<div class="item active">
-						<a href="http://www.naver.com"> 
+						<a href="#"> 
 							<img src="<c:url value='/Images/eventImages/event1.jpg'/>" alt="슬라이드1" style="width: 100%; height: 500px">
 						</a>
 						<div class="carousel-caption">
 						</div>
 					</div>
 					<div class="item">
-						<a href="http://www.daum.net"> 
+						<a href="#"> 
 							<img src="<c:url value='/Images/eventImages/event2.jpg'/>" alt="슬라이드2" style="width: 100%; height: 500px">
 						</a>
 						<div class="carousel-caption">
 						</div>
 					</div>
 					<div class="item">
-						<a href="http://www.nate.com"> 
+						<a href="#"> 
 							<img src="<c:url value='/Images/eventImages/event3.jpg'/>" alt="슬라이드3" style="width: 100%; height: 500px;">
 						</a>
 						<div class="carousel-caption">
@@ -49,7 +49,7 @@
 		      <div class="col-sm-4">
 		        <img src="<c:url value='/Images/RecommendImage.jpg' />" alt="Recommend" style="width:100%;">
 		        <h3><a href="#">인기맛집 리스트</a></h3>
-		        <p>링고포스는 유저분들이 가장 추천수가 높은 맛집을 추려 <a href="#">인기맛집 top리스트</a>를 제공하여 줍니다.
+		        <p>링고포스는 유저분들이 가장 추천수가 높은 맛집을 추려  인기맛집 리스트를 제공하여 줍니다.</p>
 		      </div>
 		      <div class="col-sm-4">
 		        <img src="<c:url value='/Images/mapImage.jpg' />" alt="Reservation" style="width:100%;">
@@ -57,7 +57,7 @@
 		        <p><a href="<c:url value='/Reservation/Search.Lingo'/>">지도</a>를 통하여 집 주변의 맛집에서부터 원하는 지역의 맛집을 찾아 쉽게 예약할수있게 도와줍니다.</p>
 		      </div>
 		      <div class="col-sm-4">
-		        <img src="<c:url value='/Images/자유게시판.png' />" alt="Components" style="width:100%;">
+		        <img src="<c:url value='/Images/free.png' />" alt="Components" style="width:100%;">
 		        <h3><a href="<c:url value='/Free/Free.Lingo' />" >자유 게시판</a></h3>
 		        <p>링고포스를 이용하시는 유저분들이 자유롭게 소통 및 정보를 자세하게 공유할수 있도록 자유 게시판을 운영하고 있습니다.</p>
 		      </div>

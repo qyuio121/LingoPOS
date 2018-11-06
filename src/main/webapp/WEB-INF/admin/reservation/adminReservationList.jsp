@@ -76,9 +76,6 @@
 	</div>
 </div>
 		
-<c:forEach begin="0" end="${25-fn:length(list)}" step="1">
-	<br/>
-</c:forEach>
 <!--메인 페이지 -->
 <script>
 $(function() {

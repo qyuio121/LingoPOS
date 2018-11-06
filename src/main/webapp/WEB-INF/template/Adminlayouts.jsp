@@ -124,7 +124,6 @@
 		   </section>
 		<!--메인 페이지 -->	
 	   	</div>
-	   	<tiles:insertAttribute name="Footer"/>
    	</section>
    	  	<!-- 
 		<script src="../../lib/bootstrap/js/bootstrap.min.js"></script>

@@ -40,6 +40,10 @@ $(function(){
 	    	}
 		}
     });
+	if(${empty sessionScope.loginDTO.adminno}){
+		alert('관리자만 접속 가능합니다.');
+		location.replace("<c:url value='/'/>");
+	}
 });
 
 

@@ -50,9 +50,6 @@
 		<div>${pageString}</div>
 	</div>
 <!-- 페이징  끝-->
-<!-- <br/>처리 -->
-<c:forEach begin="0" end="${20-fn:length(list)}" step="1">
-	<br/>
-</c:forEach>
+
 <!-- 내용 끝 -->   
 </div>

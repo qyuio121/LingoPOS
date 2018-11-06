@@ -44,6 +44,3 @@ $(function(){
 			</div>
 	</form>		
 </div>	
-<c:forEach begin="0" end="${15-fn:length(list)}" step="1">
-	<br/>
-</c:forEach>

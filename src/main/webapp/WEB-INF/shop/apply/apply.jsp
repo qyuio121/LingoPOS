@@ -23,6 +23,10 @@
 
 <script>
 $(function(){
+	if(${empty sessionScope.loginDTO.ownerno}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
 	var postcode;//우편번호 변수 설정
 	var addr;//상세주소 변수 설정
 	

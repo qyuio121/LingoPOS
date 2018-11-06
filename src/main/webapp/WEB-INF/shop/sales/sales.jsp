@@ -12,7 +12,10 @@
 
 <script>
 $(function() {
-	
+	if(${empty sessionScope.loginDTO}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
 });
 </script>
 <style>

@@ -10,8 +10,8 @@
 				<div >
 					<!-- Content -->
 					<h5 class="text-uppercase"
-						style="color: white; background-color: #000000">Footer Content</h5>
-					<p style="color: #00a3d2;">회사설명</p>
+						style="color: white; background-color: #000000">Lingo POS</h5>
+					<p style="color: #00a3d2;">LingoPOS는 여러분에게 맛보는 즐거움을 선사합니다.</p>
 				</div>
 			</div>
 			<!-- Grid row -->
@@ -20,7 +20,7 @@
 		<!-- Copyright -->
 		<div class="footer-copyright text-center py-3" style="background-color: black">
 			© 2018 Copyright: 
-			<a href="#">Lingo.com</a>
+			<a href="https://www.lingopos.co.kr">www.lingopos.co.kr</a>
 		</div>
 		<!-- Copyright -->
 	</footer>

@@ -21,6 +21,10 @@ if(${reply.replyno!=null}){
 	history.back();
 }
 $(function(){
+	if(${empty sessionScope.loginDTO}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
 	var kind = '${record.kind}';
 	//사진 업로드 시 서버에 저장된 사진제목 저장할 배열
 	$('select option[value="'+kind+'"]').attr('selected','selected');

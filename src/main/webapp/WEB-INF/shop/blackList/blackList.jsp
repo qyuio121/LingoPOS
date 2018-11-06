@@ -136,6 +136,10 @@
 </c:forEach>
 <script>
 $(function() {
+	if(${empty sessionScope.loginDTO.ownerno}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
     //모달에서 버튼 클릭시 이벤트 처리
     $('#searchWord').keydown(function(e){
 		if(e.keyCode == 13){

@@ -2,6 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script>
+if(${empty sessionScope.loginDTO}){
+	alert('로그인후 접속 가능합니다.');
+	location.replace("<c:url value='/Login/Login.Lingo'/>");
+}
+
+</script>
 <style>
 		.container {position: absolute;left: 0;bottom: 70px;width: 370px;height: 140px;margin-left: -180px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
 	    .container * {padding: 0;margin: 0;}

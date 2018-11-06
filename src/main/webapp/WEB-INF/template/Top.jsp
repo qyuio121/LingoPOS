@@ -11,7 +11,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand" href="<c:url value='/'/>"> 
-			<img id="logo" class="logoImage" src="<c:url value='/Images/Lingo로고.png'/>" alt="로고이미지" />
+			<img id="logo" class="logoImage" src="<c:url value='/Images/Lingologo.png'/>" alt="로고이미지" />
 			</a>
 		</div>
 		<!-- navbar-header -->

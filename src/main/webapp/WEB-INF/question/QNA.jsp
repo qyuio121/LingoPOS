@@ -3,7 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-
+<script>
+if(${empty sessionScope.loginDTO}){
+	alert('로그인후 접속 가능합니다.');
+	location.replace("<c:url value='/Login/Login.Lingo'/>");
+}
+</script>
 <div class="container" style="padding-top: 60px; margin-top: 60px;">
 <!-- 내용 시작 -->
 <!-- 바디 헤더 시작-->

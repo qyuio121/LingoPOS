@@ -13,6 +13,10 @@
     
 <script>
 $(function(){
+	if(${empty sessionScope.loginDTO}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
 		$('#del_memo').click(function(){
 				if(confirm("정말 삭제 하시겠습니까")){
 					location.replace("<c:url value='/Question/QNADelete.Lingo?qnano=${record.qnano}'/>");

@@ -30,10 +30,7 @@
 		</div>
 	</div>    
 </div>
-<!-- <br/>처리 -->
-<c:forEach begin="0" end="${25-fn:length(list)}" step="1">
-	<br/>
-</c:forEach>
+
 <script>
 var flag = false;
 $(function(){

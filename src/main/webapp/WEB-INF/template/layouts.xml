@@ -6,8 +6,7 @@
 		<!-- admin -->	
 		<definition name=".admin" template="/WEB-INF/template/Adminlayouts.jsp">
 	        <put-attribute name="Top" value="/WEB-INF/template/AdminTop.jsp" />
-	        <put-attribute name="Body" value="" />        
-	        <put-attribute name="Footer" value="/WEB-INF/template/AdminFooter.jsp" />
+	        <put-attribute name="Body" value="" />
 	    </definition>
 		
 		<!-- lingo --> 	

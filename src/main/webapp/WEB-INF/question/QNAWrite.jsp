@@ -17,6 +17,10 @@
  
 <script>
 $(function(){
+	if(${empty sessionScope.loginDTO}){
+		alert('로그인후 접속 가능합니다.');
+		location.replace("<c:url value='/Login/Login.Lingo'/>");
+	}
 	//사진 업로드 시 서버에 저장된 사진제목 저장할 배열
 	var realImage =[];
 	
