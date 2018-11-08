@@ -19,7 +19,7 @@
 			<table class="table table-bordered">
 				<tr class="tsTitles" style="text-align: center; font-weight:bold;background-color: #EAEDED">
 						<th class="col-md-1 text-center">글번호</th>
-						<th class="col-md-1 text-center">문의답변</th>
+						<th class="col-md-1 text-center">문의자</th>
 						<th class="col-md-2 text-center">문의유형</th>
 						<th class="text-center">문의제목</th>
 						<th class="col-md-2 text-center">문의일</th>
@@ -33,7 +33,7 @@
 						<c:forEach var="record" items="${records}" varStatus="loop">
 							<tr>
 								<td style="text-align: center;">${totalRecordCount - (((nowPage - 1) * pageSize) + loop.index)}</td>
-								<td style="text-align: center;">미완료</td>
+								<td style="text-align: center;">${record.id}</td>
 								<td style="text-align: center;">${record.kind}</td>
 								<td style="text-align: center;"><a href="<c:url value='/Question/QNAView.Lingo?qnano=${record.qnano}&nowPage=${nowPage}'/>">${record.title}</a></td>
 								<td style="text-align: center;">${record.postdate}</td>

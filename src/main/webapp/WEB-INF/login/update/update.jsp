@@ -43,8 +43,9 @@
 		 		if($('#pwd').attr('ReadOnly')==null){
 		 			alert('비밀번호를 정확히 입력하셔야 수정 가능 합니다.');
 		 			return false;
-		 		}else{
+		 		}else if($('#frm').valid()){
 		 			$('#frm').submit();
+		 			alert('회원 정보가 수정 되었습니다.');
 		 		}
 		 });
 		 $('#valicatePwd').click(function(){

@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -218,10 +219,10 @@ function reserve(){
 		<div id="tab2" class="swichtab-panel" data-swichtab="target">
 			<div style="text-align: center;width:100%;">
 				<c:forEach items="${foodimgs}" var="foodimg">
-					<div style="display:inline-table;width:45%">
-						<img style="width:400px;height:400px;display: table-row;" class="fs-gal" src="${foodimg.img}" data-url="${foodimg.img}" alt="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" title="메뉴 : ${foodimg.name} 가격 : ${foodimg.price}" />	
-						<span style="display:table-row;font-size:1.8em">메뉴 : ${foodimg.name} 가격 : ${foodimg.price}</span>
-						<br/>
+					<div style="display:inline-table;width:40%">
+						<img style="width:400px;height:400px;display: table-row;" class="fs-gal" src="${foodimg.img}" data-url="${foodimg.img}" title="메뉴 : ${foodimg.name} 가격 : <fmt:formatNumber value="${foodimg.price}" pattern="#,###,###" />원" />
+						<span style="display:table-row;font-size:1.8em">메뉴 : ${foodimg.name} 가격 : <fmt:formatNumber value="${foodimg.price}" pattern="#,###,###" />원</span>
+						<br/>				
 					</div>
 				</c:forEach>
 			</div>

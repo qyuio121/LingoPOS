@@ -74,8 +74,9 @@
 	 		if($('#id').attr('ReadOnly')==null){
 	 			alert('아이디 중복 검사를 통과하셔야 합니다.');
 	 			return false;
-	 		}else{
+	 		}else if($('#frm').valid()){
 	 			$('#frm').submit();
+	 			alert('LingoPOS 회원 가입을 축하드립니다 다시 로그인 해주세요~');
 	 		}
 	 	});
 	 	

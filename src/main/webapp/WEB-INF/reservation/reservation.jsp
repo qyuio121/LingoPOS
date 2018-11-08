@@ -152,6 +152,7 @@ $(function() {
 	$('#confirm').click(function(){
 		if($('#frm').valid() && $('#tableno').val() != "" &&  $('#startdate').val() != "" ){
 			$('#frm').submit();
+			alert('예약이 되었습니다.');
 		}
 		if($('#startdate').val() =="")
 			$('#startdate').next().html("예약날짜를 선택하세요.");

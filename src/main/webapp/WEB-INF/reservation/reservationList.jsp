@@ -30,7 +30,7 @@
 			  	<h3>현재 예약목록</h3>
 			  	<div class="row" style="margin-bottom: 10px;margin-right: 10px">
 				  	<div class="text-right">
-						<button id="deniedBtn" class="btn btn-danger">일괄거절</button>
+						<button id="deniedBtn" class="btn btn-danger">일괄취소</button>
 					</div>
 				</div>
 				<div id="currentTable">

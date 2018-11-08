@@ -14,7 +14,7 @@ $(function(){
 <div class="container" >
 	<div class="row">
 		<div class="col-xs-6">
-			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> FCM <small>알림 메시지</small></h2>
+			<h2 ><img src="<c:url value='/Images/apple.png'/>" alt="image" style="width: 40px" /> 이벤트 PUSH <small>알림 메시지</small></h2>
 		</div>
 	</div>	    
 	<!-- 폼 시작 -->

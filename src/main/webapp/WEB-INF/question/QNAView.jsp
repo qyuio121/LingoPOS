@@ -122,6 +122,11 @@ $(function(){
 <!-- 상세보기 내용 예시 시작  -->
 	<div class="row" >
 		<table class="col-sm-10 table table-striped table-responsive ">
+			<c:if test="${not empty sessionScope.loginDTO.adminno}">
+				<tr class="tsTitles">
+					<th class="col-xs-9">문의자 : <small>${record.id}</small></th>
+				</tr>
+			</c:if>
 			<tr class="tsTitles">
 				<th class="col-xs-9">문의제목 : <small>${record.title}</small></th><th>문의유형 : <small>${record.kind}</small></th>
 			</tr>

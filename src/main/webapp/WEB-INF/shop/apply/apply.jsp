@@ -56,8 +56,8 @@ $(function(){
 	//validate
 	$('#confirm').click(function(){
 		if($('#frm').valid() && $('#hiddenStore').val() != "" && $('#startTime').val()!=$('#endTime').val()){
-			
 			$('#frm').submit();
+			alert('가게가 등록 되었습니다!');
 		}else{
 			if($('#hiddenStore').val() == "")
 				$('#hiddenStore').next().html("가게사진을 업로드하세요");	
@@ -102,7 +102,7 @@ $(function(){
 	                    jusoSangsae = jusoSangsae+str[i];
 	                }
 	 				addr = data.sido+" "+data.sigungu+" "+jusoSangsae;
-	                postcode = data.postcode;
+	                postcode = data.zonecode;
 	                $("#addr1").val(postcode);
 	              	$("#addr2").val(addr);
 	              	$('#addr1Error').html("");	

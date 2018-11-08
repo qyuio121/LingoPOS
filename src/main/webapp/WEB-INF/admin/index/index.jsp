@@ -92,14 +92,16 @@
                   </div>
                   <canvas id="serverstatus02" height="120" width="120"></canvas>
                   <script>
-                    var doughnutData = [{
+                    var doughnutData = [
+                      {
+                            value: ${(totaluser-admin-owner)/(totaluser-admin)},
+                            color: "#f68275"
+                      },
+                      {
                         value: ${owner/(totaluser-admin)},
                         color: "#1c9ca7"
                       },
-                      {
-                        value: ${(totaluser-admin-owner)/(totaluser-admin)},
-                        color: "#f68275"
-                      }
+                      
                     ];
                     var myDoughnut = new Chart(document.getElementById("serverstatus02").getContext("2d")).Doughnut(doughnutData);
                   </script>
@@ -119,18 +121,20 @@
                   </div>
                   <canvas id="serverstatus03" height="120" width="120"></canvas>
                   <script>
-                    var doughnutData = [{
-                        value: ${reserve}/${reserve+visit+notvisit},
-                        color: "#1c9ca7"
-                      },
+                    var doughnutData = [
+                    	{
+                            value: ${notvisit}/${reserve+visit+notvisit},
+                            color: "#f68275"
+                        },
                       {
                         value: ${visit}/${reserve+visit+notvisit},
                         color: "#fdfdfd"
                       },
                       {
-                          value: ${notvisit}/${reserve+visit+notvisit},
-                          color: "#f68275"
-                       }
+                          value: ${reserve}/${reserve+visit+notvisit},
+                      	  color: "#1c9ca7"
+                      }
+                      
                     ];
                     var myDoughnut = new Chart(document.getElementById("serverstatus03").getContext("2d")).Doughnut(doughnutData);
                   </script>

@@ -138,7 +138,7 @@ $(function(){
            <li>
             <a class="menu" href="<c:url value='/Admin/FCM/FCM.Admin'/>">
               <i class="fa fa-envelope"></i>
-              <span>FCM</span>
+              <span>이벤트 PUSH 서비스</span>
               </a>
           </li>
         </ul>

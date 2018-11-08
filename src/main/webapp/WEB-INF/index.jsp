@@ -2,6 +2,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<c:if test="${not empty sessionScope.loginDTO.ownerno}">
+	<c:if test="${empty sessionScope.loginDTO.storeno}">
+	    <c:if test="${sessionScope.loginDTO.isallowed}">
+			<script>
+				alert('사업자 등록이 승인 되었습니다. 가게 등록을 해주세요');
+			</script>
+		</c:if>
+	</c:if>
+</c:if>
 <div class="container-fluid">
 	<div class="row">
 		<div class="carousel" id="carousels">
